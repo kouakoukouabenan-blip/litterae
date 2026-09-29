@@ -34,7 +34,7 @@ export const FACETS: Facet[] = [
   { key: "genre", label: "Genre", values: w => [w.genre], order: ["Roman", "Théâtre", "Poésie", "Nouvelle", "Conte", "Essai"], visible: 6 },
   { key: "aire", label: "Aire géographique", values: w => w.aires, visible: 5 },
   { key: "pays", label: "Pays", values: w => w.pays, visible: 6 },
-  { key: "argument", label: "Idée d'argument (guide)", values: w => w.idees.map(i => i.argument), visible: 6 }
+  { key: "argument", label: "Argument illustré", values: w => w.idees.map(i => i.argument), visible: 6 }
 ];
 
 export function buildIndex(works: Oeuvre[]): Indexed[] {

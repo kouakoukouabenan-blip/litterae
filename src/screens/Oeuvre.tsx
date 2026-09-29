@@ -11,6 +11,7 @@ import { href } from "../lib/router";
 import { NotFound } from "./NotFound";
 import { fnClass } from "../lib/fonctions";
 import type { Oeuvre } from "../data/types";
+import { argumentsDe } from "../lib/arguments";
 
 function Note({ id }: { id: string }) {
   const { notes, setNote } = useNotes();
@@ -31,6 +32,30 @@ function Note({ id }: { id: string }) {
         </button>
         {dirty && <button type="button" class="btn btn-secondary" onClick={() => setText(saved)}>Annuler</button>}
       </div>
+    </section>
+  );
+}
+
+/** Tous les arguments que l'œuvre peut illustrer ; sur une fiche ouverte, avec les idées qui les appuient. */
+function ArgumentsListe({ w, ouvert }: { w: Oeuvre; ouvert: boolean }) {
+  const liste = argumentsDe(w);
+  return (
+    <section aria-labelledby="arguments" class="arguments">
+      <h2 id="arguments" class="section-title">Arguments que cette œuvre illustre</h2>
+      <ul class="ideas">
+        {liste.map(a => (
+          <li key={a.texte}>
+            <p class="argument-texte">{a.texte}</p>
+            {ouvert && a.appuis.length > 0 && (
+              <ul class="argument-appuis">{a.appuis.map(t => <li key={t}>{t}</li>)}</ul>
+            )}
+            <p class="meta">
+              Fonction {a.fonction.toLowerCase()}
+              {a.cle && <> · <a href={href(["oeuvres"], { argument: a.cle })}>autres œuvres pour cet argument</a></>}
+            </p>
+          </li>
+        ))}
+      </ul>
     </section>
   );
 }
@@ -63,7 +88,10 @@ export function OeuvreScreen({ id }: { id: string }) {
         </header>
 
         {!libre ? (
-          <LockPanel reason="Cette fiche fait partie de l'accès complet." contenu={contenuFiche(w)} />
+          <>
+            <ArgumentsListe w={w} ouvert={false} />
+            <LockPanel reason="Cette fiche fait partie de l'accès complet." contenu={contenuFiche(w)} />
+          </>
         ) : (
           <>
             <div class="actions">
@@ -83,19 +111,7 @@ export function OeuvreScreen({ id }: { id: string }) {
               <h2 class="section-title">Résumé</h2>
               {w.resume ? <p>{w.resume}</p> : <p class="muted">Le résumé de cette œuvre n'est pas encore rédigé. Les thèmes et mots-clés ci-dessous indiquent déjà comment l'utiliser.</p>}
 
-              {w.idees.length > 0 && (
-                <section aria-labelledby="idees">
-                  <h2 id="idees" class="section-title">Pour illustrer un argument</h2>
-                  <ul class="ideas">
-                    {w.idees.map((i, k) => (
-                      <li key={k}>
-                        <p>{i.texte}</p>
-                        <p class="meta">{i.argument} · fonction {i.fonction.toLowerCase()}</p>
-                      </li>
-                    ))}
-                  </ul>
-                </section>
-              )}
+              <ArgumentsListe w={w} ouvert />
 
               {w.exemple && (
                 <section aria-labelledby="exemple">
