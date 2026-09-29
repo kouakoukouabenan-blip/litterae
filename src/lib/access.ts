@@ -5,7 +5,8 @@ import { oeuvre } from "./data";
 // 10 fiches d'œuvres choisies par l'auteur (liste dans le dépôt privé, gratuites.json).
 export const FREE_SUBJECTS = 3;
 export const FREE_WORKS = 10;
-export const PRICE = "1 000 F";
+/** Promotion de lancement à 1 000 F jusqu'au 31 octobre 2026 inclus, puis 1 500 F (décision d'Atikan). */
+export const PRICE = Date.now() < Date.UTC(2026, 10, 1) ? "1 000 F" : "1 500 F";
 
 /** Accès aux contenus payants : complet dès qu'une clé de licence a été validée sur l'appareil. */
 export function useAccess() {

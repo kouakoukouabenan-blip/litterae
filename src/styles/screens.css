@@ -154,3 +154,7 @@
 .exemple { margin: 0 0 var(--s3); padding: var(--s3) var(--s4); background: var(--green-tint); border-left: 3px solid var(--green); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-style: italic; }
 .notice-court { padding: var(--s2) var(--s3); border: 1px solid var(--line-strong); border-radius: var(--radius-sm); color: var(--muted); }
 .voir-tout { align-self: flex-start; font-size: var(--text-sm); }
+
+/* Raccourcis « Au programme » sur l'écran des œuvres */
+.chips-row { display: flex; flex-wrap: wrap; gap: var(--s2); }
+.chips-row .chip { text-decoration: none; }

@@ -25,6 +25,10 @@ export interface Oeuvre {
   exemple?: string | null;
   /** Résumé complet et idées d'illustration rédigées ; sinon, fiche courte. */
   detaillee?: boolean;
+  /** Classes où l'œuvre est au programme officiel en Côte d'Ivoire. */
+  niveaux?: string[];
+  /** Édition au programme. */
+  editeur?: string | null;
   /** Fiche ouverte à tous (choisie par l'auteur). */
   libre?: boolean;
 }

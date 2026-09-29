@@ -100,6 +100,17 @@ export function OeuvresScreen({ params }: { params: URLSearchParams }) {
             </div>
           )}
 
+          {accueil && (counts.get("programme")?.some(([, n]) => n > 0) ?? false) && (
+            <section class="browse" aria-labelledby="programme-title">
+              <h2 id="programme-title" class="results-count">Au programme en Côte d'Ivoire</h2>
+              <div class="chips-row">
+                {counts.get("programme")!.filter(([, n]) => n > 0).map(([niveau, n]) => (
+                  <a key={niveau} class="chip" href={href(["oeuvres"], { programme: niveau })}>{niveau} · {n}</a>
+                ))}
+              </div>
+            </section>
+          )}
+
           {accueil && (
             <section class="browse" aria-labelledby="browse-title">
               <h2 id="browse-title" class="results-count">Par fonction littéraire</h2>

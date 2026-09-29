@@ -108,6 +108,7 @@ export function OeuvreScreen({ id }: { id: string }) {
               )}
 
               <dl class="facts">
+                {w.niveaux?.length ? <><dt>Au programme en Côte d'Ivoire</dt><dd class="tags">{w.niveaux.map(n => <a key={n} class="tag tag-link" href={href(["oeuvres"], { programme: n })}>{n}</a>)}{w.editeur && <span class="meta"> · {w.editeur}</span>}</dd></> : null}
                 <dt>Fonction littéraire</dt>
                 <dd class="tags">{w.fonctions.map(f => <a key={f} class={`tag tag-link ${fnClass(f)}`} href={href(["oeuvres"], { fonction: f })}>{f}</a>)}</dd>
                 <dt>Thèmes</dt>

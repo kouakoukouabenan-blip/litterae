@@ -20,11 +20,15 @@ export interface Facet {
   visible: number;
 }
 
-export type FacetKey = "fonction" | "genre" | "aire" | "theme" | "argument" | "pays";
+export type FacetKey = "programme" | "fonction" | "genre" | "aire" | "theme" | "argument" | "pays";
 export type Filters = Record<FacetKey, string[]>;
-export const EMPTY_FILTERS: Filters = { fonction: [], genre: [], aire: [], theme: [], argument: [], pays: [] };
+export const EMPTY_FILTERS: Filters = { programme: [], fonction: [], genre: [], aire: [], theme: [], argument: [], pays: [] };
+
+/** Classes où l'œuvre est au programme officiel en Côte d'Ivoire, de la terminale à la 6e. */
+export const NIVEAUX = ["Terminale", "Première", "Seconde", "3e", "5e", "6e"];
 
 export const FACETS: Facet[] = [
+  { key: "programme", label: "Au programme en Côte d'Ivoire", values: w => w.niveaux ?? [], order: NIVEAUX, visible: 6 },
   { key: "fonction", label: "Fonction littéraire", values: w => w.fonctions, order: FONCTIONS, visible: 5 },
   { key: "theme", label: "Thème", values: w => w.themes, visible: 8 },
   { key: "genre", label: "Genre", values: w => [w.genre], order: ["Roman", "Théâtre", "Poésie", "Nouvelle", "Conte", "Essai"], visible: 6 },
