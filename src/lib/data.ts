@@ -2,13 +2,17 @@ import oeuvres from "../data/oeuvres.json";
 import sujets from "../data/sujets.json";
 import type { Oeuvre, Sujet, SujetApercu } from "../data/types";
 import { licence } from "./licence";
+import { contenuLibre } from "./libre";
 
 // Données publiques (partie gratuite), complétées par le contenu payant si une clé a été validée.
 const payant = licence()?.contenu;
+// Fiches gratuites choisies depuis le tableau de bord (sinon, celles du site publié).
+const libre = contenuLibre();
 
 export const OEUVRES: Oeuvre[] = (oeuvres as Oeuvre[]).map(w => {
-  const p = payant?.oeuvres[w.id];
-  return p ? { ...w, resume: p.resume, idees: p.idees, exemple: p.exemple ?? w.exemple } : w;
+  const p = payant?.oeuvres[w.id] ?? libre?.oeuvres[w.id];
+  const estLibre = libre ? libre.gratuites.includes(w.id) : w.libre;
+  return p ? { ...w, resume: p.resume, idees: p.idees, exemple: p.exemple ?? w.exemple, libre: estLibre } : { ...w, libre: estLibre };
 });
 
 export const SUJETS: (Sujet | SujetApercu)[] = (sujets as (Sujet | SujetApercu)[]).map(

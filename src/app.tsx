@@ -17,6 +17,7 @@ import { InstallGuide } from "./components/Install";
 import { AccesScreen } from "./screens/Acces";
 import { reverifier } from "./lib/licence";
 import { demarrerStats, noter } from "./lib/stats";
+import { actualiserContenuLibre } from "./lib/libre";
 
 function useScrollMemory(key: string) {
   const positions = useRef(new Map<string, number>());
@@ -40,6 +41,7 @@ export function App() {
   useEffect(() => {
     reverifier();
     demarrerStats();
+    actualiserContenuLibre();
     // Ouverture depuis une notification : l'adresse porte le numéro du message.
     const depuisNotif = new URLSearchParams(location.search).get("annonce");
     if (depuisNotif) {

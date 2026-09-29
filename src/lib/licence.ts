@@ -67,7 +67,7 @@ export async function reverifier() {
   const l = licence();
   if (!l || !navigator.onLine || Date.now() - l.verifieeLe < REVERIFIER_APRES) return;
   try {
-    const res = await appel("/verifier", { cle: l.cle });
+    const res = await appel("/verifier", { cle: l.cle, appareil: appareil() });
     if (res.ok) {
       const data = await res.json().catch(() => null);
       write(KEY, { ...l, verifieeLe: Date.now() });
@@ -75,7 +75,8 @@ export async function reverifier() {
     }
     else if (res.status === 403 || res.status === 404) {
       const data = await res.json().catch(() => null);
-      if (data?.erreur === "revoquee" || data?.erreur === "cle-invalide" || data?.erreur === "expiree") {
+      // « appareil-libere » : l'éditeur a retiré cet appareil de la clé (téléphone perdu ou changé).
+      if (["revoquee", "cle-invalide", "expiree", "appareil-libere"].includes(data?.erreur)) {
         retirer();
         location.reload();
       }
