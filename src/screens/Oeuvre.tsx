@@ -109,7 +109,7 @@ export function OeuvreScreen({ id }: { id: string }) {
                 <p class="notice-court small">Fiche courte : résumé bref et repères pour trouver l'œuvre par thème. Pour citer une œuvre en détail, préfère une fiche détaillée.</p>
               )}
               <h2 class="section-title">Résumé</h2>
-              {w.resume ? <p>{w.resume}</p> : <p class="muted">Le résumé de cette œuvre n'est pas encore rédigé. Les thèmes et mots-clés ci-dessous indiquent déjà comment l'utiliser.</p>}
+              {w.resume ? w.resume.split(/\n\s*\n/).map((para, i) => <p key={i}>{para}</p>) : <p class="muted">Le résumé de cette œuvre n'est pas encore rédigé. Les thèmes et mots-clés ci-dessous indiquent déjà comment l'utiliser.</p>}
 
               <ArgumentsListe w={w} ouvert />
 
