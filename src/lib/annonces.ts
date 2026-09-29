@@ -12,6 +12,8 @@ export interface Annonce {
   lien: string | null;
   lienTexte: string | null;
   date: number;
+  /** Message urgent : affiché en premier, avec un signal qui clignote. */
+  urgent?: boolean;
 }
 
 const CACHE = "annonces";

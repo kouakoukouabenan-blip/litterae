@@ -13,8 +13,8 @@ export function Annonces() {
   return (
     <div class="annonces">
       {annonces.map(a => (
-        <aside key={a.id} class={`annonce annonce-${a.type}`} aria-labelledby={`annonce-${a.id}`}>
-          <p class="annonce-type">{NOMS[a.type] ?? "Message"}</p>
+        <aside key={a.id} class={`annonce annonce-${a.type}${a.urgent ? " annonce-urgente" : ""}`} aria-labelledby={`annonce-${a.id}`}>
+          <p class="annonce-type">{NOMS[a.type] ?? "Message"}{a.urgent && <span class="annonce-urgent">Urgent</span>}</p>
           <p id={`annonce-${a.id}`} class="annonce-titre">{a.titre}</p>
           {a.texte && <p class="annonce-texte">{a.texte}</p>}
           {a.lien && (
