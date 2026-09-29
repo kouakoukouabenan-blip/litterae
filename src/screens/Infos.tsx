@@ -8,6 +8,7 @@ import { OEUVRES, SUJETS, NB_DETAILLEES } from "../lib/data";
 import { LECONS } from "../data/lecons";
 import { CONTACT_EMAIL, EDITEUR, MISE_A_JOUR } from "../lib/site";
 import { AchatLien } from "../components/Achat";
+import { ReglageNotifs } from "../components/Annonces";
 
 function Contact() {
   return CONTACT_EMAIL ? <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a> : <>l'adresse indiquée sur la page de paiement</>;
@@ -60,6 +61,8 @@ export function AProposScreen() {
               <button type="button" class="btn btn-primary align-start" onClick={start}><Icon name="install_mobile" size={20} />Installer Litterae</button>
             </>
           )}
+
+          <ReglageNotifs />
 
           <h2 class="section-title">Informations</h2>
           <ul class="list list-compact">
@@ -123,7 +126,7 @@ export function ConfidentialiteScreen() {
         <li>Ton choix concernant l'installation de l'application.</li>
         <li>Si tu as acheté l'accès complet : ta clé d'accès, le contenu débloqué et un identifiant anonyme de l'appareil.</li>
       </ul>
-      <p>Ces informations sont stockées dans ton navigateur. Elles ne sont envoyées à personne. Si tu effaces les données du navigateur, elles sont supprimées.</p>
+      <p>Ces informations sont stockées dans ton navigateur. Elles ne sont envoyées à personne, sauf les statistiques anonymes décrites plus bas. Si tu effaces les données du navigateur, elles sont supprimées.</p>
 
       <h2 class="section-title">Hébergement</h2>
       <p>Le site est hébergé par GitHub Pages (GitHub, Inc.). Comme tout hébergeur, GitHub peut enregistrer des données techniques de connexion, comme l'adresse IP, pour la sécurité du service.</p>
@@ -134,8 +137,14 @@ export function ConfidentialiteScreen() {
       <h2 class="section-title">Vérification des clés</h2>
       <p>Quand tu saisis ta clé, elle est envoyée avec l'identifiant anonyme de ton appareil à notre serveur (hébergé par Cloudflare), qui la vérifie auprès de Chariow. La clé est ensuite revérifiée environ une fois par semaine. Aucune autre information n'est transmise.</p>
 
-      <h2 class="section-title">Publicité et suivi</h2>
-      <p>Litterae n'affiche pas de publicité et n'utilise aucun outil de mesure d'audience ou de suivi.</p>
+      <h2 class="section-title">Statistiques anonymes</h2>
+      <p>Pour savoir ce qui est utile aux élèves, Litterae envoie à notre serveur des chiffres anonymes : un identifiant tiré au hasard pour ton appareil, le type d'appareil (Android, iPhone ou ordinateur), si l'application est installée, les parties et les fiches d'œuvres ouvertes, et les messages de l'accueil vus ou touchés. Aucun nom, aucune adresse e-mail, aucun numéro n'est envoyé. Ces chiffres sont gardés au plus 13 mois.</p>
+
+      <h2 class="section-title">Notifications</h2>
+      <p>Si tu acceptes les notifications, ton navigateur fournit une adresse technique d'envoi, gardée sur notre serveur pour t'envoyer les messages de Litterae. Elle ne permet pas de t'identifier. Tu peux arrêter à tout moment depuis la page À propos ou les réglages du navigateur.</p>
+
+      <h2 class="section-title">Publicité</h2>
+      <p>Litterae n'affiche pas de publicité et ne transmet aucune donnée à des annonceurs.</p>
 
       <h2 class="section-title">Tes droits</h2>
       <p>Conformément à la loi ivoirienne n° 2013-450 relative à la protection des données à caractère personnel, tu peux demander l'accès, la rectification ou la suppression des données te concernant en écrivant à <Contact />.</p>

@@ -16,6 +16,7 @@ import { AProposScreen, CguScreen, ConfidentialiteScreen } from "./screens/Infos
 import { InstallGuide } from "./components/Install";
 import { AccesScreen } from "./screens/Acces";
 import { reverifier } from "./lib/licence";
+import { demarrerStats, noter } from "./lib/stats";
 
 function useScrollMemory(key: string) {
   const positions = useRef(new Map<string, number>());
@@ -36,9 +37,19 @@ function useScrollMemory(key: string) {
 }
 
 export function App() {
-  useEffect(() => { reverifier(); }, []);
+  useEffect(() => {
+    reverifier();
+    demarrerStats();
+    // Ouverture depuis une notification : l'adresse porte le numéro du message.
+    const depuisNotif = new URLSearchParams(location.search).get("annonce");
+    if (depuisNotif) {
+      noter({ t: "notif", ref: depuisNotif });
+      history.replaceState(null, "", location.pathname + location.hash);
+    }
+  }, []);
   const { path, params } = useRoute();
   const [section = "cours", id] = path;
+  useEffect(() => { noter({ t: "ecran", ref: section }); }, [section]);
   useScrollMemory(path.join("/"));
 
   let screen;

@@ -2,6 +2,7 @@ import { LECONS } from "../data/lecons";
 import { Page } from "../components/Page";
 import { Icon } from "../components/Icon";
 import { InstallBanner } from "../components/Install";
+import { Annonces, InvitationNotifs } from "../components/Annonces";
 import { useStored } from "../lib/storage";
 import { NB_DETAILLEES, OEUVRES, SUJETS } from "../lib/data";
 
@@ -21,7 +22,9 @@ export function CoursScreen() {
         <p class="lede">{LECONS.length} leçons, {SUJETS.length} sujets corrigés, {OEUVRES.length} œuvres dont {NB_DETAILLEES} fiches détaillées.</p>
       </header>
 
+      <Annonces />
       <InstallBanner />
+      <InvitationNotifs />
 
       <section class="resume-card" aria-labelledby="resume-title">
         <p class="eyebrow">{nbLues === 0 ? "Commencer" : suivante ? "Reprendre" : "Cours terminé"}</p>

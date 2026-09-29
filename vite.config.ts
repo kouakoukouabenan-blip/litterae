@@ -27,6 +27,8 @@ export default defineConfig({
         ]
       },
       workbox: {
+        // Réception des notifications (promos, messages, astuces) : public/push-sw.js
+        importScripts: ["push-sw.js"],
         globPatterns: ["**/*.{js,css,html,svg,png,woff2}"],
         // Polices cyrilliques, grecques et vietnamiennes : jamais utilisées, inutile de les télécharger d'avance.
         globIgnores: ["**/*-{cyrillic,cyrillic-ext,greek,greek-ext,vietnamese}-*.woff2"]
