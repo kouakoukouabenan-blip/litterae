@@ -13,7 +13,7 @@ import { OutilsScreen } from "./screens/Outils";
 import { CarnetScreen } from "./screens/Carnet";
 import { NotFound } from "./screens/NotFound";
 import { AProposScreen, CguScreen, ConfidentialiteScreen } from "./screens/Infos";
-import { InstallGuide } from "./components/Install";
+import { InstallGate, InstallGuide } from "./components/Install";
 import { AccesScreen } from "./screens/Acces";
 import { reverifier } from "./lib/licence";
 import { demarrerStats, noter } from "./lib/stats";
@@ -76,6 +76,7 @@ export function App() {
       <BottomNav />
       <ToastHost />
       <InstallGuide />
+      <InstallGate />
     </>
   );
 }

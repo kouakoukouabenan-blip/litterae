@@ -1,4 +1,4 @@
-import { useRef } from "preact/hooks";
+import { useRef, useState } from "preact/hooks";
 import { isIosSafari, platform, useInstall } from "../lib/install";
 import { Icon } from "./Icon";
 
@@ -10,7 +10,7 @@ export function useInstallAction() {
   return { ...install, start: async () => { if (!(await install.prompt())) openGuide(); } };
 }
 
-function Steps() {
+export function Steps() {
   const p = platform();
   if (p === "ios")
     return isIosSafari() ? (
@@ -87,5 +87,46 @@ export function InstallButton() {
     <button type="button" class="icon-btn install-btn" onClick={start} aria-label="Installer l'application">
       <Icon name="install_mobile" size={22} /><span class="install-btn-label">Installer</span>
     </button>
+  );
+}
+
+const PASSE = "litterae.navigateur";
+
+/**
+ * Écran d'installation plein écran sur téléphone, à chaque visite dans le navigateur.
+ * Un lien discret permet de continuer quand même (iPhone hors Safari, visite rapide).
+ */
+export function InstallGate() {
+  const { installed, canPrompt, prompt } = useInstall();
+  const [passe, setPasse] = useState(() => { try { return !!sessionStorage.getItem(PASSE); } catch { return false; } });
+  const [etapes, setEtapes] = useState(false);
+  if (installed || passe || platform() === "desktop") return null;
+
+  const continuer = () => {
+    try { sessionStorage.setItem(PASSE, "1"); } catch { /* sans stockage, l'écran reviendra au prochain chargement */ }
+    setPasse(true);
+  };
+  const installer = async () => { if (!(await prompt())) setEtapes(true); };
+
+  return (
+    <div class="install-gate" role="dialog" aria-modal="true" aria-labelledby="gate-title">
+      <div class="install-gate-inner">
+        <svg class="install-gate-logo" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="12" fill="#FFF3DC"/><path fill="#0F3D2E" d="M18 14h14v3h-4v28h9.5l3-8H44l-1.5 13H18v-3h4V17h-4z"/><circle cx="50" cy="47.5" r="3.5" fill="#C4562B"/></svg>
+        <h1 id="gate-title" class="install-gate-title">Installe Litter<span>ae</span> sur ton téléphone</h1>
+        <ul class="install-gate-points">
+          <li><Icon name="check" size={20} />Elle s'ouvre d'un geste, depuis ton écran d'accueil.</li>
+          <li><Icon name="check" size={20} />Le cours et tes fiches restent lisibles sans connexion.</li>
+          <li><Icon name="check" size={20} />Moins de 1 Mo, sans Play Store ni App Store.</li>
+        </ul>
+        {etapes || (!canPrompt && platform() === "ios") ? (
+          <div class="install-gate-steps"><Steps /></div>
+        ) : (
+          <button type="button" class="btn install-gate-btn" onClick={installer}>
+            <Icon name="install_mobile" size={24} />Installer l'application
+          </button>
+        )}
+        <button type="button" class="install-gate-skip" onClick={continuer}>Continuer dans le navigateur</button>
+      </div>
+    </div>
   );
 }
