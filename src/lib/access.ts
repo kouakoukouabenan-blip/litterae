@@ -5,7 +5,7 @@ import { oeuvre } from "./data";
 // 10 fiches d'œuvres choisies par l'auteur (liste dans le dépôt privé, gratuites.json).
 export const FREE_SUBJECTS = 3;
 export const FREE_WORKS = 10;
-export const PRICE = "1 500 F";
+export const PRICE = "1 000 F";
 
 /** Accès aux contenus payants : complet dès qu'une clé de licence a été validée sur l'appareil. */
 export function useAccess() {

@@ -51,7 +51,7 @@ export function AProposScreen() {
 
           <h2 class="section-title">Accès gratuit et accès complet</h2>
           <p>Gratuit : le cours, la boîte à outils, les {FREE_SUBJECTS} premiers sujets corrigés et {FREE_WORKS} fiches d'œuvres choisies par l'auteur, signalées « Gratuite ».</p>
-          <p>Accès complet : tous les sujets et toutes les fiches, pour {PRICE} payés une seule fois par Mobile Money. Tu reçois une clé d'accès par e-mail, valable sur 3 appareils. <AchatLien label="Acheter une clé sur Chariow" /></p>
+          <p>Accès complet : tous les sujets et toutes les fiches, pour {PRICE} payés une seule fois par Mobile Money. Tu reçois une clé d'accès par e-mail, valable sur 2 appareils. <AchatLien label="Acheter une clé sur Chariow" /></p>
 
           {!installed && (
             <>
@@ -91,7 +91,7 @@ export function CguScreen() {
       <h2 class="section-title">5. Accès complet</h2>
       <p>L'accès complet coûte {PRICE} (francs CFA), payés une seule fois. Il ouvre l'ensemble des sujets corrigés et des fiches d'œuvres, y compris ceux ajoutés par la suite, pour la durée de vie du service.</p>
       <p>Le paiement se fait par Mobile Money (Wave, MTN MoMo, Moov Money…) via la plateforme Chariow, qui traite la transaction. Litterae ne voit ni ne conserve tes codes de paiement. <AchatLien label="Page d'achat sur Chariow" /></p>
-      <p>Après le paiement, Chariow t'envoie par e-mail une clé d'accès personnelle. Elle s'active sur 3 appareils au maximum. Une clé partagée publiquement ou utilisée frauduleusement peut être désactivée.</p>
+      <p>Après le paiement, Chariow t'envoie par e-mail une clé d'accès personnelle. Elle s'active sur 2 appareils au maximum. Une clé partagée publiquement ou utilisée frauduleusement peut être désactivée.</p>
       <p>Le contenu étant numérique et disponible immédiatement, il n'y a pas de remboursement une fois l'accès activé, sauf si l'accès ne fonctionne pas et que le problème ne peut pas être résolu : écris alors à l'adresse de contact.</p>
 
       <h2 class="section-title">6. Usage personnel</h2>
