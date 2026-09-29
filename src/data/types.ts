@@ -31,6 +31,8 @@ export interface Oeuvre {
   editeur?: string | null;
   /** Fiche ouverte à tous (choisie par l'auteur). */
   libre?: boolean;
+  /** Fiche ajoutée depuis le tableau de bord. */
+  ajout?: boolean;
 }
 
 export interface Argument {
@@ -79,6 +81,8 @@ export interface Lecon {
   titre: string;
   duree: string;
   blocs: BlocLecon[];
+  /** Leçon ajoutée depuis le tableau de bord et réservée à l'accès complet. */
+  payante?: boolean;
 }
 
 export interface Outils {
@@ -94,6 +98,8 @@ export interface ContenuPayant {
   sujets: Sujet[];
   /** Quiz par leçon (absent des clés activées avant l'ajout des quiz). */
   quiz?: Record<string, QuestionQuiz[]>;
+  /** Leçons payantes ajoutées depuis le tableau de bord. */
+  lecons?: Record<string, BlocLecon[]>;
 }
 
 export interface QuestionQuiz {

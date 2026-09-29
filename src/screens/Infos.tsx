@@ -5,7 +5,7 @@ import { Icon } from "../components/Icon";
 import { useInstallAction } from "../components/Install";
 import { FREE_SUBJECTS, FREE_WORKS, PRICE } from "../lib/access";
 import { OEUVRES, SUJETS, NB_DETAILLEES } from "../lib/data";
-import { LECONS } from "../data/lecons";
+import { LECONS } from "../lib/lecons";
 import { CONTACT_EMAIL, EDITEUR, MISE_A_JOUR } from "../lib/site";
 import { AchatLien } from "../components/Achat";
 import { ReglageNotifs } from "../components/Annonces";

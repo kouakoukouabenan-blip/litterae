@@ -1,6 +1,6 @@
 import { SERVEUR_URL } from "./site";
 import { read, write } from "./storage";
-import type { IdeeIllustration } from "../data/types";
+import type { BlocLecon, IdeeIllustration, Oeuvre } from "../data/types";
 
 /**
  * Fiches gratuites choisies par l'éditeur depuis son tableau de bord, avec leurs éventuelles corrections.
@@ -10,6 +10,11 @@ export interface ContenuLibre {
   revision: number;
   gratuites: string[];
   oeuvres: Record<string, { resume: string | null; idees: IdeeIllustration[]; exemple: string | null }>;
+  /** Fiches et leçons ajoutées depuis le tableau de bord (texte vide si payantes). */
+  ajouts?: {
+    oeuvres: Oeuvre[];
+    lecons: { id: string; titre: string; duree: string; libre: boolean; blocs: BlocLecon[] }[];
+  };
 }
 
 const CLE = "contenu-libre";

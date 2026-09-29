@@ -9,11 +9,20 @@ const payant = licence()?.contenu;
 // Fiches gratuites choisies depuis le tableau de bord (sinon, celles du site publié).
 const libre = contenuLibre();
 
-export const OEUVRES: Oeuvre[] = (oeuvres as Oeuvre[]).map(w => {
-  const p = payant?.oeuvres[w.id] ?? libre?.oeuvres[w.id];
-  const estLibre = libre ? libre.gratuites.includes(w.id) : w.libre;
-  return p ? { ...w, resume: p.resume, idees: p.idees, exemple: p.exemple ?? w.exemple, libre: estLibre } : { ...w, libre: estLibre };
-});
+const ajoutees = (libre?.ajouts?.oeuvres ?? []).filter(w => w?.id && w.titre);
+
+export const OEUVRES: Oeuvre[] = [
+  ...(oeuvres as Oeuvre[]).map(w => {
+    const p = payant?.oeuvres[w.id] ?? libre?.oeuvres[w.id];
+    const estLibre = libre ? libre.gratuites.includes(w.id) : w.libre;
+    return p ? { ...w, resume: p.resume, idees: p.idees, exemple: p.exemple ?? w.exemple, libre: estLibre } : { ...w, libre: estLibre };
+  }),
+  // Fiches ajoutées depuis le tableau de bord, classées avec les autres par titre.
+  ...ajoutees.map(w => {
+    const p = payant?.oeuvres[w.id];
+    return p ? { ...w, resume: p.resume, idees: p.idees, exemple: p.exemple ?? null } : w;
+  })
+].sort((a, b) => a.titre.localeCompare(b.titre, "fr"));
 
 export const SUJETS: (Sujet | SujetApercu)[] = (sujets as (Sujet | SujetApercu)[]).map(
   s => payant?.sujets.find(p => p.num === s.num) ?? s

@@ -1,11 +1,13 @@
 import { useEffect } from "preact/hooks";
-import { LECONS } from "../data/lecons";
+import { LECONS } from "../lib/lecons";
 import type { BlocLecon } from "../data/types";
 import { Page } from "../components/Page";
 import { Icon } from "../components/Icon";
 import { useStored } from "../lib/storage";
 import { NotFound } from "./NotFound";
 import { QuizLecon } from "../components/Quiz";
+import { LockPanel } from "../components/LockPanel";
+import { useAccess } from "../lib/access";
 
 function Bloc({ b }: { b: BlocLecon }) {
   if ("p" in b) return <p>{b.p}</p>;
@@ -34,8 +36,10 @@ function Bloc({ b }: { b: BlocLecon }) {
 export function LeconScreen({ id }: { id: string }) {
   const i = LECONS.findIndex(l => l.id === id);
   const [lues, setLues] = useStored<string[]>("lecons-lues", []);
+  const { premium } = useAccess();
+  const verrouillee = i > -1 && !!LECONS[i].payante && !premium;
   useEffect(() => {
-    if (i > -1 && !lues.includes(id)) setLues([...lues, id]);
+    if (i > -1 && !verrouillee && !lues.includes(id)) setLues([...lues, id]);
   }, [id]);
   if (i < 0) return <NotFound what="Cette leçon n'existe pas." back="#/cours" />;
   const l = LECONS[i], prev = LECONS[i - 1], next = LECONS[i + 1];
@@ -47,7 +51,11 @@ export function LeconScreen({ id }: { id: string }) {
           <p class="eyebrow">Leçon {i + 1} sur {LECONS.length} · {l.duree}</p>
           <h1 class="page-title">{l.titre}</h1>
         </header>
-        <div class="prose">{l.blocs.map((b, k) => <Bloc key={k} b={b} />)}</div>
+        {verrouillee ? (
+          <LockPanel reason="Cette leçon fait partie de l'accès complet." />
+        ) : (
+          <div class="prose">{l.blocs.map((b, k) => <Bloc key={k} b={b} />)}</div>
+        )}
         <QuizLecon id={l.id} />
         <nav class="pager" aria-label="Leçons">
           {prev ? <a class="pager-link" href={`#/cours/${prev.id}`}><span class="meta">Précédente</span>{prev.titre}</a> : <span />}

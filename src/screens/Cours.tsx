@@ -1,4 +1,4 @@
-import { LECONS } from "../data/lecons";
+import { LECONS } from "../lib/lecons";
 import { Page } from "../components/Page";
 import { Icon } from "../components/Icon";
 import { InstallBanner } from "../components/Install";
@@ -6,7 +6,7 @@ import { Annonces, InvitationNotifs } from "../components/Annonces";
 import { useStored } from "../lib/storage";
 import { NB_DETAILLEES, OEUVRES, SUJETS } from "../lib/data";
 
-const MINUTES = LECONS.reduce((n, l) => n + parseInt(l.duree), 0);
+const MINUTES = LECONS.reduce((n, l) => n + (parseInt(l.duree) || 0), 0);
 
 export function CoursScreen() {
   const [lues] = useStored<string[]>("lecons-lues", []);
@@ -51,7 +51,7 @@ export function CoursScreen() {
                   <span class={`step-num ${lue ? "done" : ""}`} aria-hidden="true">{lue ? <Icon name="check" size={18} /> : i + 1}</span>
                   <span class="row-body">
                     <span class="row-title">{l.titre}</span>
-                    <span class="meta">{l.duree}{lue ? " · lue" : ""}</span>
+                    <span class="meta">{l.duree}{lue ? " · lue" : ""}{l.payante ? " · accès complet" : ""}</span>
                   </span>
                   <Icon name="chevron_right" />
                 </a>
