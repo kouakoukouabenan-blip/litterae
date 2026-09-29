@@ -47,6 +47,9 @@ export function OeuvresScreen({ params }: { params: URLSearchParams }) {
     go(q, { ...filters, [k]: cur.includes(v) ? cur.filter(x => x !== v) : [...cur, v] });
   };
   const accueil = !q && !nbFiltres && !gratuites;
+  // À l'accueil, la liste complète reste repliée derrière un bouton discret.
+  const [toutVoir, setToutVoir] = useState(false);
+  const listeVisible = !accueil || toutVoir;
 
   return (
     <Page wide title="Œuvres">
@@ -112,11 +115,20 @@ export function OeuvresScreen({ params }: { params: URLSearchParams }) {
             </section>
           )}
 
+          {accueil && (
+            <button type="button" class="link-btn voir-tout" aria-expanded={toutVoir} onClick={() => setToutVoir(!toutVoir)}>
+              {toutVoir ? "Masquer la liste des œuvres" : `Voir toutes les œuvres (${OEUVRES.length})`}
+              <Icon name={toutVoir ? "expand_less" : "expand_more"} size={18} />
+            </button>
+          )}
+
+          {listeVisible && (
           <h2 id="results-title" class="results-count" aria-live="polite">
             {accueil ? `Toutes les œuvres (${OEUVRES.length})` : results.length ? plural(results.length, "œuvre trouvée", "œuvres trouvées") : "Aucune œuvre trouvée"}
           </h2>
+          )}
 
-          {results.length ? (
+          {!listeVisible ? null : results.length ? (
             <>
               <ul class="works">
                 {results.slice(0, limit).map(w => (

@@ -57,8 +57,8 @@
 .fn-tile-text { font-size: var(--text-xs); color: var(--muted); display: none; }
 .fn-tile-count { font-size: var(--text-xs); color: var(--muted); }
 @media (max-width: 719px) {
-  .fn-grid { display: flex; overflow-x: auto; scrollbar-width: none; margin: 0 calc(-1 * var(--s4)); padding: 0 var(--s4); }
-  .fn-tile { flex: 0 0 auto; min-width: 8.5rem; padding: var(--s2) var(--s3) var(--s2) var(--s3); }
+  .fn-grid { grid-template-columns: 1fr 1fr; }
+  .fn-tile { padding: var(--s2) var(--s3); }
 }
 @media (min-width: 720px) { .fn-tile-text { display: block; } .fn-grid { grid-template-columns: repeat(5, 1fr); } }
 @media (min-width: 720px) { .home-title { font-size: 2.125rem; } .resume-card { padding: var(--s5); max-width: 44rem; } }
@@ -153,3 +153,4 @@
 /* Fiche d'œuvre : phrase d'exemple à recopier, avertissement des fiches courtes */
 .exemple { margin: 0 0 var(--s3); padding: var(--s3) var(--s4); background: var(--green-tint); border-left: 3px solid var(--green); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-style: italic; }
 .notice-court { padding: var(--s2) var(--s3); border: 1px solid var(--line-strong); border-radius: var(--radius-sm); color: var(--muted); }
+.voir-tout { align-self: flex-start; font-size: var(--text-sm); }
