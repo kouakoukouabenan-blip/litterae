@@ -138,7 +138,7 @@ export function ConfidentialiteScreen() {
       <p>Quand tu saisis ta clé, elle est envoyée avec l'identifiant anonyme de ton appareil à notre serveur (hébergé par Cloudflare), qui la vérifie auprès de Chariow. La clé est ensuite revérifiée environ une fois par semaine. Aucune autre information n'est transmise.</p>
 
       <h2 class="section-title">Statistiques anonymes</h2>
-      <p>Pour savoir ce qui est utile aux élèves, Litterae envoie à notre serveur des chiffres anonymes : un identifiant tiré au hasard pour ton appareil, le type d'appareil (Android, iPhone ou ordinateur), si l'application est installée, les parties et les fiches d'œuvres ouvertes, et les messages de l'accueil vus ou touchés. Aucun nom, aucune adresse e-mail, aucun numéro n'est envoyé. Ces chiffres sont gardés au plus 13 mois.</p>
+      <p>Pour savoir ce qui est utile aux élèves, Litterae envoie à notre serveur des chiffres anonymes : un identifiant tiré au hasard pour ton appareil, le type d'appareil (Android, iPhone ou ordinateur), si l'application est installée, les parties et les fiches d'œuvres ouvertes, et les messages de l'accueil vus ou touchés. Aucun nom, aucune adresse e-mail, aucun numéro n'est envoyé. Ces chiffres sont gardés au plus 13 mois. Le site utilise aussi Cloudflare Web Analytics, qui compte les visites sans cookie et sans suivre les visiteurs d'un site à l'autre.</p>
 
       <h2 class="section-title">Notifications</h2>
       <p>Si tu acceptes les notifications, ton navigateur fournit une adresse technique d'envoi, gardée sur notre serveur pour t'envoyer les messages de Litterae. Elle ne permet pas de t'identifier. Tu peux arrêter à tout moment depuis la page À propos ou les réglages du navigateur.</p>
