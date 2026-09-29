@@ -10,7 +10,7 @@ export const ACHAT_URL = "https://livresfaciles.mychariow.shop/prd_mhf6g1pp";
 export const SERVEUR_URL: string = import.meta.env.VITE_SERVEUR_URL ?? "https://litterae-serveur.kouakoukouabenan.workers.dev";
 
 /** Numéro WhatsApp de l'assistance, au format international sans « + » ni espaces (ex. 2250700000000). Vide : e-mail seulement. */
-export const WHATSAPP = "";
+export const WHATSAPP = "2250758806323";
 
 /** Lien d'aide quand la clé n'arrive pas ou est refusée : WhatsApp si un numéro est renseigné, sinon e-mail. */
 export function lienAide(sujet: string) {
