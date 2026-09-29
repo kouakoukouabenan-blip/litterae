@@ -14,7 +14,7 @@ interface Licence {
 }
 
 const KEY = "licence";
-const REVERIFIER_APRES = 7 * 864e5;
+const REVERIFIER_APRES = 864e5;
 
 export const licence = () => read<Licence | null>(KEY, null);
 
@@ -59,7 +59,8 @@ export function retirer() {
 }
 
 /**
- * Vérifie de temps en temps que la clé est toujours valide (révocation après un remboursement).
+ * Vérifie une fois par jour que la clé est toujours valide (révocation après un remboursement),
+ * et recharge le contenu payant quand il a été enrichi sur le serveur (même appareil : aucune place utilisée).
  * Sans connexion ou si le serveur ne répond pas, l'accès est conservé.
  */
 export async function reverifier() {
@@ -67,7 +68,11 @@ export async function reverifier() {
   if (!l || !navigator.onLine || Date.now() - l.verifieeLe < REVERIFIER_APRES) return;
   try {
     const res = await appel("/verifier", { cle: l.cle });
-    if (res.ok) write(KEY, { ...l, verifieeLe: Date.now() });
+    if (res.ok) {
+      const data = await res.json().catch(() => null);
+      write(KEY, { ...l, verifieeLe: Date.now() });
+      if (typeof data?.version === "number" && data.version !== l.contenu.version) await activer(l.cle); // pris en compte à la prochaine ouverture
+    }
     else if (res.status === 403 || res.status === 404) {
       const data = await res.json().catch(() => null);
       if (data?.erreur === "revoquee" || data?.erreur === "cle-invalide" || data?.erreur === "expiree") {

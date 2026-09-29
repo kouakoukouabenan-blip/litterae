@@ -9,6 +9,7 @@ import { useNotes, useSaved } from "../lib/carnet";
 import { href } from "../lib/router";
 import { NotFound } from "./NotFound";
 import { fnClass } from "../lib/fonctions";
+import type { Oeuvre } from "../data/types";
 
 function Note({ id }: { id: string }) {
   const { notes, setNote } = useNotes();
@@ -33,6 +34,13 @@ function Note({ id }: { id: string }) {
   );
 }
 
+/** Ce que contient la fiche, annoncé avant l'achat. */
+function contenuFiche(w: Oeuvre) {
+  if (!w.detaillee) return "Fiche courte : un résumé bref, les thèmes et les fonctions de l'œuvre.";
+  const n = w.idees.length;
+  return `Cette fiche contient un résumé complet, ${n} idée${n > 1 ? "s" : ""} d'illustration reliée${n > 1 ? "s" : ""} aux fonctions de la littérature et une phrase d'exemple prête à recopier.`;
+}
+
 export function OeuvreScreen({ id }: { id: string }) {
   const w = oeuvre(id);
   const access = useAccess();
@@ -53,7 +61,7 @@ export function OeuvreScreen({ id }: { id: string }) {
         </header>
 
         {!libre ? (
-          <LockPanel reason="Cette fiche fait partie de l'accès complet." />
+          <LockPanel reason="Cette fiche fait partie de l'accès complet." contenu={contenuFiche(w)} />
         ) : (
           <>
             <div class="actions">
@@ -67,6 +75,9 @@ export function OeuvreScreen({ id }: { id: string }) {
             </div>
 
             <div class="prose">
+              {w.detaillee === false && (
+                <p class="notice-court small">Fiche courte : résumé bref et repères pour trouver l'œuvre par thème. Pour citer une œuvre en détail, préfère une fiche détaillée.</p>
+              )}
               <h2 class="section-title">Résumé</h2>
               {w.resume ? <p>{w.resume}</p> : <p class="muted">Le résumé de cette œuvre n'est pas encore rédigé. Les thèmes et mots-clés ci-dessous indiquent déjà comment l'utiliser.</p>}
 
@@ -81,6 +92,16 @@ export function OeuvreScreen({ id }: { id: string }) {
                       </li>
                     ))}
                   </ul>
+                </section>
+              )}
+
+              {w.exemple && (
+                <section aria-labelledby="exemple">
+                  <h2 id="exemple" class="section-title">Phrase d'exemple</h2>
+                  <blockquote class="exemple">{w.exemple}</blockquote>
+                  <button type="button" class="btn btn-secondary" onClick={() => copyText(w.exemple!, "Phrase copiée.")}>
+                    <Icon name="content_copy" size={20} />Copier la phrase
+                  </button>
                 </section>
               )}
 

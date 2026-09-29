@@ -43,3 +43,11 @@ export function useStored<T>(key: string, fallback: T): [T, (v: T) => void] {
   }, [key]);
   return [value, (v: T) => write(key, v)];
 }
+
+/**
+ * Demande au navigateur de ne pas effacer les données de Litterae (clé d'accès, carnet, progression)
+ * quand la mémoire du téléphone manque. Sans effet si l'élève efface lui-même les données du site.
+ */
+export function conserverDonnees() {
+  navigator.storage?.persist?.().catch(() => {});
+}

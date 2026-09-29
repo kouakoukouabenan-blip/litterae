@@ -49,6 +49,21 @@ export function isInstalled() {
 
 const SNOOZE_DAYS = 7;
 
+// Nombre de visites (une par session du navigateur) : le bandeau n'apparaît qu'à partir de la deuxième,
+// pour laisser l'élève découvrir l'app avant de lui proposer de l'installer.
+const VISITES = (() => {
+  let n = read<number>("visites", 0);
+  try {
+    if (!sessionStorage.getItem("litterae.visite")) {
+      sessionStorage.setItem("litterae.visite", "1");
+      write("visites", ++n);
+    }
+  } catch {
+    // Stockage de session indisponible : on compte cette visite comme la première.
+  }
+  return n;
+})();
+
 export function useInstall() {
   const [, force] = useState(0);
   useEffect(() => {
@@ -62,8 +77,8 @@ export function useInstall() {
     installed: isInstalled(),
     /** Vrai quand le navigateur peut ouvrir sa propre fenêtre d'installation. */
     canPrompt: !!deferred,
-    /** Le bandeau d'invitation revient une semaine après « Plus tard ». */
-    showBanner: !isInstalled() && Date.now() > snoozedUntil,
+    /** Le bandeau d'invitation apparaît dès la deuxième visite et revient une semaine après « Plus tard ». */
+    showBanner: !isInstalled() && VISITES >= 2 && Date.now() > snoozedUntil,
     snooze: () => { write("installation-plus-tard", Date.now() + SNOOZE_DAYS * 864e5); notify(); },
     /** Ouvre la fenêtre native ; renvoie false s'il faut montrer la marche à suivre. */
     prompt: async () => {

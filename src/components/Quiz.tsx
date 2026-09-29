@@ -1,5 +1,6 @@
 import { useState } from "preact/hooks";
 import apercu from "../data/quiz-apercu.json";
+import libres from "../data/quiz-libre.json";
 import type { QuestionQuiz } from "../data/types";
 import { activer, licence } from "../lib/licence";
 import { PRICE } from "../lib/access";
@@ -9,17 +10,20 @@ import { AchatLien } from "./Achat";
 import { Icon } from "./Icon";
 
 const NOMBRES = apercu as Record<string, number>;
+/** Quiz offert à tous (le premier), pour découvrir l'entraînement. */
+const LIBRES = libres as Record<string, QuestionQuiz[]>;
 
-/** Quiz en bas d'une leçon : réservé à l'accès complet, une question à la fois. */
+/** Quiz en bas d'une leçon : le premier est offert, les autres font partie de l'accès complet. */
 export function QuizLecon({ id }: { id: string }) {
   const nombre = NOMBRES[id];
   if (!nombre) return null;
   const l = licence();
-  const questions = l?.contenu.quiz?.[id];
+  const offert = LIBRES[id]?.length ? LIBRES[id] : undefined;
+  const questions = offert ?? l?.contenu.quiz?.[id];
 
   return (
     <section class="quiz" aria-labelledby="quiz-title">
-      <p class="eyebrow">Quiz · {plural(nombre, "question")}</p>
+      <p class="eyebrow">Quiz · {plural(nombre, "question")}{offert && !l ? " · offert" : ""}</p>
       <h2 id="quiz-title" class="section-title">Vérifie ce que tu as retenu</h2>
       {questions ? <Questions id={id} questions={questions} /> : l ? <MiseAJour cle={l.cle} /> : <Verrou nombre={nombre} />}
     </section>

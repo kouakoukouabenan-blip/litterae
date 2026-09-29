@@ -29,7 +29,7 @@
 
 /* Cours */
 .home-header { margin-bottom: var(--s5); max-width: 44rem; }
-.home-title { font: 900 2rem/1.08 var(--font-title); color: var(--green); letter-spacing: -0.01em; margin-bottom: var(--s3); }
+.home-title { font: 800 1.625rem/1.15 var(--font-title); color: var(--green); letter-spacing: -0.01em; margin-bottom: var(--s3); }
 .home-title em { font-style: italic; color: var(--orange); }
 .home-header .lede { font-size: var(--text-md); }
 .resume-card {
@@ -61,7 +61,7 @@
   .fn-tile { flex: 0 0 auto; min-width: 8.5rem; padding: var(--s2) var(--s3) var(--s2) var(--s3); }
 }
 @media (min-width: 720px) { .fn-tile-text { display: block; } .fn-grid { grid-template-columns: repeat(5, 1fr); } }
-@media (min-width: 720px) { .home-title { font-size: 2.75rem; } .resume-card { padding: var(--s5); max-width: 44rem; } }
+@media (min-width: 720px) { .home-title { font-size: 2.125rem; } .resume-card { padding: var(--s5); max-width: 44rem; } }
 
 
 /* Sujet corrigé */
@@ -149,3 +149,7 @@
 .features dd { margin: 0; color: var(--ink); }
 .legal .section-title { font-size: var(--text-md); }
 .work-lock { color: var(--muted); display: inline-flex; }
+
+/* Fiche d'œuvre : phrase d'exemple à recopier, avertissement des fiches courtes */
+.exemple { margin: 0 0 var(--s3); padding: var(--s3) var(--s4); background: var(--green-tint); border-left: 3px solid var(--green); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-style: italic; }
+.notice-court { padding: var(--s2) var(--s3); border: 1px solid var(--line-strong); border-radius: var(--radius-sm); color: var(--muted); }

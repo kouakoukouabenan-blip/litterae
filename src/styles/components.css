@@ -4,7 +4,7 @@
 .muted { color: var(--muted); }
 .meta { color: var(--muted); font-size: var(--text-xs); }
 
-/* En-tête de page : surtitre orange, titre Playfair, trait orange comme dans le guide. */
+/* En-tête de page : surtitre orange, titre Literata, trait orange comme dans le guide. */
 .page-header { margin-bottom: var(--s5); max-width: var(--read-width); }
 .eyebrow {
   color: var(--orange-text);
@@ -206,7 +206,7 @@
 .notice { display: flex; align-items: center; gap: var(--s2); padding: var(--s3) var(--s4); border-radius: var(--radius-sm); font-weight: 600; margin-bottom: var(--s6); }
 .notice-success { background: var(--green-tint); color: var(--green); }
 .lock-actions { display: flex; flex-wrap: wrap; gap: var(--s2); }
-.acces-achat { display: flex; flex-direction: column; gap: var(--s3); padding-top: var(--s5); border-top: var(--border) solid var(--line); }
+.acces-aide, .acces-achat { display: flex; flex-direction: column; gap: var(--s3); padding-top: var(--s5); border-top: var(--border) solid var(--line); }
 .acces-note { margin: var(--s4) 0; }
 .access-row { background: var(--surface); border: var(--border) solid var(--line); border-radius: var(--radius); margin-bottom: var(--s5); }
 .access-row > .icon:first-child { color: var(--orange); }
@@ -255,3 +255,7 @@
 .quiz-option.faux .icon { color: var(--orange-text); }
 .quiz-correction { display: flex; flex-direction: column; gap: var(--s3); font-size: var(--text-sm); }
 .quiz-score { font: 900 2.5rem/1 var(--font-title); color: var(--green); }
+
+/* Fiches courtes et contenu annoncé d'une fiche payante */
+.tag-court { background: transparent; border: 1px solid var(--line-strong); color: var(--muted); }
+.lock-contenu { font-weight: 600; color: var(--ink-strong); }

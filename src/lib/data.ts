@@ -8,7 +8,7 @@ const payant = licence()?.contenu;
 
 export const OEUVRES: Oeuvre[] = (oeuvres as Oeuvre[]).map(w => {
   const p = payant?.oeuvres[w.id];
-  return p ? { ...w, resume: p.resume, idees: p.idees } : w;
+  return p ? { ...w, resume: p.resume, idees: p.idees, exemple: p.exemple ?? w.exemple } : w;
 });
 
 export const SUJETS: (Sujet | SujetApercu)[] = (sujets as (Sujet | SujetApercu)[]).map(
@@ -16,6 +16,9 @@ export const SUJETS: (Sujet | SujetApercu)[] = (sujets as (Sujet | SujetApercu)[
 );
 
 export const estComplet = (s: Sujet | SujetApercu): s is Sujet => "intro" in s;
+
+/** Nombre de fiches avec résumé complet et idées d'illustration rédigées. */
+export const NB_DETAILLEES = OEUVRES.filter(w => w.detaillee).length;
 
 const byId = new Map(OEUVRES.map(w => [w.id, w]));
 export const oeuvre = (id: string) => byId.get(id);

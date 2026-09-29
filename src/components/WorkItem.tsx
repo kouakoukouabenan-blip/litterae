@@ -31,6 +31,7 @@ export function WorkItem({ w, terms = [], saved = false, note, open = true, free
       ) : null}
       <span class="tags">
         {free && <span class="tag tag-free">Gratuite</span>}
+        {w.detaillee === false && <span class="tag tag-court">Fiche courte</span>}
         {w.fonctions.map(f => <span key={f} class={`tag ${fnClass(f)}`}>{f}</span>)}
       </span>
     </a>

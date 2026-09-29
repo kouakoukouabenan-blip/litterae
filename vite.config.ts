@@ -26,7 +26,11 @@ export default defineConfig({
           { src: "icon-512.png", sizes: "512x512", type: "image/png", purpose: "maskable" }
         ]
       },
-      workbox: { globPatterns: ["**/*.{js,css,html,svg,png,woff2}"] }
+      workbox: {
+        globPatterns: ["**/*.{js,css,html,svg,png,woff2}"],
+        // Polices cyrilliques, grecques et vietnamiennes : jamais utilisées, inutile de les télécharger d'avance.
+        globIgnores: ["**/*-{cyrillic,cyrillic-ext,greek,greek-ext,vietnamese}-*.woff2"]
+      }
     })
   ]
 });

@@ -3,7 +3,7 @@ import { Page } from "../components/Page";
 import { Icon } from "../components/Icon";
 import { InstallBanner } from "../components/Install";
 import { useStored } from "../lib/storage";
-import { OEUVRES, SUJETS } from "../lib/data";
+import { NB_DETAILLEES, OEUVRES, SUJETS } from "../lib/data";
 
 const MINUTES = LECONS.reduce((n, l) => n + parseInt(l.duree), 0);
 
@@ -18,7 +18,7 @@ export function CoursScreen() {
       <header class="home-header">
         <p class="eyebrow">Français · Terminale</p>
         <h1 class="home-title">La dissertation <em>littéraire</em>, pas à pas</h1>
-        <p class="lede">{LECONS.length} leçons, {SUJETS.length} sujets corrigés, {OEUVRES.length} œuvres résumées.</p>
+        <p class="lede">{LECONS.length} leçons, {SUJETS.length} sujets corrigés, {OEUVRES.length} œuvres dont {NB_DETAILLEES} fiches détaillées.</p>
       </header>
 
       <InstallBanner />

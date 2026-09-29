@@ -4,7 +4,7 @@ import { PageHeader } from "../components/PageHeader";
 import { Icon } from "../components/Icon";
 import { useInstallAction } from "../components/Install";
 import { FREE_SUBJECTS, FREE_WORKS, PRICE } from "../lib/access";
-import { OEUVRES, SUJETS } from "../lib/data";
+import { OEUVRES, SUJETS, NB_DETAILLEES } from "../lib/data";
 import { LECONS } from "../data/lecons";
 import { CONTACT_EMAIL, EDITEUR, MISE_A_JOUR } from "../lib/site";
 import { AchatLien } from "../components/Achat";
@@ -40,7 +40,7 @@ export function AProposScreen() {
             <dt><Icon name="history_edu" />Les sujets corrigés</dt>
             <dd>{SUJETS.length} sujets traités de bout en bout : thème, thèse, reformulation, plan dialectique, arguments illustrés, transition et conclusion. Filtre par orientation.</dd>
             <dt><Icon name="local_library" />Le moteur de recherche d'œuvres</dt>
-            <dd>{OEUVRES.length} œuvres résumées. Cherche par titre, auteur, thème ou mot-clé, puis combine les filtres : fonction littéraire, thème, genre, aire géographique, pays, idée d'argument.</dd>
+            <dd>{OEUVRES.length} œuvres, dont {NB_DETAILLEES} fiches détaillées (résumé complet, idées d'illustration, phrase d'exemple) ; les autres sont des fiches courtes pour repérer une œuvre par thème. Cherche par titre, auteur, thème ou mot-clé, puis combine les filtres : fonction littéraire, thème, genre, aire géographique, pays, idée d'argument.</dd>
             <dt><Icon name="inventory_2" />La boîte à outils</dt>
             <dd>Formules d'introduction, de transition et de conclusion à copier, connecteurs logiques, vocabulaire de chaque orientation.</dd>
             <dt><Icon name="bookmarks" />Le carnet</dt>
@@ -90,7 +90,7 @@ export function CguScreen() {
 
       <h2 class="section-title">5. Accès complet</h2>
       <p>L'accès complet coûte {PRICE} (francs CFA), payés une seule fois. Il ouvre l'ensemble des sujets corrigés et des fiches d'œuvres, y compris ceux ajoutés par la suite, pour la durée de vie du service.</p>
-      <p>Le paiement se fait par Mobile Money (Wave, Orange Money, MTN MoMo, Moov Money) via la plateforme Chariow, qui traite la transaction. Litterae ne voit ni ne conserve tes codes de paiement. <AchatLien label="Page d'achat sur Chariow" /></p>
+      <p>Le paiement se fait par Mobile Money (Wave, MTN MoMo, Moov Money…) via la plateforme Chariow, qui traite la transaction. Litterae ne voit ni ne conserve tes codes de paiement. <AchatLien label="Page d'achat sur Chariow" /></p>
       <p>Après le paiement, Chariow t'envoie par e-mail une clé d'accès personnelle. Elle s'active sur 3 appareils au maximum. Une clé partagée publiquement ou utilisée frauduleusement peut être désactivée.</p>
       <p>Le contenu étant numérique et disponible immédiatement, il n'y a pas de remboursement une fois l'accès activé, sauf si l'accès ne fonctionne pas et que le problème ne peut pas être résolu : écris alors à l'adresse de contact.</p>
 

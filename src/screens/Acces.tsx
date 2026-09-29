@@ -4,7 +4,7 @@ import { PageHeader } from "../components/PageHeader";
 import { Icon } from "../components/Icon";
 import { activer, licence, retirer } from "../lib/licence";
 import { PRICE } from "../lib/access";
-import { ACHAT_URL } from "../lib/site";
+import { ACHAT_URL, lienAide, WHATSAPP } from "../lib/site";
 import { AchatLien } from "../components/Achat";
 
 /** Saisie de la clé reçue par e-mail après l'achat, ou état de l'accès complet. */
@@ -40,7 +40,7 @@ export function AccesScreen() {
           <dl class="def">
             <dt>Clé</dt><dd class="mono">{actuelle.cle.replace(/.(?=.{4})/g, "•")}</dd>
           </dl>
-          <p class="small muted acces-note">Ta clé fonctionne sur 3 appareils. Garde l'e-mail qui la contient pour la saisir sur un nouveau téléphone.</p>
+          <p class="small muted acces-note">Ta clé fonctionne sur 3 appareils. Garde l'e-mail qui la contient pour la saisir sur un nouveau téléphone. Attention : effacer les données du navigateur compte comme un nouvel appareil. En cas de souci, <a href={lienAide("ma clé Litterae a atteint sa limite d'appareils")} target="_blank" rel="noopener">écris-nous</a>.</p>
           <button type="button" class="btn btn-secondary" onClick={() => { if (confirm("Retirer l'accès complet de cet appareil ? Tu pourras le réactiver avec ta clé.")) { retirer(); location.reload(); } }}>
             Retirer de cet appareil
           </button>
@@ -66,11 +66,20 @@ export function AccesScreen() {
               onInput={e => { setCle((e.target as HTMLInputElement).value); setErreur(""); }} />
             {erreur && <p id="cle-erreur" class="field-error" role="alert"><Icon name="error" size={18} />{erreur}</p>}
             {erreur && ACHAT_URL && <p class="small">Tu n'as pas de clé valide ? <AchatLien label={`Acheter une clé, ${PRICE}`} /></p>}
+            {erreur && <p class="small">Tu as payé et ta clé est refusée ? <a href={lienAide("ma clé Litterae est refusée")} target="_blank" rel="noopener">Écris-nous{WHATSAPP ? " sur WhatsApp" : ""}</a>, on règle ça.</p>}
             <button type="submit" class="btn btn-primary btn-block" disabled={!cle.trim() || etat === "envoi"}>
               {etat === "envoi" ? "Vérification…" : "Valider ma clé"}
             </button>
           </form>
         )}
+
+        <section class="acces-aide" aria-labelledby="aide-title">
+          <h2 id="aide-title" class="section-title">Je n'ai pas reçu ma clé</h2>
+          <p>La clé arrive par e-mail quelques minutes après le paiement, à l'adresse donnée sur Chariow. Regarde aussi dans les dossiers <strong>Spam</strong> et <strong>Promotions</strong>.</p>
+          <a class="btn btn-secondary align-start" href={lienAide("je n'ai pas reçu ma clé Litterae")} target="_blank" rel="noopener">
+            {WHATSAPP ? "Nous écrire sur WhatsApp" : "Nous écrire par e-mail"}
+          </a>
+        </section>
 
         <section class="acces-achat">
           <h2 class="section-title">Pas encore de clé ?</h2>

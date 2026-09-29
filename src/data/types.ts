@@ -21,6 +21,10 @@ export interface Oeuvre {
   themes: string[];
   motsCles: string[];
   idees: IdeeIllustration[];
+  /** Phrase prête à recopier dans une copie (fiches détaillées). */
+  exemple?: string | null;
+  /** Résumé complet et idées d'illustration rédigées ; sinon, fiche courte. */
+  detaillee?: boolean;
   /** Fiche ouverte à tous (choisie par l'auteur). */
   libre?: boolean;
 }
@@ -82,7 +86,7 @@ export interface Outils {
 /** Contenu payant renvoyé par le serveur après validation d'une clé. */
 export interface ContenuPayant {
   version: number;
-  oeuvres: Record<string, { resume: string | null; idees: IdeeIllustration[] }>;
+  oeuvres: Record<string, { resume: string | null; idees: IdeeIllustration[]; exemple?: string | null }>;
   sujets: Sujet[];
   /** Quiz par leçon (absent des clés activées avant l'ajout des quiz). */
   quiz?: Record<string, QuestionQuiz[]>;
