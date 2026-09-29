@@ -1,0 +1,291 @@
+[
+ {
+  "num": "01",
+  "auteur": "Rachida Brakni — La Grande Librairie",
+  "citation": "Faire de la littérature, c'est s'armer pour se faire l'écho de ceux qui n'ont pas de voix.",
+  "orientation": "Engagement",
+  "compreh": {
+   "theme": "La littérature / l'écrivain",
+   "these": "Faire de la littérature, c'est s'armer pour se faire l'écho de ceux qui n'ont pas de voix.",
+   "reformulation": "La littérature est une arme au service des sans-voix.",
+   "orientation": "Engagement — l'auteur attribue une fonction militante à la littérature.",
+   "motscles": [
+    {
+     "mot": "S'armer",
+     "def": "Se préparer à un combat, ici métaphorique : le combat littéraire."
+    },
+    {
+     "mot": "Écho",
+     "def": "Répercuter, amplifier la voix d'autrui."
+    },
+    {
+     "mot": "Sans voix",
+     "def": "Les opprimés, les marginalisés, ceux que la société réduit au silence."
+    }
+   ]
+  },
+  "intro": "La question de la fonction de la littérature passionne depuis toujours les cercles critiques. Si certains la réduisent à un simple exercice de style, d'autres y voient un puissant levier de transformation sociale. Prenant part à ce débat, Rachida Brakni affirme : « Faire de la littérature, c'est s'armer pour se faire l'écho de ceux qui n'ont pas de voix » ; autrement dit, la littérature est une arme au service des sans-voix. Une telle affirmation soulève les questions suivantes : En quoi la littérature sert-elle de tribune aux opprimés ? Cependant, ne dépasse-t-elle pas cette seule vocation militante ? Nous répondrons à ces interrogations dans notre analyse.",
+  "axe1": {
+   "titre": "La littérature, porte-parole des opprimés",
+   "args": [
+    {
+     "titre": "La littérature dénonce les injustices sociales",
+     "expl": "En mettant des mots sur ce que la société préfère taire, l'écrivain devient un accusateur public. Il transforme la souffrance silencieuse en cri collectif audible.",
+     "ex": "Une si longue lettre de Mariama Bâ dénonce la condition de la femme africaine face à la polygamie — une souffrance que la tradition empêchait de nommer."
+    },
+    {
+     "titre": "La littérature éveille les consciences endormies",
+     "expl": "En racontant des réalités ignorées ou occultées, l'écrivain secoue l'indifférence du lecteur et l'incite à regarder autour de lui différemment.",
+     "ex": "La Carte d'identité de Jean-Marie Adiaffi dénonce l'humiliation coloniale et réveille la conscience identitaire de l'Africain face à l'oppresseur."
+    },
+    {
+     "titre": "L'écrivain est le guide et la vigie de la société",
+     "expl": "Il observe, analyse et transmet. Son œuvre agit comme un miroir tendu à la société — une société qui se voit parfois pour la première fois dans ce reflet.",
+     "ex": "Les Bouts de bois de Dieu de Sembène Ousmane amplifie la voix des ouvriers grévistes du chemin de fer, figures invisibles dans l'histoire officielle."
+    }
+   ]
+  },
+  "transition": "Si la littérature est bien cet espace de résistance pour les sans-voix, il serait réducteur de l'y enfermer — car elle répond aussi à d'autres aspirations humaines tout aussi légitimes.",
+  "axe2": {
+   "titre": "La littérature, au-delà du seul engagement",
+   "args": [
+    {
+     "titre": "La littérature répond aussi au besoin de beauté",
+     "expl": "L'art du langage a une valeur intrinsèque : la quête du beau, du style, de la musique des mots. Cette dimension esthétique n'est pas moins noble que le combat social.",
+     "ex": "Calligrammes d'Apollinaire joue avec la forme visuelle du poème pour faire de l'écriture un tableau — la beauté prime sur le message."
+    },
+    {
+     "titre": "La littérature offre une évasion nécessaire",
+     "expl": "Face aux duretés du quotidien, le lecteur a aussi besoin de rêver, de voyager, de se perdre dans un monde autre. Ce refuge imaginaire est une fonction pleinement humaine.",
+     "ex": "Le Petit Prince de Saint-Exupéry transporte le lecteur dans un univers onirique de planètes et d'étoiles, loin des fracas du monde."
+    },
+    {
+     "titre": "La littérature exprime les sentiments personnels de l'auteur",
+     "expl": "La dimension lyrique de l'écriture touche à l'intime : l'amour, la douleur, la joie. Imposer à tout texte une vocation militante serait nier cette part d'humanité.",
+     "ex": "Les Fleurs du mal de Baudelaire plonge dans les abîmes intimes de l'auteur, sans revendiquer autre chose qu'une vérité profondément personnelle."
+    }
+   ]
+  },
+  "conclu": "Au terme de notre analyse, retenons que la littérature porte efficacement la voix de ceux que la société réduit au silence, faisant de l'écrivain un combattant des injustices. Cependant, au-delà de cette fonction engagée, la littérature embrasse aussi la quête du beau, le besoin d'évasion et l'expression du moi profond. En vérité, c'est précisément cette richesse de fonctions — militer, embellir, rêver, ressentir — qui fait de la littérature l'un des arts les plus complets et les plus indispensables à l'humanité. On se demanderait toutefois si, à l'ère des réseaux sociaux, le roman ne trouve pas dans le hashtag militaire un concurrent inattendu."
+ },
+ {
+  "num": "02",
+  "auteur": "Auteur anonyme — citation classique",
+  "citation": "Écrire, ce n'est pas faire du bien, c'est faire de l'art.",
+  "orientation": "Esthétique",
+  "compreh": {
+   "theme": "L'écriture / la littérature",
+   "these": "Écrire, ce n'est pas faire du bien, c'est faire de l'art.",
+   "reformulation": "La littérature doit rechercher le beau plutôt que l'utilité morale ou sociale.",
+   "orientation": "Esthétique — l'auteur refuse toute fonction utilitaire à l'écriture.",
+   "motscles": [
+    {
+     "mot": "Faire du bien",
+     "def": "Être utile, avoir un impact moral ou social — fonction d'engagement."
+    },
+    {
+     "mot": "Faire de l'art",
+     "def": "Créer du beau, rechercher la perfection formelle, la stylistique."
+    }
+   ]
+  },
+  "intro": "La question des buts de la littérature est au cœur de toutes les grandes interrogations sur la création littéraire. Pour certains auteurs, la littérature doit être engagée, utile au bien commun. Pour d'autres, elle ne doit avoir d'autre finalité que la recherche du beau. Un auteur affirme ainsi : « Écrire, ce n'est pas faire du bien, c'est faire de l'art » ; autrement dit, la littérature ne doit pas se fixer pour objectif de promouvoir la morale, mais plutôt de rechercher la perfection formelle. Une telle affirmation pose les questions suivantes : En quoi la littérature promeut-elle la perfection formelle ? Cependant, n'admet-elle pas aussi une fonction militante ? Notre analyse tentera de répondre à ces questions.",
+  "axe1": {
+   "titre": "La littérature, quête de la beauté formelle",
+   "args": [
+    {
+     "titre": "La littérature est avant tout un culte du style",
+     "expl": "L'écrivain travaille la langue avec le soin d'un sculpteur. Ce n'est pas ce qu'il dit qui compte d'abord, mais la façon dont il le dit — la musique, le rythme, les images.",
+     "ex": "La disparition de Georges Perec, écrit sans la lettre « e », est une prouesse stylistique qui démontre que la forme peut devenir l'œuvre elle-même."
+    },
+    {
+     "titre": "La littérature crée un univers esthétique autonome",
+     "expl": "Une œuvre n'a pas à justifier son existence par son utilité. Sa seule raison d'être peut être d'offrir une expérience esthétique pure, comme un tableau ou une sonate.",
+     "ex": "Les Calligrammes d'Apollinaire transforment le poème en objet visuel — la forme devient le message, indépendamment de tout discours social."
+    },
+    {
+     "titre": "Le langage littéraire dépasse le langage ordinaire",
+     "expl": "En mobilisant figures de style, métaphores et rythmes, l'écrivain élève la langue à un niveau que le discours utilitaire ne peut atteindre. C'est là sa noblesse propre.",
+     "ex": "Mémoire de porc-épic d'Alain Mabanckou, rédigé sans point, propose une narration-fleuve qui bouleverse les codes et célèbre l'originalité formelle."
+    }
+   ]
+  },
+  "transition": "Si la recherche du beau est bien une mission noble de la littérature, il serait cependant difficile d'ignorer les nombreux textes qui ont changé le monde en prenant le parti de l'utilité.",
+  "axe2": {
+   "titre": "La littérature, instrument au service de la société",
+   "args": [
+    {
+     "titre": "La littérature engagée a changé l'histoire",
+     "expl": "Des œuvres littéraires ont directement influencé des révolutions, des lois, des consciences. Réduire cela à du « non-art » serait un contresens historique.",
+     "ex": "Les Misérables de Victor Hugo a contribué à sensibiliser la société française du XIXe siècle aux conditions de vie des plus démunis, influençant les débats politiques de l'époque."
+    },
+    {
+     "titre": "La littérature instruit et forme le lecteur",
+     "expl": "En transmettant des valeurs, des visions du monde, des exemples moraux, la littérature remplit un rôle éducatif irremplaçable — ce que l'esthétisme seul ne peut offrir.",
+     "ex": "Rebelle de Fatou Keïta forme les esprits sur les droits des femmes et combat l'excision et le mariage forcé en touchant le cœur du lecteur."
+    },
+    {
+     "titre": "La beauté et l'utilité ne sont pas incompatibles",
+     "expl": "Les plus grandes œuvres sont souvent à la fois belles et engagées. L'opposition entre art et utilité est une fausse alternative — on peut faire du bien en faisant de l'art.",
+     "ex": "Germinal de Zola dénonce l'exploitation minière dans une langue précise, vivante, puissante — preuve que la beauté du style amplifie le propos social."
+    }
+   ]
+  },
+  "conclu": "Au terme de cette analyse, retenons que la littérature a effectivement pour vocation de faire du beau — la recherche de la perfection formelle est une dignité que l'écrivain ne devrait jamais sacrifier. Cependant, au-delà de cette ambition esthétique, la littérature admet une fonction militante qui fait d'elle un outil précieux au service de la société. Loin d'être contradictoires, ces deux fonctions se complètent et confèrent à l'œuvre écrite toute sa profondeur. L'on se demanderait toutefois si, dans nos sociétés de plus en plus tournées vers l'image et la vitesse, la littérature ne doit pas redoubler d'esthétisme pour séduire d'abord, avant de convaincre."
+ },
+ {
+  "num": "03",
+  "auteur": "Émile Zola",
+  "citation": "L'écrivain donne les faits tels qu'il les a observés.",
+  "orientation": "Social / Engagement",
+  "compreh": {
+   "theme": "L'écrivain / la littérature",
+   "these": "L'écrivain donne les faits tels qu'il les a observés.",
+   "reformulation": "L'écrivain est un témoin de la réalité sociale, dont il rend compte fidèlement.",
+   "orientation": "Fonction sociale/engagement — l'auteur fait de l'écrivain un observateur objectif de la réalité.",
+   "motscles": [
+    {
+     "mot": "Les faits",
+     "def": "La réalité concrète, observable, vécue par la société."
+    },
+    {
+     "mot": "Tels qu'il les a observés",
+     "def": "Sans déformation, sans idéalisation — le réalisme comme méthode."
+    }
+   ]
+  },
+  "intro": "Depuis toujours, la question de la place de l'écrivain dans la société divise les milieux littéraires. Certains pensent qu'il doit rêver et inventer ; d'autres, qu'il doit observer et témoigner. Émile Zola, père du naturalisme, tranche : « L'écrivain donne les faits tels qu'il les a observés » ; autrement dit, l'écrivain est un témoin de la réalité sociale, dont il rend compte fidèlement. Cette affirmation soulève les questions suivantes : En quoi l'écrivain est-il un observateur fidèle du réel ? Cependant, n'a-t-il pas aussi le droit — voire le devoir — d'inventer et de rêver ? Notre analyse répondra à ces interrogations.",
+  "axe1": {
+   "titre": "L'écrivain, témoin et miroir de la réalité",
+   "args": [
+    {
+     "titre": "L'écrivain peint la société avec précision",
+     "expl": "En s'appuyant sur l'observation directe du monde qui l'entoure, l'écrivain produit un portrait fidèle des réalités sociales, économiques et humaines de son époque.",
+     "ex": "Germinal de Zola, fruit d'une enquête minutieuse dans les mines du Nord, restitue avec une précision quasi documentaire les conditions de vie des ouvriers mineurs."
+    },
+    {
+     "titre": "La littérature préserve la mémoire collective",
+     "expl": "En relatant des faits observés, l'écrivain construit une archive vivante des vécus humains que l'histoire officielle ignore ou efface.",
+     "ex": "Les Soleils des Indépendances d'Ahmadou Kourouma témoigne des désillusions politiques de l'Afrique postcoloniale avec une lucidité sans concession."
+    },
+    {
+     "titre": "L'œuvre ancrée dans le réel est plus convaincante",
+     "expl": "Un texte nourri de faits observés touche le lecteur dans sa vérité — il reconnaît sa propre expérience et se sent compris. Cette authenticité est la force de la littérature réaliste.",
+     "ex": "Une si longue lettre de Mariama Bâ tire sa puissance de la précision avec laquelle elle décrit la vie conjugale africaine — un vécu que des millions de femmes partagent."
+    }
+   ]
+  },
+  "transition": "Si l'observation du réel est un précieux fondement littéraire, cantonner l'écrivain au rôle de simple reporter serait oublier que l'imagination est aussi une forme de vérité.",
+  "axe2": {
+   "titre": "L'écrivain, inventeur de mondes et créateur de sens",
+   "args": [
+    {
+     "titre": "La fiction peut dire des vérités que les faits ne peuvent pas révéler",
+     "expl": "L'invention narrative permet d'explorer des zones que l'observation directe ne peut atteindre : l'intériorité, les motivations secrètes, les possibles non réalisés.",
+     "ex": "Le Petit Prince de Saint-Exupéry, pure fiction philosophique, dit sur l'amour, l'amitié et la solitude des vérités que nul rapport d'enquête ne pourrait exprimer."
+    },
+    {
+     "titre": "L'imagination est aussi une forme d'observation intérieure",
+     "expl": "En inventant, l'écrivain observe ses propres émotions, ses peurs, ses désirs. L'œuvre imaginaire n'est pas étrangère au réel — elle en est une transfiguration.",
+     "ex": "Petit Bodiel d'Hampâté Bâ, conte imaginaire avec des animaux personnifiés, dit des vérités profondes sur la sagesse, la justice et la ruse humaine."
+    },
+    {
+     "titre": "L'écriture engagée peut aussi mentir pour mieux convaincre",
+     "expl": "Les auteurs font parfois le choix de déformer, d'amplifier, de symboliser pour que leur message passe plus fort. La fidélité absolue aux faits peut même affaiblir la portée littéraire.",
+     "ex": "1984 de George Orwell est une fiction dystopique, pas un reportage — mais elle dénonce la dictature avec une force que nul journaliste n'a jamais atteinte."
+    }
+   ]
+  },
+  "conclu": "Au terme de notre analyse, il ressort que la littérature ancrée dans l'observation fidèle de la réalité offre une profondeur et une authenticité remarquables, faisant de l'écrivain un précieux témoin de son époque. Cependant, la fiction et l'imagination sont tout autant des voies vers la vérité — parfois plus directes et plus pénétrantes. En définitive, le véritable écrivain n'est ni un reporter ni un pur rêveur, mais quelqu'un qui sait que la frontière entre le réel observé et le réel inventé est souvent le lieu où naît la grande littérature."
+ },
+ {
+  "num": "04",
+  "auteur": "Gilles Vigneault — entretien journalistique",
+  "citation": "Tous les poètes sont engagés ; ils doivent être des révolutionnaires, non pas en maniant des bombes, mais par leur désir de changer le monde, de l'améliorer.",
+  "orientation": "Engagement"
+ },
+ {
+  "num": "05",
+  "auteur": "James Riley — Les Voleurs d'histoires",
+  "citation": "On lit des romans parce qu'on s'ennuie, parce qu'on a envie de s'amuser.",
+  "orientation": "Évasion"
+ },
+ {
+  "num": "06",
+  "auteur": "Roger Caillot",
+  "citation": "Une littérature existe dans une société donnée ; elle en reçoit l'empreinte et, en retour, lui imprime une direction.",
+  "orientation": "Social"
+ },
+ {
+  "num": "07",
+  "auteur": "Alain Mabanckou — TV5",
+  "citation": "Le livre va dans le sens de notre relecture de l'histoire.",
+  "orientation": "Engagement / Social"
+ },
+ {
+  "num": "08",
+  "auteur": "Fatou Diome — Radio France, avril 2021",
+  "citation": "J'écris pour dire que la lâche sérénité des silencieux garantit la victoire des injustes.",
+  "orientation": "Engagement"
+ },
+ {
+  "num": "09",
+  "auteur": "Charles Baudelaire",
+  "citation": "La poésie n'a pas d'autre but qu'elle-même.",
+  "orientation": "Esthétique"
+ },
+ {
+  "num": "10",
+  "auteur": "Oscar Wilde",
+  "citation": "Un artiste doit créer de belles choses, mais sans rien y mettre de sa propre vie.",
+  "orientation": "Esthétique"
+ },
+ {
+  "num": "11",
+  "auteur": "Jean Giraudoux — L'Impromptu de Paris (1937)",
+  "citation": "Le mot comprendre n'existe pas au théâtre. Le vrai public ne comprend pas, il ressent. Le théâtre n'est pas un théorème mais un spectacle.",
+  "orientation": "Évasion / Esthétique"
+ },
+ {
+  "num": "12",
+  "auteur": "André Brink",
+  "citation": "La vocation essentielle de l'écrivain réside dans sa croisade impitoyable contre l'hypocrisie, la dissimulation et le mensonge.",
+  "orientation": "Engagement"
+ },
+ {
+  "num": "13",
+  "auteur": "Jean Giono",
+  "citation": "Le poète doit être un professeur d'espérance. À cette seule condition, il a sa place à côté des hommes qui travaillent.",
+  "orientation": "Engagement / Social"
+ },
+ {
+  "num": "14",
+  "auteur": "Marie Vareille — Écrire un roman",
+  "citation": "L'écrivain écrit parce qu'il a envie de raconter des histoires qui divertissent.",
+  "orientation": "Évasion"
+ },
+ {
+  "num": "15",
+  "auteur": "Alain Mabanckou — à propos de la littérature africaine",
+  "citation": "Dès qu'apparait le souci de signifier quelque chose d'autre — d'extérieur à l'art — la littérature commence à reculer.",
+  "orientation": "Esthétique"
+ },
+ {
+  "num": "16",
+  "auteur": "Maxime Gorki",
+  "citation": "Quand un écrivain crée un bon livre, il touche le cœur avec des mots. À sa volonté, le cœur gémit, se lamente, se remplit de colère ou au contraire de sérénité et de joie.",
+  "orientation": "Lyrique / Esthétique"
+ },
+ {
+  "num": "17",
+  "auteur": "Tshiyombo — poète congolais, sur Le Brouillard",
+  "citation": "Mon œuvre est une poésie sensible et douloureuse, tout entière sortie du silence de la nuit et des brumes. Elle exprime l'amertume devant l'opprobre d'un peuple asservi.",
+  "orientation": "Lyrique / Engagement"
+ },
+ {
+  "num": "18",
+  "auteur": "Friedrich Nietzsche",
+  "citation": "Une œuvre d'art n'est supérieure que si elle est, en même temps, un symbole et l'expression exacte d'une réalité.",
+  "orientation": "Esthétique / Social"
+ }
+]

@@ -1,0 +1,73 @@
+/*
+ * Design system de Litterae : « Couleurs d'Afrique de l'Ouest ».
+ * Vert profond (principal), terre cuite (accent), ocre (mise en avant), sur fond crème.
+ * Chaque fonction littéraire a sa couleur, reprise partout (filtres, étiquettes, sujets).
+ * Thème clair uniquement (usage de jour, en classe et à la maison).
+ */
+:root {
+  /* Couleurs de base */
+  --paper: #FFF8EC;
+  --surface: #FFFFFF;
+  --surface-hover: #FFF3DE;
+  --line: #F0DFC2;
+  --line-strong: #E2C9A0;
+  --ink: #2B2118;
+  --ink-strong: #1C140D;
+  --muted: #7A6552;
+  --on-dark: #FFF3DC;
+  --on-dark-muted: #BFD6C9;
+
+  --green: #0F3D2E;        /* principal : barres, boutons, titres */
+  --green-press: #0A2B20;
+  --green-pale: #CFE3D6;
+  --green-tint: #E7F0EA;
+
+  --orange: #C4562B;       /* accent : terre cuite */
+  --orange-text: #A2431C;
+  --orange-pale: #FBE3D3;
+
+  --ochre: #F2A541;        /* mise en avant : reprise de lecture, bouton actif */
+  --ochre-pale: #FDEBC8;
+  --ochre-text: #7A3514;
+
+  /* Couleurs des fonctions littéraires */
+  --fn-engagement: #C4562B;
+  --fn-esthetique: #2E5E8C;
+  --fn-evasion: #E0A030;
+  --fn-lyrique: #8E3B5F;
+  --fn-sociale: #0F3D2E;
+
+  --error: #B42318;
+  --error-pale: #FDEDEC;
+  --success: #0F3D2E;
+  --highlight: #FCE3A6;
+
+  /* Typographie */
+  --font-title: "Playfair Display", Georgia, "Times New Roman", serif;
+  --font-text: "DM Sans Variable", "DM Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --text-xs: 0.8125rem;  /* 13px : métadonnées */
+  --text-sm: 0.9375rem;  /* 15px : interface */
+  --text-md: 1.0625rem;  /* 17px : lecture */
+  --text-lg: 1.25rem;    /* 20px : titres de section */
+  --text-xl: 1.875rem;   /* 30px : titres de page (mobile) */
+  --text-2xl: 2.5rem;    /* 40px : titres de page (grand écran) */
+
+  /* Espacements (base 4px) */
+  --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s5: 24px; --s6: 32px; --s7: 48px;
+
+  /* Formes et dimensions */
+  --radius: 12px;
+  --radius-sm: 8px;
+  --border: 2px;
+  --control-h: 44px;
+  --control-h-main: 48px;
+  --bottom-nav-h: 64px;
+  --topbar-h: 58px;
+  --band-h: 10px;
+  --read-width: 42rem;
+  --page-width: 72rem;
+
+  --focus: 0 0 0 3px rgba(242, 165, 65, 0.6);
+  --duration: 160ms;
+  color-scheme: light;
+}

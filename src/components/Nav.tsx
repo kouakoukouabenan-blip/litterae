@@ -1,0 +1,46 @@
+import { useRoute } from "../lib/router";
+import { Icon } from "./Icon";
+
+const ITEMS = [
+  { section: "cours", label: "Cours", icon: "menu_book" },
+  { section: "sujets", label: "Sujets", long: "Sujets corrigés", icon: "history_edu" },
+  { section: "oeuvres", label: "Œuvres", icon: "local_library" },
+  { section: "outils", label: "Outils", long: "Boîte à outils", icon: "inventory_2" },
+  { section: "carnet", label: "Carnet", long: "Mon carnet", icon: "bookmarks" }
+] as const;
+
+function useSection() {
+  return useRoute().path[0] ?? "cours";
+}
+
+/** Onglets dans la barre du haut, sur tablette et ordinateur. */
+export function NavTabs() {
+  const current = useSection();
+  return (
+    <nav class="nav-tabs" aria-label="Navigation principale">
+      {ITEMS.map(i => (
+        <a key={i.section} href={`#/${i.section}`} class="nav-tab" aria-current={current === i.section ? "page" : undefined}>
+          {"long" in i ? i.long : i.label}
+        </a>
+      ))}
+    </nav>
+  );
+}
+
+/** Barre du bas, sur téléphone. */
+export function BottomNav() {
+  const current = useSection();
+  return (
+    <nav class="bottom-nav" aria-label="Navigation principale">
+      {ITEMS.map(i => {
+        const active = current === i.section;
+        return (
+          <a key={i.section} href={`#/${i.section}`} class="bottom-nav-item" aria-current={active ? "page" : undefined}>
+            <Icon name={i.icon} filled={active} />
+            <span>{i.label}</span>
+          </a>
+        );
+      })}
+    </nav>
+  );
+}
