@@ -8,8 +8,26 @@
     <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="./icon-192.png" />
     <title>Litterae</title>
+    <style>
+      /* Écran d'ouverture : affiché tout de suite, avant le chargement de l'application. */
+      #splash { position: fixed; inset: 0; z-index: 100; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; background: #0F3D2E; color: #FFF3DC; transition: opacity .35s ease; }
+      #splash.fin { opacity: 0; pointer-events: none; }
+      #splash svg { width: 76px; height: 76px; animation: splash-logo .6s cubic-bezier(.2,.8,.3,1.2) both; }
+      #splash .nom { font: 900 34px/1 Georgia, "Times New Roman", serif; letter-spacing: -.01em; animation: splash-texte .5s .15s ease-out both; }
+      #splash .nom span { color: #F2A541; }
+      #splash .frise { width: 168px; height: 10px; border-radius: 2px; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='10'%3E%3Crect width='40' height='10' fill='%23C4562B'/%3E%3Cpath d='M0 10 5 0h5L5 10zM10 10 15 0h5l-5 10z' fill='%23F2A541'/%3E%3Crect x='23' y='2' width='6' height='6' fill='%230F3D2E'/%3E%3Crect x='33' y='3.5' width='3' height='3' fill='%23FFF3DC'/%3E%3C/svg%3E") repeat-x; animation: splash-texte .5s .25s ease-out both, splash-frise 1.2s linear infinite; }
+      @keyframes splash-logo { from { transform: scale(.6) rotate(-8deg); opacity: 0; } to { transform: none; opacity: 1; } }
+      @keyframes splash-texte { from { transform: translateY(8px); opacity: 0; } to { transform: none; opacity: 1; } }
+      @keyframes splash-frise { to { background-position: 40px 0; } }
+      @media (prefers-reduced-motion: reduce) { #splash * { animation: none !important; } }
+    </style>
   </head>
   <body>
+    <div id="splash" aria-hidden="true">
+      <svg viewBox="0 0 64 64"><rect width="64" height="64" rx="12" fill="#FFF3DC"/><path fill="#0F3D2E" d="M18 14h14v3h-4v28h9.5l3-8H44l-1.5 13H18v-3h4V17h-4z"/><circle cx="50" cy="47.5" r="3.5" fill="#C4562B"/></svg>
+      <p class="nom">Litter<span>ae</span></p>
+      <div class="frise"></div>
+    </div>
     <div id="app"></div>
     <noscript>Litterae a besoin de JavaScript pour fonctionner.</noscript>
     <script type="module" src="/src/main.tsx"></script>
