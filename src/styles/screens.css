@@ -57,8 +57,13 @@
 .fn-tile-text { font-size: var(--text-xs); color: var(--muted); display: none; }
 .fn-tile-count { font-size: var(--text-xs); color: var(--muted); }
 @media (max-width: 719px) {
-  .fn-grid { grid-template-columns: 1fr 1fr; }
-  .fn-tile { padding: var(--s2) var(--s3); }
+  /* Téléphone : petits boutons centrés qui passent à la ligne, sans défilement horizontal. */
+  .fn-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--s2); }
+  .fn-tile { flex-direction: row; align-items: baseline; gap: var(--s1); padding: 6px var(--s3) 6px 10px; border-left-width: 4px; }
+  .fn-tile-title { font-size: var(--text-sm); }
+  .fn-tile-count { font-size: 0.75rem; }
+  .fn-tile-count { color: var(--muted); }
+  .fn-tile-unit { display: none; }
 }
 @media (min-width: 720px) { .fn-tile-text { display: block; } .fn-grid { grid-template-columns: repeat(5, 1fr); } }
 @media (min-width: 720px) { .home-title { font-size: 2.125rem; } .resume-card { padding: var(--s5); max-width: 44rem; } }

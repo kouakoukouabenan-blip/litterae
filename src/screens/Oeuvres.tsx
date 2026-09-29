@@ -119,7 +119,7 @@ export function OeuvresScreen({ params }: { params: URLSearchParams }) {
                   <a key={f} class={`fn-tile ${fnClass(f)}`} href={href(["oeuvres"], { fonction: f })}>
                     <span class="fn-tile-title">{f}</span>
                     <span class="fn-tile-text">{FONCTION_TEXTE[f]}</span>
-                    <span class="fn-tile-count">{plural(counts.get("fonction")!.find(([v]) => v === f)?.[1] ?? 0, "œuvre")}</span>
+                    <span class="fn-tile-count">{(n => <>{n}<span class="fn-tile-unit"> {n > 1 ? "œuvres" : "œuvre"}</span></>)(counts.get("fonction")!.find(([v]) => v === f)?.[1] ?? 0)}</span>
                   </a>
                 ))}
               </div>
