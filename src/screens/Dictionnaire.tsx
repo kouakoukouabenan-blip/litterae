@@ -14,6 +14,7 @@ import { href } from "../lib/router";
 import { AchatLien } from "../components/Achat";
 import { useAccess } from "../lib/access";
 import { DICO_GRATUITS, consulter, dicoComplet, useConsultes, type EchecConsultation } from "../lib/dictionnaire";
+import { lienContact } from "../lib/contact";
 
 const D = dico as Dictionnaire;
 
@@ -128,6 +129,7 @@ function Details({ e, onVoir, onFonction }: { e: EntreeDico; onVoir: (m: string)
       {e.exemples?.map(x => (
         <p key={x} class="dico-exemple"><span class="dico-label">Exemple</span><Texte text={x} terms={[]} onVoir={onVoir} /></p>
       ))}
+      <p class="meta"><a href={lienContact("erreur", "#/outils", `le mot « ${e.mot} » du dictionnaire`)}>Signaler une erreur</a></p>
     </div>
   );
 }

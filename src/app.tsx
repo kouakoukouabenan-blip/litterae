@@ -15,6 +15,7 @@ import { NotFound } from "./screens/NotFound";
 import { AProposScreen, CguScreen, ConfidentialiteScreen } from "./screens/Infos";
 import { InstallGate, InstallGuide } from "./components/Install";
 import { AccesScreen } from "./screens/Acces";
+import { ContactScreen } from "./screens/Contact";
 import { reverifier } from "./lib/licence";
 import { demarrerStats, noter } from "./lib/stats";
 import { actualiserContenuLibre } from "./lib/libre";
@@ -65,6 +66,7 @@ export function App() {
     case "cgu": screen = <CguScreen />; break;
     case "confidentialite": screen = <ConfidentialiteScreen />; break;
     case "acces": screen = <AccesScreen />; break;
+    case "contact": screen = <ContactScreen params={params} />; break;
     default: screen = <NotFound />;
   }
 

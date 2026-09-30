@@ -243,3 +243,24 @@
 .dico-carte .dico-mot { font-size: var(--text-lg); }
 .dico-carte-corps { padding: var(--s4); }
 .dico-carte .dico-sens { font-size: var(--text-md); }
+
+/* Contact */
+.contact-form { display: flex; flex-direction: column; gap: var(--s5); margin-bottom: var(--s6); }
+.contact-sujets { border: 0; margin: 0; padding: 0; min-width: 0; }
+.contact-choix { display: flex; flex-wrap: wrap; gap: var(--s2); }
+.contact-choix .chip { cursor: pointer; font-size: var(--text-sm); min-height: var(--control-h); }
+.contact-choix .chip-actif { background: var(--green); border-color: var(--green); color: var(--on-dark); }
+.contact-choix .chip:focus-within { box-shadow: var(--focus); }
+.contact-objet { display: flex; align-items: center; justify-content: space-between; gap: var(--s2); margin: calc(-1 * var(--s2)) 0 0; padding: var(--s1) var(--s1) var(--s1) var(--s3); border-left: 4px solid var(--orange); background: var(--surface); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: var(--text-sm); }
+.contact-compteur { margin-top: var(--s1); text-align: right; font-variant-numeric: tabular-nums; }
+.contact-duo { display: grid; gap: var(--s5); }
+@media (min-width: 720px) { .contact-duo { grid-template-columns: 1fr 1fr; gap: var(--s4); } }
+.input-texte { text-transform: none; font-size: 1rem; }
+.contact-piege { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.contact-envoye { display: flex; flex-direction: column; gap: var(--s3); margin-bottom: var(--s6); }
+.contact-envoye .notice { margin-bottom: 0; }
+.contact-direct { display: flex; flex-direction: column; gap: var(--s3); padding-top: var(--s5); border-top: var(--border) solid var(--line); }
+.contact-direct .btn { white-space: normal; }
+.signaler { margin-top: var(--s6); font-size: var(--text-xs); color: var(--muted); }
+.signaler a { font-weight: 600; }
+.contact-sujets legend { padding: 0; }

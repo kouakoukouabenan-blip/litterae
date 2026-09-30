@@ -8,6 +8,7 @@ import { NotFound } from "./NotFound";
 import { QuizLecon } from "../components/Quiz";
 import { LockPanel } from "../components/LockPanel";
 import { useAccess } from "../lib/access";
+import { lienContact } from "../lib/contact";
 
 function Bloc({ b }: { b: BlocLecon }) {
   if ("p" in b) return <p>{b.p}</p>;
@@ -57,6 +58,7 @@ export function LeconScreen({ id }: { id: string }) {
           <div class="prose">{l.blocs.map((b, k) => <Bloc key={k} b={b} />)}</div>
         )}
         <QuizLecon id={l.id} />
+        {!verrouillee && <p class="signaler">Une question sur cette leçon, ou une erreur ? <a href={lienContact("question", `#/cours/${l.id}`, `la leçon « ${l.titre} »`)}>Écris-nous</a></p>}
         <nav class="pager" aria-label="Leçons">
           {prev ? <a class="pager-link" href={`#/cours/${prev.id}`}><span class="meta">Précédente</span>{prev.titre}</a> : <span />}
           {next ? (

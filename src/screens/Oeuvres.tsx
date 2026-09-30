@@ -17,6 +17,7 @@ import {
 import { plural } from "../lib/text";
 import { FONCTION_TEXTE, fnClass } from "../lib/fonctions";
 import { AchatLien } from "../components/Achat";
+import { lienContact } from "../lib/contact";
 
 const INDEX = buildIndex(OEUVRES);
 const PAGE = 30;
@@ -160,6 +161,7 @@ export function OeuvresScreen({ params }: { params: URLSearchParams }) {
             <EmptyState title="Rien ne correspond à cette recherche.">
               <p>Vérifie l'orthographe, essaie un mot plus général (« colonisation » plutôt que « colon ») ou retire un filtre.</p>
               {nbFiltres > 0 && <button type="button" class="btn btn-secondary" onClick={() => go(q, EMPTY_FILTERS)}>Retirer les filtres</button>}
+              <p>Une œuvre manque ? <a href={lienContact("oeuvre")}>Propose-la</a></p>
             </EmptyState>
           )}
         </section>

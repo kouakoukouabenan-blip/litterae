@@ -5,6 +5,7 @@ import { InstallBanner } from "../components/Install";
 import { Annonces, InvitationNotifs } from "../components/Annonces";
 import { useStored } from "../lib/storage";
 import { NB_DETAILLEES, OEUVRES, SUJETS } from "../lib/data";
+import { lienContact } from "../lib/contact";
 
 const MINUTES = LECONS.reduce((n, l) => n + (parseInt(l.duree) || 0), 0);
 
@@ -59,6 +60,7 @@ export function CoursScreen() {
             );
           })}
         </ol>
+        <p class="signaler">Une leçon te manque ? <a href={lienContact("lecon")}>Propose-la</a></p>
       </section>
     </Page>
   );

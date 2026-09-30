@@ -79,6 +79,7 @@ export function AccesScreen() {
           <a class="btn btn-secondary align-start" href={lienAide("je n'ai pas reçu ma clé Litterae")} target="_blank" rel="noopener">
             {WHATSAPP ? "Nous écrire sur WhatsApp" : "Nous écrire par e-mail"}
           </a>
+          <p class="small muted">Pour toute autre question, passe par la page <a href="#/contact">Contact</a>.</p>
         </section>
 
         <section class="acces-achat">

@@ -66,6 +66,7 @@ export function AProposScreen() {
 
           <h2 class="section-title">Informations</h2>
           <ul class="list list-compact">
+            <li><a class="row" href="#/contact"><span class="row-body"><span class="row-title">Nous contacter</span><span class="meta">Une question, une leçon ou une œuvre à proposer, une erreur à signaler</span></span><Icon name="chevron_right" /></a></li>
             <li><a class="row" href="#/cgu"><span class="row-body"><span class="row-title">Conditions générales d'utilisation et de vente</span></span><Icon name="chevron_right" /></a></li>
             <li><a class="row" href="#/confidentialite"><span class="row-body"><span class="row-title">Confidentialité et données personnelles</span></span><Icon name="chevron_right" /></a></li>
           </ul>
@@ -86,7 +87,7 @@ export function CguScreen() {
       <p>Litterae est éditée à titre personnel par {EDITEUR}. Contact : <Contact />.</p>
 
       <h2 class="section-title">3. Contenu</h2>
-      <p>Litterae propose un cours de méthode, des sujets corrigés, des résumés d'œuvres et des outils de rédaction. Ces contenus sont une aide à l'apprentissage : ils ne remplacent ni l'enseignement de ton professeur ni la lecture des œuvres. Les résumés et corrigés sont rédigés avec soin mais peuvent contenir des erreurs ; tu peux les signaler à l'adresse de contact.</p>
+      <p>Litterae propose un cours de méthode, des sujets corrigés, des résumés d'œuvres et des outils de rédaction. Ces contenus sont une aide à l'apprentissage : ils ne remplacent ni l'enseignement de ton professeur ni la lecture des œuvres. Les résumés et corrigés sont rédigés avec soin mais peuvent contenir des erreurs ; tu peux les signaler depuis la page <a href="#/contact?sujet=erreur">Contact</a>.</p>
 
       <h2 class="section-title">4. Accès gratuit</h2>
       <p>Sans paiement, tu as accès au cours, à la boîte à outils, aux {FREE_SUBJECTS} premiers sujets corrigés et à {FREE_WORKS} fiches d'œuvres choisies par l'éditeur. L'éditeur peut faire évoluer le contenu de l'accès gratuit.</p>
@@ -139,6 +140,9 @@ export function ConfidentialiteScreen() {
 
       <h2 class="section-title">Statistiques anonymes</h2>
       <p>Pour savoir ce qui est utile aux élèves, Litterae envoie à notre serveur des chiffres anonymes : un identifiant tiré au hasard pour ton appareil, le type d'appareil (Android, iPhone ou ordinateur), si l'application est installée, les parties et les fiches d'œuvres ouvertes, et les messages de l'accueil vus ou touchés. Aucun nom, aucune adresse e-mail, aucun numéro n'est envoyé. Ces chiffres sont gardés au plus 13 mois. Le site utilise aussi Cloudflare Web Analytics, qui compte les visites sans cookie et sans suivre les visiteurs d'un site à l'autre.</p>
+
+      <h2 class="section-title">Messages envoyés depuis la page Contact</h2>
+      <p>Quand tu écris depuis la page Contact, ton message est envoyé à notre serveur avec le prénom et le contact (WhatsApp ou e-mail) que tu choisis de laisser, la page concernée et le type d'appareil. Ils servent uniquement à lire ton message et à te répondre. L'adresse de connexion n'est pas gardée : seule une empreinte illisible sert à bloquer les envois abusifs pendant une journée. Les messages sont supprimés au plus tard 13 mois après leur lecture.</p>
 
       <h2 class="section-title">Notifications</h2>
       <p>Si tu acceptes les notifications, ton navigateur fournit une adresse technique d'envoi, gardée sur notre serveur pour t'envoyer les messages de Litterae. Elle ne permet pas de t'identifier. Tu peux arrêter à tout moment depuis la page À propos ou les réglages du navigateur.</p>

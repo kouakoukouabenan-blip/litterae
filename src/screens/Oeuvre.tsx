@@ -12,6 +12,7 @@ import { NotFound } from "./NotFound";
 import { fnClass } from "../lib/fonctions";
 import type { Oeuvre } from "../data/types";
 import { argumentsDe } from "../lib/arguments";
+import { lienContact } from "../lib/contact";
 
 function Note({ id }: { id: string }) {
   const { notes, setNote } = useNotes();
@@ -152,6 +153,7 @@ export function OeuvreScreen({ id }: { id: string }) {
             </div>
           </>
         )}
+        <p class="signaler">Une erreur dans cette fiche ? <a href={lienContact("erreur", `#/oeuvres/${id}`, `la fiche « ${w.titre} »`)}>Signale-la</a></p>
       </article>
     </Page>
   );

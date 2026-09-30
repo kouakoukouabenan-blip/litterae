@@ -39,6 +39,7 @@ export function Page({ title, back, wide, children }: Props) {
       <main id="contenu" class={`page ${wide ? "page-wide" : ""}`}>{children}</main>
       <footer class="site-footer">
         <a href="#/a-propos">À propos et fonctionnalités</a>
+        <a href="#/contact">Nous contacter</a>
         <a href="#/cgu">Conditions générales</a>
         <a href="#/confidentialite">Confidentialité</a>
       </footer>
