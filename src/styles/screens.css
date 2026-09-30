@@ -276,3 +276,7 @@
 .question-auteur { font-size: var(--text-xs); font-weight: 700; color: var(--green); }
 .question-attente { font-size: var(--text-xs); font-weight: 600; color: var(--ochre-text); }
 .reponse-alerte { margin-bottom: var(--s5); }
+.carnet-titre { margin-top: var(--s6); }
+.carnet-intro { margin: var(--s1) 0 var(--s4); }
+.messages-row { margin-top: calc(-1 * var(--s2)); }
+.access-buy + .messages-row { margin-top: 0; }

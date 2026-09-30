@@ -99,3 +99,9 @@ body { padding-top: calc(var(--topbar-h) + var(--band-h)); padding-bottom: calc(
   .site-footer { padding: var(--s5); }
 }
 @media (min-width: 720px) { .topbar-spacer { display: none; } }
+
+/* Pastille « nouvelle réponse » sur Mon espace */
+.bottom-nav-icone { position: relative; display: inline-flex; }
+.nav-tab { position: relative; }
+.nav-pastille { position: absolute; top: -2px; right: -4px; width: 9px; height: 9px; border-radius: 50%; background: var(--orange); box-shadow: 0 0 0 2px var(--green); }
+.nav-tab .nav-pastille { top: 7px; right: 5px; box-shadow: none; }

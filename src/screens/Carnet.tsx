@@ -8,7 +8,28 @@ import type { Oeuvre } from "../data/types";
 import { Icon } from "../components/Icon";
 import { licence } from "../lib/licence";
 import { AchatLien } from "../components/Achat";
-import { PRICE } from "../lib/access";
+import { PRICE, useAccess } from "../lib/access";
+import { useQuestions } from "../lib/contact";
+
+/** Accès aux messages : questions à l'auteur et réponses (accès complet), ou page Contact. */
+function LigneMessages() {
+  const { premium } = useAccess();
+  const { nouvellesReponses, enAttente } = useQuestions();
+  const detail = !premium ? "Une question, une proposition, une erreur à signaler"
+    : nouvellesReponses ? `${nouvellesReponses} nouvelle${nouvellesReponses > 1 ? "s" : ""} réponse${nouvellesReponses > 1 ? "s" : ""} de l'auteur`
+    : enAttente ? `${enAttente} question${enAttente > 1 ? "s" : ""} en attente de réponse`
+    : "Pose une question, la réponse arrive ici";
+  return (
+    <a class="row access-row messages-row" href={premium ? "#/contact?vue=questions" : "#/contact"}>
+      <Icon name="mail" size={20} />
+      <span class="row-body">
+        <span class="row-title">{premium ? "Mes questions à l'auteur" : "Écrire à l'auteur"}{nouvellesReponses > 0 && <span class="pastille">{nouvellesReponses}</span>}</span>
+        <span class="meta">{detail}</span>
+      </span>
+      <Icon name="chevron_right" />
+    </a>
+  );
+}
 
 export function CarnetScreen() {
   const { saved } = useSaved();
@@ -18,9 +39,7 @@ export function CarnetScreen() {
 
   return (
     <Page>
-      <PageHeader eyebrow="Sur cet appareil" title="Mon carnet">
-        Les œuvres que tu as enregistrées et tes notes, prêtes pour le prochain devoir.
-      </PageHeader>
+      <PageHeader title="Mon espace" compact />
 
       <a class="row access-row" href="#/acces">
         <Icon name="lock" size={20} />
@@ -31,6 +50,10 @@ export function CarnetScreen() {
         <Icon name="chevron_right" />
       </a>
       {!licence() && <p class="small muted access-buy">Pas encore de clé ? <AchatLien label={`Acheter l'accès complet, ${PRICE}`} /></p>}
+      <LigneMessages />
+
+      <h2 class="section-title carnet-titre">Mon carnet</h2>
+      <p class="small muted carnet-intro">Les œuvres que tu as enregistrées et tes notes, prêtes pour le prochain devoir.</p>
 
       {!enregistrees.length && !annotees.length ? (
         <EmptyState title="Ton carnet est vide.">
