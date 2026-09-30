@@ -56,6 +56,7 @@ export async function activer(cle: string): Promise<ErreurActivation | null> {
 
 export function retirer() {
   write(KEY, null);
+  write("mes-questions", []);
 }
 
 /**

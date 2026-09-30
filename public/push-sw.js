@@ -6,7 +6,9 @@ self.addEventListener("push", event => {
   event.waitUntil((async () => {
     let annonce = null;
     try {
-      const r = await fetch(SERVEUR + "/push/dernier", { cache: "no-store" });
+      // L'adresse du téléphone permet de recevoir aussi une notification personnelle (réponse à une question).
+      const endpoint = (await self.registration.pushManager.getSubscription())?.endpoint ?? "";
+      const r = await fetch(SERVEUR + "/push/dernier" + (endpoint ? `?e=${encodeURIComponent(endpoint)}` : ""), { cache: "no-store" });
       annonce = (await r.json()).annonce;
     } catch {
       // Hors connexion ou serveur injoignable : notification générique.

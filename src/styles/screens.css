@@ -264,3 +264,15 @@
 .signaler { margin-top: var(--s6); font-size: var(--text-xs); color: var(--muted); }
 .signaler a { font-weight: 600; }
 .contact-sujets legend { padding: 0; }
+.consignes { margin-bottom: var(--s5); padding: var(--s3) var(--s4); background: var(--surface); border: var(--border) solid var(--line); border-radius: var(--radius-sm); font-size: var(--text-sm); }
+.consignes-titre { font: 700 var(--text-sm)/1.4 var(--font-text); color: var(--ink-strong); margin-bottom: var(--s2); }
+.consignes .bullets { margin: 0; display: flex; flex-direction: column; gap: var(--s1); }
+.contact-premium { margin: calc(-1 * var(--s2)) 0 var(--s5); color: var(--muted); }
+.segment .pastille, .pastille { display: inline-block; min-width: 18px; height: 18px; margin-left: var(--s1); padding: 0 5px; border-radius: 9px; background: var(--orange); color: #fff; font-size: 0.6875rem; font-weight: 700; line-height: 18px; text-align: center; vertical-align: 1px; }
+.questions { list-style: none; margin: 0 0 var(--s6); padding: 0; display: flex; flex-direction: column; gap: var(--s3); }
+.question { display: flex; flex-direction: column; gap: var(--s2); padding: var(--s4); background: var(--surface); border: var(--border) solid var(--line); border-radius: var(--radius-sm); }
+.question-texte { white-space: pre-line; overflow-wrap: anywhere; }
+.question-reponse { display: flex; flex-direction: column; gap: var(--s1); margin-top: var(--s1); padding-left: var(--s3); border-left: 4px solid var(--green); }
+.question-auteur { font-size: var(--text-xs); font-weight: 700; color: var(--green); }
+.question-attente { font-size: var(--text-xs); font-weight: 600; color: var(--ochre-text); }
+.reponse-alerte { margin-bottom: var(--s5); }

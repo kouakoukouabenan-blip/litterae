@@ -4,7 +4,7 @@ import { LockPanel } from "../components/LockPanel";
 import { SUJETS, estComplet, oeuvresCitees } from "../lib/data";
 import { useAccess } from "../lib/access";
 import { NotFound } from "./NotFound";
-import { lienContact } from "../lib/contact";
+import { LigneContact } from "../components/LigneContact";
 
 function Args({ args }: { args: Argument[] }) {
   return (
@@ -84,7 +84,7 @@ export function SujetScreen({ num }: { num: string }) {
           </div>
         )}
         {libre && estComplet(s) && (
-          <p class="signaler">Une erreur dans ce corrigé ? <a href={lienContact("erreur", `#/sujets/${s.num}`, `le sujet ${s.num}`)}>Signale-la</a></p>
+          <LigneContact page={`#/sujets/${s.num}`} objet={`le sujet ${s.num}`} quoi="ce corrigé" />
         )}
 
         <nav class="pager" aria-label="Sujets">

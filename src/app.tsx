@@ -19,6 +19,7 @@ import { ContactScreen } from "./screens/Contact";
 import { reverifier } from "./lib/licence";
 import { demarrerStats, noter } from "./lib/stats";
 import { actualiserContenuLibre } from "./lib/libre";
+import { actualiserQuestions } from "./lib/contact";
 
 function useScrollMemory(key: string) {
   const positions = useRef(new Map<string, number>());
@@ -43,6 +44,9 @@ export function App() {
     reverifier();
     demarrerStats();
     actualiserContenuLibre();
+    // Réponses de l'auteur aux questions (accès complet) : au démarrage et au retour dans l'appli.
+    actualiserQuestions();
+    document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") actualiserQuestions(); });
     // Ouverture depuis une notification : l'adresse porte le numéro du message.
     const depuisNotif = new URLSearchParams(location.search).get("annonce");
     if (depuisNotif) {

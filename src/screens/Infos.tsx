@@ -52,7 +52,7 @@ export function AProposScreen() {
 
           <h2 class="section-title">Accès gratuit et accès complet</h2>
           <p>Gratuit : le cours, la boîte à outils (avec 10 mots du dictionnaire au choix), les {FREE_SUBJECTS} premiers sujets corrigés et {FREE_WORKS} fiches d'œuvres choisies par l'auteur, signalées « Gratuite ».</p>
-          <p>Accès complet : tous les sujets et toutes les fiches, pour {PRICE} payés une seule fois par Mobile Money. Tu reçois une clé d'accès par e-mail, valable sur 2 appareils. <AchatLien label="Acheter une clé sur Chariow" /></p>
+          <p>Accès complet : tous les sujets et toutes les fiches, pour {PRICE} payés une seule fois par Mobile Money, et les réponses de l'auteur à tes questions directement dans l'application. Tu reçois une clé d'accès par e-mail, valable sur 2 appareils. <AchatLien label="Acheter une clé sur Chariow" /></p>
 
           {!installed && (
             <>
@@ -94,6 +94,7 @@ export function CguScreen() {
 
       <h2 class="section-title">5. Accès complet</h2>
       <p>L'accès complet coûte {PRICE} (francs CFA), payés une seule fois. Il ouvre l'ensemble des sujets corrigés et des fiches d'œuvres, y compris ceux ajoutés par la suite, pour la durée de vie du service.</p>
+      <p>L'accès complet permet aussi de poser des questions à l'auteur depuis la page Contact et de recevoir la réponse dans l'application. L'auteur répond dès qu'il le peut, sans délai garanti ; il ne rédige pas les devoirs à la place des élèves et peut ne pas répondre à un message irrespectueux ou hors sujet.</p>
       <p>Le paiement se fait par Mobile Money (Wave, MTN MoMo, Moov Money…) via la plateforme Chariow, qui traite la transaction. Litterae ne voit ni ne conserve tes codes de paiement. <AchatLien label="Page d'achat sur Chariow" /></p>
       <p>Après le paiement, Chariow t'envoie par e-mail une clé d'accès personnelle. Elle s'active sur 2 appareils au maximum. Une clé partagée publiquement ou utilisée frauduleusement peut être désactivée.</p>
       <p>Le contenu étant numérique et disponible immédiatement, il n'y a pas de remboursement une fois l'accès activé, sauf si l'accès ne fonctionne pas et que le problème ne peut pas être résolu : écris alors à l'adresse de contact.</p>
@@ -142,7 +143,7 @@ export function ConfidentialiteScreen() {
       <p>Pour savoir ce qui est utile aux élèves, Litterae envoie à notre serveur des chiffres anonymes : un identifiant tiré au hasard pour ton appareil, le type d'appareil (Android, iPhone ou ordinateur), si l'application est installée, les parties et les fiches d'œuvres ouvertes, et les messages de l'accueil vus ou touchés. Aucun nom, aucune adresse e-mail, aucun numéro n'est envoyé. Ces chiffres sont gardés au plus 13 mois. Le site utilise aussi Cloudflare Web Analytics, qui compte les visites sans cookie et sans suivre les visiteurs d'un site à l'autre.</p>
 
       <h2 class="section-title">Messages envoyés depuis la page Contact</h2>
-      <p>Quand tu écris depuis la page Contact, ton message est envoyé à notre serveur avec le prénom et le contact (WhatsApp ou e-mail) que tu choisis de laisser, la page concernée et le type d'appareil. Ils servent uniquement à lire ton message et à te répondre. L'adresse de connexion n'est pas gardée : seule une empreinte illisible sert à bloquer les envois abusifs pendant une journée. Les messages sont supprimés au plus tard 13 mois après leur lecture.</p>
+      <p>Quand tu écris depuis la page Contact, ton message est envoyé à notre serveur avec le prénom et le contact (WhatsApp ou e-mail) que tu choisis de laisser, la page concernée et le type d'appareil. Ils servent uniquement à lire ton message et à te répondre. L'adresse de connexion n'est pas gardée : seule une empreinte illisible sert à bloquer les envois abusifs pendant une journée. Avec l'accès complet, le message est aussi relié à ta clé d'accès (et, si tu as accepté les notifications, à l'adresse technique de ton téléphone) pour que la réponse te parvienne dans l'application. Les messages sont supprimés au plus tard 13 mois après leur lecture.</p>
 
       <h2 class="section-title">Notifications</h2>
       <p>Si tu acceptes les notifications, ton navigateur fournit une adresse technique d'envoi, gardée sur notre serveur pour t'envoyer les messages de Litterae. Elle ne permet pas de t'identifier. Tu peux arrêter à tout moment depuis la page À propos ou les réglages du navigateur.</p>

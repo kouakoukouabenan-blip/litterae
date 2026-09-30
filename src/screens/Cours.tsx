@@ -6,6 +6,7 @@ import { Annonces, InvitationNotifs } from "../components/Annonces";
 import { useStored } from "../lib/storage";
 import { NB_DETAILLEES, OEUVRES, SUJETS } from "../lib/data";
 import { lienContact } from "../lib/contact";
+import { ReponseAlerte } from "../components/ReponseAlerte";
 
 const MINUTES = LECONS.reduce((n, l) => n + (parseInt(l.duree) || 0), 0);
 
@@ -23,6 +24,7 @@ export function CoursScreen() {
         <p class="lede">{LECONS.length} leçons, {SUJETS.length} sujets corrigés, {OEUVRES.length} œuvres dont {NB_DETAILLEES} fiches détaillées.</p>
       </header>
 
+      <ReponseAlerte />
       <Annonces />
       <InstallBanner />
       <InvitationNotifs />
