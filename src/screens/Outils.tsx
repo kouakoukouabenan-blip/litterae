@@ -6,12 +6,14 @@ import { PageHeader } from "../components/PageHeader";
 import { Icon } from "../components/Icon";
 import { copyText } from "../components/Toast";
 import { href, replaceRoute, useRoute } from "../lib/router";
+import { DicoRecherche, DicoResultats } from "./Dictionnaire";
 
 const O = outils as Outils;
 /** Une rubrique par écran : chaque groupe de formules, puis les connecteurs et les orientations. */
 const COURTS = ["Généralité", "Introduction", "Transition", "Jugement", "Conclusion", "Expressions"];
 const slug = (t: string) => t.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 const VUES = [
+  { id: "dictionnaire", label: "Dictionnaire" },
   ...O.formules.map((g, i) => ({ id: slug(COURTS[i] ?? g.title), label: COURTS[i] ?? g.title })),
   { id: "connecteurs", label: "Connecteurs" },
   { id: "orientations", label: "Orientations" }
@@ -27,12 +29,20 @@ const plain = (text: string) => text.replace(/<\/?em>/g, "");
 export function OutilsScreen() {
   const { params } = useRoute();
   const vue = VUES.some(v => v.id === params.get("vue")) ? params.get("vue")! : VUES[0].id;
-  const groupe = O.formules.find((_, i) => VUES[i].id === vue);
+  const groupe = O.formules.find((_, i) => VUES[i + 1].id === vue);
+  const q = params.get("q") ?? "";
+  const fonction = params.get("fonction");
+  const dico = (nq: string, nf: string | null) => {
+    const p: Record<string, string> = { vue: "dictionnaire" };
+    if (nq) p.q = nq;
+    if (nf) p.fonction = nf;
+    replaceRoute(href(["outils"], p));
+  };
 
   return (
     <Page>
       <PageHeader eyebrow="Pendant la rédaction" title="Boîte à outils" compact>
-        Des formules à adapter, les connecteurs logiques et le vocabulaire de chaque orientation.
+        Le sens des mots des sujets, des formules à adapter, les connecteurs logiques et le vocabulaire de chaque orientation.
       </PageHeader>
 
       <div class="sticky-bar">
@@ -44,9 +54,12 @@ export function OutilsScreen() {
             </button>
           ))}
         </div>
+        {vue === "dictionnaire" && <DicoRecherche q={q} onChange={nq => dico(nq, fonction)} />}
       </div>
 
-      <div class="reading reading-left" role="tabpanel">
+      {vue === "dictionnaire" && <DicoResultats q={q} fonction={fonction} onChange={dico} />}
+
+      {vue !== "dictionnaire" && <div class="reading reading-left" role="tabpanel">
         {groupe && [groupe].map(g => (
           <section key={g.title} class="tool-group">
             <h2 class="section-title">{g.title}</h2>
@@ -81,7 +94,7 @@ export function OutilsScreen() {
             <p class="small muted">{o.oppose}</p>
           </section>
         ))}
-      </div>
+      </div>}
     </Page>
   );
 }

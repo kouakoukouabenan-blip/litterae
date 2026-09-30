@@ -43,7 +43,7 @@ export function AProposScreen() {
             <dt><Icon name="local_library" />Le moteur de recherche d'œuvres</dt>
             <dd>{OEUVRES.length} œuvres, dont {NB_DETAILLEES} fiches détaillées (résumé complet, idées d'illustration, phrase d'exemple) ; les autres sont des fiches courtes pour repérer une œuvre par thème. Cherche par titre, auteur, thème ou mot-clé, puis combine les filtres : fonction littéraire, thème, genre, aire géographique, pays, idée d'argument.</dd>
             <dt><Icon name="inventory_2" />La boîte à outils</dt>
-            <dd>Formules d'introduction, de transition et de conclusion à copier, connecteurs logiques, vocabulaire de chaque orientation.</dd>
+            <dd>Dictionnaire littéraire avec recherche (le sens des mots des sujets et leur fonction), formules d'introduction, de transition et de conclusion à copier, connecteurs logiques, vocabulaire de chaque orientation.</dd>
             <dt><Icon name="bookmarks" />Le carnet</dt>
             <dd>Enregistre des œuvres et écris tes notes personnelles pour tes devoirs. Tout reste sur ton appareil.</dd>
             <dt><Icon name="wifi_off" />Sans connexion</dt>

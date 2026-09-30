@@ -1,0 +1,1077 @@
+{
+ "guide": [
+  {
+   "titre": "À quoi sert ce dictionnaire ?",
+   "blocs": [
+    "Un sujet de dissertation contient des mots qui ont plusieurs sens. Si tu choisis le mauvais, tu fais un contresens : tu reformules mal la thèse, et tout ton devoir part à côté. Ce petit dictionnaire te donne, pour chaque mot, tous ses sens possibles et la fonction littéraire à laquelle il renvoie.",
+    "Astuce : Le dictionnaire de la langue donne le sens général. Ici, tu apprends le sens dans un sujet de dissertation. Le sens qui compte est celui qui colle au reste de la phrase."
+   ]
+  },
+  {
+   "titre": "Quand l'utiliser",
+   "blocs": [
+    [
+     "À l'étape des mots-clés, pour expliquer les mots importants du sujet",
+     "À l'étape de la reformulation, pour remplacer un mot ou une image par un mot simple",
+     "Pour trouver l'orientation : chaque entrée indique la fonction la plus probable",
+     "Pour enrichir ton vocabulaire dans les explications d'arguments"
+    ]
+   ]
+  },
+  {
+   "titre": "Comment lire une entrée",
+   "blocs": [
+    "Chaque entrée suit le même schéma : le MOT, sa nature entre parenthèses, puis ses sens séparés par des points-virgules. Une indication de fonction (engagement, esthétique, évasion, lyrique, social) précise vers quelle orientation le mot pousse. Un exemple montre le mot dans un sujet.",
+    "Astuce : Quand un mot a plusieurs sens, lis toute la phrase du sujet, puis garde le sens qui garde la phrase cohérente. Vérifie ensuite qu'il correspond à l'orientation que tu as trouvée."
+   ]
+  },
+  {
+   "titre": "Exemple d'utilisation pas à pas",
+   "blocs": [
+    "Sujet : « Faire de la littérature, c'est s'armer pour se faire l'écho de ceux qui n'ont pas de voix. »",
+    [
+     "« S'armer » : voir COMBAT, se donner les moyens de lutter",
+     "« Se faire l'écho » : voir ÉCHO, faire entendre, relayer",
+     "« Ceux qui n'ont pas de voix » : voir VOIX, ceux qu'on n'écoute pas, les opprimés",
+     "Orientation : engagement",
+     "Reformulation : la littérature défend et fait entendre les opprimés"
+    ]
+   ]
+  }
+ ],
+ "entrees": [
+  {
+   "mot": "ACQUIESCER",
+   "nature": "verbe",
+   "fonctions": [
+    "Engagement"
+   ]
+  },
+  {
+   "mot": "AFFIRMATION (ASSERTION, CONCEPTION, OPINION, POINT DE VUE)",
+   "nature": "noms"
+  },
+  {
+   "mot": "AILLEURS",
+   "nature": "nom",
+   "fonctions": [
+    "Évasion"
+   ]
+  },
+  {
+   "mot": "ÂME",
+   "nature": "nom",
+   "fonctions": [
+    "Lyrique"
+   ]
+  },
+  {
+   "mot": "AMERTUME",
+   "nature": "nom",
+   "fonctions": [
+    "Engagement",
+    "Lyrique"
+   ]
+  },
+  {
+   "mot": "AMOUR",
+   "nature": "nom",
+   "fonctions": [
+    "Lyrique"
+   ]
+  },
+  {
+   "mot": "AMUSER / S'AMUSER",
+   "nature": "verbe",
+   "fonctions": [
+    "Évasion"
+   ]
+  },
+  {
+   "mot": "ANTITHÈSE",
+   "nature": "nom"
+  },
+  {
+   "mot": "ART",
+   "nature": "nom",
+   "fonctions": [
+    "Esthétique"
+   ]
+  },
+  {
+   "mot": "ART POUR L'ART",
+   "nature": "expression",
+   "fonctions": [
+    "Esthétique"
+   ]
+  },
+  {
+   "mot": "ARTISTE",
+   "nature": "nom"
+  },
+  {
+   "mot": "ASSERVISSEMENT / ASSERVI",
+   "nature": "nom / adjectif",
+   "fonctions": [
+    "Engagement"
+   ]
+  },
+  {
+   "mot": "ASSUJETTI",
+   "nature": "adjectif",
+   "fonctions": [
+    "Esthétique"
+   ]
+  },
+  {
+   "mot": "AUTEUR",
+   "nature": "nom"
+  },
+  {
+   "mot": "AUTOBIOGRAPHIE",
+   "nature": "nom",
+   "fonctions": [
+    "Lyrique",
+    "Sociale"
+   ]
+  },
+  {
+   "mot": "BEAU / BEAUTÉ",
+   "nature": "adjectif / nom",
+   "fonctions": [
+    "Esthétique"
+   ]
+  },
+  {
+   "mot": "BIEN",
+   "nature": "nom",
+   "fonctions": [
+    "Engagement"
+   ]
+  },
+  {
+   "mot": "CATHARSIS",
+   "nature": "nom",
+   "fonctions": [
+    "Lyrique"
+   ]
+  },
+  {
+   "mot": "CENSURE",
+   "nature": "nom",
+   "fonctions": [
+    "Engagement"
+   ]
+  },
+  {
+   "mot": "COLONISATION / COLONIALISME",
+   "nature": "noms",
+   "fonctions": [
+    "Engagement"
+   ]
+  },
+  {
+   "mot": "COMBAT",
+   "nature": "nom",
+   "fonctions": [
+    "Engagement"
+   ]
+  },
+  {
+   "mot": "COMIQUE",
+   "nature": "adjectif / nom",
+   "fonctions": [
+    "Évasion"
+   ]
+  },
+  {
+   "mot": "CONSCIENCE",
+   "nature": "nom",
+   "fonctions": [
+    "Engagement"
+   ]
+  },
+  {
+   "mot": "CONTE",
+   "nature": "nom",
+   "fonctions": [
+    "Évasion"
+   ]
+  },
+  {
+   "mot": "CONVICTION",
+   "nature": "nom",
+   "fonctions": [
+    "Engagement"
+   ]
+  },
+  {
+   "mot": "COURANT LITTÉRAIRE",
+   "nature": "nom"
+  },
+  {
+   "mot": "CRÉATION / CRÉER",
+   "nature": "nom / verbe",
+   "fonctions": [
+    "Esthétique"
+   ]
+  },
+  {
+   "mot": "CRITIQUE",
+   "nature": "nom / verbe"
+  },
+  {
+   "mot": "CROISADE",
+   "nature": "nom",
+   "fonctions": [
+    "Engagement"
+   ]
+  },
+  {
+   "mot": "CULTURE",
+   "nature": "nom",
+   "fonctions": [
+    "Engagement",
+    "Sociale"
+   ]
+  },
+  {
+   "mot": "DÉNONCER / DÉNONCIATION",
+   "nature": "verbe / nom",
+   "fonctions": [
+    "Engagement"
+   ]
+  },
+  {
+   "mot": "DÉPAYSER / DÉPAYSEMENT",
+   "nature": "verbe / nom",
+   "fonctions": [
+    "Évasion"
+   ]
+  },
+  {
+   "mot": "DICTATURE",
+   "nature": "nom",
+   "fonctions": [
+    "Engagement"
+   ]
+  },
+  {
+   "mot": "DIDACTIQUE",
+   "nature": "adjectif",
+   "fonctions": [
+    "Engagement"
+   ]
+  },
+  {
+   "mot": "DISSIMULATION",
+   "nature": "nom",
+   "fonctions": [
+    "Engagement"
+   ]
+  },
+  {
+   "mot": "DISTRACTION",
+   "nature": "nom",
+   "fonctions": [
+    "Évasion"
+   ]
+  },
+  {
+   "mot": "DIVERTIR / DIVERTISSEMENT",
+   "nature": "verbe / nom",
+   "fonctions": [
+    "Évasion"
+   ]
+  },
+  {
+   "mot": "DRAMATURGE",
+   "nature": "nom"
+  },
+  {
+   "mot": "DYSTOPIE",
+   "nature": "nom",
+   "fonctions": [
+    "Engagement"
+   ]
+  },
+  {
+   "mot": "ÉCHO",
+   "nature": "nom",
+   "fonctions": [
+    "Engagement"
+   ]
+  },
+  {
+   "mot": "ÉCLAIRER / ÉCLAIREUR",
+   "nature": "verbe / nom",
+   "fonctions": [
+    "Engagement"
+   ]
+  },
+  {
+   "mot": "ÉCRIRE / ÉCRITURE",
+   "nature": "verbe / nom"
+  },
+  {
+   "mot": "ÉCRIVAIN",
+   "nature": "nom"
+  },
+  {
+   "mot": "ÉDUCATION / ÉDUQUER",
+   "nature": "nom / verbe",
+   "fonctions": [
+    "Engagement"
+   ]
+  },
+  {
+   "mot": "ÉMOTION",
+   "nature": "nom",
+   "fonctions": [
+    "Lyrique"
+   ]
+  },
+  {
+   "mot": "EMPREINTE",
+   "nature": "nom",
+   "fonctions": [
+    "Sociale"
+   ]
+  },
+  {
+   "mot": "ENGAGEMENT / ENGAGÉ",
+   "nature": "nom / adjectif",
+   "fonctions": [
+    "Engagement"
+   ]
+  },
+  {
+   "mot": "ENNUI",
+   "nature": "nom",
+   "fonctions": [
+    "Évasion"
+   ]
+  },
+  {
+   "mot": "ÉPOPÉE",
+   "nature": "nom",
+   "fonctions": [
+    "Sociale"
+   ]
+  },
+  {
+   "mot": "ESPÉRANCE / ESPOIR",
+   "nature": "noms",
+   "fonctions": [
+    "Engagement"
+   ]
+  },
+  {
+   "mot": "ESTHÉTIQUE",
+   "nature": "adjectif / nom",
+   "fonctions": [
+    "Esthétique"
+   ]
+  },
+  {
+   "mot": "ÉVASION",
+   "nature": "nom",
+   "fonctions": [
+    "Évasion"
+   ]
+  },
+  {
+   "mot": "EXALTER / EXALTATION",
+   "nature": "verbe / nom",
+   "fonctions": [
+    "Esthétique"
+   ]
+  },
+  {
+   "mot": "EXPÉRIENCE",
+   "nature": "nom",
+   "fonctions": [
+    "Lyrique"
+   ]
+  },
+  {
+   "mot": "EXPRIMER / EXPRESSION",
+   "nature": "verbe / nom",
+   "fonctions": [
+    "Lyrique"
+   ]
+  },
+  {
+   "mot": "FABLE",
+   "nature": "nom"
+  },
+  {
+   "mot": "FANTASME",
+   "nature": "nom",
+   "fonctions": [
+    "Évasion"
+   ]
+  },
+  {
+   "mot": "FANTASTIQUE",
+   "nature": "adjectif / nom",
+   "fonctions": [
+    "Évasion"
+   ]
+  },
+  {
+   "mot": "FICTION",
+   "nature": "nom",
+   "fonctions": [
+    "Évasion"
+   ]
+  },
+  {
+   "mot": "FONCTION",
+   "nature": "nom"
+  },
+  {
+   "mot": "FOND ET FORME",
+   "nature": "expression",
+   "fonctions": [
+    "Engagement",
+    "Esthétique"
+   ]
+  },
+  {
+   "mot": "FORMATION",
+   "nature": "nom",
+   "fonctions": [
+    "Engagement"
+   ]
+  },
+  {
+   "mot": "GENRE LITTÉRAIRE",
+   "nature": "nom"
+  },
+  {
+   "mot": "GUIDE",
+   "nature": "nom",
+   "fonctions": [
+    "Engagement"
+   ]
+  },
+  {
+   "mot": "HISTOIRE",
+   "nature": "nom"
+  },
+  {
+   "mot": "HISTORIEN",
+   "nature": "nom",
+   "fonctions": [
+    "Sociale"
+   ]
+  },
+  {
+   "mot": "HYPOCRISIE",
+   "nature": "nom",
+   "fonctions": [
+    "Engagement"
+   ]
+  },
+  {
+   "mot": "IDENTITÉ",
+   "nature": "nom",
+   "fonctions": [
+    "Engagement",
+    "Sociale"
+   ]
+  },
+  {
+   "mot": "IDÉOLOGIE",
+   "nature": "nom"
+  },
+  {
+   "mot": "IMAGINAIRE",
+   "nature": "adjectif / nom",
+   "fonctions": [
+    "Évasion"
+   ]
+  },
+  {
+   "mot": "IMAGINATION",
+   "nature": "nom",
+   "fonctions": [
+    "Esthétique",
+    "Évasion"
+   ]
+  },
+  {
+   "mot": "INDIFFÉRENCE",
+   "nature": "nom"
+  },
+  {
+   "mot": "INFORMATION",
+   "nature": "nom",
+   "fonctions": [
+    "Engagement"
+   ]
+  },
+  {
+   "mot": "INJUSTICE",
+   "nature": "nom",
+   "fonctions": [
+    "Engagement"
+   ]
+  },
+  {
+   "mot": "INSPIRATION",
+   "nature": "nom",
+   "fonctions": [
+    "Esthétique",
+    "Lyrique"
+   ]
+  },
+  {
+   "mot": "INSTRUIRE",
+   "nature": "verbe",
+   "fonctions": [
+    "Engagement",
+    "Évasion"
+   ]
+  },
+  {
+   "mot": "INSURRECTION",
+   "nature": "nom",
+   "fonctions": [
+    "Engagement"
+   ]
+  },
+  {
+   "mot": "INTRIGUE",
+   "nature": "nom",
+   "fonctions": [
+    "Évasion"
+   ]
+  },
+  {
+   "mot": "IRONIE",
+   "nature": "nom",
+   "fonctions": [
+    "Engagement"
+   ]
+  },
+  {
+   "mot": "LÂCHE / LÂCHETÉ",
+   "nature": "adjectif / nom",
+   "fonctions": [
+    "Engagement"
+   ]
+  },
+  {
+   "mot": "LANGUE ET LANGAGE",
+   "nature": "noms",
+   "fonctions": [
+    "Esthétique"
+   ]
+  },
+  {
+   "mot": "LARMES",
+   "nature": "nom"
+  },
+  {
+   "mot": "LECTEUR",
+   "nature": "nom"
+  },
+  {
+   "mot": "LIBERTÉ",
+   "nature": "nom",
+   "fonctions": [
+    "Engagement"
+   ]
+  },
+  {
+   "mot": "LITTÉRATURE",
+   "nature": "nom"
+  },
+  {
+   "mot": "LUTTE",
+   "nature": "nom",
+   "fonctions": [
+    "Engagement"
+   ]
+  },
+  {
+   "mot": "LYRIQUE / LYRISME",
+   "nature": "adjectif / nom",
+   "fonctions": [
+    "Lyrique"
+   ]
+  },
+  {
+   "mot": "MÉMOIRE",
+   "nature": "nom",
+   "fonctions": [
+    "Sociale"
+   ]
+  },
+  {
+   "mot": "MENSONGE",
+   "nature": "nom",
+   "fonctions": [
+    "Engagement"
+   ]
+  },
+  {
+   "mot": "MESSAGE",
+   "nature": "nom",
+   "fonctions": [
+    "Engagement"
+   ]
+  },
+  {
+   "mot": "MILITANT",
+   "nature": "adjectif / nom",
+   "fonctions": [
+    "Engagement"
+   ]
+  },
+  {
+   "mot": "MIROIR",
+   "nature": "nom",
+   "fonctions": [
+    "Sociale"
+   ]
+  },
+  {
+   "mot": "MONDE",
+   "nature": "nom",
+   "fonctions": [
+    "Engagement"
+   ]
+  },
+  {
+   "mot": "MORALE",
+   "nature": "nom",
+   "fonctions": [
+    "Engagement"
+   ]
+  },
+  {
+   "mot": "MOT",
+   "nature": "nom"
+  },
+  {
+   "mot": "MYTHE",
+   "nature": "nom",
+   "fonctions": [
+    "Évasion"
+   ]
+  },
+  {
+   "mot": "NATURALISME",
+   "nature": "nom",
+   "fonctions": [
+    "Engagement",
+    "Sociale"
+   ]
+  },
+  {
+   "mot": "NÉGRITUDE",
+   "nature": "nom",
+   "fonctions": [
+    "Engagement"
+   ]
+  },
+  {
+   "mot": "NOUVEAU ROMAN",
+   "nature": "nom",
+   "fonctions": [
+    "Esthétique"
+   ]
+  },
+  {
+   "mot": "ŒUVRE",
+   "nature": "nom"
+  },
+  {
+   "mot": "OPPRESSION / OPPRIMÉ",
+   "nature": "nom / adjectif",
+   "fonctions": [
+    "Engagement"
+   ]
+  },
+  {
+   "mot": "OPPROBRE",
+   "nature": "nom",
+   "fonctions": [
+    "Engagement"
+   ]
+  },
+  {
+   "mot": "ORALITÉ",
+   "nature": "nom"
+  },
+  {
+   "mot": "ORNEMENT",
+   "nature": "nom",
+   "fonctions": [
+    "Esthétique"
+   ]
+  },
+  {
+   "mot": "PASSE-TEMPS",
+   "nature": "nom",
+   "fonctions": [
+    "Évasion"
+   ]
+  },
+  {
+   "mot": "PEINDRE / PEINTURE",
+   "nature": "verbe / nom",
+   "fonctions": [
+    "Sociale"
+   ]
+  },
+  {
+   "mot": "PENSEUR",
+   "nature": "nom"
+  },
+  {
+   "mot": "PEUPLE",
+   "nature": "nom",
+   "fonctions": [
+    "Engagement"
+   ]
+  },
+  {
+   "mot": "PLAIRE",
+   "nature": "verbe",
+   "fonctions": [
+    "Esthétique",
+    "Évasion"
+   ]
+  },
+  {
+   "mot": "PLAISIR",
+   "nature": "nom",
+   "fonctions": [
+    "Esthétique",
+    "Évasion"
+   ]
+  },
+  {
+   "mot": "POÉSIE / POÈTE / POÈME",
+   "nature": "noms",
+   "fonctions": [
+    "Engagement",
+    "Esthétique",
+    "Lyrique"
+   ]
+  },
+  {
+   "mot": "PORTE-PAROLE",
+   "nature": "nom",
+   "fonctions": [
+    "Engagement"
+   ]
+  },
+  {
+   "mot": "POUVOIR",
+   "nature": "nom"
+  },
+  {
+   "mot": "PROBLÉMATIQUE",
+   "nature": "nom"
+  },
+  {
+   "mot": "PROSE",
+   "nature": "nom"
+  },
+  {
+   "mot": "PUBLIC",
+   "nature": "nom"
+  },
+  {
+   "mot": "QUÊTE",
+   "nature": "nom",
+   "fonctions": [
+    "Esthétique",
+    "Évasion"
+   ]
+  },
+  {
+   "mot": "QUOTIDIEN",
+   "nature": "nom / adjectif",
+   "fonctions": [
+    "Évasion"
+   ]
+  },
+  {
+   "mot": "RÉALISME",
+   "nature": "nom",
+   "fonctions": [
+    "Sociale"
+   ]
+  },
+  {
+   "mot": "RÉALITÉ",
+   "nature": "nom",
+   "fonctions": [
+    "Engagement",
+    "Sociale"
+   ]
+  },
+  {
+   "mot": "RÉCIT",
+   "nature": "nom",
+   "fonctions": [
+    "Évasion"
+   ]
+  },
+  {
+   "mot": "REFLET / REFLÉTER",
+   "nature": "nom / verbe",
+   "fonctions": [
+    "Sociale"
+   ]
+  },
+  {
+   "mot": "RÊVE",
+   "nature": "nom",
+   "fonctions": [
+    "Évasion"
+   ]
+  },
+  {
+   "mot": "RÉVOLTE / RÉVOLUTION / RÉVOLUTIONNAIRE",
+   "nature": "noms / adjectif",
+   "fonctions": [
+    "Engagement"
+   ]
+  },
+  {
+   "mot": "RIRE",
+   "nature": "nom / verbe",
+   "fonctions": [
+    "Engagement",
+    "Évasion"
+   ]
+  },
+  {
+   "mot": "ROMAN / ROMANCIER",
+   "nature": "noms"
+  },
+  {
+   "mot": "ROMANTISME",
+   "nature": "nom",
+   "fonctions": [
+    "Lyrique"
+   ]
+  },
+  {
+   "mot": "SATIRE",
+   "nature": "nom",
+   "fonctions": [
+    "Engagement"
+   ]
+  },
+  {
+   "mot": "SENSIBILITÉ",
+   "nature": "nom",
+   "fonctions": [
+    "Lyrique"
+   ]
+  },
+  {
+   "mot": "SENTIMENT",
+   "nature": "nom",
+   "fonctions": [
+    "Lyrique"
+   ]
+  },
+  {
+   "mot": "SILENCE / SILENCIEUX",
+   "nature": "nom / adjectif",
+   "fonctions": [
+    "Engagement"
+   ]
+  },
+  {
+   "mot": "SOCIÉTÉ",
+   "nature": "nom",
+   "fonctions": [
+    "Sociale"
+   ]
+  },
+  {
+   "mot": "SOUFFRANCE",
+   "nature": "nom",
+   "fonctions": [
+    "Engagement",
+    "Lyrique"
+   ]
+  },
+  {
+   "mot": "SPECTACLE",
+   "nature": "nom"
+  },
+  {
+   "mot": "STYLE",
+   "nature": "nom",
+   "fonctions": [
+    "Esthétique"
+   ]
+  },
+  {
+   "mot": "STYLISTIQUE",
+   "nature": "nom"
+  },
+  {
+   "mot": "SURRÉALISME",
+   "nature": "nom",
+   "fonctions": [
+    "Esthétique",
+    "Évasion"
+   ]
+  },
+  {
+   "mot": "SYMBOLE",
+   "nature": "nom"
+  },
+  {
+   "mot": "TÉMOIGNAGE / TÉMOIN",
+   "nature": "nom",
+   "fonctions": [
+    "Engagement",
+    "Sociale"
+   ]
+  },
+  {
+   "mot": "THÉÂTRE",
+   "nature": "nom"
+  },
+  {
+   "mot": "THÈME",
+   "nature": "nom"
+  },
+  {
+   "mot": "THÉORÈME",
+   "nature": "nom"
+  },
+  {
+   "mot": "THÉRAPIE",
+   "nature": "nom",
+   "fonctions": [
+    "Lyrique"
+   ]
+  },
+  {
+   "mot": "THÈSE",
+   "nature": "nom"
+  },
+  {
+   "mot": "TOTALITARISME",
+   "nature": "nom",
+   "fonctions": [
+    "Engagement"
+   ]
+  },
+  {
+   "mot": "TRADITION",
+   "nature": "nom",
+   "fonctions": [
+    "Sociale"
+   ]
+  },
+  {
+   "mot": "TRANSFORMATION",
+   "nature": "nom",
+   "fonctions": [
+    "Engagement"
+   ]
+  },
+  {
+   "mot": "TRIBUNE",
+   "nature": "nom",
+   "fonctions": [
+    "Engagement"
+   ]
+  },
+  {
+   "mot": "UTILE / UTILITÉ",
+   "nature": "adjectif / nom",
+   "fonctions": [
+    "Engagement"
+   ]
+  },
+  {
+   "mot": "UTOPIE",
+   "nature": "nom",
+   "fonctions": [
+    "Engagement",
+    "Évasion"
+   ]
+  },
+  {
+   "mot": "VÉCU",
+   "nature": "nom",
+   "fonctions": [
+    "Lyrique",
+    "Sociale"
+   ]
+  },
+  {
+   "mot": "VERBE",
+   "nature": "nom",
+   "fonctions": [
+    "Esthétique"
+   ]
+  },
+  {
+   "mot": "VÉRITÉ",
+   "nature": "nom",
+   "fonctions": [
+    "Engagement"
+   ]
+  },
+  {
+   "mot": "VERS",
+   "nature": "nom"
+  },
+  {
+   "mot": "VIE",
+   "nature": "nom"
+  },
+  {
+   "mot": "VIGIE",
+   "nature": "nom",
+   "fonctions": [
+    "Engagement"
+   ]
+  },
+  {
+   "mot": "VOCATION",
+   "nature": "nom",
+   "fonctions": [
+    "Engagement"
+   ]
+  },
+  {
+   "mot": "VOIX",
+   "nature": "nom",
+   "fonctions": [
+    "Engagement"
+   ]
+  },
+  {
+   "mot": "VOYAGE",
+   "nature": "nom",
+   "fonctions": [
+    "Évasion"
+   ]
+  },
+  {
+   "mot": "VRAISEMBLANCE",
+   "nature": "nom",
+   "fonctions": [
+    "Sociale"
+   ]
+  }
+ ]
+}

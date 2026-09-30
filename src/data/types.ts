@@ -91,6 +91,25 @@ export interface Outils {
   orientations: { titre: string; mots: string[]; oppose: string }[];
 }
 
+/** Une entrée du dictionnaire littéraire (mots des sujets de dissertation). */
+export interface EntreeDico {
+  mot: string;
+  nature: string;
+  sens: string;
+  /** Indication de fonction telle que rédigée par l'auteur (avec ses nuances). */
+  fonction?: string;
+  /** Fonctions reconnues, pour les filtres et les couleurs. */
+  fonctions?: Fonction[];
+  note?: string;
+  oeuvres?: string[];
+  exemples?: string[];
+}
+
+export interface Dictionnaire {
+  guide: { titre: string; blocs: (string | string[])[] }[];
+  entrees: EntreeDico[];
+}
+
 /** Contenu payant renvoyé par le serveur après validation d'une clé. */
 export interface ContenuPayant {
   version: number;

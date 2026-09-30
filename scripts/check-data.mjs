@@ -4,6 +4,7 @@ import { readFileSync } from "node:fs";
 const load = f => JSON.parse(readFileSync(new URL(`../src/data/${f}`, import.meta.url), "utf8"));
 const oeuvres = load("oeuvres.json");
 const sujets = load("sujets.json");
+const dico = load("dictionnaire.json");
 const FONCTIONS = ["Engagement", "Esthétique", "Évasion", "Lyrique", "Sociale"];
 const errors = [];
 const err = (where, msg) => errors.push(`${where} : ${msg}`);
@@ -23,6 +24,15 @@ for (const w of oeuvres) {
   if (!w.libre && (w.resume || w.idees?.some(i => i.texte))) err(at, "contenu payant présent dans les données publiques");
 }
 if (oeuvres.filter(w => w.libre).length !== 10) err("œuvres", "il faut exactement 10 fiches gratuites");
+
+const motsDico = new Set();
+for (const e of dico.entrees) {
+  const at = `dictionnaire « ${e.mot} »`;
+  if (!e.mot?.trim() || !e.sens?.trim()) err(at, "mot ou sens manquant");
+  if (motsDico.has(e.mot)) err(at, "mot en double");
+  motsDico.add(e.mot);
+  for (const f of e.fonctions ?? []) if (!FONCTIONS.includes(f)) err(at, `fonction inconnue « ${f} »`);
+}
 
 const nums = new Set();
 for (const s of sujets) {
