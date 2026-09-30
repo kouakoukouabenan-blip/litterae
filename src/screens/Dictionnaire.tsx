@@ -194,25 +194,25 @@ export function DicoResultats({ q, fonction, onChange }: { q: string; fonction: 
   // Carte du mot ouvert.
   const [ouvert, setOuvert] = useState<string | null>(null);
   const [etat, setEtat] = useState<Etat | null>(null);
-  const carte = useRef<HTMLDialogElement>(null);
   const entreeOuverte = ouvert ? entrees.find(e => e.mot === ouvert) : undefined;
-  useEffect(() => {
-    const d = carte.current;
-    if (!d) return;
-    if (ouvert && !d.open) d.showModal();
-    if (!ouvert && d.open) d.close();
-  }, [ouvert]);
+  // Position dans la liste, retrouvée en refermant la carte.
+  const position = useRef(0);
   const ouvrir = async (mot: string) => {
+    if (!ouvert) position.current = scrollY;
     setOuvert(mot);
+    scrollTo(0, 0);
     const e = entrees.find(x => x.mot === mot);
     if (!e || complete(e)) { setEtat(null); return; }
     setEtat("chargement");
     const r = await consulter(mot);
     setEtat(typeof r === "string" ? r : null);
   };
-  const fermer = () => setOuvert(null);
+  const fermer = () => {
+    setOuvert(null);
+    requestAnimationFrame(() => scrollTo(0, position.current));
+  };
   // Une nouvelle recherche (lien, retour) referme la carte.
-  useEffect(fermer, [q, fonction]);
+  useEffect(() => setOuvert(null), [q, fonction]);
   // Renvoi « voir COMBAT » : ouvre directement la carte du mot quand il existe.
   const voir = (mot: string) => {
     const n = normalize(mot);
@@ -224,6 +224,28 @@ export function DicoResultats({ q, fonction, onChange }: { q: string; fonction: 
 
   const parcours = !normalize(q) && !fonction;
   const liste = !parcours || tous;
+
+  // Carte d'un mot : elle prend la place de la liste, sous la recherche qui reste visible.
+  if (entreeOuverte) return (
+    <div class="reading reading-left dico">
+      <article class={`dico-carte ${entreeOuverte.fonctions?.[0] ? fnClass(entreeOuverte.fonctions[0]) : ""}`} aria-labelledby="dico-carte-titre">
+        <div class="dico-carte-tete">
+          <button type="button" class="link-btn dico-retour" onClick={fermer}><Icon name="arrow_back" size={18} />Retour aux mots</button>
+          <h2 id="dico-carte-titre" class="dico-tete">
+            <span class="dico-mot">{entreeOuverte.mot}</span>{" "}
+            <span class="dico-nature">{entreeOuverte.nature}</span>
+          </h2>
+        </div>
+        <div class="dico-carte-corps">
+          {complete(entreeOuverte) ? <Details e={entreeOuverte} onVoir={voir} onFonction={filtrer} />
+            : etat === "limite" ? <Verrou />
+            : etat === "chargement" ? <p class="muted">Un instant…</p>
+            : etat === "hors-ligne" ? <p class="muted">Connecte-toi à Internet pour voir ce mot.</p>
+            : <p class="dico-ouvrir"><span class="muted">Le serveur ne répond pas.</span><button type="button" class="btn btn-secondary" onClick={() => ouvrir(entreeOuverte.mot)}>Réessayer</button></p>}
+        </div>
+      </article>
+    </div>
+  );
 
   return (
     <div class="reading reading-left dico">
@@ -264,7 +286,7 @@ export function DicoResultats({ q, fonction, onChange }: { q: string; fonction: 
                 <Fragment key={e.mot}>
                   {nouvelle && <li class="dico-lettre" aria-hidden="true">{lettre}</li>}
                   <li class={fn ? fnClass(fn) : ""}>
-                    <button type="button" class="dico-ligne" onClick={() => ouvrir(e.mot)} aria-haspopup="dialog">
+                    <button type="button" class="dico-ligne" onClick={() => ouvrir(e.mot)} >
                       <span class="dico-ligne-texte">
                         <span class="dico-mot"><Highlight text={e.mot} terms={terms} /></span>{" "}
                         <span class="dico-nature">{e.nature}</span>
@@ -285,27 +307,6 @@ export function DicoResultats({ q, fonction, onChange }: { q: string; fonction: 
         </EmptyState>
       )}
 
-      <dialog ref={carte} class="sheet dico-carte" aria-labelledby="dico-carte-titre" onClose={fermer}
-        onClick={e => e.target === carte.current && fermer()}>
-        {entreeOuverte && (
-          <>
-            <div class={`sheet-head dico-carte-tete ${entreeOuverte.fonctions?.[0] ? fnClass(entreeOuverte.fonctions[0]) : ""}`}>
-              <h2 id="dico-carte-titre" class="dico-tete">
-                <span class="dico-mot">{entreeOuverte.mot}</span>{" "}
-                <span class="dico-nature">{entreeOuverte.nature}</span>
-              </h2>
-              <button type="button" class="icon-btn" onClick={fermer} aria-label="Fermer"><Icon name="close" /></button>
-            </div>
-            <div class="sheet-body">
-              {complete(entreeOuverte) ? <Details e={entreeOuverte} onVoir={voir} onFonction={filtrer} />
-                : etat === "limite" ? <Verrou />
-                : etat === "chargement" ? <p class="muted">Un instant…</p>
-                : etat === "hors-ligne" ? <p class="muted">Connecte-toi à Internet pour voir ce mot.</p>
-                : <p class="dico-ouvrir"><span class="muted">Le serveur ne répond pas.</span><button type="button" class="btn btn-secondary" onClick={() => ouvrir(entreeOuverte.mot)}>Réessayer</button></p>}
-            </div>
-          </>
-        )}
-      </dialog>
     </div>
   );
 }

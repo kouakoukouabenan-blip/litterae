@@ -234,16 +234,12 @@
 .dico-ligne > .icon { color: var(--muted); }
 .dico-ligne .dico-mot { font-size: var(--text-sm); }
 .dico-tous { align-self: center; margin-top: var(--s2); color: var(--muted); font-weight: 600; }
-.dico-carte .sheet-head { align-items: flex-start; padding-top: var(--s3); }
-.dico-carte-tete { border-top: 5px solid var(--fn, var(--line-strong)); }
-.dico-carte h2 { padding-top: var(--s1); }
-.dico-carte .dico-mot { font-size: var(--text-lg); }
 .dico-details { display: flex; flex-direction: column; gap: var(--s3); }
 .dico-carte .dico-sens { font-size: var(--text-md); }
-/* Carte d'un mot : plein écran sur téléphone */
-@media (max-width: 719px) {
-  .dico-carte { width: 100%; max-width: none; height: 100dvh; max-height: none; margin: 0; border-radius: 0; }
-  .dico-carte .sheet-head { padding-top: calc(var(--s3) + env(safe-area-inset-top)); }
-  .dico-carte .sheet-body { padding-bottom: calc(var(--s6) + env(safe-area-inset-bottom)); }
-}
-@media (min-width: 720px) { .dico-carte { max-width: 40rem; } }
+/* Carte d'un mot : à la place de la liste, sous la barre de recherche */
+.dico-carte { background: var(--surface); border: var(--border) solid var(--line); border-top: 5px solid var(--fn, var(--line-strong)); border-radius: var(--radius); min-height: calc(100dvh - 22rem); }
+.dico-carte-tete { display: flex; flex-direction: column; align-items: flex-start; gap: var(--s1); padding: var(--s2) var(--s4) var(--s3); border-bottom: 1px solid var(--line); }
+.dico-retour { gap: var(--s1); }
+.dico-carte .dico-mot { font-size: var(--text-lg); }
+.dico-carte-corps { padding: var(--s4); }
+.dico-carte .dico-sens { font-size: var(--text-md); }
