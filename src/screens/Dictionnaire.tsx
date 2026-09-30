@@ -15,6 +15,8 @@ import { AchatLien } from "../components/Achat";
 import { useAccess } from "../lib/access";
 import { DICO_GRATUITS, consulter, dicoComplet, useConsultes, type EchecConsultation } from "../lib/dictionnaire";
 import { lienContact } from "../lib/contact";
+import { useVerrou } from "../components/LockPanel";
+import { noter, noterRecherche } from "../lib/stats";
 
 const D = dico as Dictionnaire;
 
@@ -135,6 +137,7 @@ function Details({ e, onVoir, onFonction }: { e: EntreeDico; onVoir: (m: string)
 }
 
 function Verrou() {
+  useVerrou("dico");
   return (
     <div class="dico-verrou">
       <p><Icon name="lock" size={16} /> Tu as consulté tes {DICO_GRATUITS} mots gratuits. L'accès complet ouvre tout le dictionnaire.</p>
@@ -199,7 +202,9 @@ export function DicoResultats({ q, fonction, onChange }: { q: string; fonction: 
   const entreeOuverte = ouvert ? entrees.find(e => e.mot === ouvert) : undefined;
   // Position dans la liste, retrouvée en refermant la carte.
   const position = useRef(0);
+  useEffect(() => noterRecherche("dico", q, resultats.length), [q]);
   const ouvrir = async (mot: string) => {
+    noter({ t: "mot", ref: mot });
     if (!ouvert) position.current = scrollY;
     setOuvert(mot);
     scrollTo(0, 0);

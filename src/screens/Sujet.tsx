@@ -5,6 +5,8 @@ import { SUJETS, estComplet, oeuvresCitees } from "../lib/data";
 import { useAccess } from "../lib/access";
 import { NotFound } from "./NotFound";
 import { LigneContact } from "../components/LigneContact";
+import { useEffect } from "preact/hooks";
+import { noter } from "../lib/stats";
 
 function Args({ args }: { args: Argument[] }) {
   return (
@@ -23,6 +25,7 @@ function Args({ args }: { args: Argument[] }) {
 export function SujetScreen({ num }: { num: string }) {
   const access = useAccess();
   const i = SUJETS.findIndex(s => s.num === num);
+  useEffect(() => { if (i > -1) noter({ t: "sujet", ref: num }); }, [num]);
   if (i < 0) return <NotFound what="Ce sujet n'existe pas." back="#/sujets" />;
   const s = SUJETS[i], prev = SUJETS[i - 1], next = SUJETS[i + 1];
   const libre = access.canOpenSubject(i) && estComplet(s);

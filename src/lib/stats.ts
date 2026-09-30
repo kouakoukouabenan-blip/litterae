@@ -1,4 +1,5 @@
-import { SERVEUR_URL } from "./site";
+import { ACHAT_URL, SERVEUR_URL } from "./site";
+import { parseHash } from "./router";
 import { appareil } from "./licence";
 import { isInstalled, platform } from "./install";
 
@@ -7,7 +8,7 @@ import { isInstalled, platform } from "./install";
  * les fiches consultées et les messages de l'accueil vus ou cliqués. Aucun nom, aucune adresse.
  * Les événements sont regroupés et envoyés en une fois pour économiser les données mobiles.
  */
-export type Evenement = { t: "ecran" | "oeuvre" | "vue" | "clic" | "notif"; ref: string };
+export type Evenement = { t: "ecran" | "oeuvre" | "vue" | "clic" | "notif" | "sujet" | "lecon" | "mot" | "recherche" | "vide" | "verrou" | "achat"; ref: string };
 
 let file: Evenement[] = [];
 let minuterie: ReturnType<typeof setTimeout> | undefined;
@@ -35,8 +36,31 @@ export function noter(e: Evenement) {
   minuterie ??= setTimeout(envoyer, 8000);
 }
 
+/** Partie de l'appli où se trouve l'élève, pour savoir d'où viennent les achats (entonnoir du tableau de bord). */
+export function endroit(): string {
+  const [section = "cours", id] = parseHash().path;
+  const noms: Record<string, string> = { oeuvres: id ? "oeuvre" : "oeuvres", sujets: "sujet", cours: id ? "lecon" : "accueil", outils: "dico", acces: "acces", carnet: "espace", "a-propos": "a-propos", cgu: "a-propos" };
+  return noms[section] ?? "autre";
+}
+
+/** Recherche faite par l'élève (œuvres ou dictionnaire), notée si elle reste affichée 2 secondes. */
+export function noterRecherche(ou: "oeuvres" | "dico", q: string, trouves: number) {
+  const nette = q.trim().toLowerCase();
+  if (nette.length < 3) return () => {};
+  const t = setTimeout(() => {
+    noter({ t: "recherche", ref: `${ou}:${nette}` });
+    if (!trouves) noter({ t: "vide", ref: `${ou}:${nette}` });
+  }, 2000);
+  return () => clearTimeout(t);
+}
+
 /** Compte la visite dès l'ouverture, puis envoie le reste quand l'élève quitte ou met l'appli en arrière-plan. */
 export function demarrerStats() {
+  // Tout lien vers la page d'achat Chariow, où qu'il soit.
+  document.addEventListener("click", e => {
+    const a = (e.target as Element).closest?.("a[href]") as HTMLAnchorElement | null;
+    if (a && ACHAT_URL && a.href.startsWith(ACHAT_URL)) { noter({ t: "achat", ref: endroit() }); envoyer(); }
+  });
   setTimeout(envoyer, 3000);
   document.addEventListener("visibilitychange", () => { if (document.visibilityState === "hidden") envoyer(); });
 }

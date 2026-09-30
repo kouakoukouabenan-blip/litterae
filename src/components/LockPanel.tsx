@@ -1,9 +1,17 @@
 import { FREE_SUBJECTS, FREE_WORKS, PRICE } from "../lib/access";
 import { ACHAT_URL } from "../lib/site";
 import { Icon } from "./Icon";
+import { useEffect } from "preact/hooks";
+import { endroit, noter } from "../lib/stats";
+
+/** Note qu'un élève a vu un contenu réservé (entonnoir d'achat du tableau de bord). */
+export function useVerrou(ou?: string) {
+  useEffect(() => { noter({ t: "verrou", ref: ou ?? endroit() }); }, []);
+}
 
 /** Explique ce qui est réservé et comment obtenir l'accès complet. */
 export function LockPanel({ reason, contenu }: { reason: string; contenu?: string }) {
+  useVerrou();
   return (
     <section class="lock" aria-labelledby="lock-title">
       <p class="eyebrow eyebrow-icon"><Icon name="lock" size={16} />Accès complet</p>

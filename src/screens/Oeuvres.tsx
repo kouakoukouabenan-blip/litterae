@@ -18,6 +18,7 @@ import { plural } from "../lib/text";
 import { FONCTION_TEXTE, fnClass } from "../lib/fonctions";
 import { AchatLien } from "../components/Achat";
 import { lienContact } from "../lib/contact";
+import { noterRecherche } from "../lib/stats";
 
 const INDEX = buildIndex(OEUVRES);
 const PAGE = 30;
@@ -37,6 +38,7 @@ export function OeuvresScreen({ params }: { params: URLSearchParams }) {
   const results = useMemo(() => search(INDEX, q, filters).filter(w => !gratuites || w.libre), [key]);
   const counts = useMemo(() => new Map(FACETS.map(f => [f.key, facetCounts(INDEX, q, filters, f)])), [key]);
   useEffect(() => setLimit(PAGE), [key]);
+  useEffect(() => noterRecherche("oeuvres", q, results.length), [q]);
 
   const go = (nq: string, nf: Filters, libres = gratuites) => {
     const p = paramsFrom(nq, nf);

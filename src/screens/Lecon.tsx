@@ -9,6 +9,7 @@ import { QuizLecon } from "../components/Quiz";
 import { LockPanel } from "../components/LockPanel";
 import { useAccess } from "../lib/access";
 import { LigneContact } from "../components/LigneContact";
+import { noter } from "../lib/stats";
 
 function Bloc({ b }: { b: BlocLecon }) {
   if ("p" in b) return <p>{b.p}</p>;
@@ -36,6 +37,7 @@ function Bloc({ b }: { b: BlocLecon }) {
 
 export function LeconScreen({ id }: { id: string }) {
   const i = LECONS.findIndex(l => l.id === id);
+  useEffect(() => { if (i > -1) noter({ t: "lecon", ref: id }); }, [id]);
   const [lues, setLues] = useStored<string[]>("lecons-lues", []);
   const { premium } = useAccess();
   const verrouillee = i > -1 && !!LECONS[i].payante && !premium;

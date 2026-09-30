@@ -8,6 +8,7 @@ import { useStored } from "../lib/storage";
 import { plural } from "../lib/text";
 import { AchatLien } from "./Achat";
 import { Icon } from "./Icon";
+import { useVerrou } from "./LockPanel";
 
 const NOMBRES = apercu as Record<string, number>;
 /** Quiz offert à tous (le premier), pour découvrir l'entraînement. */
@@ -31,6 +32,7 @@ export function QuizLecon({ id }: { id: string }) {
 }
 
 function Verrou({ nombre }: { nombre: number }) {
+  useVerrou("quiz");
   return (
     <div class="quiz-lock">
       <p><Icon name="lock" size={18} /> Les {nombre} questions de ce quiz, avec la correction expliquée, font partie de l'accès complet ({PRICE}, une seule fois).</p>
