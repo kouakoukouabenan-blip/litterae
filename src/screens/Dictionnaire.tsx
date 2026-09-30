@@ -17,8 +17,18 @@ import { DICO_GRATUITS, consulter, dicoComplet, useConsultes, type EchecConsulta
 import { lienContact } from "../lib/contact";
 import { useVerrou } from "../components/LockPanel";
 import { noter, noterRecherche } from "../lib/stats";
+import { contenuLibre } from "../lib/libre";
 
 const D = dico as Dictionnaire;
+
+/** Liste publique des mots, avec ceux ajoutés ou modifiés depuis le tableau de bord. */
+function motsPublics(): MotDico[] {
+  const changes = contenuLibre()?.mots;
+  if (!changes?.length) return D.entrees;
+  const parMot = new Map(D.entrees.map(m => [m.mot, m]));
+  for (const m of changes) parMot.set(m.mot, m);
+  return [...parMot.values()].sort((a, b) => a.mot.localeCompare(b.mot, "fr"));
+}
 
 type Mot = MotDico | EntreeDico;
 const complete = (e: Mot): e is EntreeDico => "sens" in e;
@@ -188,7 +198,7 @@ export function DicoResultats({ q, fonction, onChange }: { q: string; fonction: 
   const vus = useConsultes();
   const complet = access.premium ? dicoComplet() : null;
   // Sans le dictionnaire complet : liste des mots, avec le sens de ceux déjà consultés.
-  const entrees = useMemo<Mot[]>(() => complet ?? D.entrees.map(m => vus[m.mot] ?? m), [complet, vus]);
+  const entrees = useMemo<Mot[]>(() => complet ?? motsPublics().map(m => vus[m.mot] ?? m), [complet, vus]);
   const INDEX = useMemo(() => indexer(entrees), [entrees]);
   const resultats = chercher(INDEX, q, fonction);
   const restants = Math.max(0, DICO_GRATUITS - Object.keys(vus).length);

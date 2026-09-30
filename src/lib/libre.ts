@@ -1,6 +1,6 @@
 import { SERVEUR_URL } from "./site";
 import { read, write } from "./storage";
-import type { BlocLecon, IdeeIllustration, Oeuvre } from "../data/types";
+import type { BlocLecon, IdeeIllustration, MotDico, Oeuvre } from "../data/types";
 
 /**
  * Fiches gratuites choisies par l'éditeur depuis son tableau de bord, avec leurs éventuelles corrections.
@@ -19,6 +19,8 @@ export interface ContenuLibre {
     oeuvres: Oeuvre[];
     lecons: { id: string; titre: string; duree: string; libre: boolean; blocs: BlocLecon[] }[];
   };
+  /** Mots du dictionnaire ajoutés ou modifiés depuis le tableau de bord (sans le sens). */
+  mots?: MotDico[];
 }
 
 const CLE = "contenu-libre";
