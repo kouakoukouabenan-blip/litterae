@@ -90,8 +90,8 @@ export function OeuvreScreen({ id }: { id: string }) {
 
         {!libre ? (
           <>
-            <ArgumentsListe w={w} ouvert={false} />
             <LockPanel reason="Cette fiche fait partie de l'accès complet." contenu={contenuFiche(w)} />
+            <ArgumentsListe w={w} ouvert={false} />
           </>
         ) : (
           <>

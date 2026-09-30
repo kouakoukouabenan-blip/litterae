@@ -15,9 +15,8 @@ export function LockPanel({ reason, contenu }: { reason: string; contenu?: strin
   return (
     <section class="lock" aria-labelledby="lock-title">
       <p class="eyebrow eyebrow-icon"><Icon name="lock" size={16} />Accès complet</p>
-      <h2 id="lock-title" class="section-title">{reason}</h2>
-      {contenu && <p class="lock-contenu">{contenu}</p>}
-      <p>L'accès gratuit comprend le cours, la boîte à outils, les {FREE_SUBJECTS} premiers sujets corrigés et {FREE_WORKS} fiches d'œuvres. L'accès complet ouvre tout le reste, pour {PRICE} payés une seule fois.</p>
+      <h2 id="lock-title" class="lock-title">{reason}</h2>
+      <p class="lock-prix">Débloque tout pour <strong>{PRICE}</strong>, payés une seule fois.</p>
       <div class="lock-actions">
         {ACHAT_URL ? (
           <a class="btn btn-primary" href={ACHAT_URL} target="_blank" rel="noopener">Acheter l'accès, {PRICE}</a>
@@ -26,6 +25,8 @@ export function LockPanel({ reason, contenu }: { reason: string; contenu?: strin
         )}
         <a class="btn btn-secondary" href="#/acces">J'ai une clé d'accès</a>
       </div>
+      {contenu && <p class="lock-contenu">{contenu}</p>}
+      <p class="small">L'accès gratuit comprend le cours, la boîte à outils, les {FREE_SUBJECTS} premiers sujets corrigés et {FREE_WORKS} fiches d'œuvres.</p>
       <p id="lock-soon" class="small muted">
         {ACHAT_URL
           ? "Paiement par Mobile Money (Wave, MTN MoMo, Moov Money…) sur Chariow. Ta clé d'accès arrive par e-mail juste après : pense à regarder dans les spams."
