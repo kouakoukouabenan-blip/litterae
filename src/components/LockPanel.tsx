@@ -1,6 +1,7 @@
 import { FREE_SUBJECTS, FREE_WORKS, PRICE } from "../lib/access";
 import { ACHAT_URL } from "../lib/site";
 import { Icon } from "./Icon";
+import { CommentPayerBouton } from "./CommentPayer";
 import { useEffect } from "preact/hooks";
 import { endroit, noter } from "../lib/stats";
 
@@ -25,6 +26,7 @@ export function LockPanel({ reason, contenu }: { reason: string; contenu?: strin
         )}
         <a class="btn btn-secondary" href="#/acces">J'ai une clé d'accès</a>
       </div>
+      {ACHAT_URL && <CommentPayerBouton />}
       {contenu && <p class="lock-contenu">{contenu}</p>}
       <p class="small">L'accès gratuit comprend le cours, la boîte à outils, les {FREE_SUBJECTS} premiers sujets corrigés et {FREE_WORKS} fiches d'œuvres.</p>
       <p id="lock-soon" class="small muted">

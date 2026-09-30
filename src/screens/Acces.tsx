@@ -6,6 +6,7 @@ import { activer, licence, retirer } from "../lib/licence";
 import { PRICE } from "../lib/access";
 import { ACHAT_URL, lienAide, WHATSAPP } from "../lib/site";
 import { AchatLien } from "../components/Achat";
+import { CommentPayerBouton } from "../components/CommentPayer";
 
 /** Saisie de la clé reçue par e-mail après l'achat, ou état de l'accès complet. */
 export function AccesScreen() {
@@ -86,7 +87,10 @@ export function AccesScreen() {
           <h2 class="section-title">Pas encore de clé ?</h2>
           <p>L'accès complet coûte {PRICE}, payés une seule fois par Mobile Money. La clé arrive par e-mail juste après le paiement.</p>
           {ACHAT_URL ? (
-            <AchatLien class="btn btn-primary align-start" label={`Acheter une clé, ${PRICE}`} />
+            <>
+              <AchatLien class="btn btn-primary align-start" label={`Acheter une clé, ${PRICE}`} />
+              <CommentPayerBouton />
+            </>
           ) : (
             <p class="small muted">Le paiement ouvre très bientôt.</p>
           )}

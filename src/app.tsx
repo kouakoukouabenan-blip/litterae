@@ -14,6 +14,7 @@ import { CarnetScreen } from "./screens/Carnet";
 import { NotFound } from "./screens/NotFound";
 import { AProposScreen, CguScreen, ConfidentialiteScreen } from "./screens/Infos";
 import { InstallGate, InstallGuide } from "./components/Install";
+import { CommentPayer } from "./components/CommentPayer";
 import { AccesScreen } from "./screens/Acces";
 import { ContactScreen } from "./screens/Contact";
 import { reverifier } from "./lib/licence";
@@ -84,6 +85,7 @@ export function App() {
       <BottomNav />
       <ToastHost />
       <InstallGuide />
+      <CommentPayer />
       <InstallGate />
     </>
   );
