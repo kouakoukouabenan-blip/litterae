@@ -1,4 +1,5 @@
 import { Fragment } from "preact";
+import { useState } from "preact/hooks";
 import dico from "../data/dictionnaire.json";
 import type { Dictionnaire, EntreeDico, Fonction } from "../data/types";
 import { FONCTIONS } from "../data/types";
@@ -127,8 +128,7 @@ function Entree({ e, terms, onVoir, onFonction }: { e: EntreeDico; terms: string
 
 function Guide({ onVoir }: { onVoir: (m: string) => void }) {
   return (
-    <details class="dico-guide">
-      <summary>Comment se servir du dictionnaire</summary>
+    <div class="dico-guide" id="dico-guide">
       {D.guide.map(g => (
         <section key={g.titre}>
           <h3 class="sub-title">{g.titre}</h3>
@@ -139,7 +139,7 @@ function Guide({ onVoir }: { onVoir: (m: string) => void }) {
               : <p key={i}><Texte text={b} terms={[]} onVoir={onVoir} /></p>)}
         </section>
       ))}
-    </details>
+    </div>
   );
 }
 
@@ -168,25 +168,32 @@ export function DicoResultats({ q, fonction, onChange }: { q: string; fonction: 
   const parcours = !normalize(q);
   const voir = (mot: string) => { onChange(mot, null); scrollTo(0, 0); };
   const filtrer = (f: string) => { onChange("", f === fonction ? null : f); scrollTo(0, 0); };
+  const [guide, setGuide] = useState(false);
   const compte = (f: Fonction) => D.entrees.filter(e => e.fonctions?.includes(f)).length;
 
   return (
     <div class="reading reading-left dico">
-      <div class="dico-filtres" role="group" aria-label="Filtrer par fonction littéraire">
-        {FONCTIONS.map(f => (
-          <button key={f} type="button" class={`chip dico-chip ${fnClass(f)}`} aria-pressed={fonction === f} onClick={() => filtrer(f)}>
-            {f} <span class="dico-chip-n">{compte(f)}</span>
-          </button>
-        ))}
+      <div class="dico-outils">
+        <label class="dico-fonction">
+          <span class="sr-only">Fonction littéraire</span>
+          <select class={`select ${fonction ? fnClass(fonction) + " dico-select-actif" : ""}`} value={fonction ?? ""}
+            onChange={e => { const v = (e.target as HTMLSelectElement).value; onChange(q, v || null); }}>
+            <option value="">Toutes les fonctions</option>
+            {FONCTIONS.map(f => <option key={f} value={f}>{f} ({compte(f)})</option>)}
+          </select>
+        </label>
+        <button type="button" class="link-btn" aria-expanded={guide} aria-controls="dico-guide" onClick={() => setGuide(!guide)}>
+          {guide ? "Fermer le mode d'emploi" : "Mode d'emploi"}
+        </button>
       </div>
 
-      {parcours && !fonction && <Guide onVoir={voir} />}
+      {guide && <Guide onVoir={m => { setGuide(false); voir(m); }} />}
 
       {resultats.length ? (
         <>
-          <p class="results-count" aria-live="polite">
-            {plural(resultats.length, "mot")}{fonction ? ` · ${fonction}` : ""}
-          </p>
+          {(!parcours || fonction) && (
+            <p class="small muted" aria-live="polite">{plural(resultats.length, "mot")}{fonction ? ` · ${fonction}` : ""}</p>
+          )}
           <ul class="dico-liste">
             {resultats.map((e, i) => {
               const lettre = normalize(e.mot)[0].toUpperCase();

@@ -176,14 +176,9 @@
 .dico-search .field input { height: 42px; }
 .dico-effacer { width: 40px; height: 40px; color: var(--muted); }
 .dico { display: flex; flex-direction: column; gap: var(--s3); }
-.dico-filtres { display: flex; flex-wrap: wrap; gap: var(--s2); }
-.dico-chip { min-height: 34px; border-left: 4px solid var(--fn); }
-.dico-chip[aria-pressed="true"] { background: var(--fn); border-color: var(--fn); color: #fff; }
-.dico-chip.fn-evasion[aria-pressed="true"] { color: var(--ink-strong); }
-.dico-chip-n { font-weight: 500; opacity: 0.7; }
 .dico-guide { padding: var(--s3) var(--s4); background: var(--surface); border: var(--border) solid var(--line); border-radius: var(--radius); font-size: var(--text-sm); }
-.dico-guide summary { cursor: pointer; font-weight: 700; color: var(--green); min-height: 28px; }
-.dico-guide section { margin-top: var(--s4); display: flex; flex-direction: column; gap: var(--s2); }
+.dico-guide section + section { margin-top: var(--s4); }
+.dico-guide section { display: flex; flex-direction: column; gap: var(--s2); }
 .dico-guide ul { margin: 0; padding-left: 1.1em; }
 .dico-liste { list-style: none; padding: 0; background: var(--surface); border: var(--border) solid var(--line); border-radius: var(--radius); overflow: hidden; }
 .dico-entree { display: flex; flex-direction: column; gap: var(--s2); padding: var(--s3) var(--s4) var(--s4); border-left: 4px solid var(--fn, var(--line-strong)); }
@@ -204,3 +199,26 @@
 .dico-search input:focus, .dico-search input:focus-visible { outline: none; box-shadow: none; }
 .dico-astuce { padding: var(--s2) var(--s3); background: var(--green-tint); border-radius: var(--radius-sm); }
 .dico-astuce .dico-label { display: block; color: var(--green); margin-bottom: 2px; }
+
+/* Boîte à outils : trois onglets de même largeur, sans défilement de côté */
+.onglets { display: grid; grid-template-columns: repeat(3, 1fr); padding: 3px; background: var(--surface); border: 1.5px solid var(--line-strong); border-radius: var(--radius-sm); max-width: 30rem; }
+.onglet { min-height: 38px; padding: 0 var(--s2); border: 0; border-radius: 5px; background: none; color: var(--muted); font-size: var(--text-sm); font-weight: 600; }
+.onglet[aria-selected="true"] { background: var(--green); color: var(--on-dark); }
+.onglet:not([aria-selected="true"]):hover { color: var(--green); }
+.outils-choix { display: block; margin-top: var(--s2); }
+.outils-select { width: 100%; max-width: 30rem; min-height: var(--control-h); font-size: var(--text-sm); }
+.outils-intro { margin-bottom: var(--s3); }
+.outils-titre { margin: var(--s2) 0 var(--s3); }
+.outils-titre ~ .outils-titre { margin-top: var(--s6); }
+.vocab { margin: 0; display: grid; gap: var(--s1); }
+.vocab dt { font-weight: 700; color: var(--ink-strong); font-size: var(--text-sm); }
+.vocab dt:not(:first-child) { margin-top: var(--s3); }
+.vocab dd { margin: 0; font-size: var(--text-sm); color: var(--ink); }
+.vocab-oppose { display: block; margin-top: 2px; font-size: var(--text-xs); color: var(--muted); }
+.dico-outils { display: flex; align-items: center; justify-content: space-between; gap: var(--s3); }
+.dico-fonction .select { min-width: 12rem; }
+.dico-select-actif { border-color: var(--fn); border-left-width: 4px; }
+@media (max-width: 719px) {
+  .outils-lede, .lede:has(> .outils-lede) { display: none; }
+  .dico-sens { font-size: var(--text-sm); }
+}
