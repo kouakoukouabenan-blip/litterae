@@ -30,7 +30,7 @@ function indexer(entrees: Mot[]): Indexe[] {
       e,
       mot,
       mots: mot.split(/[^a-z-]+/).filter(Boolean),
-      texte: c ? normalize([c.sens, c.fonction, c.note, ...(c.oeuvres ?? [])].join(" ")) : "",
+      texte: c ? normalize([c.sens, c.fonction, c.note, ...(c.oeuvres ?? [])].join(" ")) : e.cles ?? "",
       exemples: c ? normalize((c.exemples ?? []).join(" ")) : ""
     };
   });

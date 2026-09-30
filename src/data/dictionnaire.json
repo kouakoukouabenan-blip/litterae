@@ -45,25 +45,29 @@
    "nature": "verbe",
    "fonctions": [
     "Engagement"
-   ]
+   ],
+   "cles": "accepter affirmer contenter dire discuter doit ecrivain engagement est liberte monde murakami oui pas peut poete pour sans soumettre tel tout"
   },
   {
    "mot": "AFFIRMATION (ASSERTION, CONCEPTION, OPINION, POINT DE VUE)",
-   "nature": "noms"
+   "nature": "noms",
+   "cles": "auteur cette change defendue designent discute discutez employe explique expliquez idee ils methode mot par pas signifie synonymes these"
   },
   {
    "mot": "AILLEURS",
    "nature": "nom",
    "fonctions": [
     "Évasion"
-   ]
+   ],
+   "cles": "autre est evasion imaginaire invente lecteur lieu monde pas pour quete qui quitte quotidien reel son"
   },
   {
    "mot": "ÂME",
    "nature": "nom",
    "fonctions": [
     "Lyrique"
-   ]
+   ],
+   "cles": "ames conscience designent esprit interieure les lyrique moralement partie personne personnes qui religieux sens sentiments ses souffrent tourmentees une"
   },
   {
    "mot": "AMERTUME",
@@ -71,61 +75,71 @@
    "fonctions": [
     "Engagement",
     "Lyrique"
-   ]
+   ],
+   "cles": "asservi deception devant engagement humilie injustice lyrique melee opprobre parle peuple profonde ranc sentiment souffrance subie tristesse tshiyombo une"
   },
   {
    "mot": "AMOUR",
    "nature": "nom",
    "fonctions": [
     "Lyrique"
-   ]
+   ],
+   "cles": "attachement cause liberte lyrique passion patrie personne poesie principal profond theme une"
   },
   {
    "mot": "AMUSER / S'AMUSER",
    "nature": "verbe",
    "fonctions": [
     "Évasion"
-   ]
+   ],
+   "cles": "agreablement comme distraire envie est evasion faire lecture loisir parce passer rire temps vue"
   },
   {
    "mot": "ANTITHÈSE",
-   "nature": "nom"
+   "nature": "nom",
+   "cles": "axe contenu deuxieme est idee limite oppose qui these ton"
   },
   {
    "mot": "ART",
    "nature": "nom",
    "fonctions": [
     "Esthétique"
-   ]
+   ],
+   "cles": "activite beau bien cherche creer dans des designe domaine ecrire ensemble est esthetique etre exterieur faire habilete message morale oppose pas politique qui recherche signifie tout utile uvres"
   },
   {
    "mot": "ART POUR L'ART",
    "nature": "expression",
    "fonctions": [
     "Esthétique"
-   ]
+   ],
+   "cles": "autre beaute but contraire doctrine elle engagement est esthetique gautier laquelle liee message morale parnasse que refus selon theophile utile uvre"
   },
   {
    "mot": "ARTISTE",
-   "nature": "nom"
+   "nature": "nom",
+   "cles": "art belles celui choses concerne createurs cree creer des doit ecrivain ecrivains est idee large les mot musicien pas peintre plus poete que qui seulement tous uvres"
   },
   {
    "mot": "ASSERVISSEMENT / ASSERVI",
    "nature": "nom / adjectif",
    "fonctions": [
     "Engagement"
-   ]
+   ],
+   "cles": "colonisation dictature engagement liberte pouvoir prive reduit servitude soumis"
   },
   {
    "mot": "ASSUJETTI",
    "nature": "adjectif",
    "fonctions": [
     "Esthétique"
-   ]
+   ],
+   "cles": "art assujettie comme convictions dependant des doit elle esthetique etre oblige outil pas poesie politique politiques refus service servir soumis utiliser"
   },
   {
    "mot": "AUTEUR",
-   "nature": "nom"
+   "nature": "nom",
+   "cles": "celui dans defend ecrit penseur qui sujet these une uvre"
   },
   {
    "mot": "AUTOBIOGRAPHIE",
@@ -133,99 +147,114 @@
    "fonctions": [
     "Lyrique",
     "Sociale"
-   ]
+   ],
+   "cles": "auteur autobiographique camara comme enfant est laye lui-meme lyrique noir par presente propre recit social vie"
   },
   {
    "mot": "BEAU / BEAUTÉ",
    "nature": "adjectif / nom",
    "fonctions": [
     "Esthétique"
-   ]
+   ],
+   "cles": "designe esthetique forme formelle harmonie par perfection plaisir plait qui recherche son style sur travail"
   },
   {
    "mot": "BIEN",
    "nature": "nom",
    "fonctions": [
     "Engagement"
-   ]
+   ],
+   "cles": "apporte art bon engagement est etre faire moralement oppose pour qui reconfort rendre service signifie soulagement utile"
   },
   {
    "mot": "CATHARSIS",
    "nature": "nom",
    "fonctions": [
     "Lyrique"
-   ]
+   ],
+   "cles": "applique aristote concept des emotions les libere lyrique par passions purification representees ses spectacle spectateur theatre therapie voyant"
   },
   {
    "mot": "CENSURE",
    "nature": "nom",
    "fonctions": [
     "Engagement"
-   ]
+   ],
+   "cles": "controle derange engagement exerce expression interdit liberte par pouvoir qui"
   },
   {
    "mot": "COLONISATION / COLONIALISME",
    "nature": "noms",
    "fonctions": [
     "Engagement"
-   ]
+   ],
+   "cles": "autre bomba christ coups domination engagement exploitation humiliation liberte medaille negre par pauvre pays perte peuple pilon vieux"
   },
   {
    "mot": "COMBAT",
    "nature": "nom",
    "fonctions": [
     "Engagement"
-   ]
+   ],
+   "cles": "armer bataille cause croisade defendre donner ecrivain engagement figure les lutte lutter mene moyens plume pour resistance signifie une utilise voisins"
   },
   {
    "mot": "COMIQUE",
    "nature": "adjectif / nom",
    "fonctions": [
     "Évasion"
-   ]
+   ],
+   "cles": "avare caractere evasion exemples fait gestes moliere mots qui repetition rire situation types"
   },
   {
    "mot": "CONSCIENCE",
    "nature": "nom",
    "fonctions": [
     "Engagement"
-   ]
+   ],
+   "cles": "capacite comprendre consciences engagement eveiller faire les moral ouvrir prise probleme sens signifie sur vit yeux"
   },
   {
    "mot": "CONTE",
    "nature": "nom",
    "fonctions": [
     "Évasion"
-   ]
+   ],
+   "cles": "afrique bodiel court divertit education enseigne est evasion griot hampate imaginaire lie oral oralite petit qui recit souvent"
   },
   {
    "mot": "CONVICTION",
    "nature": "nom",
    "fonctions": [
     "Engagement"
-   ]
+   ],
+   "cles": "croyance engagement esthetique ferme idee morale opposee politique pure religieuse"
   },
   {
    "mot": "COURANT LITTÉRAIRE",
-   "nature": "nom"
+   "nature": "nom",
+   "cles": "des ecrivains epoque idees mouvement naturalisme negritude nouveau partagent qui realisme roman romantisme style surrealisme une"
   },
   {
    "mot": "CRÉATION / CRÉER",
    "nature": "nom / verbe",
    "fonctions": [
     "Esthétique"
-   ]
+   ],
+   "cles": "beau beaute cherche chose createur creee designe ecrivain esthetique imagination inventer nouveau produire quelque qui uvre"
   },
   {
    "mot": "CRITIQUE",
-   "nature": "nom / verbe"
+   "nature": "nom / verbe",
+   "cles": "aussi blamer celui critiquer critiques debattent defauts denoncer denonciation depend est juge jugement jugent les litteraire litteraires pas personnes piege qui sens sociale societe sujet sur une uvre uvres"
   },
   {
    "mot": "CROISADE",
    "nature": "nom",
    "fonctions": [
     "Engagement"
-   ]
+   ],
+   "cles": "ardent cause combat contre engagement figure guerre impitoyable mensonge origine pitie pour religieuse sans une"
   },
   {
    "mot": "CULTURE",
@@ -233,202 +262,233 @@
    "fonctions": [
     "Engagement",
     "Sociale"
-   ]
+   ],
+   "cles": "defense engagement identite instruction personnelle peuple savoirs social traditions valeurs"
   },
   {
    "mot": "DÉNONCER / DÉNONCIATION",
    "nature": "verbe / nom",
    "fonctions": [
     "Engagement"
-   ]
+   ],
+   "cles": "accuser cesser critiquer denonce des engagement exploitation faire germinal injustice mal mineurs montrer pour publiquement une"
   },
   {
    "mot": "DÉPAYSER / DÉPAYSEMENT",
    "nature": "verbe / nom",
    "fonctions": [
     "Évasion"
-   ]
+   ],
+   "cles": "ailleurs cadre changer donner etre evasion impression pays"
   },
   {
    "mot": "DICTATURE",
    "nature": "nom",
    "fonctions": [
     "Engagement"
-   ]
+   ],
+   "cles": "1984 controle dans engagement gouverne les liberte pouvoir regime sans vent voix"
   },
   {
    "mot": "DIDACTIQUE",
    "nature": "adjectif",
    "fonctions": [
     "Engagement"
-   ]
+   ],
+   "cles": "cherche conte education engagement enseigner exemples fable instruire qui"
   },
   {
    "mot": "DISSIMULATION",
    "nature": "nom",
    "fonctions": [
     "Engagement"
-   ]
+   ],
+   "cles": "action cacher ecrivain engagement hypocrisie mensonge qui revele verite"
   },
   {
    "mot": "DISTRACTION",
    "nature": "nom",
    "fonctions": [
     "Évasion"
-   ]
+   ],
+   "cles": "activite amuse autre evasion fait inattention les oublier qui sens soucis"
   },
   {
    "mot": "DIVERTIR / DIVERTISSEMENT",
    "nature": "verbe / nom",
    "fonctions": [
     "Évasion"
-   ]
+   ],
+   "cles": "amuser contraire des distraire divertissent engagement evasion faire faits histoires les oublier passe-temps plaire pour qui recits soucis"
   },
   {
    "mot": "DRAMATURGE",
-   "nature": "nom"
+   "nature": "nom",
+   "cles": "auteur pieces sujet theatre theme"
   },
   {
    "mot": "DYSTOPIE",
    "nature": "nom",
    "fonctions": [
     "Engagement"
-   ]
+   ],
+   "cles": "1984 avertir cauchemardesque contraire decrit engagement exemple lecteur qui recit societe une utopie"
   },
   {
    "mot": "ÉCHO",
    "nature": "nom",
    "fonctions": [
     "Engagement"
-   ]
+   ],
+   "cles": "des engagement entende entendre faire figure groupe les leur opprimes porter pour preoccupations preter quelqu refleter relayer repete signifie son voix"
   },
   {
    "mot": "ÉCLAIRER / ÉCLAIREUR",
    "nature": "verbe / nom",
    "fonctions": [
     "Engagement"
-   ]
+   ],
+   "cles": "avec chemin comprendre des engagement est faire guide lien lumieres montre siecle"
   },
   {
    "mot": "ÉCRIRE / ÉCRITURE",
-   "nature": "verbe / nom"
+   "nature": "verbe / nom",
+   "cles": "acte activite art auteur bien comme est faire maniere pas precise produire propre sens souvent style sujet texte"
   },
   {
    "mot": "ÉCRIVAIN",
-   "nature": "nom"
+   "nature": "nom",
+   "cles": "des dramaturge ecrit essayiste litteraires personne poete qui romancier sujet theme uvres"
   },
   {
    "mot": "ÉDUCATION / ÉDUQUER",
    "nature": "nom / verbe",
    "fonctions": [
     "Engagement"
-   ]
+   ],
+   "cles": "caractere des engagement esprit former instruire transmettre valeurs"
   },
   {
    "mot": "ÉMOTION",
    "nature": "nom",
    "fonctions": [
     "Lyrique"
-   ]
+   ],
+   "cles": "avec des emeut emouvoir langage lecteur lyrique mots par plaisir ressenti sentiment touche toucher trouble vif voisins"
   },
   {
    "mot": "EMPREINTE",
    "nature": "nom",
    "fonctions": [
     "Sociale"
-   ]
+   ],
+   "cles": "chose influence laissee litterature marque par profonde quelque sociale societe sur"
   },
   {
    "mot": "ENGAGEMENT / ENGAGÉ",
    "nature": "nom / adjectif",
    "fonctions": [
     "Engagement"
-   ]
+   ],
+   "cles": "cause combats contraire dans defend engagee est esthetique evasion impliquer les litterature mettre militant plume sartre service son synonyme temps une"
   },
   {
    "mot": "ENNUI",
    "nature": "nom",
    "fonctions": [
     "Évasion"
-   ]
+   ],
+   "cles": "celui echapper etat evasion faire interet lassitude lire manque pour qui rien"
   },
   {
    "mot": "ÉPOPÉE",
    "nature": "nom",
    "fonctions": [
     "Sociale"
-   ]
+   ],
+   "cles": "avec exemple exploits heros histoire les long mandingue memoire merveilleux peuple qui raconte recit social soundjata"
   },
   {
    "mot": "ESPÉRANCE / ESPOIR",
    "nature": "noms",
    "fonctions": [
     "Engagement"
-   ]
+   ],
+   "cles": "attente autres aux avenir celui confiance croire donne encourager engagement envie guider mieux professeur qui"
   },
   {
    "mot": "ESTHÉTIQUE",
    "nature": "adjectif / nom",
    "fonctions": [
     "Esthétique"
-   ]
+   ],
+   "cles": "artistique beau concerne contraire engagement qualite qui theorie"
   },
   {
    "mot": "ÉVASION",
    "nature": "nom",
    "fonctions": [
     "Évasion"
-   ]
+   ],
+   "cles": "contraire echapper engagement fuir imagination quotidien realite reve voyage"
   },
   {
    "mot": "EXALTER / EXALTATION",
    "nature": "verbe / nom",
    "fonctions": [
     "Esthétique"
-   ]
+   ],
+   "cles": "autre avec celebration celebrer des enthousiasme esthetique excitation mettre mots pouvoirs puissance sens valeur verbe vive"
   },
   {
    "mot": "EXPÉRIENCE",
    "nature": "nom",
    "fonctions": [
     "Lyrique"
-   ]
+   ],
+   "cles": "acquise appuie auteur autobiographique connaissance ecrit est etranger lyrique mon que rien sur uvre vecu vivant"
   },
   {
    "mot": "EXPRIMER / EXPRESSION",
    "nature": "verbe / nom",
    "fonctions": [
     "Lyrique"
-   ]
+   ],
+   "cles": "dire idees lyrique manifester mots sentiments ses traduire"
   },
   {
    "mot": "FABLE",
-   "nature": "nom"
+   "nature": "nom",
+   "cles": "animaux avec court des education fontaine imaginaire morale par qui recit satire souvent termine une"
   },
   {
    "mot": "FANTASME",
    "nature": "nom",
    "fonctions": [
     "Évasion"
-   ]
+   ],
+   "cles": "desir evasion eveille image imaginaire qui reve traduit"
   },
   {
    "mot": "FANTASTIQUE",
    "nature": "adjectif / nom",
    "fonctions": [
     "Évasion"
-   ]
+   ],
+   "cles": "evasion fait intervenir invente magie monde qui surnaturel"
   },
   {
    "mot": "FICTION",
    "nature": "nom",
    "fonctions": [
     "Évasion"
-   ]
+   ],
+   "cles": "assumee avec confondre contraire est evasion invente invention irreel mensonge pas qui realite recit une"
   },
   {
    "mot": "FONCTION",
-   "nature": "nom"
+   "nature": "nom",
+   "cles": "aussi but cinq elle engagement esthetique evasion fonctions les litterature lyrique quoi role sert signifie sociale utilite voir"
   },
   {
    "mot": "FOND ET FORME",
@@ -436,43 +496,50 @@
    "fonctions": [
     "Engagement",
     "Esthétique"
-   ]
+   ],
+   "cles": "detriment dire dit ecrire engagement est esthetique facon idees langue maniere message plus pour privilegier que soigner structure style texte"
   },
   {
    "mot": "FORMATION",
    "nature": "nom",
    "fonctions": [
     "Engagement"
-   ]
+   ],
+   "cles": "action apprentissage education engagement esprit former"
   },
   {
    "mot": "GENRE LITTÉRAIRE",
-   "nature": "nom"
+   "nature": "nom",
+   "cles": "categorie conte des essai partagent poesie qui regles roman theatre uvres"
   },
   {
    "mot": "GUIDE",
    "nature": "nom",
    "fonctions": [
     "Engagement"
-   ]
+   ],
+   "cles": "celui chemin ecrivain engagement montre oriente qui societe"
   },
   {
    "mot": "HISTOIRE",
-   "nature": "nom"
+   "nature": "nom",
+   "cles": "dans des designe deux ensemble est evenements histoires ici invente livre notre passe permet piege que raconter recit recits relecture revoir sens"
   },
   {
    "mot": "HISTORIEN",
    "nature": "nom",
    "fonctions": [
     "Sociale"
-   ]
+   ],
+   "cles": "age celui epoque fidelement passe qui raconte realisme signifie sociale son specialiste"
   },
   {
    "mot": "HYPOCRISIE",
    "nature": "nom",
    "fonctions": [
     "Engagement"
-   ]
+   ],
+   "cles": "comportement demasque ecrivain engagement etre faire faux qui semblant vertueux"
   },
   {
    "mot": "IDENTITÉ",
@@ -480,18 +547,21 @@
    "fonctions": [
     "Engagement",
     "Sociale"
-   ]
+   ],
+   "cles": "ambigue aventure carte culture engagement exemples fait histoire langue lui-meme personne peuple qui reste social une"
   },
   {
    "mot": "IDÉOLOGIE",
-   "nature": "nom"
+   "nature": "nom",
+   "cles": "auteur defendues ensemble groupe idees morales par politiques sociales"
   },
   {
    "mot": "IMAGINAIRE",
    "nature": "adjectif / nom",
    "fonctions": [
     "Évasion"
-   ]
+   ],
+   "cles": "dans evasion existe imagination invente monde que qui"
   },
   {
    "mot": "IMAGINATION",
@@ -499,25 +569,29 @@
    "fonctions": [
     "Esthétique",
     "Évasion"
-   ]
+   ],
+   "cles": "creer des esthetique evasion faculte idees images invention nouvelles"
   },
   {
    "mot": "INDIFFÉRENCE",
-   "nature": "nom"
+   "nature": "nom",
+   "cles": "absence autour aux engager interet lui pas passe pour problemes qui refus reprochait soi son temps"
   },
   {
    "mot": "INFORMATION",
    "nature": "nom",
    "fonctions": [
     "Engagement"
-   ]
+   ],
+   "cles": "connaitre contient dans dissertation engagement fait informer partie passe qui societe sujet these"
   },
   {
    "mot": "INJUSTICE",
    "nature": "nom",
    "fonctions": [
     "Engagement"
-   ]
+   ],
+   "cles": "abus droit engagement inegal traitement violation"
   },
   {
    "mot": "INSPIRATION",
@@ -525,7 +599,8 @@
    "fonctions": [
     "Esthétique",
     "Lyrique"
-   ]
+   ],
+   "cles": "createur ecrire elan esthetique idees lyrique poete pousse qui source"
   },
   {
    "mot": "INSTRUIRE",
@@ -533,135 +608,156 @@
    "fonctions": [
     "Engagement",
     "Évasion"
-   ]
+   ],
+   "cles": "apprendre classique connaissances des engagement evasion expression plaire transmettre"
   },
   {
    "mot": "INSURRECTION",
    "nature": "nom",
    "fonctions": [
     "Engagement"
-   ]
+   ],
+   "cles": "appel comme contre engagement etre figure peut poesie pouvoir presentee revolte soulevement violent"
   },
   {
    "mot": "INTRIGUE",
    "nature": "nom",
    "fonctions": [
     "Évasion"
-   ]
+   ],
+   "cles": "des enchainement evasion evenements recit suspense"
   },
   {
    "mot": "IRONIE",
    "nature": "nom",
    "fonctions": [
     "Engagement"
-   ]
+   ],
+   "cles": "contraire dire engagement moquer pense pour satire"
   },
   {
    "mot": "LÂCHE / LÂCHETÉ",
    "nature": "adjectif / nom",
    "fonctions": [
     "Engagement"
-   ]
+   ],
+   "cles": "calme ceux courage danger des engagement fuit par peur qui sans serenite silencieux taisent"
   },
   {
    "mot": "LANGUE ET LANGAGE",
    "nature": "noms",
    "fonctions": [
     "Esthétique"
-   ]
+   ],
+   "cles": "art capacite designe est esthetique exprimer litterature mots peuple systeme"
   },
   {
    "mot": "LARMES",
-   "nature": "nom"
+   "nature": "nom",
+   "cles": "sensibilite voir"
   },
   {
    "mot": "LECTEUR",
-   "nature": "nom"
+   "nature": "nom",
+   "cles": "destinataire lit personne public qui uvre"
   },
   {
    "mot": "LIBERTÉ",
    "nature": "nom",
    "fonctions": [
     "Engagement"
-   ]
+   ],
+   "cles": "agir artiste contrainte ecrire engagement expression pouvoir sans"
   },
   {
    "mot": "LITTÉRATURE",
-   "nature": "nom"
+   "nature": "nom",
+   "cles": "activite art artistique des ecrire ecrites ensemble frequent langage ont plus qui theme une uvres valeur"
   },
   {
    "mot": "LUTTE",
    "nature": "nom",
    "fonctions": [
     "Engagement"
-   ]
+   ],
+   "cles": "combat voir"
   },
   {
    "mot": "LYRIQUE / LYRISME",
    "nature": "adjectif / nom",
    "fonctions": [
     "Lyrique"
-   ]
+   ],
+   "cles": "amour contraire des deuil expression joie lyre mot personnels sentiments social tristesse vient"
   },
   {
    "mot": "MÉMOIRE",
    "nature": "nom",
    "fonctions": [
     "Sociale"
-   ]
+   ],
+   "cles": "capacite collective epopee exemple les mandingue par partages peuple sociale soundjata souvenir souvenirs"
   },
   {
    "mot": "MENSONGE",
    "nature": "nom",
    "fonctions": [
     "Engagement"
-   ]
+   ],
+   "cles": "affirmation avec comme confondre contraire declaree denoncer engagement est faite fiction inventee mais pas pour qui telle tromper verite"
   },
   {
    "mot": "MESSAGE",
    "nature": "nom",
    "fonctions": [
     "Engagement"
-   ]
+   ],
+   "cles": "engagement idee lecon morale que transmettre uvre veut"
   },
   {
    "mot": "MILITANT",
    "nature": "adjectif / nom",
    "fonctions": [
     "Engagement"
-   ]
+   ],
+   "cles": "activement cause engagee fonction litterature lutte militante pour qui une"
   },
   {
    "mot": "MIROIR",
    "nature": "nom",
    "fonctions": [
     "Sociale"
-   ]
+   ],
+   "cles": "fidelement figure qui realisme reflete sociale societe surface uvre"
   },
   {
    "mot": "MONDE",
    "nature": "nom",
    "fonctions": [
     "Engagement"
-   ]
+   ],
+   "cles": "ameliorer changer engagement humains les signifie societe terre"
   },
   {
    "mot": "MORALE",
    "nature": "nom",
    "fonctions": [
     "Engagement"
-   ]
+   ],
+   "cles": "bien des donner engagement esthetique lecon lecons mal moraliser oppose pure recit regles"
   },
   {
    "mot": "MOT",
-   "nature": "nom"
+   "nature": "nom",
+   "cles": "des influence langage mots pouvoir signifie unite verbe voir"
   },
   {
    "mot": "MYTHE",
    "nature": "nom",
    "fonctions": [
     "Évasion"
-   ]
+   ],
+   "cles": "ancien culture des dieux evasion explique figure heros idealisee idee imaginaire monde qui raconte recit"
   },
   {
    "mot": "NATURALISME",
@@ -669,75 +765,87 @@
    "fonctions": [
     "Engagement",
     "Sociale"
-   ]
+   ],
+   "cles": "avec courant decrit engagement est figure germinal observateur precision principale prolonge qui realisme scientifique siecle sociale societe uvre xixe zola"
   },
   {
    "mot": "NÉGRITUDE",
    "nature": "nom",
    "fonctions": [
     "Engagement"
-   ]
+   ],
+   "cles": "cesaire culture damas engagement identite litteraire mouvement noires qui senghor valorise"
   },
   {
    "mot": "NOUVEAU ROMAN",
    "nature": "nom",
    "fonctions": [
     "Esthétique"
-   ]
+   ],
+   "cles": "courant ecriture est esthetique figure intrigue message met personnages plan premier qui rejette robbe-grillet siecle traditionnel une xxe"
   },
   {
    "mot": "ŒUVRE",
-   "nature": "nom"
+   "nature": "nom",
+   "cles": "artiste artistique litteraire produit texte valeur"
   },
   {
    "mot": "OPPRESSION / OPPRIMÉ",
    "nature": "nom / adjectif",
    "fonctions": [
     "Engagement"
-   ]
+   ],
+   "cles": "domination engagement est injuste une victime violente"
   },
   {
    "mot": "OPPROBRE",
    "nature": "nom",
    "fonctions": [
     "Engagement"
-   ]
+   ],
+   "cles": "deshonneur engagement honte publique"
   },
   {
    "mot": "ORALITÉ",
-   "nature": "nom"
+   "nature": "nom",
+   "cles": "contes culture dits epopees griots les memoire par parole proverbes transmission"
   },
   {
    "mot": "ORNEMENT",
    "nature": "nom",
    "fonctions": [
     "Esthétique"
-   ]
+   ],
+   "cles": "embellit esthetique figures images qui style"
   },
   {
    "mot": "PASSE-TEMPS",
    "nature": "nom",
    "fonctions": [
     "Évasion"
-   ]
+   ],
+   "cles": "agreablement evasion fait loisir occupation passer qui temps"
   },
   {
    "mot": "PEINDRE / PEINTURE",
    "nature": "verbe / nom",
    "fonctions": [
     "Sociale"
-   ]
+   ],
+   "cles": "decrire description les mots par representer signifie sociale societe"
   },
   {
    "mot": "PENSEUR",
-   "nature": "nom"
+   "nature": "nom",
+   "cles": "auteur critique dans ecrivain personne philosophe qui reflechit sujet these"
   },
   {
    "mot": "PEUPLE",
    "nature": "nom",
    "fonctions": [
     "Engagement"
-   ]
+   ],
+   "cles": "des engagement ensemble gens habitants les ordinaires pays porte-parole"
   },
   {
    "mot": "PLAIRE",
@@ -745,7 +853,8 @@
    "fonctions": [
     "Esthétique",
     "Évasion"
-   ]
+   ],
+   "cles": "esthetique evasion plaisir procurer seduire"
   },
   {
    "mot": "PLAISIR",
@@ -753,7 +862,8 @@
    "fonctions": [
     "Esthétique",
     "Évasion"
-   ]
+   ],
+   "cles": "agreable decouvrir esthetique evasion lire rire satisfaction sensation"
   },
   {
    "mot": "POÉSIE / POÈTE / POÈME",
@@ -762,30 +872,36 @@
     "Engagement",
     "Esthétique",
     "Lyrique"
-   ]
+   ],
+   "cles": "auteur avec des ecrit emotions engagement est esthetique exprime genre images joue les lyrique mots plus poetique qui son souvent texte vers"
   },
   {
    "mot": "PORTE-PAROLE",
    "nature": "nom",
    "fonctions": [
     "Engagement"
-   ]
+   ],
+   "cles": "engagement groupe nom parle personne qui"
   },
   {
    "mot": "POUVOIR",
-   "nature": "nom"
+   "nature": "nom",
+   "cles": "agir autorite capacite choisir critiquer denoncer des deux gouvernants gouverne langage les lis mots phrase piege politique pour pouvoirs puissance qui sens verbe"
   },
   {
    "mot": "PROBLÉMATIQUE",
-   "nature": "nom"
+   "nature": "nom",
+   "cles": "dans deux elle figure introduction par questions serie soulevees these trois"
   },
   {
    "mot": "PROSE",
-   "nature": "nom"
+   "nature": "nom",
+   "cles": "ecrit est forme genre langage ordinaire rime roman sans vers"
   },
   {
    "mot": "PUBLIC",
-   "nature": "nom"
+   "nature": "nom",
+   "cles": "des ensemble lecteurs spectateurs theatre"
   },
   {
    "mot": "QUÊTE",
@@ -793,21 +909,24 @@
    "fonctions": [
     "Esthétique",
     "Évasion"
-   ]
+   ],
+   "cles": "active ailleurs beau chose esthetique evasion exemples quelque recherche"
   },
   {
    "mot": "QUOTIDIEN",
    "nature": "nom / adjectif",
    "fonctions": [
     "Évasion"
-   ]
+   ],
+   "cles": "echapper evader evasion jours les routine signifie tous vie"
   },
   {
    "mot": "RÉALISME",
    "nature": "nom",
    "fonctions": [
     "Sociale"
-   ]
+   ],
+   "cles": "balzac compris courant elle est flaubert ordinaire qui realite represente sociale telle vie"
   },
   {
    "mot": "RÉALITÉ",
@@ -815,35 +934,40 @@
    "fonctions": [
     "Engagement",
     "Sociale"
-   ]
+   ],
+   "cles": "contraire engagement est existe fiction monde qui sociale tel vecu vraiment"
   },
   {
    "mot": "RÉCIT",
    "nature": "nom",
    "fonctions": [
     "Évasion"
-   ]
+   ],
+   "cles": "evasion histoire narration racontee"
   },
   {
    "mot": "REFLET / REFLÉTER",
    "nature": "nom / verbe",
    "fonctions": [
     "Sociale"
-   ]
+   ],
+   "cles": "est-a-dire fidelement image miroir montre par reflete renvoyee sociale societe uvre"
   },
   {
    "mot": "RÊVE",
    "nature": "nom",
    "fonctions": [
     "Évasion"
-   ]
+   ],
+   "cles": "aspiration evasion images imagination pendant sommeil vues"
   },
   {
    "mot": "RÉVOLTE / RÉVOLUTION / RÉVOLUTIONNAIRE",
    "nature": "noms / adjectif",
    "fonctions": [
     "Engagement"
-   ]
+   ],
+   "cles": "bombes celui changement changer des designe engagement est idees leur leurs maniant monde non ordre par parole pas profond qui radicalement refus revolutionnaires veut violence violent"
   },
   {
    "mot": "RIRE",
@@ -851,53 +975,61 @@
    "fonctions": [
     "Engagement",
     "Évasion"
-   ]
+   ],
+   "cles": "arme aussi comique divertissement engagement evasion fonction mais reaction satire"
   },
   {
    "mot": "ROMAN / ROMANCIER",
-   "nature": "noms"
+   "nature": "noms",
+   "cles": "auteur est frequent invente long plus prose recit souvent theme tres"
   },
   {
    "mot": "ROMANTISME",
    "nature": "nom",
    "fonctions": [
     "Lyrique"
-   ]
+   ],
+   "cles": "courant exprime hugo lamartine les liberte lyrique moi musset nature qui sentiments siecle xixe"
   },
   {
    "mot": "SATIRE",
    "nature": "nom",
    "fonctions": [
     "Engagement"
-   ]
+   ],
+   "cles": "avec colonialisme critiquer defauts des engagement est les medaille moque negre personnes pour qui rire societe une uvre vieux"
   },
   {
    "mot": "SENSIBILITÉ",
    "nature": "nom",
    "fonctions": [
     "Lyrique"
-   ]
+   ],
+   "cles": "adulte aux capacite des emotions exprime faciles larmes lyrique personne qui ressentir sensible ses signifie tres une vive"
   },
   {
    "mot": "SENTIMENT",
    "nature": "nom",
    "fonctions": [
     "Lyrique"
-   ]
+   ],
+   "cles": "amour durable emotion haine joie lyrique tristesse"
   },
   {
    "mot": "SILENCE / SILENCIEUX",
    "nature": "nom / adjectif",
    "fonctions": [
     "Engagement"
-   ]
+   ],
+   "cles": "ceux dire engagement face ici injustice qui rien taisent"
   },
   {
    "mot": "SOCIÉTÉ",
    "nature": "nom",
    "fonctions": [
     "Sociale"
-   ]
+   ],
+   "cles": "des ensemble personnes qui regles selon sociale vivent"
   },
   {
    "mot": "SOUFFRANCE",
@@ -905,22 +1037,26 @@
    "fonctions": [
     "Engagement",
     "Lyrique"
-   ]
+   ],
+   "cles": "douleur engagement lyrique morale physique"
   },
   {
    "mot": "SPECTACLE",
-   "nature": "nom"
+   "nature": "nom",
+   "cles": "est etre fait pour regarde representation ressenti theatrale theatre"
   },
   {
    "mot": "STYLE",
    "nature": "nom",
    "fonctions": [
     "Esthétique"
-   ]
+   ],
+   "cles": "auteur ecrire esthetique images maniere mots propre rythme"
   },
   {
    "mot": "STYLISTIQUE",
-   "nature": "nom"
+   "nature": "nom",
+   "cles": "des ecriture ensemble etude figures procedes style"
   },
   {
    "mot": "SURRÉALISME",
@@ -928,11 +1064,13 @@
    "fonctions": [
     "Esthétique",
     "Évasion"
-   ]
+   ],
+   "cles": "andre breton courant esthetique evasion imagination inconscient libere qui reve siecle xxe"
   },
   {
    "mot": "SYMBOLE",
-   "nature": "nom"
+   "nature": "nom",
+   "cles": "colombe dit element elle idee montre paix plus que qui represente symbolique une uvre"
   },
   {
    "mot": "TÉMOIGNAGE / TÉMOIN",
@@ -940,65 +1078,76 @@
    "fonctions": [
     "Engagement",
     "Sociale"
-   ]
+   ],
+   "cles": "dire ecrivain engagement epoque est sociale son temoigner vecu"
   },
   {
    "mot": "THÉÂTRE",
-   "nature": "nom"
+   "nature": "nom",
+   "cles": "aussi comedie destine devant dialogue drame etre formes genre joue lieu public ses tragedie"
   },
   {
    "mot": "THÈME",
-   "nature": "nom"
+   "nature": "nom",
+   "cles": "dont parle sujet"
   },
   {
    "mot": "THÉORÈME",
-   "nature": "nom"
+   "nature": "nom",
+   "cles": "adresse comprend demontree est figure logique mais par pas proposition raison raisonnement sensibilite spectacle theatre"
   },
   {
    "mot": "THÉRAPIE",
    "nature": "nom",
    "fonctions": [
     "Lyrique"
-   ]
+   ],
+   "cles": "ames apaiser catharsis ceux figure les litterature lyrique morale moyen pour que qui signifie soigne souffrance souffrent soulage tourmentees traitement une voir"
   },
   {
    "mot": "THÈSE",
-   "nature": "nom"
+   "nature": "nom",
+   "cles": "auteur citation contenue dans defendue idee par sujet"
   },
   {
    "mot": "TOTALITARISME",
    "nature": "nom",
    "fonctions": [
     "Engagement"
-   ]
+   ],
+   "cles": "1984 citoyens controle des engagement etat exemple regime toute vie"
   },
   {
    "mot": "TRADITION",
    "nature": "nom",
    "fonctions": [
     "Sociale"
-   ]
+   ],
+   "cles": "coutumes croyances culture generation modernite opposee parfois sociale transmises"
   },
   {
    "mot": "TRANSFORMATION",
    "nature": "nom",
    "fonctions": [
     "Engagement"
-   ]
+   ],
+   "cles": "changement engagement lecteur litterature profond societe transforme"
   },
   {
    "mot": "TRIBUNE",
    "nature": "nom",
    "fonctions": [
     "Engagement"
-   ]
+   ],
+   "cles": "engagement estrade exprimer figure moyen parle publiquement"
   },
   {
    "mot": "UTILE / UTILITÉ",
    "nature": "adjectif / nom",
    "fonctions": [
     "Engagement"
-   ]
+   ],
+   "cles": "beau chose contraire engagement gratuit quelque qui rend sert service"
   },
   {
    "mot": "UTOPIE",
@@ -1006,7 +1155,8 @@
    "fonctions": [
     "Engagement",
     "Évasion"
-   ]
+   ],
+   "cles": "changer contraire dystopie engagement evasion ideale imaginaire invite meilleur monde reve societe"
   },
   {
    "mot": "VÉCU",
@@ -1014,64 +1164,74 @@
    "fonctions": [
     "Lyrique",
     "Sociale"
-   ]
+   ],
+   "cles": "des experience lyrique personnellement sociale societes"
   },
   {
    "mot": "VERBE",
    "nature": "nom",
    "fonctions": [
     "Esthétique"
-   ]
+   ],
+   "cles": "action dans des dissertation est esthetique exprime grammaire langage mot mots parole pouvoirs premier presque puissance qui sens sujet toujours une"
   },
   {
    "mot": "VÉRITÉ",
    "nature": "nom",
    "fonctions": [
     "Engagement"
-   ]
+   ],
+   "cles": "conforme engagement est qui realite"
   },
   {
    "mot": "VERS",
-   "nature": "nom"
+   "nature": "nom",
+   "cles": "avec ligne poeme poesie rime rythme souvent"
   },
   {
    "mot": "VIE",
-   "nature": "nom"
+   "nature": "nom",
+   "cles": "auteur biographie designe existence experience lyrique mettre personnel personnelle propre quotidien realite rien sans selon sociale son sujet vecu"
   },
   {
    "mot": "VIGIE",
    "nature": "nom",
    "fonctions": [
     "Engagement"
-   ]
+   ],
+   "cles": "alerte celui dangers engagement figure les qui sentinelle sur surveille veille"
   },
   {
    "mot": "VOCATION",
    "nature": "nom",
    "fonctions": [
     "Engagement"
-   ]
+   ],
+   "cles": "appel dans donne engagement interieur mission vie"
   },
   {
    "mot": "VOIX",
    "nature": "nom",
    "fonctions": [
     "Engagement"
-   ]
+   ],
+   "cles": "bouche ceux designent donner ecoute emis engagement exprimer figure ont opinion par parole pas permettre qui signifie son"
   },
   {
    "mot": "VOYAGE",
    "nature": "nom",
    "fonctions": [
     "Évasion"
-   ]
+   ],
+   "cles": "deplacement evasion figure lecture par"
   },
   {
    "mot": "VRAISEMBLANCE",
    "nature": "nom",
    "fonctions": [
     "Sociale"
-   ]
+   ],
+   "cles": "est invente meme parait possible qui realisme regle sociale vrai"
   }
  ]
 }

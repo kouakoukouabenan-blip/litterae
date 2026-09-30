@@ -33,7 +33,10 @@ for (const e of dico.entrees) {
   motsDico.add(e.mot);
   for (const f of e.fonctions ?? []) if (!FONCTIONS.includes(f)) err(at, `fonction inconnue « ${f} »`);
   // Le sens des mots est payant : le site public n'a que la liste des mots.
-  if (Object.keys(e).some(k => !["mot", "nature", "fonctions"].includes(k))) err(at, "contenu payant présent dans les données publiques");
+  // « cles » : mots de la définition en vrac (triés, sans doublon), pour chercher sans révéler le texte.
+  if (Object.keys(e).some(k => !["mot", "nature", "fonctions", "cles"].includes(k))) err(at, "contenu payant présent dans les données publiques");
+  const cles = (e.cles ?? "").split(" ");
+  if (e.cles && cles.some((m, i) => i > 0 && m <= cles[i - 1])) err(at, "« cles » doit être une liste de mots triés sans doublon");
 }
 
 const nums = new Set();

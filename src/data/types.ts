@@ -97,6 +97,8 @@ export interface MotDico {
   nature: string;
   /** Fonctions reconnues, pour les filtres et les couleurs. */
   fonctions?: Fonction[];
+  /** Mots de la définition en vrac, triés : la recherche les trouve sans que le texte soit publié. */
+  cles?: string;
 }
 
 /** Une entrée complète du dictionnaire littéraire (mots des sujets de dissertation). */
