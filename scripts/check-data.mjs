@@ -28,10 +28,12 @@ if (oeuvres.filter(w => w.libre).length !== 10) err("œuvres", "il faut exacteme
 const motsDico = new Set();
 for (const e of dico.entrees) {
   const at = `dictionnaire « ${e.mot} »`;
-  if (!e.mot?.trim() || !e.sens?.trim()) err(at, "mot ou sens manquant");
+  if (!e.mot?.trim() || !e.nature?.trim()) err(at, "mot ou nature manquant");
   if (motsDico.has(e.mot)) err(at, "mot en double");
   motsDico.add(e.mot);
   for (const f of e.fonctions ?? []) if (!FONCTIONS.includes(f)) err(at, `fonction inconnue « ${f} »`);
+  // Le sens des mots est payant : le site public n'a que la liste des mots.
+  if (Object.keys(e).some(k => !["mot", "nature", "fonctions"].includes(k))) err(at, "contenu payant présent dans les données publiques");
 }
 
 const nums = new Set();

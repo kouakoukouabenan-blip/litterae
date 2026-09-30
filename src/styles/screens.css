@@ -222,3 +222,8 @@
   .outils-lede, .lede:has(> .outils-lede) { display: none; }
   .dico-sens { font-size: var(--text-sm); }
 }
+.dico-ouvrir { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2); }
+.dico-ouvrir .btn { min-height: 36px; padding: 0 var(--s3); font-size: var(--text-xs); }
+.dico-verrou { display: flex; flex-direction: column; gap: var(--s2); padding: var(--s3); background: var(--ochre-pale); border-radius: var(--radius-sm); font-size: var(--text-sm); }
+.dico-verrou .icon { vertical-align: -3px; color: var(--orange-text); }
+.dico-verrou-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2) var(--s4); }

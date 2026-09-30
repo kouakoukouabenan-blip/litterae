@@ -91,15 +91,19 @@ export interface Outils {
   orientations: { titre: string; mots: string[]; oppose: string }[];
 }
 
-/** Une entrée du dictionnaire littéraire (mots des sujets de dissertation). */
-export interface EntreeDico {
+/** Mot du dictionnaire tel que publié dans le site : sans son sens (contenu payant). */
+export interface MotDico {
   mot: string;
   nature: string;
+  /** Fonctions reconnues, pour les filtres et les couleurs. */
+  fonctions?: Fonction[];
+}
+
+/** Une entrée complète du dictionnaire littéraire (mots des sujets de dissertation). */
+export interface EntreeDico extends MotDico {
   sens: string;
   /** Indication de fonction telle que rédigée par l'auteur (avec ses nuances). */
   fonction?: string;
-  /** Fonctions reconnues, pour les filtres et les couleurs. */
-  fonctions?: Fonction[];
   note?: string;
   oeuvres?: string[];
   exemples?: string[];
@@ -107,7 +111,7 @@ export interface EntreeDico {
 
 export interface Dictionnaire {
   guide: { titre: string; blocs: (string | string[])[] }[];
-  entrees: EntreeDico[];
+  entrees: MotDico[];
 }
 
 /** Contenu payant renvoyé par le serveur après validation d'une clé. */
@@ -117,6 +121,8 @@ export interface ContenuPayant {
   sujets: Sujet[];
   /** Quiz par leçon (absent des clés activées avant l'ajout des quiz). */
   quiz?: Record<string, QuestionQuiz[]>;
+  /** Dictionnaire littéraire complet (absent des clés activées avant son ajout). */
+  dictionnaire?: EntreeDico[];
   /** Leçons payantes ajoutées depuis le tableau de bord. */
   lecons?: Record<string, BlocLecon[]>;
 }
