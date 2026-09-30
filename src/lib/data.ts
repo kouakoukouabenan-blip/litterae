@@ -12,7 +12,8 @@ const libre = contenuLibre();
 const ajoutees = (libre?.ajouts?.oeuvres ?? []).filter(w => w?.id && w.titre);
 
 export const OEUVRES: Oeuvre[] = [
-  ...(oeuvres as Oeuvre[]).map(w => {
+  ...(oeuvres as Oeuvre[]).map(o => {
+    const w = { ...o, ...libre?.corrections?.[o.id] };
     const p = payant?.oeuvres[w.id] ?? libre?.oeuvres[w.id];
     const estLibre = libre ? libre.gratuites.includes(w.id) : w.libre;
     return p ? { ...w, resume: p.resume, idees: p.idees, exemple: p.exemple ?? w.exemple, libre: estLibre } : { ...w, libre: estLibre };

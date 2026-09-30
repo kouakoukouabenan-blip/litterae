@@ -10,6 +10,10 @@ export interface ContenuLibre {
   revision: number;
   gratuites: string[];
   oeuvres: Record<string, { resume: string | null; idees: IdeeIllustration[]; exemple: string | null }>;
+  /** Autres champs corrigés depuis le tableau de bord (titre, auteur, thèmes…), pour toutes les fiches. */
+  corrections?: Record<string, Partial<Oeuvre>>;
+  /** Leçons du guide modifiées ou passées en payant (texte vide si payantes). */
+  lecons?: Record<string, { titre: string; duree: string; libre: boolean; blocs: BlocLecon[] }>;
   /** Fiches et leçons ajoutées depuis le tableau de bord (texte vide si payantes). */
   ajouts?: {
     oeuvres: Oeuvre[];
