@@ -123,13 +123,20 @@ function Reperes({ etape }: { etape: Etape }) {
     <svg class="demo-reperes" viewBox="0 0 1080 2209" aria-hidden="true">
       {etape.traces.map(({ f, b: [x1, y1, x2, y2] }, i) => {
         const cx = (x1 + x2) / 2, cy = (y1 + y2) / 2;
-        if (f === "cadre") return <rect key={i} class="trace" style={retard(i)} pathLength={1} x={x1 - 10} y={y1 - 10} width={x2 - x1 + 20} height={y2 - y1 + 20} rx={26} />;
-        if (f === "cercle") return <ellipse key={i} class="trace" style={retard(i)} pathLength={1} cx={cx} cy={cy} rx={(x2 - x1) / 2 + 34} ry={(y2 - y1) / 2 + 40} transform={`rotate(-2 ${cx} ${cy})`} />;
+        // Tout est tracé en <path> : pathLength n'est pas pris en compte sur rect ou ellipse par certains navigateurs.
+        if (f === "cadre") {
+          const g = x1 - 10, h = y1 - 10, d = x2 + 10, b = y2 + 10, r = 26;
+          return <path key={i} class="trace" style={retard(i)} pathLength={1} d={`M${g + r} ${h}H${d - r}Q${d} ${h} ${d} ${h + r}V${b - r}Q${d} ${b} ${d - r} ${b}H${g + r}Q${g} ${b} ${g} ${b - r}V${h + r}Q${g} ${h} ${g + r} ${h}Z`} />;
+        }
+        if (f === "cercle") {
+          const rx = (x2 - x1) / 2 + 34, ry = (y2 - y1) / 2 + 40;
+          return <path key={i} class="trace" style={retard(i)} pathLength={1} transform={`rotate(-2 ${cx} ${cy})`} d={`M${cx - rx} ${cy}A${rx} ${ry} 0 1 1 ${cx + rx} ${cy}A${rx} ${ry} 0 1 1 ${cx - rx} ${cy}`} />;
+        }
         return <path key={i} class="trace trace-souligne" style={retard(i)} pathLength={1} d={`M${x1} ${y2 + 8} Q${cx} ${y2 + 26} ${x2} ${y2 + 4}`} />;
       })}
       {etape.clic && (
-        <g style={`--x:${etape.clic[0]};--y:${etape.clic[1]};${retard(etape.traces.length)}`}>
-          <circle class="demo-onde" cx={etape.clic[0]} cy={etape.clic[1]} r={46} />
+        <g transform={`translate(${etape.clic[0]} ${etape.clic[1]})`} style={retard(etape.traces.length)}>
+          <circle class="demo-onde" r={46} />
           <path class="demo-curseur" d="M0 0V92L23 71L38 104L55 96L40 64H69Z" />
         </g>
       )}

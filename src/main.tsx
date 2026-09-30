@@ -10,8 +10,16 @@ import "./styles/screens.css";
 import "./lib/install";
 import { App } from "./app";
 import { conserverDonnees } from "./lib/storage";
+import { registerSW } from "virtual:pwa-register";
 
 conserverDonnees();
+
+// Nouvelle version en ligne : elle s'installe et la page se recharge seule, pour ne jamais garder
+// un ancien code avec de nouvelles images. Vérifie aussi toutes les heures si l'appli reste ouverte.
+registerSW({
+  immediate: true,
+  onRegisteredSW(_url, reg) { if (reg) setInterval(() => { if (navigator.onLine) reg.update(); }, 60 * 60 * 1000); }
+});
 
 render(<App />, document.getElementById("app")!);
 

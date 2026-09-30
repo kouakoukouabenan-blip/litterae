@@ -333,11 +333,11 @@
   animation: demo-curseur 1300ms ease-in-out var(--d) both;
 }
 @keyframes demo-curseur {
-  0% { opacity: 0; transform: translate(calc(var(--x) * 1px + 230px), calc(var(--y) * 1px + 380px)); }
+  0% { opacity: 0; transform: translate(230px, 380px); }
   20% { opacity: 1; }
-  65% { transform: translate(calc(var(--x) * 1px), calc(var(--y) * 1px)); }
-  78% { transform: translate(calc(var(--x) * 1px), calc(var(--y) * 1px)) scale(0.84); }
-  90%, 100% { opacity: 1; transform: translate(calc(var(--x) * 1px), calc(var(--y) * 1px)); }
+  65% { transform: translate(0, 0); }
+  78% { transform: scale(0.84); }
+  90%, 100% { opacity: 1; transform: translate(0, 0); }
 }
 .demo-onde {
   fill: var(--ochre); opacity: 0; transform-box: fill-box; transform-origin: center;
