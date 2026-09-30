@@ -1,5 +1,5 @@
 import { Fragment } from "preact";
-import { useMemo, useState } from "preact/hooks";
+import { useEffect, useMemo, useRef, useState } from "preact/hooks";
 import dico from "../data/dictionnaire.json";
 import type { Dictionnaire, EntreeDico, Fonction, MotDico } from "../data/types";
 import { FONCTIONS } from "../data/types";
@@ -98,54 +98,14 @@ function nuance(e: EntreeDico) {
   return brut === simple ? null : e.fonction;
 }
 
-interface EntreeProps { e: Mot; terms: string[]; onVoir: (m: string) => void; onFonction: (f: string) => void; onOuvrir: (m: string) => void; etat?: EchecConsultation | "chargement" }
+type Etat = EchecConsultation | "chargement";
 
-/** Mot dont le sens n'est pas encore sur l'appareil : un bouton le demande (mots gratuits comptés). */
-function MotFerme({ e, terms, onFonction, onOuvrir, etat }: EntreeProps) {
-  const fn = e.fonctions?.[0];
-  return (
-    <li class={`dico-entree ${fn ? fnClass(fn) : ""}`}>
-      <p class="dico-tete">
-        <span class="dico-mot"><Highlight text={e.mot} terms={terms} /></span>{" "}
-        <span class="dico-nature">{e.nature}</span>
-      </p>
-      <div class="dico-fonctions">
-        {e.fonctions?.map(f => (
-          <button key={f} type="button" class={`tag tag-link ${fnClass(f)}`} onClick={() => onFonction(f)}
-            aria-label={`Voir les mots de la fonction ${f}`}>{f}</button>
-        ))}
-      </div>
-      {etat === "limite" ? (
-        <div class="dico-verrou">
-          <p><Icon name="lock" size={16} /> Tu as consulté tes {DICO_GRATUITS} mots gratuits. L'accès complet ouvre tout le dictionnaire.</p>
-          <p class="dico-verrou-actions"><AchatLien /><a class="link-btn" href="#/acces">J'ai une clé d'accès</a></p>
-        </div>
-      ) : (
-        <p class="dico-ouvrir">
-          <button type="button" class="btn btn-secondary" disabled={etat === "chargement"} onClick={() => onOuvrir(e.mot)}>
-            {etat === "chargement" ? "Un instant…" : "Voir le sens"}
-          </button>
-          {etat === "hors-ligne" && <span class="small muted">Connecte-toi à Internet pour voir ce mot.</span>}
-          {etat === "erreur" && <span class="small muted">Le serveur ne répond pas. Réessaie dans un instant.</span>}
-        </p>
-      )}
-    </li>
-  );
-}
-
-function Entree(props: EntreeProps) {
-  const { terms, onVoir, onFonction } = props;
-  if (!complete(props.e)) return <MotFerme {...props} />;
-  const e = props.e;
-  const fn = e.fonctions?.[0];
+/** Détails d'un mot, affichés dans la carte qui s'ouvre au toucher. */
+function Details({ e, onVoir, onFonction }: { e: EntreeDico; onVoir: (m: string) => void; onFonction: (f: string) => void }) {
   const detail = nuance(e);
   return (
-    <li class={`dico-entree ${fn ? fnClass(fn) : ""}`}>
-      <p class="dico-tete">
-        <span class="dico-mot"><Highlight text={e.mot} terms={terms} /></span>{" "}
-        <span class="dico-nature">{e.nature}</span>
-      </p>
-      <p class="dico-sens"><Texte text={majuscule(e.sens)} terms={terms} onVoir={onVoir} /></p>
+    <div class="dico-details">
+      <p class="dico-sens"><Texte text={majuscule(e.sens)} terms={[]} onVoir={onVoir} /></p>
       {(e.fonctions?.length || detail) && (
         <div class="dico-fonctions">
           {e.fonctions?.map(f => (
@@ -155,7 +115,7 @@ function Entree(props: EntreeProps) {
           {detail && <span class="small muted">Fonction : {detail}</span>}
         </div>
       )}
-      {e.note && <p class="small"><Texte text={e.note} terms={terms} onVoir={onVoir} /></p>}
+      {e.note && <p class="small"><Texte text={e.note} terms={[]} onVoir={onVoir} /></p>}
       {e.oeuvres && (
         <p class="small">
           <span class="dico-label">Œuvres</span>{" "}
@@ -166,9 +126,18 @@ function Entree(props: EntreeProps) {
         </p>
       )}
       {e.exemples?.map(x => (
-        <p key={x} class="dico-exemple"><span class="dico-label">Exemple</span><Texte text={x} terms={terms} onVoir={onVoir} /></p>
+        <p key={x} class="dico-exemple"><span class="dico-label">Exemple</span><Texte text={x} terms={[]} onVoir={onVoir} /></p>
       ))}
-    </li>
+    </div>
+  );
+}
+
+function Verrou() {
+  return (
+    <div class="dico-verrou">
+      <p><Icon name="lock" size={16} /> Tu as consulté tes {DICO_GRATUITS} mots gratuits. L'accès complet ouvre tout le dictionnaire.</p>
+      <p class="dico-verrou-actions"><AchatLien /><a class="link-btn" href="#/acces">J'ai une clé d'accès</a></p>
+    </div>
   );
 }
 
@@ -217,18 +186,44 @@ export function DicoResultats({ q, fonction, onChange }: { q: string; fonction: 
   const entrees = useMemo<Mot[]>(() => complet ?? D.entrees.map(m => vus[m.mot] ?? m), [complet, vus]);
   const INDEX = useMemo(() => indexer(entrees), [entrees]);
   const resultats = chercher(INDEX, q, fonction);
-  const [etats, setEtats] = useState<Record<string, EchecConsultation | "chargement">>({});
-  const ouvrir = async (mot: string) => {
-    setEtats(x => ({ ...x, [mot]: "chargement" }));
-    const r = await consulter(mot);
-    setEtats(x => { const n = { ...x }; if (typeof r === "string") n[mot] = r; else delete n[mot]; return n; });
-  };
   const restants = Math.max(0, DICO_GRATUITS - Object.keys(vus).length);
-  const parcours = !normalize(q);
-  const voir = (mot: string) => { onChange(mot, null); scrollTo(0, 0); };
-  const filtrer = (f: string) => { onChange("", f === fonction ? null : f); scrollTo(0, 0); };
   const [guide, setGuide] = useState(false);
+  const [tous, setTous] = useState(false);
   const compte = (f: Fonction) => entrees.filter(e => e.fonctions?.includes(f)).length;
+
+  // Carte du mot ouvert.
+  const [ouvert, setOuvert] = useState<string | null>(null);
+  const [etat, setEtat] = useState<Etat | null>(null);
+  const carte = useRef<HTMLDialogElement>(null);
+  const entreeOuverte = ouvert ? entrees.find(e => e.mot === ouvert) : undefined;
+  useEffect(() => {
+    const d = carte.current;
+    if (!d) return;
+    if (ouvert && !d.open) d.showModal();
+    if (!ouvert && d.open) d.close();
+  }, [ouvert]);
+  const ouvrir = async (mot: string) => {
+    setOuvert(mot);
+    const e = entrees.find(x => x.mot === mot);
+    if (!e || complete(e)) { setEtat(null); return; }
+    setEtat("chargement");
+    const r = await consulter(mot);
+    setEtat(typeof r === "string" ? r : null);
+  };
+  const fermer = () => setOuvert(null);
+  // Une nouvelle recherche (lien, retour) referme la carte.
+  useEffect(fermer, [q, fonction]);
+  // Renvoi « voir COMBAT » : ouvre directement la carte du mot quand il existe.
+  const voir = (mot: string) => {
+    const n = normalize(mot);
+    const cible = entrees.find(e => normalize(e.mot).split(/\s*\/\s*| et /).includes(n));
+    if (cible) { ouvrir(cible.mot); return; }
+    fermer(); onChange(mot, null); scrollTo(0, 0);
+  };
+  const filtrer = (f: string) => { fermer(); onChange("", f === fonction ? null : f); scrollTo(0, 0); };
+
+  const parcours = !normalize(q) && !fonction;
+  const liste = !parcours || tous;
 
   return (
     <div class="reading reading-left dico">
@@ -255,30 +250,62 @@ export function DicoResultats({ q, fonction, onChange }: { q: string; fonction: 
 
       {guide && <Guide onVoir={m => { setGuide(false); voir(m); }} />}
 
-      {resultats.length ? (
+      {!liste ? (
+        <button type="button" class="link-btn dico-tous" onClick={() => setTous(true)}>Voir tous les mots ({entrees.length})</button>
+      ) : resultats.length ? (
         <>
-          {(!parcours || fonction) && (
-            <p class="small muted" aria-live="polite">{plural(resultats.length, "mot")}{fonction ? ` · ${fonction}` : ""}</p>
-          )}
+          {!parcours && <p class="small muted" aria-live="polite">{plural(resultats.length, "mot")}{fonction ? ` · ${fonction}` : ""}</p>}
           <ul class="dico-liste">
             {resultats.map((e, i) => {
               const lettre = normalize(e.mot)[0].toUpperCase();
               const nouvelle = parcours && (i === 0 || normalize(resultats[i - 1].mot)[0].toUpperCase() !== lettre);
+              const fn = e.fonctions?.[0];
               return (
                 <Fragment key={e.mot}>
                   {nouvelle && <li class="dico-lettre" aria-hidden="true">{lettre}</li>}
-                  <Entree e={e} terms={terms} onVoir={voir} onFonction={filtrer} onOuvrir={ouvrir} etat={etats[e.mot]} />
+                  <li class={fn ? fnClass(fn) : ""}>
+                    <button type="button" class="dico-ligne" onClick={() => ouvrir(e.mot)} aria-haspopup="dialog">
+                      <span class="dico-ligne-texte">
+                        <span class="dico-mot"><Highlight text={e.mot} terms={terms} /></span>{" "}
+                        <span class="dico-nature">{e.nature}</span>
+                      </span>
+                      <Icon name="chevron_right" size={20} />
+                    </button>
+                  </li>
                 </Fragment>
               );
             })}
           </ul>
+          {parcours && <button type="button" class="link-btn dico-tous" onClick={() => { setTous(false); scrollTo(0, 0); }}>Replier la liste</button>}
         </>
       ) : (
         <EmptyState title="Aucun mot trouvé">
           <p>Essaie un mot voisin, ou un seul mot à la fois.</p>
-          <button type="button" class="btn btn-secondary" onClick={() => onChange("", null)}>Voir tout le dictionnaire</button>
+          <button type="button" class="btn btn-secondary" onClick={() => { onChange("", null); setTous(true); }}>Voir tous les mots</button>
         </EmptyState>
       )}
+
+      <dialog ref={carte} class="sheet dico-carte" aria-labelledby="dico-carte-titre" onClose={fermer}
+        onClick={e => e.target === carte.current && fermer()}>
+        {entreeOuverte && (
+          <>
+            <div class={`sheet-head dico-carte-tete ${entreeOuverte.fonctions?.[0] ? fnClass(entreeOuverte.fonctions[0]) : ""}`}>
+              <h2 id="dico-carte-titre" class="dico-tete">
+                <span class="dico-mot">{entreeOuverte.mot}</span>{" "}
+                <span class="dico-nature">{entreeOuverte.nature}</span>
+              </h2>
+              <button type="button" class="icon-btn" onClick={fermer} aria-label="Fermer"><Icon name="close" /></button>
+            </div>
+            <div class="sheet-body">
+              {complete(entreeOuverte) ? <Details e={entreeOuverte} onVoir={voir} onFonction={filtrer} />
+                : etat === "limite" ? <Verrou />
+                : etat === "chargement" ? <p class="muted">Un instant…</p>
+                : etat === "hors-ligne" ? <p class="muted">Connecte-toi à Internet pour voir ce mot.</p>
+                : <p class="dico-ouvrir"><span class="muted">Le serveur ne répond pas.</span><button type="button" class="btn btn-secondary" onClick={() => ouvrir(entreeOuverte.mot)}>Réessayer</button></p>}
+            </div>
+          </>
+        )}
+      </dialog>
     </div>
   );
 }

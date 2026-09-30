@@ -227,3 +227,16 @@
 .dico-verrou { display: flex; flex-direction: column; gap: var(--s2); padding: var(--s3); background: var(--ochre-pale); border-radius: var(--radius-sm); font-size: var(--text-sm); }
 .dico-verrou .icon { vertical-align: -3px; color: var(--orange-text); }
 .dico-verrou-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2) var(--s4); }
+/* Liste de mots seuls ; le détail s'ouvre dans une carte */
+.dico-liste > li[class*="fn-"] { border-left: 4px solid var(--fn); }
+.dico-ligne { width: 100%; min-height: 52px; display: flex; align-items: center; justify-content: space-between; gap: var(--s2); padding: var(--s2) var(--s3) var(--s2) var(--s4); border: 0; background: none; text-align: left; font: inherit; color: var(--ink); cursor: pointer; }
+.dico-ligne:hover { background: var(--surface-hover); }
+.dico-ligne > .icon { color: var(--muted); }
+.dico-ligne .dico-mot { font-size: var(--text-sm); }
+.dico-tous { align-self: center; margin-top: var(--s2); color: var(--muted); font-weight: 600; }
+.dico-carte .sheet-head { align-items: flex-start; padding-top: var(--s3); }
+.dico-carte-tete { border-top: 5px solid var(--fn, var(--line-strong)); }
+.dico-carte h2 { padding-top: var(--s1); }
+.dico-carte .dico-mot { font-size: var(--text-lg); }
+.dico-details { display: flex; flex-direction: column; gap: var(--s3); }
+.dico-carte .dico-sens { font-size: var(--text-md); }
