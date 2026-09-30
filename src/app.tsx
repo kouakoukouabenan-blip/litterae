@@ -20,6 +20,7 @@ import { reverifier } from "./lib/licence";
 import { demarrerStats, noter } from "./lib/stats";
 import { actualiserContenuLibre } from "./lib/libre";
 import { actualiserQuestions } from "./lib/contact";
+import { prevenirAchatHorsLigne } from "./components/Achat";
 
 function useScrollMemory(key: string) {
   const positions = useRef(new Map<string, number>());
@@ -42,6 +43,7 @@ function useScrollMemory(key: string) {
 export function App() {
   useEffect(() => {
     reverifier();
+    prevenirAchatHorsLigne();
     demarrerStats();
     actualiserContenuLibre();
     // Réponses de l'auteur aux questions (accès complet) : au démarrage et au retour dans l'appli.
