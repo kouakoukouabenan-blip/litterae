@@ -35,7 +35,11 @@ export function OeuvresScreen({ params }: { params: URLSearchParams }) {
   const key = params.toString();
 
   const gratuites = params.get("gratuites") === "1" && !access.premium;
-  const results = useMemo(() => search(INDEX, q, filters).filter(w => !gratuites || w.libre), [key]);
+  // Sans clé, les fiches gratuites passent en tête, dans l'ordre habituel à l'intérieur de chaque groupe.
+  const results = useMemo(() => {
+    const r = search(INDEX, q, filters).filter(w => !gratuites || w.libre);
+    return access.premium ? r : [...r.filter(w => w.libre), ...r.filter(w => !w.libre)];
+  }, [key, access.premium]);
   const counts = useMemo(() => new Map(FACETS.map(f => [f.key, facetCounts(INDEX, q, filters, f)])), [key]);
   useEffect(() => setLimit(PAGE), [key]);
   useEffect(() => noterRecherche("oeuvres", q, results.length), [q]);
