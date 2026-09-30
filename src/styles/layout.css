@@ -54,10 +54,12 @@ body { padding-top: calc(var(--topbar-h) + var(--band-h)); padding-bottom: calc(
 }
 .bottom-nav-item[aria-current="page"] { color: var(--ochre); font-weight: 700; }
 
-.page { max-width: var(--page-width); margin: 0 auto; padding: var(--s5) var(--s4) var(--s7); }
+/* Le pied de page reste en bas de l'écran, même quand la page est courte. */
+#app { display: flex; flex-direction: column; min-height: calc(100vh - var(--topbar-h) - var(--band-h) - var(--bottom-nav-h)); min-height: calc(100dvh - var(--topbar-h) - var(--band-h) - var(--bottom-nav-h) - env(safe-area-inset-bottom)); }
+.page { flex: 1 0 auto; width: 100%; max-width: var(--page-width); margin: 0 auto; padding: var(--s5) var(--s4) var(--s7); }
 
 .site-footer {
-  max-width: var(--page-width); margin: 0 auto; padding: var(--s5) var(--s4) var(--s6);
+  width: 100%; max-width: var(--page-width); margin: 0 auto; padding: var(--s5) var(--s4) var(--s6);
   border-top: var(--border) solid var(--line);
   display: flex; flex-wrap: wrap; gap: var(--s2) var(--s5);
   font-size: var(--text-xs); color: var(--muted);
@@ -78,6 +80,7 @@ body { padding-top: calc(var(--topbar-h) + var(--band-h)); padding-bottom: calc(
 
 @media (min-width: 720px) {
   body { padding-bottom: 0; }
+  #app { min-height: calc(100vh - var(--topbar-h) - var(--band-h)); min-height: calc(100dvh - var(--topbar-h) - var(--band-h)); }
   .bottom-nav { display: none; }
   .topbar-inner { padding: 0 var(--s5); gap: var(--s3); }
   .topbar-title { display: none; }
