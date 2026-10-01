@@ -69,9 +69,6 @@ export async function dejaInstallee(): Promise<boolean> {
   return read<boolean>("installee", false);
 }
 
-/** L'élève dit avoir supprimé l'application : on propose de nouveau de l'installer. */
-export const oublierInstallation = () => write("installee", false);
-
 const SNOOZE_DAYS = 7;
 
 // Nombre de visites (une par session du navigateur) : le bandeau n'apparaît qu'à partir de la deuxième,
