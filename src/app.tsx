@@ -16,7 +16,7 @@ import { OeuvreScreen } from "./screens/Oeuvre";
 import { OutilsScreen } from "./screens/Outils";
 import { EntrainementScreen } from "./screens/Entrainement";
 import { AtelierScreen } from "./screens/Atelier";
-import { CarnetScreen } from "./screens/Carnet";
+import { CarnetScreen, MesFichesScreen } from "./screens/Carnet";
 import { NotFound } from "./screens/NotFound";
 import { AProposScreen, CguScreen, ConfidentialiteScreen } from "./screens/Infos";
 import { InstallGate, InstallGuide } from "./components/Install";
@@ -89,6 +89,7 @@ export function App() {
     case "oeuvres": screen = id ? <OeuvreScreen id={id} params={params} /> : <OeuvresScreen params={params} />; break;
     case "outils": screen = <OutilsScreen />; break;
     case "carnet": screen = <CarnetScreen />; break;
+    case "mes-fiches": screen = <MesFichesScreen />; break;
     case "entrainement": screen = id ? <AtelierScreen num={id} params={params} /> : <EntrainementScreen />; break;
     case "a-propos": screen = <AProposScreen />; break;
     case "cgu": screen = <CguScreen />; break;

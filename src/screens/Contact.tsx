@@ -1,3 +1,4 @@
+import { Segments } from "../components/SujetsOnglets";
 import { CopieAnnotee } from "../components/CopieAnnotee";
 import { useEffect, useRef, useState } from "preact/hooks";
 import { Page } from "../components/Page";
@@ -154,12 +155,10 @@ export function ContactScreen({ params }: { params: URLSearchParams }) {
         </PageHeader>
 
         {premium && (
-          <div class="segmented" role="tablist" aria-label="Contact">
-            <button type="button" role="tab" class="segment" aria-selected={onglet === "ecrire"} onClick={() => voir("ecrire")}>Écrire</button>
-            <button type="button" role="tab" class="segment" aria-selected={onglet === "questions"} onClick={() => voir("questions")}>
-              Mes questions{nouvellesReponses > 0 && <span class="pastille" aria-label={`${nouvellesReponses} nouvelle(s) réponse(s)`}>{nouvellesReponses}</span>}
-            </button>
-          </div>
+          <Segments groupe="contact" label="Contact" items={[
+            { label: "Écrire", onClick: () => voir("ecrire"), actif: onglet === "ecrire" },
+            { label: <>Mes questions{nouvellesReponses > 0 && <span class="pastille" aria-label={`${nouvellesReponses} nouvelle(s) réponse(s)`}>{nouvellesReponses}</span>}</>, onClick: () => voir("questions"), actif: onglet === "questions" }
+          ]} />
         )}
 
         {onglet === "questions" ? (

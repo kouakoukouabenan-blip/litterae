@@ -155,3 +155,16 @@
 /* Atelier : lien direct vers l'outil utile à ce champ. */
 .atelier-outil { font-weight: 600; color: var(--green); white-space: nowrap; }
 .atelier-outil::before { content: "· "; color: var(--muted); font-weight: 400; }
+
+/* Double onglet : un curseur blanc qui glisse, et le contenu qui arrive du bon côté. */
+.segments { position: relative; isolation: isolate; }
+.segments-curseur { position: absolute; z-index: -1; top: 3px; bottom: 3px; left: 0; border-radius: 999px; background: var(--surface); box-shadow: 0 1px 3px rgba(0,0,0,.12), 0 2px 8px rgba(0,0,0,.06); transition: transform .38s cubic-bezier(.34, 1.4, .5, 1), width .38s cubic-bezier(.34, 1.4, .5, 1); }
+.segments .segment { position: relative; background: none !important; box-shadow: none !important; border: 0; cursor: pointer; font: inherit; font-weight: 700; font-size: var(--text-sm); color: var(--muted); transition: color .25s; }
+.segments .segment[aria-current="page"], .segments .segment[aria-pressed="true"] { color: var(--green); }
+.segments .segment { -webkit-tap-highlight-color: transparent; }
+.segments .segment:active { transform: scale(.96); }
+@keyframes glisse-droite { from { opacity: 0; transform: translateX(28px); } to { opacity: 1; transform: none; } }
+@keyframes glisse-gauche { from { opacity: 0; transform: translateX(-28px); } to { opacity: 1; transform: none; } }
+html[data-glisse="droite"] main.page > :not(.segments):not(:has(.segments)), html[data-glisse="droite"] main.page > * .segments ~ * { animation: glisse-droite .32s cubic-bezier(.2, .8, .3, 1) both; }
+html[data-glisse="gauche"] main.page > :not(.segments):not(:has(.segments)), html[data-glisse="gauche"] main.page > * .segments ~ * { animation: glisse-gauche .32s cubic-bezier(.2, .8, .3, 1) both; }
+@media (prefers-reduced-motion: reduce) { .segments-curseur { transition: none; } html[data-glisse] main.page > * { animation: none !important; } }

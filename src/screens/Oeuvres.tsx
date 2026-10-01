@@ -19,6 +19,7 @@ import { fnClass } from "../lib/fonctions";
 import { AchatLien } from "../components/Achat";
 import { lienContact } from "../lib/contact";
 import { noterRecherche } from "../lib/stats";
+import { OeuvresOnglets } from "../components/SujetsOnglets";
 
 const INDEX = buildIndex(OEUVRES);
 const PAGE = 30;
@@ -66,6 +67,7 @@ export function OeuvresScreen({ params }: { params: URLSearchParams }) {
 
   return (
     <Page wide title="Œuvres">
+      <OeuvresOnglets actif="chercher" />
       <PageHeader eyebrow="Moteur de recherche" title="Résumés d'œuvres" compact>
         {OEUVRES.length} œuvres pour illustrer tes arguments.
       </PageHeader>

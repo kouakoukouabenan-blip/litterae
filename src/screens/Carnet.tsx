@@ -10,6 +10,7 @@ import { licence } from "../lib/licence";
 import { AchatLien } from "../components/Achat";
 import { PRICE, useAccess } from "../lib/access";
 import { useQuestions } from "../lib/contact";
+import { OeuvresOnglets } from "../components/SujetsOnglets";
 
 /** Accès aux messages : questions à l'auteur et réponses (accès complet), ou page Contact. */
 function LigneMessages() {
@@ -32,11 +33,6 @@ function LigneMessages() {
 }
 
 export function CarnetScreen() {
-  const { saved } = useSaved();
-  const { notes } = useNotes();
-  const enregistrees = saved.map(oeuvre).filter((w): w is Oeuvre => !!w);
-  const annotees = Object.keys(notes).filter(id => !saved.includes(id)).map(oeuvre).filter((w): w is Oeuvre => !!w);
-
   return (
     <Page>
       <PageHeader title="Mon espace" compact />
@@ -51,17 +47,21 @@ export function CarnetScreen() {
       </a>
       {!licence() && <p class="small muted access-buy">Pas encore de clé ? <AchatLien label={`Acheter l'accès complet, ${PRICE}`} /></p>}
       <LigneMessages />
-      <a class="row access-row entrainement-row" href="#/entrainement">
-        <Icon name="edit" size={20} />
-        <span class="row-body">
-          <span class="row-title">Sujets d'entraînement</span>
-          <span class="meta">Rédige tes devoirs pas à pas, sans corrigé</span>
-        </span>
-        <Icon name="chevron_right" />
-      </a>
+    </Page>
+  );
+}
 
-      <h2 class="section-title carnet-titre">Mon carnet</h2>
-      <p class="small muted carnet-intro">Tes œuvres enregistrées et tes notes.</p>
+/** Onglet Œuvres, seconde partie : les fiches enregistrées et annotées. */
+export function MesFichesScreen() {
+  const { saved } = useSaved();
+  const { notes } = useNotes();
+  const enregistrees = saved.map(oeuvre).filter((w): w is Oeuvre => !!w);
+  const annotees = Object.keys(notes).filter(id => !saved.includes(id)).map(oeuvre).filter((w): w is Oeuvre => !!w);
+
+  return (
+    <Page title="Mon carnet">
+      <OeuvresOnglets actif="carnet" />
+      <PageHeader title="Mon carnet" compact>Tes œuvres enregistrées et tes notes.</PageHeader>
 
       {!enregistrees.length && !annotees.length ? (
         <EmptyState title="Ton carnet est vide.">
