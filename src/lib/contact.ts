@@ -75,13 +75,18 @@ export async function envoyerMessage(m: Message): Promise<EchecEnvoi | null> {
 
 // ---- Questions posées avec l'accès complet et réponses de l'auteur ----
 
+/** Annotation du prof sur une copie : passage (d = début, f = fin) et marque ; un commentaire porte un texte. */
+export interface Annotation { d: number; f: number; t: "commentaire" | "souligne" | "barre" | "surligne"; c?: string }
+
 export interface Question {
   id: number;
   sujet: SujetContact;
   texte: string;
   page: string;
   date: number;
+  /** Vide quand le prof a seulement annoté la copie ; null tant qu'il n'a pas répondu. */
   reponse: string | null;
+  annotations?: Annotation[];
   reponseDate: number | null;
   vue: boolean;
 }
@@ -114,8 +119,8 @@ export function useQuestions() {
   const [questions] = useStored<Question[]>(QUESTIONS, []);
   return {
     questions,
-    nouvellesReponses: questions.filter(q => q.reponse && !q.vue).length,
-    enAttente: questions.filter(q => !q.reponse).length
+    nouvellesReponses: questions.filter(q => q.reponse != null && !q.vue).length,
+    enAttente: questions.filter(q => q.reponse == null).length
   };
 }
 

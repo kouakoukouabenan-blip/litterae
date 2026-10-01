@@ -1,3 +1,4 @@
+import { CopieAnnotee } from "../components/CopieAnnotee";
 import { useEffect, useRef, useState } from "preact/hooks";
 import { Page } from "../components/Page";
 import { PageHeader } from "../components/PageHeader";
@@ -59,7 +60,7 @@ function MesQuestions({ questions, onEcrire }: { questions: Question[]; onEcrire
   }, []);
   // Les réponses affichées sont comptées comme lues.
   useEffect(() => {
-    marquerVues(questions.filter(q => q.reponse && !q.vue).map(q => q.id));
+    marquerVues(questions.filter(q => q.reponse != null && !q.vue).map(q => q.id));
   }, [questions.map(q => `${q.id}${q.vue}`).join()]);
 
   if (!questions.length) return (
@@ -75,18 +76,21 @@ function MesQuestions({ questions, onEcrire }: { questions: Question[]; onEcrire
       {questions.map(q => {
         const [objet, corps] = q.texte.startsWith("À propos de : ") ? [q.texte.slice(14).split("\n")[0], q.texte.split("\n").slice(1).join("\n").trim()] : ["", q.texte];
         return (
-          <li key={q.id} class={`question ${q.reponse ? "question-repondue" : ""}`}>
+          <li key={q.id} class={`question ${q.reponse != null ? "question-repondue" : ""}`}>
             <p class="meta">
               {q.sujet === "copie" ? "Copie envoyée" : SUJETS_CONTACT.find(s => s.id === q.sujet)?.label.replace(/^Poser une question$/, "Question")} · {dateCourte(q.date)}
               {objet && <> · {q.page ? <a href={q.page}>{objet}</a> : objet}</>}
             </p>
-            {q.sujet === "copie"
-              ? <details class="question-copie"><summary>Voir ma copie</summary><p class="question-texte">{corps}</p></details>
-              : <p class="question-texte">{corps}</p>}
-            {q.reponse ? (
+            {q.annotations?.length
+              ? <details class="question-copie" open><summary>Ma copie corrigée</summary>
+                  <CopieAnnotee texte={q.texte} debut={q.texte.indexOf(corps)} annotations={q.annotations} /></details>
+              : q.sujet === "copie"
+                ? <details class="question-copie"><summary>Voir ma copie</summary><p class="question-texte">{corps}</p></details>
+                : <p class="question-texte">{corps}</p>}
+            {q.reponse != null ? (
               <div class="question-reponse">
                 <p class="question-auteur">{q.sujet === "copie" ? "Correction" : "Réponse"} de Prof {EDITEUR}{q.reponseDate ? `, le ${dateCourte(q.reponseDate)}` : ""}</p>
-                <p class="question-texte">{q.reponse}</p>
+                <p class="question-texte">{q.reponse || "Lis les annotations sur ta copie ci-dessus."}</p>
               </div>
             ) : (
               <p class="question-attente">En attente de réponse</p>
