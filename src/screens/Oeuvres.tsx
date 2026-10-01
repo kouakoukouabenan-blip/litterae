@@ -77,7 +77,7 @@ export function OeuvresScreen({ params }: { params: URLSearchParams }) {
         <label class="field">
           <Icon name="search" />
           <span class="sr-only">Rechercher une œuvre</span>
-          <input type="search" value={q} placeholder="Titre, auteur, thème, mot-clé…" enterkeyhint="search" autocomplete="off"
+          <input type="search" value={q} placeholder="Titre, auteur, thème, pays…" enterkeyhint="search" autocomplete="off"
             onInput={e => go((e.target as HTMLInputElement).value, filters)} />
         </label>
         <button type="button" class="btn btn-secondary filter-btn" onClick={() => sheet.current?.showModal()} aria-haspopup="dialog">

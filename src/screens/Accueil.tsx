@@ -28,7 +28,7 @@ export function AccueilScreen() {
         <label class="field">
           <Icon name="search" />
           <span class="sr-only">Chercher des exemples</span>
-          <input type="search" value={q} placeholder="Thème, auteur…" enterkeyhint="search" autocomplete="off"
+          <input type="search" value={q} placeholder="Titre, auteur, thème, pays…" enterkeyhint="search" autocomplete="off"
             onInput={e => setQ((e.target as HTMLInputElement).value)} />
         </label>
         <button type="submit" class="btn btn-primary">Chercher le livre</button>
