@@ -1,32 +1,90 @@
-import { useState } from "preact/hooks";
-import { useAnnonces } from "../lib/annonces";
+import { useEffect, useRef, useState } from "preact/hooks";
+import { fermerMessages, marquerLue, ouvrirMessages, useAnnonces, type Annonce } from "../lib/annonces";
 import { useNotifs } from "../lib/notifications";
 import { useInstall } from "../lib/install";
 import { Icon } from "./Icon";
 
 const NOMS = { promo: "Promo", message: "Message", astuce: "Astuce" };
+const dateCourte = (t: number) => new Date(t).toLocaleDateString("fr-FR", { day: "numeric", month: "long" });
 
-/** Messages de l'éditeur en haut de l'accueil. L'élève peut fermer chacun. */
-export function Annonces() {
-  const { annonces, fermer, clic } = useAnnonces();
+/** Cloche de la barre du haut, sur tous les écrans : nombre de messages non lus, qui pulse tant qu'il en reste. */
+export function Cloche() {
+  const { annonces, nonLues } = useAnnonces();
   if (!annonces.length) return null;
+  const n = nonLues.length;
   return (
-    <div class="annonces">
-      {annonces.map(a => (
-        <aside key={a.id} class={`annonce annonce-${a.type}${a.urgent ? " annonce-urgente" : ""}`} aria-labelledby={`annonce-${a.id}`}>
-          <p class="annonce-type">{NOMS[a.type] ?? "Message"}{a.urgent && <span class="annonce-urgent">Urgent</span>}</p>
-          <p id={`annonce-${a.id}`} class="annonce-titre">{a.titre}</p>
-          {a.texte && <p class="annonce-texte">{a.texte}</p>}
-          {a.lien && /^(https:\/\/|#\/)/.test(a.lien) && (
-            <a class="btn btn-primary align-start" href={a.lien} onClick={() => clic(a.id)}
-              {...(a.lien.startsWith("http") ? { target: "_blank", rel: "noopener" } : {})}>
-              {a.lienTexte || "Voir"}
-            </a>
-          )}
-          <button type="button" class="icon-btn annonce-fermer" onClick={() => fermer(a.id)} aria-label="Masquer ce message"><Icon name="close" size={20} /></button>
-        </aside>
+    <button type="button" class={`icon-btn cloche${n ? " cloche-active" : ""}`} onClick={() => ouvrirMessages()}
+      aria-label={n ? `Messages : ${n} non lu${n > 1 ? "s" : ""}` : "Messages"}>
+      <Icon name="notifications" />
+      {n > 0 && <span class="cloche-nombre" aria-hidden="true">{n > 9 ? "9+" : n}</span>}
+    </button>
+  );
+}
+
+function Message({ a, lue, ouvert, clic }: { a: Annonce; lue: boolean; ouvert: boolean; clic: (id: number) => void }) {
+  const lien = a.lien && /^(https:\/\/|#\/)/.test(a.lien) ? a.lien : null;
+  return (
+    <details class={`message message-${a.type}${lue ? "" : " message-nouveau"}${a.urgent ? " message-urgent" : ""}`} open={ouvert}
+      onToggle={e => { if ((e.target as HTMLDetailsElement).open) marquerLue(a.id); }}>
+      <summary>
+        <span class="message-haut"><span class="message-type">{NOMS[a.type] ?? "Message"}</span>{a.urgent && <span class="annonce-urgent">Urgent</span>}<span class="meta">{dateCourte(a.date)}</span></span>
+        <span class="message-titre">{a.titre}</span>
+      </summary>
+      <div class="message-corps">
+        {a.texte && <p class="annonce-texte">{a.texte}</p>}
+        {lien && (
+          <a class="btn btn-primary align-start" href={lien} onClick={() => { clic(a.id); if (lien.startsWith("#")) fermerMessages(); }}
+            {...(lien.startsWith("http") ? { target: "_blank", rel: "noopener" } : {})}>
+            {a.lienTexte || "Voir"}
+          </a>
+        )}
+      </div>
+    </details>
+  );
+}
+
+/** Panneau des messages, ouvert par la cloche ou par un titre de l'accueil. */
+export function PanneauMessages() {
+  const { annonces, estLue, ouvert, clic } = useAnnonces();
+  const dialogue = useRef<HTMLDialogElement>(null);
+  useEffect(() => {
+    const d = dialogue.current;
+    if (!d) return;
+    if (ouvert !== null && !d.open) d.showModal();
+    if (ouvert === null && d.open) d.close();
+    if (ouvert) marquerLue(ouvert);
+  }, [ouvert]);
+  return (
+    <dialog ref={dialogue} class="sheet" aria-labelledby="messages-titre" onClose={fermerMessages}
+      onClick={e => e.target === dialogue.current && fermerMessages()}>
+      <div class="sheet-head">
+        <h2 id="messages-titre" class="section-title">Messages</h2>
+        <button type="button" class="icon-btn" onClick={fermerMessages} aria-label="Fermer"><Icon name="close" /></button>
+      </div>
+      <div class="sheet-body messages-liste">
+        {annonces.length ? annonces.map(a => <Message key={`${a.id}-${ouvert}`} a={a} lue={estLue(a.id)} ouvert={ouvert === a.id} clic={clic} />)
+          : <p class="muted">Aucun message pour le moment.</p>}
+      </div>
+    </dialog>
+  );
+}
+
+/** Sur l'accueil : seulement le titre des messages non lus ; le toucher ouvre le message. */
+export function Annonces() {
+  const { nonLues } = useAnnonces();
+  if (!nonLues.length) return null;
+  return (
+    <ul class="annonces-titres" aria-label="Nouveaux messages">
+      {nonLues.slice(0, 3).map(a => (
+        <li key={a.id}>
+          <button type="button" class={`annonce-ligne annonce-${a.type}${a.urgent ? " annonce-urgente" : ""}`} onClick={() => ouvrirMessages(a.id)}>
+            <span class="annonce-type">{NOMS[a.type] ?? "Message"}</span>
+            <span class="annonce-ligne-titre">{a.titre}</span>
+            <Icon name="chevron_right" size={20} />
+          </button>
+        </li>
       ))}
-    </div>
+    </ul>
   );
 }
 

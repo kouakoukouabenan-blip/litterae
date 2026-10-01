@@ -1,3 +1,5 @@
+import { PanneauMessages } from "./components/Annonces";
+import { marquerLue, ouvrirMessages } from "./lib/annonces";
 import { useEffect, useRef } from "preact/hooks";
 import { useRoute } from "./lib/router";
 import { BottomNav } from "./components/Nav";
@@ -65,6 +67,8 @@ export function App() {
     const depuisNotif = new URLSearchParams(location.search).get("annonce");
     if (depuisNotif) {
       noter({ t: "notif", ref: depuisNotif });
+      // Message sans bouton : on l'ouvre directement sous la cloche.
+      if (/^\d+$/.test(depuisNotif)) { if (!location.hash || location.hash === "#/") ouvrirMessages(Number(depuisNotif)); else marquerLue(Number(depuisNotif)); }
       history.replaceState(null, "", location.pathname + location.hash);
     }
   }, []);
@@ -97,6 +101,7 @@ export function App() {
       <BottomNav />
       <ToastHost />
       <InstallGuide />
+      <PanneauMessages />
       <CommentPayer />
       <InstallGate />
     </>

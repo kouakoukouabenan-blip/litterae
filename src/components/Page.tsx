@@ -4,6 +4,7 @@ import { goBack } from "../lib/router";
 import { Icon } from "./Icon";
 import { NavTabs } from "./Nav";
 import { InstallButton } from "./Install";
+import { Cloche } from "./Annonces";
 
 interface Props {
   /** Titre court affiché dans la barre du haut sur mobile pour les pages de détail. */
@@ -33,6 +34,7 @@ export function Page({ title, back, wide, children }: Props) {
           </a>
           {back && title ? <p class="topbar-title">{title}</p> : <span class="topbar-spacer" />}
           <NavTabs />
+          <Cloche />
           <InstallButton />
         </div>
       </header>
