@@ -6,6 +6,7 @@ import { PageHeader } from "../components/PageHeader";
 import { Icon } from "../components/Icon";
 import { copyText } from "../components/Toast";
 import { href, replaceRoute, useRoute } from "../lib/router";
+import { CoursOnglets } from "../components/SujetsOnglets";
 import { DicoRecherche, DicoResultats } from "./Dictionnaire";
 
 const O = outils as Outils;
@@ -47,7 +48,8 @@ export function OutilsScreen() {
   };
 
   return (
-    <Page title="Boîte à outils" back="#/cours">
+    <Page title="Boîte à outils">
+      <CoursOnglets actif="outils" />
       <PageHeader eyebrow="Pendant la rédaction" title="Boîte à outils" compact>
         <span class="outils-lede">Mots des sujets, formules et vocabulaire.</span>
       </PageHeader>

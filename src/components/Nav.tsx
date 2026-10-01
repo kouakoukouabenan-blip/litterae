@@ -13,7 +13,7 @@ function Pastille() {
 const ITEMS = [
   { section: "accueil", label: "Accueil", icon: "home" },
   { section: "cours", label: "Cours", icon: "menu_book" },
-  { section: "sujets", label: "Sujets", icon: "history_edu" },
+  { section: "sujets", label: "Sujets", icon: "history_edu", lien: "entrainement" },
   { section: "oeuvres", label: "Œuvres", icon: "local_library" }
 ] as const;
 
@@ -29,7 +29,7 @@ export function NavTabs() {
   return (
     <nav class="nav-tabs" aria-label="Navigation principale">
       {ITEMS.map(i => (
-        <a key={i.section} href={`#/${i.section}`} class="nav-tab" aria-current={current === i.section ? "page" : undefined}>
+        <a key={i.section} href={`#/${"lien" in i ? i.lien : i.section}`} class="nav-tab" aria-current={current === i.section ? "page" : undefined}>
           {i.label}
         </a>
       ))}
@@ -45,7 +45,7 @@ export function BottomNav() {
       {ITEMS.map(i => {
         const active = current === i.section;
         return (
-          <a key={i.section} href={`#/${i.section}`} class="bottom-nav-item" aria-current={active ? "page" : undefined}>
+          <a key={i.section} href={`#/${"lien" in i ? i.lien : i.section}`} class="bottom-nav-item" aria-current={active ? "page" : undefined}>
             <span class="bottom-nav-icone"><Icon name={i.icon} filled={active} /></span>
             <span>{i.label}</span>
           </a>
