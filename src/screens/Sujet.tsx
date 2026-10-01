@@ -1,3 +1,4 @@
+import { Icon } from "../components/Icon";
 import type { Argument } from "../data/types";
 import { Page } from "../components/Page";
 import { LockPanel } from "../components/LockPanel";
@@ -41,7 +42,7 @@ export function SujetScreen({ num }: { num: string }) {
           <p class="eyebrow">Sujet {s.num} · {s.orientation}</p>
           <blockquote class="citation citation-lg">« {s.citation} »</blockquote>
           <p class="meta">{s.auteur}. Expliquez et discutez.</p>
-          <a class="link-strong sujet-atelier" href={`#/entrainement/${s.num}`}>Rédiger ce sujet moi-même</a>
+          <a class="btn btn-secondary align-start sujet-atelier" href={`#/entrainement/${s.num}`}><Icon name="edit" size={20} />M'entraîner sur ce sujet</a>
         </header>
 
         {!libre || !estComplet(s) ? (

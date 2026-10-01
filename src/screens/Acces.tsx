@@ -9,9 +9,17 @@ import { AchatLien } from "../components/Achat";
 import { CommentPayerBouton } from "../components/CommentPayer";
 
 /** Saisie de la clé reçue par e-mail après l'achat, ou état de l'accès complet. */
-export function AccesScreen() {
+export function AccesScreen({ params }: { params: URLSearchParams }) {
   const actuelle = licence();
-  const [cle, setCle] = useState("");
+  // Lien reçu par e-mail (…#/acces?cle=ABCD-1234) : la clé est déjà remplie, il ne reste qu'à valider.
+  const [cle, setCle] = useState(() => (params.get("cle") ?? "").trim().toUpperCase());
+  const peutColler = typeof navigator.clipboard?.readText === "function";
+  const coller = async () => {
+    try {
+      const t = (await navigator.clipboard.readText()).trim();
+      if (t) { setCle(t.toUpperCase()); setErreur(""); }
+    } catch { /* l'élève peut toujours coller à la main */ }
+  };
   const [etat, setEtat] = useState<"saisie" | "envoi" | "ok">("saisie");
   const [erreur, setErreur] = useState("");
 
@@ -68,6 +76,7 @@ export function AccesScreen() {
             <input id="cle" class="input mono" value={cle} autocomplete="off" autocapitalize="characters" spellcheck={false}
               placeholder="ABCD-1234-EFGH-5678" aria-invalid={!!erreur} aria-describedby={erreur ? "cle-erreur" : undefined}
               onInput={e => { setCle((e.target as HTMLInputElement).value); setErreur(""); }} />
+            {peutColler && !cle && <button type="button" class="btn btn-secondary align-start" onClick={coller}><Icon name="content_paste" size={20} />Coller ma clé</button>}
             {erreur && <p id="cle-erreur" class="field-error" role="alert"><Icon name="error" size={18} />{erreur}</p>}
             {erreur && ACHAT_URL && <p class="small">Tu n'as pas de clé valide ? <AchatLien label={`Acheter une clé, ${PRICE}`} /></p>}
             {erreur && <p class="small">Tu as payé et ta clé est refusée ? <a href={lienAide("ma clé Litterae est refusée")} target="_blank" rel="noopener">Écris-nous{WHATSAPP ? " sur WhatsApp" : ""}</a>, on règle ça.</p>}

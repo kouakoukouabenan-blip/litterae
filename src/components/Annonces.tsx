@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "preact/hooks";
 import { fermerMessages, marquerLue, ouvrirMessages, useAnnonces, type Annonce } from "../lib/annonces";
 import { useNotifs } from "../lib/notifications";
-import { useInstall } from "../lib/install";
+import { aDecouvert, useInstall } from "../lib/install";
 import { Icon } from "./Icon";
 
 const NOMS = { promo: "Promo", message: "Message", astuce: "Astuce" };
@@ -93,7 +93,8 @@ export function InvitationNotifs() {
   const { etat, plusTard, reporter, activer } = useNotifs();
   const { showBanner } = useInstall();
   const [erreur, setErreur] = useState<string | null>(null);
-  if (etat !== "possible" || plusTard || showBanner) return null;
+  // Pas à la première visite : on attend que l'élève ait ouvert une leçon, une fiche ou un sujet.
+  if (etat !== "possible" || plusTard || showBanner || !aDecouvert()) return null;
   return (
     <aside class="install-banner" aria-label="Notifications">
       <Icon name="notifications" size={22} />

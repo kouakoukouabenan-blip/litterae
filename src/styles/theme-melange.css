@@ -1,0 +1,79 @@
+/* Aperçu « Mélange » : la clarté de Quizlet avec les couleurs de Litterae. Se charge en dernier. */
+:root {
+  --paper: #F6F4EF; --surface: #FFFFFF; --surface-hover: #F1EEE7;
+  --line: #ECE7DE; --line-strong: #DDD5C7; --ink: #26302B; --ink-strong: #14201B; --muted: #6B7069;
+  --soft: #ECE9E2;
+  --radius: 20px; --radius-sm: 14px; --control-h: 46px; --control-h-main: 54px;
+  --band-h: 6px; --topbar-h: 62px; --bottom-nav-h: 68px;
+  --font-head: "DM Sans Variable", "DM Sans", system-ui, sans-serif;
+  --shadow: 0 1px 2px rgba(20,32,27,.05), 0 6px 20px rgba(20,32,27,.07);
+}
+/* Barre du haut blanche, la frise devient un fin liseré */
+.topbar { background: var(--surface); color: var(--ink-strong); box-shadow: 0 1px 0 var(--line); }
+.topbar .icon-btn, .topbar-title { color: var(--ink-strong); }
+.topbar .icon-btn:hover { background: var(--surface-hover); }
+.brand { color: var(--green); font-size: 1.5rem; }
+.brand span { color: var(--orange); }
+.nav-tab { color: var(--muted); }
+.nav-tab:hover { color: var(--ink-strong); background: var(--surface-hover); }
+.nav-tab[aria-current="page"] { background: var(--green); color: #fff; border-radius: 999px; }
+.install-btn { border-color: var(--line-strong) !important; border-radius: 999px; }
+/* Barre du bas blanche, onglet actif dans une pastille verte pâle */
+.bottom-nav { background: var(--surface); box-shadow: 0 -1px 0 var(--line); }
+.bottom-nav-item { color: var(--muted); font-weight: 600; }
+.bottom-nav-item[aria-current="page"] { color: var(--green); font-weight: 800; }
+.bottom-nav-item[aria-current="page"] .icon, .bottom-nav-item[aria-current="page"] .bottom-nav-icone { background: var(--green-pale); border-radius: 999px; padding: 3px 14px; box-sizing: content-box; }
+.nav-pastille { box-shadow: 0 0 0 2px var(--surface); }
+/* Titres : grands, gras, sans empattement (Literata reste pour les titres d'œuvres et les citations) */
+.page-title, .home-title { font: 800 2.125rem/1.08 var(--font-head); letter-spacing: -0.035em; color: var(--ink-strong); }
+.page-title em, .home-title em { font-style: normal; color: var(--green); }
+.work-page-title { font-family: var(--font-title); font-style: italic; font-weight: 800; letter-spacing: -0.01em; color: var(--green); }
+.section-title, .home-section-title { font: 800 1.375rem/1.2 var(--font-head); letter-spacing: -0.02em; color: var(--ink-strong); }
+.lede { font-size: var(--text-md); color: var(--muted); }
+.eyebrow { letter-spacing: .06em; }
+@media (min-width: 720px) { .page-title, .home-title { font-size: 3rem; } }
+@media (max-width: 719px) { .page-header-compact .page-title { font-size: 1.875rem; } }
+/* Boutons en pilule, plus généreux */
+.btn { border-radius: 999px; font-weight: 700; padding: 0 var(--s5); }
+.btn-primary { background: var(--green); }
+.btn-secondary { background: var(--soft); border-color: transparent; color: var(--ink-strong); }
+.btn-secondary:hover { background: #E3DFD6; border-color: transparent; }
+.chip { border: 0; background: var(--soft); border-radius: 999px; min-height: 38px; padding: 0 var(--s4); }
+.chip[aria-pressed="true"], .chip[aria-selected="true"] { background: var(--green); color: #fff; }
+.tag { border-radius: 999px; padding: 3px 10px; }
+/* Recherche : grand champ gris clair, sans bordure */
+.field { background: var(--soft); border-color: transparent; border-radius: var(--radius-sm); color: var(--muted); }
+.field:focus-within { background: var(--surface); border-color: var(--green); }
+.field input { font-size: 1.0625rem; }
+.input, .textarea, .facet-find input { border-radius: var(--radius-sm); }
+.sticky-bar { background: color-mix(in srgb, var(--paper) 92%, transparent); backdrop-filter: blur(8px); border-bottom: 0; }
+/* Cartes blanches arrondies, ombre douce au lieu des bordures */
+.list, .work, .link-panel, .args li, .def, .model, .pager-link, .install-banner, .access-row, .fn-tile {
+  border: 0 !important; border-radius: var(--radius); box-shadow: var(--shadow); background: var(--surface);
+}
+.list > li + li { border-top-color: var(--line); }
+.work { padding: var(--s4) var(--s5) !important; }
+.work:hover, .link-panel:hover { box-shadow: 0 2px 4px rgba(20,32,27,.06), 0 10px 28px rgba(20,32,27,.11); }
+.step-num { border-radius: 12px; }
+/* Cartes de couleur pleine, comme les grandes cartes de Quizlet */
+.resume-card { background: var(--green); color: var(--on-dark); border: 0; border-radius: 24px; padding: var(--s5); }
+.resume-card .eyebrow { color: var(--ochre); }
+.resume-title { font: 800 1.375rem/1.2 var(--font-head); letter-spacing: -0.02em; color: #fff; }
+.resume-meta { color: var(--on-dark-muted); }
+.resume-card .progress-bar { background: rgba(255,243,220,.18); }
+.resume-card .progress-bar span { background: var(--ochre); }
+.resume-card .btn-primary { background: var(--ochre); color: var(--ink-strong); }
+.link-panel { border-left: 0 !important; }
+.fn-tile { border-radius: var(--radius) !important; background: color-mix(in srgb, var(--fn) 12%, white); box-shadow: none; }
+.fn-tile-title { font-family: var(--font-head); font-weight: 800; color: color-mix(in srgb, var(--fn) 80%, black); }
+.lock, .quiz-lock { border-left: 0; border-radius: var(--radius); }
+.callout { border-left: 0; border-radius: var(--radius); }
+.citation { border-left-width: 4px; }
+.site-footer { border-top: 0; }
+@media (max-width: 719px) { .fn-tile { border-radius: 999px !important; } }
+/* Nouveaux éléments du parcours simplifié */
+.choix-carte { border: 0; border-radius: 24px; padding: var(--s5); box-shadow: none; }
+.choix-titre { font-family: var(--font-head); font-size: 1.375rem; letter-spacing: -0.02em; }
+.segments { background: var(--soft); border-radius: 999px; }
+.segment { border-radius: 999px; }
+.argument-trouve { border-radius: var(--radius-sm); }

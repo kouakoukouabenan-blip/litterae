@@ -7,41 +7,59 @@ import { useStored } from "../lib/storage";
 import { OEUVRES, SUJETS } from "../lib/data";
 import { lienContact } from "../lib/contact";
 import { ReponseAlerte } from "../components/ReponseAlerte";
+import { useState } from "preact/hooks";
+import { href } from "../lib/router";
 
 const MINUTES = LECONS.reduce((n, l) => n + (parseInt(l.duree) || 0), 0);
 
 export function CoursScreen() {
   const [lues] = useStored<string[]>("lecons-lues", []);
   const suivante = LECONS.find(l => !lues.includes(l.id));
-  const iSuivante = suivante ? LECONS.indexOf(suivante) : -1;
   const nbLues = LECONS.filter(l => lues.includes(l.id)).length;
+  const [q, setQ] = useState("");
 
   return (
     <Page>
       <header class="home-header">
-        <p class="eyebrow">Français · Terminale</p>
-        <h1 class="home-title">La dissertation <em>littéraire</em>, pas à pas</h1>
-        <p class="lede">{LECONS.length} leçons · {SUJETS.length} sujets · {OEUVRES.length} œuvres</p>
+        <p class="eyebrow">La dissertation littéraire, pas à pas</p>
+        <h1 class="home-title">Que veux-tu faire ?</h1>
       </header>
+
+      {/* La recherche d'exemples d'abord : c'est ce que cherche l'élève qui a une dissertation à rendre. */}
+      <form class="accueil-recherche" role="search" onSubmit={e => { e.preventDefault(); location.hash = href(["oeuvres"], q.trim() ? { q: q.trim() } : undefined); }}>
+        <label class="field">
+          <Icon name="search" />
+          <span class="sr-only">Chercher des exemples</span>
+          <input type="search" value={q} placeholder="Thème, auteur…" enterkeyhint="search" autocomplete="off"
+            onInput={e => setQ((e.target as HTMLInputElement).value)} />
+        </label>
+        <button type="submit" class="btn btn-primary">Chercher</button>
+      </form>
+
+      <nav class="choix" aria-label="Que veux-tu faire ?">
+        <a class="choix-carte choix-oeuvres" href="#/oeuvres">
+          <Icon name="local_library" size={28} />
+          <span class="choix-titre">Trouver des exemples pour ma dissertation</span>
+          <span class="choix-detail">{OEUVRES.length} fiches d'œuvres, classées par argument</span>
+        </a>
+        <a class="choix-carte choix-methode" href={suivante ? `#/cours/${suivante.id}` : "#/cours/" + LECONS[0].id}>
+          <Icon name="menu_book" size={28} />
+          <span class="choix-titre">{nbLues === 0 ? "Apprendre la méthode" : suivante ? "Continuer la méthode" : "Revoir la méthode"}</span>
+          <span class="choix-detail">{nbLues === 0 ? `${LECONS.length} leçons courtes (${MINUTES} min), avec quiz` : `${nbLues} leçon${nbLues > 1 ? "s" : ""} lue${nbLues > 1 ? "s" : ""} sur ${LECONS.length}`}</span>
+          {nbLues > 0 && <span class="progress-bar" aria-hidden="true"><span style={{ width: `${(nbLues / LECONS.length) * 100}%` }} /></span>}
+        </a>
+        <a class="choix-carte choix-entrainer" href="#/entrainement">
+          <Icon name="edit" size={28} />
+          <span class="choix-titre">M'entraîner sur un sujet</span>
+          <span class="choix-detail">{SUJETS.length} sujets type bac, à rédiger étape par étape</span>
+        </a>
+      </nav>
 
       <ReponseAlerte />
       <Annonces />
       <InstallBanner />
       <InvitationNotifs />
 
-      <section class="resume-card" aria-labelledby="resume-title">
-        <p class="eyebrow">{nbLues === 0 ? "Commencer" : suivante ? "Reprendre" : "Cours terminé"}</p>
-        <p id="resume-title" class="resume-title">
-          {suivante ? `Leçon ${iSuivante + 1} · ${suivante.titre}` : "Passe aux sujets corrigés pour t'entraîner"}
-        </p>
-        <div class="progress-bar" role="progressbar" aria-label="Leçons lues" aria-valuemin={0} aria-valuemax={LECONS.length} aria-valuenow={nbLues}>
-          <span style={{ width: `${(nbLues / LECONS.length) * 100}%` }} />
-        </div>
-        <p class="resume-meta">{nbLues === 0 ? `${LECONS.length} leçons, ${MINUTES} minutes de lecture` : `${nbLues} leçon${nbLues > 1 ? "s" : ""} lue${nbLues > 1 ? "s" : ""} sur ${LECONS.length}`}</p>
-        <a class="btn btn-primary align-start" href={suivante ? `#/cours/${suivante.id}` : "#/sujets"}>
-          {nbLues === 0 ? "Commencer le cours" : suivante ? "Continuer" : "Voir les sujets"}<Icon name="arrow_forward" size={20} />
-        </a>
-      </section>
 
       <section aria-labelledby="cours-title">
         <h2 id="cours-title" class="section-title home-section-title">Les leçons</h2>

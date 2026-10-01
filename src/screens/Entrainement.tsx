@@ -6,6 +6,7 @@ import { Icon } from "../components/Icon";
 import { numero, sujetsEntrainement } from "../lib/entrainement";
 import { avancement, lireBrouillon } from "../lib/atelier";
 import { read, write } from "../lib/storage";
+import { SujetsOnglets } from "../components/SujetsOnglets";
 
 const GUIDE_VU = "atelier-guide-vu";
 
@@ -58,8 +59,9 @@ export function EntrainementScreen() {
   };
 
   return (
-    <Page title="Sujets d'entraînement" back="#/carnet">
-      <PageHeader eyebrow="S'entraîner" title="Sujets d'entraînement" compact>
+    <Page title="Sujets d'entraînement">
+      <SujetsOnglets actif="entrainement" />
+      <PageHeader title="Sujets d'entraînement" compact>
         {sujets.length} sujets à rédiger seul, pas à pas.{" "}
         <button type="button" class="link-btn guide-lien" onClick={() => ouvrirGuide(null)}>Comment ça marche ?</button>
       </PageHeader>

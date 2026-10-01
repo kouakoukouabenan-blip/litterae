@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "preact/hooks";
-import { dejaInstallee, isIosSafari, platform, useInstall } from "../lib/install";
+import { aDecouvert, dejaInstallee, isIosSafari, platform, useInstall } from "../lib/install";
+import { useRoute } from "../lib/router";
 import { Icon } from "./Icon";
 
 let openGuide = () => {};
@@ -102,7 +103,10 @@ export function InstallGate() {
   const [etapes, setEtapes] = useState(false);
   const [dejaLa, setDejaLa] = useState(false);
   useEffect(() => { if (!installed && platform() !== "desktop") dejaInstallee().then(setDejaLa); }, [installed]);
+  // Revenu d'une première leçon, fiche ou sujet : l'élève a vu ce que contient l'app avant qu'on lui propose de l'installer.
+  const surUneListe = useRoute().path.length < 2;
   if (installed || passe || platform() === "desktop") return null;
+  if (!dejaLa && !(aDecouvert() && surUneListe)) return null;
 
   const continuer = () => {
     try { sessionStorage.setItem(PASSE, "1"); } catch { /* sans stockage, l'écran reviendra au prochain chargement */ }

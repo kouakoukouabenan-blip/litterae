@@ -288,7 +288,7 @@
 .entrainement-etat { margin-top: var(--s1); font-size: var(--text-xs); font-weight: 700; color: var(--muted); }
 .entrainement-encours { color: var(--ochre-text); }
 .entrainement-fini { color: var(--green); }
-.sujet-atelier { display: inline-block; margin-top: var(--s2); }
+.sujet-atelier { margin-top: var(--s3); }
 .atelier .page-header .citation { margin-bottom: var(--s2); }
 .atelier-etapes { margin-bottom: var(--s5); padding-bottom: var(--s4); border-bottom: 1px solid var(--line); }
 .atelier-etapes ol { list-style: none; margin: 0; padding: 0; display: flex; gap: var(--s2); }
@@ -355,3 +355,47 @@
 /* Partager : petite icône discrète */
 .dico-carte-tete { position: relative; }
 .dico-carte-tete .partager { position: absolute; top: var(--s1); right: var(--s1); color: var(--muted); }
+
+/* Accueil : « Que veux-tu faire ? », la recherche d'exemples d'abord */
+.accueil-recherche { display: flex; gap: var(--s2); margin-bottom: var(--s4); max-width: 44rem; }
+.accueil-recherche .btn { min-height: var(--control-h-main); }
+.choix { display: grid; gap: var(--s3); margin-bottom: var(--s6); }
+@media (min-width: 720px) { .choix { grid-template-columns: repeat(3, 1fr); } }
+.choix-carte {
+  display: flex; flex-direction: column; gap: var(--s1);
+  padding: var(--s4); border-radius: var(--radius); text-decoration: none; color: var(--ink-strong);
+  background: var(--surface); border: var(--border) solid var(--line);
+}
+.choix-carte .icon { margin-bottom: var(--s1); }
+.choix-titre { font: 800 var(--text-lg)/1.2 var(--font-text); letter-spacing: -0.01em; }
+.choix-detail { font-size: var(--text-sm); color: var(--muted); }
+.choix-carte .progress-bar { margin-top: var(--s2); }
+.choix-oeuvres { background: var(--green); border-color: var(--green); color: #fff; }
+.choix-oeuvres .icon { color: var(--ochre); }
+.choix-oeuvres .choix-detail { color: var(--on-dark-muted); }
+.choix-methode { background: var(--ochre-pale); border-color: var(--ochre-pale); }
+.choix-methode .icon { color: var(--ochre-text); }
+.choix-entrainer { background: var(--orange-pale); border-color: var(--orange-pale); }
+.choix-entrainer .icon { color: var(--orange-text); }
+
+/* Onglet Sujets : Corrigés / M'entraîner */
+.segments { display: inline-flex; gap: 2px; padding: 3px; margin-bottom: var(--s4); background: var(--line); border-radius: var(--radius-sm); }
+.segment { min-height: 38px; display: inline-flex; align-items: center; padding: 0 var(--s4); border-radius: calc(var(--radius-sm) - 2px); color: var(--ink); font-weight: 700; font-size: var(--text-sm); text-decoration: none; }
+.segment[aria-current="page"] { background: var(--surface); color: var(--green); box-shadow: 0 1px 3px rgba(0,0,0,.12); }
+
+/* Fiche : rubriques en haut, argument trouvé mis en avant */
+.rubriques { margin-bottom: var(--s3); }
+.reading [id] { scroll-margin-top: calc(var(--topbar-h) + var(--band-h) + 64px); }
+.argument-trouve { background: var(--ochre-pale); border-radius: var(--radius); padding: var(--s3) var(--s4); margin: 0 calc(-1 * var(--s2)); box-shadow: inset 4px 0 0 var(--ochre); }
+.argument-trouve-label { font-size: var(--text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--ochre-text); }
+
+/* Panneau « contenu réservé » : un bouton, un lien */
+.lock-cle { align-self: flex-start; }
+
+/* Un seul contour autour du champ de recherche quand on le touche */
+.field input:focus-visible { box-shadow: none; }
+/* Rubriques de fiche : sur une seule ligne sans défilement de côté */
+.rubriques .chips { flex-wrap: wrap; overflow: visible; margin: 0; padding: 2px 0; gap: var(--s1); }
+.rubriques .chip { padding: 0 var(--s3); }
+/* Filtres des sujets : passent à la ligne sur téléphone, sans défilement de côté */
+@media (max-width: 719px) { .sticky-bar .chips { flex-wrap: wrap; overflow: visible; margin: 0; padding: 2px 0; gap: 6px; } }

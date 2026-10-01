@@ -11,7 +11,7 @@ function Pastille({ section }: { section: string }) {
 
 const ITEMS = [
   { section: "cours", label: "Cours", icon: "menu_book" },
-  { section: "sujets", label: "Sujets", long: "Sujets corrigés", icon: "history_edu" },
+  { section: "sujets", label: "Sujets", icon: "history_edu" },
   { section: "oeuvres", label: "Œuvres", icon: "local_library" },
   { section: "outils", label: "Outils", long: "Boîte à outils", icon: "inventory_2" },
   { section: "carnet", label: "Mon espace", icon: "person" }
@@ -19,8 +19,8 @@ const ITEMS = [
 
 function useSection() {
   const section = useRoute().path[0] ?? "cours";
-  // Les sujets d'entraînement s'ouvrent depuis Mon espace.
-  return section === "entrainement" ? "carnet" : section;
+  // Les sujets d'entraînement sont le second onglet de Sujets.
+  return section === "entrainement" ? "sujets" : section;
 }
 
 /** Onglets dans la barre du haut, sur tablette et ordinateur. */

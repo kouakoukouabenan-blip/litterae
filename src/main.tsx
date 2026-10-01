@@ -7,6 +7,7 @@ import "./styles/base.css";
 import "./styles/layout.css";
 import "./styles/components.css";
 import "./styles/screens.css";
+import "./styles/theme-melange.css";
 import "./lib/install";
 import { App } from "./app";
 import { conserverDonnees } from "./lib/storage";

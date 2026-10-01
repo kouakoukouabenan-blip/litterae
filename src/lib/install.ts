@@ -71,6 +71,14 @@ export async function dejaInstallee(): Promise<boolean> {
 
 const SNOOZE_DAYS = 7;
 
+/** L'élève a ouvert une première leçon, fiche ou sujet : il sait ce qu'il installerait. */
+export function marquerDecouverte() {
+  if (read<boolean>("decouverte", false)) return;
+  write("decouverte", true);
+  notify();
+}
+export const aDecouvert = () => read<boolean>("decouverte", false);
+
 // Nombre de visites (une par session du navigateur) : le bandeau n'apparaît qu'à partir de la deuxième,
 // pour laisser l'élève découvrir l'app avant de lui proposer de l'installer.
 const VISITES = (() => {

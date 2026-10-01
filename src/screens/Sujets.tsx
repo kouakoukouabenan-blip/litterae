@@ -7,6 +7,7 @@ import { FREE_SUBJECTS, PRICE, useAccess } from "../lib/access";
 import { href, replaceRoute } from "../lib/router";
 import { fnClass } from "../lib/fonctions";
 import { AchatLien } from "../components/Achat";
+import { SujetsOnglets } from "../components/SujetsOnglets";
 
 const ORIENTATIONS = ["Engagement", "Esthétique", "Évasion", "Lyrique", "Social"];
 
@@ -17,7 +18,8 @@ export function SujetsScreen({ params }: { params: URLSearchParams }) {
 
   return (
     <Page>
-      <PageHeader eyebrow="S'entraîner" title="Sujets corrigés" compact>
+      <SujetsOnglets actif="corriges" />
+      <PageHeader title="Sujets corrigés" compact>
         {access.premium ? `${SUJETS.length} sujets type bac, tous corrigés.` : <>{FREE_SUBJECTS} gratuits sur {SUJETS.length}. <AchatLien label="Tout débloquer" /></>}
       </PageHeader>
 

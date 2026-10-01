@@ -14,6 +14,9 @@ import { fnClass } from "../lib/fonctions";
 import type { Oeuvre } from "../data/types";
 import { argumentsDe } from "../lib/arguments";
 import { LigneContact } from "../components/LigneContact";
+import { Highlight } from "../components/Highlight";
+import { queryTerms } from "../lib/search";
+import { normalize } from "../lib/text";
 
 function Note({ id }: { id: string }) {
   const { notes, setNote } = useNotes();
@@ -39,17 +42,18 @@ function Note({ id }: { id: string }) {
 }
 
 /** Tous les arguments que l'œuvre peut illustrer ; sur une fiche ouverte, avec les idées qui les appuient. */
-function ArgumentsListe({ w, ouvert }: { w: Oeuvre; ouvert: boolean }) {
+function ArgumentsListe({ w, ouvert, trouve, terms }: { w: Oeuvre; ouvert: boolean; trouve: number; terms: string[] }) {
   const liste = argumentsDe(w);
   return (
     <section aria-labelledby="arguments" class="arguments">
       <h2 id="arguments" class="section-title">Arguments que cette œuvre illustre</h2>
       <ul class="ideas">
-        {liste.map(a => (
-          <li key={a.texte}>
-            <p class="argument-texte">{a.texte}</p>
+        {liste.map((a, i) => (
+          <li key={a.texte} id={i === trouve ? "argument-trouve" : undefined} class={i === trouve ? "argument-trouve" : undefined}>
+            {i === trouve && <p class="argument-trouve-label">Correspond à ta recherche</p>}
+            <p class="argument-texte"><Highlight text={a.texte} terms={terms} /></p>
             {ouvert && a.appuis.length > 0 && (
-              <ul class="argument-appuis">{a.appuis.map(t => <li key={t}>{t}</li>)}</ul>
+              <ul class="argument-appuis">{a.appuis.map(t => <li key={t}><Highlight text={t} terms={terms} /></li>)}</ul>
             )}
             <p class="meta">
               Fonction {a.fonction.toLowerCase()}
@@ -62,6 +66,34 @@ function ArgumentsListe({ w, ouvert }: { w: Oeuvre; ouvert: boolean }) {
   );
 }
 
+/** Argument de la fiche qui correspond le mieux à la recherche de l'élève, ou -1. */
+function argumentCherche(w: Oeuvre, params: URLSearchParams, terms: string[]) {
+  const liste = argumentsDe(w);
+  const cle = params.get("argument");
+  if (cle) { const i = liste.findIndex(a => a.cle === cle); if (i > -1) return i; }
+  const mots = [...terms, ...queryTerms(params.get("theme") ?? "")];
+  if (!mots.length) return -1;
+  let best = -1, score = 0;
+  liste.forEach((a, i) => {
+    const texte = normalize([a.texte, ...a.appuis].join(" "));
+    const s = mots.filter(m => texte.includes(m)).length;
+    if (s > score) { score = s; best = i; }
+  });
+  return best;
+}
+
+/** Barre de rubriques en haut de la fiche : un geste pour aller droit aux arguments. */
+function Rubriques({ items }: { items: [string, string][] }) {
+  const aller = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+  return (
+    <nav class="sticky-bar rubriques" aria-label="Rubriques de la fiche">
+      <div class="chips">
+        {items.map(([id, label]) => <button key={id} type="button" class="chip" onClick={() => aller(id)}>{label}</button>)}
+      </div>
+    </nav>
+  );
+}
+
 /** Ce que contient la fiche, annoncé avant l'achat. */
 function contenuFiche(w: Oeuvre) {
   if (!w.detaillee) return "Fiche courte : un résumé bref, les thèmes et les fonctions de l'œuvre.";
@@ -69,8 +101,16 @@ function contenuFiche(w: Oeuvre) {
   return `Cette fiche contient un résumé complet, ${n} idée${n > 1 ? "s" : ""} d'illustration reliée${n > 1 ? "s" : ""} aux fonctions de la littérature et une phrase d'exemple prête à recopier.`;
 }
 
-export function OeuvreScreen({ id }: { id: string }) {
+export function OeuvreScreen({ id, params }: { id: string; params: URLSearchParams }) {
   const w = oeuvre(id);
+  const terms = queryTerms(params.get("q") ?? "");
+  const trouve = w ? argumentCherche(w, params, terms) : -1;
+  // Arrivé depuis une recherche : la fiche s'ouvre sur l'argument qui correspond.
+  useEffect(() => {
+    if (trouve < 0) return;
+    const t = setTimeout(() => document.getElementById("argument-trouve")?.scrollIntoView({ block: "start" }), 120);
+    return () => clearTimeout(t);
+  }, [id, trouve]);
   useEffect(() => { if (w) { noter({ t: "oeuvre", ref: id }); noterFiche(id); } }, [id]);
   const access = useAccess();
   const { isSaved, toggle } = useSaved();
@@ -101,10 +141,15 @@ export function OeuvreScreen({ id }: { id: string }) {
         {!libre ? (
           <>
             <LockPanel reason="Cette fiche fait partie de l'accès complet." contenu={contenuFiche(w)} />
-            <ArgumentsListe w={w} ouvert={false} />
+            <ArgumentsListe w={w} ouvert={false} trouve={trouve} terms={terms} />
           </>
         ) : (
           <>
+            <Rubriques items={[
+              ["resume", "Résumé"], ["arguments", "Arguments"],
+              ...(w.exemple ? [["exemple", "Exemple"] as [string, string]] : []),
+              ...(sujets.length ? [["sujets-citant", "Sujets"] as [string, string]] : [])
+            ]} />
             <div class="actions">
               <button type="button" class="btn btn-secondary" aria-pressed={saved}
                 onClick={() => { toggle(id); toast(saved ? "Retirée du carnet." : "Enregistrée dans ton carnet."); }}>
@@ -119,10 +164,10 @@ export function OeuvreScreen({ id }: { id: string }) {
               {w.detaillee === false && (
                 <p class="notice-court small">Fiche courte : résumé bref et repères pour trouver l'œuvre par thème. Pour citer une œuvre en détail, préfère une fiche détaillée.</p>
               )}
-              <h2 class="section-title">Résumé</h2>
+              <h2 id="resume" class="section-title">Résumé</h2>
               {w.resume ? w.resume.split(/\n\s*\n/).map((para, i) => <p key={i}>{para}</p>) : <p class="muted">Le résumé de cette œuvre n'est pas encore rédigé. Les thèmes et mots-clés ci-dessous indiquent déjà comment l'utiliser.</p>}
 
-              <ArgumentsListe w={w} ouvert />
+              <ArgumentsListe w={w} ouvert trouve={trouve} terms={terms} />
 
               {w.exemple && (
                 <section aria-labelledby="exemple">

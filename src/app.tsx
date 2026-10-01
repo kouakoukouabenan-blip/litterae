@@ -2,6 +2,7 @@ import { PanneauMessages } from "./components/Annonces";
 import { marquerLue, ouvrirMessages } from "./lib/annonces";
 import { useEffect, useRef } from "preact/hooks";
 import { useRoute } from "./lib/router";
+import { marquerDecouverte } from "./lib/install";
 import { BottomNav } from "./components/Nav";
 import { ToastHost } from "./components/Toast";
 import { OfflineNotice } from "./components/OfflineNotice";
@@ -75,20 +76,22 @@ export function App() {
   const { path, params } = useRoute();
   const [section = "cours", id] = path;
   useEffect(() => { noter({ t: "ecran", ref: section }); }, [section]);
+  // Première leçon, fiche ou sujet ouvert : l'élève a découvert l'app, on peut lui proposer d'installer.
+  useEffect(() => { if (id && ["cours", "sujets", "oeuvres", "entrainement"].includes(section)) marquerDecouverte(); }, [section, id]);
   useScrollMemory(path.join("/"));
 
   let screen;
   switch (section) {
     case "cours": screen = id ? <LeconScreen id={id} /> : <CoursScreen />; break;
     case "sujets": screen = id ? <SujetScreen num={id} /> : <SujetsScreen params={params} />; break;
-    case "oeuvres": screen = id ? <OeuvreScreen id={id} /> : <OeuvresScreen params={params} />; break;
+    case "oeuvres": screen = id ? <OeuvreScreen id={id} params={params} /> : <OeuvresScreen params={params} />; break;
     case "outils": screen = <OutilsScreen />; break;
     case "carnet": screen = <CarnetScreen />; break;
     case "entrainement": screen = id ? <AtelierScreen num={id} params={params} /> : <EntrainementScreen />; break;
     case "a-propos": screen = <AProposScreen />; break;
     case "cgu": screen = <CguScreen />; break;
     case "confidentialite": screen = <ConfidentialiteScreen />; break;
-    case "acces": screen = <AccesScreen />; break;
+    case "acces": screen = <AccesScreen params={params} />; break;
     case "contact": screen = <ContactScreen params={params} />; break;
     default: screen = <NotFound />;
   }

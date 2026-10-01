@@ -54,6 +54,12 @@ export function OeuvresScreen({ params }: { params: URLSearchParams }) {
     go(q, { ...filters, [k]: cur.includes(v) ? cur.filter(x => x !== v) : [...cur, v] });
   };
   const accueil = !q && !nbFiltres && !gratuites;
+  // Ce que l'élève cherche (mots tapés, argument ou thème choisi) suit jusqu'à la fiche.
+  const suite = new URLSearchParams([
+    ...(q.trim() ? [["q", q.trim()]] : []),
+    ...filters.argument.slice(0, 1).map(a => ["argument", a]),
+    ...filters.theme.slice(0, 1).map(t => ["theme", t])
+  ] as [string, string][]).toString();
   // À l'accueil, la liste complète reste repliée derrière un bouton discret.
   const [toutVoir, setToutVoir] = useState(false);
   const listeVisible = !accueil || toutVoir;
@@ -154,7 +160,7 @@ export function OeuvresScreen({ params }: { params: URLSearchParams }) {
             <>
               <ul class="works">
                 {results.slice(0, limit).map(w => (
-                  <li key={w.id}><WorkItem w={w} terms={terms} saved={isSaved(w.id)} open={access.canOpenWork(w.id)} free={!access.premium && !!w.libre} /></li>
+                  <li key={w.id}><WorkItem w={w} terms={terms} suite={suite} saved={isSaved(w.id)} open={access.canOpenWork(w.id)} free={!access.premium && !!w.libre} /></li>
                 ))}
               </ul>
               {results.length > limit && (

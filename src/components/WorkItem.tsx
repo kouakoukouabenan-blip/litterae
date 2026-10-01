@@ -12,12 +12,14 @@ interface Props {
   open?: boolean;
   /** Fiche en accès libre, signalée tant que l'accès complet n'est pas activé. */
   free?: boolean;
+  /** Recherche en cours, transmise à la fiche pour l'ouvrir sur l'argument qui correspond. */
+  suite?: string;
 }
 
-export function WorkItem({ w, terms = [], saved = false, note, open = true, free = false }: Props) {
+export function WorkItem({ w, terms = [], saved = false, note, open = true, free = false, suite }: Props) {
   const locked = !open;
   return (
-    <a class="work" href={`#/oeuvres/${w.id}`}>
+    <a class="work" href={`#/oeuvres/${w.id}${suite ? `?${suite}` : ""}`}>
       <span class="work-head">
         <span class="work-title"><Highlight text={w.titre} terms={terms} /></span>
         {saved && <span class="work-saved" title="Enregistrée"><Icon name="bookmark" filled size={18} /><span class="sr-only">Enregistrée</span></span>}
