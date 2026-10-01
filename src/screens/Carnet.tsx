@@ -65,7 +65,7 @@ export function CarnetScreen() {
 
       {!enregistrees.length && !annotees.length ? (
         <EmptyState title="Ton carnet est vide.">
-          <p>Touche « Enregistrer » sur une fiche d'œuvre.</p>
+          <p>Touche le marque-page en haut d'une fiche d'œuvre.</p>
           <a class="btn btn-primary" href="#/oeuvres">Chercher une œuvre</a>
         </EmptyState>
       ) : (

@@ -25,10 +25,11 @@ function Note({ id }: { id: string }) {
   useEffect(() => setText(saved), [id]);
   const dirty = text !== saved;
 
+  // Repliée tant que l'élève n'a rien noté : la fiche reste légère.
   return (
-    <section aria-labelledby="note-title">
-      <h2 id="note-title" class="section-title">Ma note</h2>
-            <label class="sr-only" for="note">Ma note sur cette œuvre</label>
+    <details class="repli note-repli" open={!!saved}>
+      <summary>{saved ? "Ma note" : "Ajouter une note"}</summary>
+      <label class="sr-only" for="note">Ma note sur cette œuvre</label>
       <textarea id="note" class="textarea" rows={4} value={text} onInput={e => setText((e.target as HTMLTextAreaElement).value)}
         placeholder="Une citation, l'argument où l'utiliser… (visible par toi seulement)" />
       <div class="note-actions">
@@ -37,7 +38,7 @@ function Note({ id }: { id: string }) {
         </button>
         {dirty && <button type="button" class="btn btn-secondary" onClick={() => setText(saved)}>Annuler</button>}
       </div>
-    </section>
+    </details>
   );
 }
 
@@ -46,19 +47,17 @@ function ArgumentsListe({ w, ouvert, trouve, terms }: { w: Oeuvre; ouvert: boole
   const liste = argumentsDe(w);
   return (
     <section aria-labelledby="arguments" class="arguments">
-      <h2 id="arguments" class="section-title">Arguments que cette œuvre illustre</h2>
-      <ul class="ideas">
+      <h2 id="arguments" class="section-title">Arguments illustrés</h2>
+      <ul class="args">
         {liste.map((a, i) => (
-          <li key={a.texte} id={i === trouve ? "argument-trouve" : undefined} class={i === trouve ? "argument-trouve" : undefined}>
-            {i === trouve && <p class="argument-trouve-label">Correspond à ta recherche</p>}
-            <p class="argument-texte"><Highlight text={a.texte} terms={terms} /></p>
-            {ouvert && a.appuis.length > 0 && (
-              <ul class="argument-appuis">{a.appuis.map(t => <li key={t}><Highlight text={t} terms={terms} /></li>)}</ul>
-            )}
-            <p class="meta">
-              Fonction {a.fonction.toLowerCase()}
-              {a.cle && <> · <a href={href(["oeuvres"], { argument: a.cle })}>autres œuvres pour cet argument</a></>}
+          <li key={a.texte} id={i === trouve ? "argument-trouve" : undefined} class={`arg${i === trouve ? " argument-trouve" : ""}`}>
+            <p class="arg-haut">
+              <a class={`tag tag-link ${fnClass(a.fonction)}`} href={href(["oeuvres"], { fonction: a.fonction })}>{a.fonction}</a>
+              {i === trouve && <span class="argument-trouve-label">Ta recherche</span>}
             </p>
+            <p class="argument-texte"><Highlight text={a.texte} terms={terms} /></p>
+            {ouvert && a.appuis.map(t => <p key={t} class="arg-appui"><Highlight text={t} terms={terms} /></p>)}
+            {a.cle && <a class="arg-autres" href={href(["oeuvres"], { argument: a.cle })}>Autres œuvres pour cet argument</a>}
           </li>
         ))}
       </ul>
@@ -87,10 +86,22 @@ function Rubriques({ items }: { items: [string, string][] }) {
   const aller = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
   return (
     <nav class="sticky-bar rubriques" aria-label="Rubriques de la fiche">
-      <div class="chips">
-        {items.map(([id, label]) => <button key={id} type="button" class="chip" onClick={() => aller(id)}>{label}</button>)}
-      </div>
+      {items.map(([id, label]) => <button key={id} type="button" class="rubrique" onClick={() => aller(id)}>{label}</button>)}
     </nav>
+  );
+}
+
+/** Le résumé : le premier paragraphe, puis la suite sur demande. */
+function Resume({ texte, ouvrir }: { texte: string; ouvrir: boolean }) {
+  const paras = texte.split(/\n\s*\n/);
+  const [tout, setTout] = useState(ouvrir);
+  return (
+    <>
+      {(tout ? paras : paras.slice(0, 1)).map((para, i) => <p key={i}>{para}</p>)}
+      {paras.length > 1 && !tout && (
+        <button type="button" class="lien-suite" onClick={() => setTout(true)}>Lire tout le résumé<Icon name="expand_more" size={20} /></button>
+      )}
+    </>
   );
 }
 
@@ -121,7 +132,12 @@ export function OeuvreScreen({ id, params }: { id: string; params: URLSearchPara
   const sujets = sujetsCitant(id);
 
   return (
-    <Page title={w.titre} back="#/oeuvres" partage={{
+    <Page title={w.titre} back="#/oeuvres" actions={libre && (
+      <button type="button" class="icon-btn" aria-pressed={saved} aria-label={saved ? "Retirer de mon carnet" : "Enregistrer dans mon carnet"}
+        onClick={() => { toggle(id); toast(saved ? "Retirée du carnet." : "Enregistrée dans ton carnet."); }}>
+        <Icon name="bookmark" filled={saved} />
+      </button>
+    )} partage={{
       type: "oeuvre", cle: id, titre: w.titre, chemin: `#/oeuvres/${encodeURIComponent(id)}`,
       texte: [`${w.titre}, ${/^[aeiouyàâéèêëîïôöùûü]/i.test(w.auteur) ? "d'" : "de "}${w.auteur}`,
         [w.genre, w.paysTexte].filter(Boolean).join(" · "),
@@ -146,46 +162,40 @@ export function OeuvreScreen({ id, params }: { id: string; params: URLSearchPara
         ) : (
           <>
             <Rubriques items={[
-              ["resume", "Résumé"], ["arguments", "Arguments"],
-              ...(w.exemple ? [["exemple", "Exemple"] as [string, string]] : []),
+              ["resume", "Résumé"], ["arguments", "Arguments"], ["copie", "Pour ta copie"],
               ...(sujets.length ? [["sujets-citant", "Sujets"] as [string, string]] : [])
             ]} />
-            <div class="actions">
-              <button type="button" class="btn btn-secondary" aria-pressed={saved}
-                onClick={() => { toggle(id); toast(saved ? "Retirée du carnet." : "Enregistrée dans ton carnet."); }}>
-                <Icon name="bookmark" filled={saved} size={20} />{saved ? "Enregistrée" : "Enregistrer"}
-              </button>
-              <button type="button" class="btn btn-secondary" onClick={() => copyText(reference(w), "Référence copiée.")}>
-                <Icon name="content_copy" size={20} />Copier la référence
-              </button>
-            </div>
 
             <div class="prose">
               {w.detaillee === false && (
-                <p class="notice-court small">Fiche courte : résumé bref et repères pour trouver l'œuvre par thème. Pour citer une œuvre en détail, préfère une fiche détaillée.</p>
+                <p class="notice-court small">Fiche courte : résumé bref et repères pour trouver l'œuvre par thème.</p>
               )}
               <h2 id="resume" class="section-title">Résumé</h2>
-              {w.resume ? w.resume.split(/\n\s*\n/).map((para, i) => <p key={i}>{para}</p>) : <p class="muted">Le résumé de cette œuvre n'est pas encore rédigé. Les thèmes et mots-clés ci-dessous indiquent déjà comment l'utiliser.</p>}
+              {w.resume ? <Resume key={id} texte={w.resume} ouvrir={terms.length > 0} /> : <p class="muted">Le résumé de cette œuvre n'est pas encore rédigé. Les thèmes ci-dessous indiquent déjà comment l'utiliser.</p>}
 
               <ArgumentsListe w={w} ouvert trouve={trouve} terms={terms} />
 
-              {w.exemple && (
-                <section aria-labelledby="exemple">
-                  <h2 id="exemple" class="section-title">Phrase d'exemple</h2>
-                  <blockquote class="exemple">{w.exemple}</blockquote>
-                  <button type="button" class="btn btn-secondary" onClick={() => copyText(w.exemple!, "Phrase copiée.")}>
-                    <Icon name="content_copy" size={20} />Copier la phrase
+              {/* Ce que l'élève recopie : la phrase d'exemple et la référence de l'œuvre. */}
+              <section aria-labelledby="copie">
+                <h2 id="copie" class="section-title">Pour ta copie</h2>
+                {w.exemple && <blockquote class="exemple">{w.exemple}</blockquote>}
+                <div class="actions copie-actions">
+                  {w.exemple && (
+                    <button type="button" class="btn btn-secondary" onClick={() => copyText(w.exemple!, "Phrase copiée.")}>
+                      <Icon name="content_copy" size={20} />Copier la phrase
+                    </button>
+                  )}
+                  <button type="button" class="btn btn-secondary" onClick={() => copyText(reference(w), "Référence copiée.")}>
+                    <Icon name="content_copy" size={20} />Copier la référence
                   </button>
-                </section>
-              )}
+                </div>
+              </section>
 
               <dl class="facts">
                 {w.niveaux?.length ? <><dt>Au programme en Côte d'Ivoire</dt><dd class="tags">{w.niveaux.map(n => <a key={n} class="tag tag-link" href={href(["oeuvres"], { programme: n })}>{n}</a>)}{w.editeur && <span class="meta"> · {w.editeur}</span>}</dd></> : null}
-                <dt>Fonction littéraire</dt>
-                <dd class="tags">{w.fonctions.map(f => <a key={f} class={`tag tag-link ${fnClass(f)}`} href={href(["oeuvres"], { fonction: f })}>{f}</a>)}</dd>
                 <dt>Thèmes</dt>
                 <dd class="tags">{w.themes.map(t => <a key={t} class="tag tag-link" href={href(["oeuvres"], { theme: t })}>{t}</a>)}</dd>
-                {w.motsCles.length > 0 && <><dt>Mots-clés</dt><dd>{w.motsCles.join(", ")}</dd></>}
+                {w.motsCles.length > 0 && <dd class="meta">Mots-clés : {w.motsCles.join(", ")}</dd>}
               </dl>
 
               {sujets.length > 0 && (

@@ -77,3 +77,38 @@
 .segments { background: var(--soft); border-radius: 999px; }
 .segment { border-radius: 999px; }
 .argument-trouve { border-radius: var(--radius-sm); }
+
+/* Accueil : la grande carte « exemples », puis méthode et entraînement côte à côte. */
+.choix { grid-template-columns: 1fr 1fr; gap: var(--s3); }
+.choix-oeuvres { grid-column: 1 / -1; }
+.choix-methode, .choix-entrainer { padding: var(--s4); border-radius: 20px; }
+.choix-methode .choix-titre, .choix-entrainer .choix-titre { font-size: 1.0625rem; line-height: 1.2; }
+@media (min-width: 720px) { .choix { grid-template-columns: 2fr 1fr 1fr; } .choix-oeuvres { grid-column: auto; } }
+.cours-progression { display: block; max-width: 20rem; margin-top: var(--s2); }
+
+/* « Mon espace » : icône de profil dans la barre du haut. */
+.espace-btn { position: relative; color: inherit; }
+.espace-btn[aria-current="page"] { color: var(--green); background: var(--green-tint); }
+.espace-btn .nav-pastille { top: 8px; right: 8px; }
+
+/* Fiche d'œuvre : rubriques en onglets texte, arguments en cartes simples. */
+.rubriques { display: flex; gap: var(--s4); margin: 0 calc(-1 * var(--s4)) var(--s4); padding: 0 var(--s4); border-bottom: 1px solid var(--line); overflow: visible; flex-wrap: wrap; row-gap: 0; }
+.rubrique { background: none; border: 0; padding: var(--s3) 0; font: 600 var(--text-sm) var(--font-text); color: var(--muted); cursor: pointer; min-height: 44px; }
+.rubrique:hover, .rubrique:focus-visible { color: var(--green); }
+.lien-suite { display: inline-flex; align-items: center; gap: 2px; background: none; border: 0; padding: var(--s1) 0; font: 600 var(--text-sm) var(--font-text); color: var(--green); cursor: pointer; min-height: 40px; }
+.args { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: var(--s3); }
+.arg { background: var(--surface); border-radius: 18px; padding: var(--s4); box-shadow: 0 1px 2px rgb(0 0 0 / .05); }
+.arg p { margin: 0; }
+.arg-haut { display: flex; align-items: center; gap: var(--s2); margin-bottom: var(--s2) !important; }
+.arg .argument-texte { font-weight: 700; line-height: 1.4; }
+.arg-appui { margin-top: var(--s2) !important; color: var(--ink); line-height: 1.55; }
+.arg-autres { display: inline-block; margin-top: var(--s3); font-size: var(--text-sm); font-weight: 600; color: var(--green); }
+.arg.argument-trouve { background: var(--ochre-pale); margin: 0; box-shadow: inset 4px 0 0 var(--ochre); }
+.argument-trouve-label { margin: 0; }
+.copie-actions { margin-top: var(--s3); flex-wrap: wrap; }
+.facts { margin-top: var(--s5); }
+.facts > dd.meta { margin-top: var(--s2); }
+.note-repli { margin-top: var(--s5); }
+.note-repli .textarea { margin-bottom: var(--s2); }
+/* Sur téléphone, les pages de détail gardent la barre du haut pour le titre et leurs propres boutons. */
+@media (max-width: 719px) { .espace-detail { display: none; } }

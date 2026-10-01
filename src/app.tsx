@@ -7,6 +7,7 @@ import { BottomNav } from "./components/Nav";
 import { ToastHost } from "./components/Toast";
 import { OfflineNotice } from "./components/OfflineNotice";
 import { CoursScreen } from "./screens/Cours";
+import { AccueilScreen } from "./screens/Accueil";
 import { LeconScreen } from "./screens/Lecon";
 import { SujetsScreen } from "./screens/Sujets";
 import { SujetScreen } from "./screens/Sujet";
@@ -74,7 +75,7 @@ export function App() {
     }
   }, []);
   const { path, params } = useRoute();
-  const [section = "cours", id] = path;
+  const [section = "accueil", id] = path;
   useEffect(() => { noter({ t: "ecran", ref: section }); }, [section]);
   // Première leçon, fiche ou sujet ouvert : l'élève a découvert l'app, on peut lui proposer d'installer.
   useEffect(() => { if (id && ["cours", "sujets", "oeuvres", "entrainement"].includes(section)) marquerDecouverte(); }, [section, id]);
@@ -82,6 +83,7 @@ export function App() {
 
   let screen;
   switch (section) {
+    case "accueil": screen = <AccueilScreen />; break;
     case "cours": screen = id ? <LeconScreen id={id} /> : <CoursScreen />; break;
     case "sujets": screen = id ? <SujetScreen num={id} /> : <SujetsScreen params={params} />; break;
     case "oeuvres": screen = id ? <OeuvreScreen id={id} params={params} /> : <OeuvresScreen params={params} />; break;

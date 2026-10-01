@@ -1,7 +1,7 @@
 import { Page } from "../components/Page";
 import { EmptyState } from "../components/EmptyState";
 
-export function NotFound({ what = "Cette page n'existe pas.", back = "#/cours" }: { what?: string; back?: string }) {
+export function NotFound({ what = "Cette page n'existe pas.", back = "#/accueil" }: { what?: string; back?: string }) {
   return (
     <Page title="Introuvable" back={back}>
       <EmptyState title={what}>

@@ -66,7 +66,7 @@ export function noterAtelier(num: string, pct: number, envoye: boolean) {
 
 /** Partie de l'appli où se trouve l'élève, pour savoir d'où viennent les achats (entonnoir du tableau de bord). */
 export function endroit(): string {
-  const [section = "cours", id] = parseHash().path;
+  const [section = "accueil", id] = parseHash().path;
   const noms: Record<string, string> = { oeuvres: id ? "oeuvre" : "oeuvres", sujets: "sujet", cours: id ? "lecon" : "accueil", outils: "dico", acces: "acces", carnet: "espace", "a-propos": "a-propos", cgu: "a-propos" };
   return noms[section] ?? "autre";
 }

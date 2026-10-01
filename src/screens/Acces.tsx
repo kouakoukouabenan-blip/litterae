@@ -35,13 +35,13 @@ export function AccesScreen({ params }: { params: URLSearchParams }) {
     } else {
       setEtat("ok");
       // Recharge pour intégrer le contenu payant partout dans l'application.
-      setTimeout(() => { location.hash = "#/cours"; location.reload(); }, 1200);
+      setTimeout(() => { location.hash = "#/accueil"; location.reload(); }, 1200);
     }
   }
 
   if (actuelle && etat !== "ok")
     return (
-      <Page title="Accès complet" back="#/cours">
+      <Page title="Accès complet" back="#/accueil">
         <div class="reading">
           <PageHeader eyebrow="Accès complet" title="Ton accès est actif">
             Tout est ouvert sur cet appareil, même hors connexion.
@@ -61,7 +61,7 @@ export function AccesScreen({ params }: { params: URLSearchParams }) {
     );
 
   return (
-    <Page title="Clé d'accès" back="#/cours">
+    <Page title="Clé d'accès" back="#/accueil">
       <div class="reading">
         <PageHeader eyebrow="Accès complet" title="Saisir ma clé d'accès">
           La clé reçue par e-mail après l'achat.

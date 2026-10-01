@@ -2,7 +2,7 @@ import type { ComponentChildren } from "preact";
 import { useEffect } from "preact/hooks";
 import { goBack } from "../lib/router";
 import { Icon } from "./Icon";
-import { NavTabs } from "./Nav";
+import { EspaceBouton, NavTabs } from "./Nav";
 import { InstallButton } from "./Install";
 import { Cloche } from "./Annonces";
 import { Partager, type Partage } from "./Partager";
@@ -15,10 +15,12 @@ interface Props {
   wide?: boolean;
   /** Contenu à partager : une petite icône apparaît dans la barre du haut. */
   partage?: { type: Partage; cle: string; titre: string; texte: string; chemin: string };
+  /** Petits boutons propres à la page, dans la barre du haut (ex. : enregistrer une fiche). */
+  actions?: ComponentChildren;
   children: ComponentChildren;
 }
 
-export function Page({ title, back, wide, partage, children }: Props) {
+export function Page({ title, back, wide, partage, actions, children }: Props) {
   useEffect(() => {
     document.title = title ? `${title} · Litterae` : "Litterae";
   }, [title]);
@@ -32,13 +34,15 @@ export function Page({ title, back, wide, partage, children }: Props) {
               <Icon name="arrow_back" />
             </button>
           ) : null}
-          <a class={`brand ${back ? "brand-desktop" : ""}`} href="#/cours" aria-label="Litterae, accueil">
+          <a class={`brand ${back ? "brand-desktop" : ""}`} href="#/accueil" aria-label="Litterae, accueil">
             Litter<span>ae</span>
           </a>
           {back && title ? <p class="topbar-title">{title}</p> : <span class="topbar-spacer" />}
           <NavTabs />
+          {actions}
           {partage && <Partager {...partage} />}
           <Cloche />
+          <EspaceBouton detail={!!back} />
           <InstallButton />
         </div>
       </header>
