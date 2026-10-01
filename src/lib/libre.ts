@@ -21,6 +21,8 @@ export interface ContenuLibre {
   };
   /** Mots du dictionnaire ajoutés ou modifiés depuis le tableau de bord (sans le sens). */
   mots?: MotDico[];
+  /** Sujets d'entraînement ajoutés depuis le tableau de bord (énoncé seul). */
+  entrainement?: { id: string; citation: string; auteur: string; consigne: string; cree: number }[];
 }
 
 const CLE = "contenu-libre";

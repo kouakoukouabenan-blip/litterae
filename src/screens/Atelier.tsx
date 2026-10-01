@@ -4,7 +4,7 @@ import { Page } from "../components/Page";
 import { Icon } from "../components/Icon";
 import { AchatLien } from "../components/Achat";
 import { copyText } from "../components/Toast";
-import { SUJETS } from "../lib/data";
+import { numero, sujetsEntrainement } from "../lib/entrainement";
 import { useAccess } from "../lib/access";
 import { href, replaceRoute } from "../lib/router";
 import { envoyerMessage, type EchecEnvoi } from "../lib/contact";
@@ -15,7 +15,6 @@ import {
 import { NotFound } from "./NotFound";
 
 const ETAPES = ["Comprendre le sujet", "Plan détaillé", "Introduction", "Développement", "Conclusion", "Ma rédaction"];
-const CONSIGNE = "Expliquez et discutez.";
 
 const ECHECS: Record<EchecEnvoi, string> = {
   "hors-ligne": "Tu es hors connexion. Ta copie reste enregistrée : envoie-la quand tu seras connecté.",
@@ -100,7 +99,7 @@ function PlanAxe({ n, axe, set, question }: { n: 1 | 2; axe: Axe; set: (a: Axe) 
 }
 
 export function AtelierScreen({ num, params }: { num: string; params: URLSearchParams }) {
-  const sujet = SUJETS.find(s => s.num === num);
+  const sujet = sujetsEntrainement().find(s => s.num === num);
   const [b, setB] = useBrouillon(num);
   const { premium } = useAccess();
   const etape = Math.min(Math.max(Number(params.get("etape")) || 0, 0), ETAPES.length - 1);
@@ -125,7 +124,7 @@ export function AtelierScreen({ num, params }: { num: string; params: URLSearchP
     const r = await envoyerMessage({
       sujet: "copie", nom: "", reponse: "", site: "", page: `#/entrainement/${num}`,
       duree: Date.now() - debut.current,
-      texte: `À propos de : Sujet ${num}\n\n« ${sujet!.citation} » (${sujet!.auteur})\n\n${texte}`
+      texte: `À propos de : Sujet ${numero(num)}\n\n« ${sujet!.citation} » (${sujet!.auteur})\n\n${texte}`
     });
     if (r) { setEchec(r); setEnvoi(""); return; }
     maj({ envoye: Date.now() });
@@ -133,12 +132,12 @@ export function AtelierScreen({ num, params }: { num: string; params: URLSearchP
   }
 
   return (
-    <Page title={`Sujet ${num}`} back="#/entrainement">
+    <Page title={`Sujet ${numero(num)}`} back="#/entrainement">
       <article class="reading atelier">
         <header class="page-header">
-          <p class="eyebrow">Atelier · Sujet {num}</p>
+          <p class="eyebrow">Atelier · Sujet {numero(num)}</p>
           <blockquote class="citation">« {sujet.citation} »</blockquote>
-          <p class="meta">{sujet.auteur}. {CONSIGNE}</p>
+          <p class="meta">{sujet.auteur}. {sujet.consigne}</p>
         </header>
 
         <nav class="atelier-etapes" aria-label="Étapes">

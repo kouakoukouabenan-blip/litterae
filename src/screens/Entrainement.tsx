@@ -3,7 +3,7 @@ import { useRef, useState } from "preact/hooks";
 import { Page } from "../components/Page";
 import { PageHeader } from "../components/PageHeader";
 import { Icon } from "../components/Icon";
-import { SUJETS } from "../lib/data";
+import { numero, sujetsEntrainement } from "../lib/entrainement";
 import { avancement, lireBrouillon } from "../lib/atelier";
 import { read, write } from "../lib/storage";
 
@@ -39,7 +39,7 @@ function Guide({ dialogue, cible }: { dialogue: RefObject<HTMLDialogElement>; ci
       </div>
       <div class="sheet-foot sheet-foot-single">
         {cible
-          ? <a class="btn btn-primary" href={`#/entrainement/${cible}`} onClick={fermer}>Traiter le sujet {cible}</a>
+          ? <a class="btn btn-primary" href={`#/entrainement/${cible}`} onClick={fermer}>Traiter le sujet {numero(cible)}</a>
           : <button type="button" class="btn btn-primary" onClick={fermer}>J'ai compris</button>}
       </div>
     </dialog>
@@ -48,6 +48,7 @@ function Guide({ dialogue, cible }: { dialogue: RefObject<HTMLDialogElement>; ci
 
 /** Tous les sujets, sans corrigé ni orientation : l'élève les rédige seul dans l'atelier, comme le jour de l'examen. */
 export function EntrainementScreen() {
+  const sujets = sujetsEntrainement();
   const dialogue = useRef<HTMLDialogElement>(null);
   const [cible, setCible] = useState<string | null>(null);
   const ouvrirGuide = (num: string | null) => {
@@ -59,20 +60,20 @@ export function EntrainementScreen() {
   return (
     <Page title="Sujets d'entraînement" back="#/carnet">
       <PageHeader eyebrow="S'entraîner" title="Sujets d'entraînement" compact>
-        {SUJETS.length} sujets à rédiger seul, pas à pas.{" "}
+        {sujets.length} sujets à rédiger seul, pas à pas.{" "}
         <button type="button" class="link-btn guide-lien" onClick={() => ouvrirGuide(null)}>Comment ça marche ?</button>
       </PageHeader>
       <ol class="list" aria-label="Sujets d'entraînement">
-        {SUJETS.map(s => {
+        {sujets.map(s => {
           const b = lireBrouillon(s.num);
           const pct = avancement(b);
           return (
             <li key={s.num}>
               <a class="row row-top" href={`#/entrainement/${s.num}`}
                 onClick={e => { if (!read(GUIDE_VU, false)) { e.preventDefault(); ouvrirGuide(s.num); } }}>
-                <span class="sujet-num" aria-hidden="true">{s.num}</span>
+                <span class="sujet-num" aria-hidden="true">{numero(s.num)}</span>
                 <span class="row-body">
-                  <span class="sr-only">Sujet {s.num}</span>
+                  <span class="sr-only">Sujet {numero(s.num)}</span>
                   <span class="row-quote">« {s.citation} »</span>
                   <span class="meta">{s.auteur}</span>
                   {pct ? (
