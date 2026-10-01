@@ -1,5 +1,5 @@
-import { useRef, useState } from "preact/hooks";
-import { isIosSafari, platform, useInstall } from "../lib/install";
+import { useEffect, useRef, useState } from "preact/hooks";
+import { dejaInstallee, isIosSafari, oublierInstallation, platform, useInstall } from "../lib/install";
 import { Icon } from "./Icon";
 
 let openGuide = () => {};
@@ -100,7 +100,22 @@ export function InstallGate() {
   const { installed, canPrompt, prompt } = useInstall();
   const [passe, setPasse] = useState(() => { try { return !!sessionStorage.getItem(PASSE); } catch { return false; } });
   const [etapes, setEtapes] = useState(false);
-  if (installed || passe || platform() === "desktop") return null;
+  const [dejaLa, setDejaLa] = useState(false);
+  useEffect(() => { if (!installed && platform() !== "desktop") dejaInstallee().then(setDejaLa); }, [installed]);
+  if (installed || platform() === "desktop") return null;
+
+  // Déjà installée : on demande d'ouvrir l'application, sans continuer dans le navigateur.
+  if (dejaLa) return (
+    <div class="install-gate" role="dialog" aria-modal="true" aria-labelledby="gate-title">
+      <div class="install-gate-inner">
+        <svg class="install-gate-logo" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="12" fill="#FFF3DC"/><path fill="#0F3D2E" d="M18 14h14v3h-4v28h9.5l3-8H44l-1.5 13H18v-3h4V17h-4z"/><circle cx="50" cy="47.5" r="3.5" fill="#C4562B"/></svg>
+        <h1 id="gate-title" class="install-gate-title">Litter<span>ae</span> est déjà installée</h1>
+        <p class="install-gate-texte">Ferme le navigateur et ouvre Litterae depuis l'icône sur ton écran d'accueil.</p>
+        <button type="button" class="install-gate-skip" onClick={() => { oublierInstallation(); setDejaLa(false); }}>J'ai supprimé l'application</button>
+      </div>
+    </div>
+  );
+  if (passe) return null;
 
   const continuer = () => {
     try { sessionStorage.setItem(PASSE, "1"); } catch { /* sans stockage, l'écran reviendra au prochain chargement */ }

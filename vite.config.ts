@@ -18,6 +18,8 @@ export default defineConfig({
         start_url: "./",
         scope: "./",
         display: "standalone",
+        // Permet à Chrome (Android) de savoir si l'application est déjà installée.
+        related_applications: [{ platform: "webapp", url: "https://kouakoukouabenan-blip.github.io/litterae/manifest.webmanifest" }],
         background_color: "#FFF8EC",
         theme_color: "#0F3D2E",
         icons: [

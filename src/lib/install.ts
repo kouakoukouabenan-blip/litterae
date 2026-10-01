@@ -47,6 +47,31 @@ export function isInstalled() {
   );
 }
 
+// Ouverte comme application : on le note, pour reconnaître ensuite le téléphone dans le navigateur
+// (sur Android, l'application et Chrome partagent le même stockage).
+if (isInstalled()) write("installee", true);
+
+/**
+ * Litterae est-elle déjà installée sur ce téléphone, alors qu'on est dans le navigateur ?
+ * Chrome sur Android sait répondre de façon sûre ; sinon on se fie à ce qui a été noté à l'installation.
+ */
+export async function dejaInstallee(): Promise<boolean> {
+  if (isInstalled()) return false;
+  const nav = navigator as Navigator & { getInstalledRelatedApps?: () => Promise<unknown[]> };
+  if (nav.getInstalledRelatedApps) {
+    try {
+      const apps = await nav.getInstalledRelatedApps();
+      // Réponse sûre : si l'application a été supprimée, on l'oublie.
+      write("installee", apps.length > 0);
+      return apps.length > 0;
+    } catch { /* on se fie à ce qui a été noté */ }
+  }
+  return read<boolean>("installee", false);
+}
+
+/** L'élève dit avoir supprimé l'application : on propose de nouveau de l'installer. */
+export const oublierInstallation = () => write("installee", false);
+
 const SNOOZE_DAYS = 7;
 
 // Nombre de visites (une par session du navigateur) : le bandeau n'apparaît qu'à partir de la deuxième,

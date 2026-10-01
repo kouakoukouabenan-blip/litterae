@@ -304,6 +304,7 @@
 .install-gate-inner { min-height: 100%; max-width: 26rem; margin: 0 auto; padding: var(--s7) var(--s5) var(--s5); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--s5); text-align: center; }
 .install-gate-logo { width: 72px; height: 72px; }
 .install-gate-title { font: 900 1.875rem/1.15 var(--font-title); color: var(--on-dark); }
+.install-gate-texte { color: var(--on-dark); font-size: var(--text-md, 1.0625rem); line-height: 1.5; margin: var(--s3) 0; }
 .install-gate-title span { color: var(--ochre); }
 .install-gate-points { list-style: none; padding: 0; display: flex; flex-direction: column; gap: var(--s3); text-align: left; font-size: var(--text-sm); }
 .install-gate-points li { display: flex; gap: var(--s2); align-items: flex-start; }
