@@ -21,7 +21,7 @@ export function WorkItem({ w, terms = [], saved = false, note, open = true, free
   return (
     <a class="work" href={`#/oeuvres/${w.id}${suite ? `?${suite}` : ""}`}>
       <span class="work-head">
-        <span class="work-title"><Highlight text={w.titre} terms={terms} /></span>
+        <span class="work-title"><Highlight text={w.titre} terms={terms} />{free && <span class="work-libre">Gratuite</span>}</span>
         {saved && <span class="work-saved" title="Enregistrée"><Icon name="bookmark" filled size={18} /><span class="sr-only">Enregistrée</span></span>}
         {locked && <span class="work-lock" title="Réservée à l'accès complet"><Icon name="lock" size={18} /><span class="sr-only">Réservée à l'accès complet</span></span>}
       </span>
@@ -31,10 +31,10 @@ export function WorkItem({ w, terms = [], saved = false, note, open = true, free
       ) : w.resume && open ? (
         <span class="work-summary"><Highlight text={w.resume} terms={terms} /></span>
       ) : null}
-      <span class="tags">
-        {free && <span class="tag tag-free">Gratuite</span>}
-        {w.detaillee === false && <span class="tag tag-court">Fiche courte</span>}
-        {w.fonctions.map(f => <span key={f} class={`tag ${fnClass(f)}`}>{f}</span>)}
+      {/* Les fonctions sur une seule ligne discrète, une pastille de couleur chacune. */}
+      <span class="work-fonctions">
+        {w.fonctions.map(f => <span key={f} class={`work-fn ${fnClass(f)}`}>{f}</span>)}
+        {w.detaillee === false && <span class="work-fn work-court">Fiche courte</span>}
       </span>
     </a>
   );

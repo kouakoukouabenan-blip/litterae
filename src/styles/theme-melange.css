@@ -79,11 +79,18 @@
 .argument-trouve { border-radius: var(--radius-sm); }
 
 /* Accueil : la grande carte « exemples », puis méthode et entraînement côte à côte. */
+/* Accueil : la recherche, une phrase d'aide, puis quatre tuiles en grille 2 × 2. */
+.accueil-recherche { margin-bottom: var(--s2); }
+.accueil-recherche .btn { white-space: nowrap; }
+.accueil-astuce { font-size: var(--text-sm); color: var(--muted); margin: 0 0 var(--s5); max-width: 44rem; }
 .choix { grid-template-columns: 1fr 1fr; gap: var(--s3); }
-.choix-oeuvres { grid-column: 1 / -1; }
-.choix-methode, .choix-entrainer { padding: var(--s4); border-radius: 20px; }
-.choix-methode .choix-titre, .choix-entrainer .choix-titre { font-size: 1.0625rem; line-height: 1.2; }
-@media (min-width: 720px) { .choix { grid-template-columns: 2fr 1fr 1fr; } .choix-oeuvres { grid-column: auto; } }
+.choix .choix-carte { padding: var(--s4); border-radius: 20px; }
+.choix .choix-titre { font-size: 1.0625rem; line-height: 1.2; }
+.choix-corriges { background: var(--green-tint); }
+.choix-corriges .icon { color: var(--green); }
+.choix-outils { background: var(--surface); box-shadow: 0 1px 2px rgb(0 0 0 / .06) !important; }
+.choix-outils .icon { color: var(--green); }
+@media (min-width: 720px) { .choix { grid-template-columns: repeat(4, 1fr); } }
 .cours-progression { display: block; max-width: 20rem; margin-top: var(--s2); }
 
 /* « Mon espace » : icône de profil dans la barre du haut. */
@@ -112,3 +119,25 @@
 .note-repli .textarea { margin-bottom: var(--s2); }
 /* Sur téléphone, les pages de détail gardent la barre du haut pour le titre et leurs propres boutons. */
 @media (max-width: 719px) { .espace-detail { display: none; } }
+
+/* Œuvres : un seul bouton « fiches gratuites », puis des raccourcis alignés à gauche. */
+.quota { display: flex; align-items: center; gap: var(--s3); margin: var(--s3) 0 0; font-size: var(--text-sm); }
+.chip-libres { font-size: var(--text-sm); font-weight: 600; min-height: 36px; display: inline-flex; align-items: center; gap: 4px; cursor: pointer; }
+.explorer { display: flex; flex-direction: column; align-items: flex-start; gap: var(--s2); margin-top: var(--s2); }
+.explorer-titre { font: 700 var(--text-sm) var(--font-text); color: var(--ink-strong); margin: var(--s3) 0 0; }
+.explorer-fonctions { display: flex; flex-wrap: wrap; gap: var(--s2); }
+@media (max-width: 719px) { .explorer-fonctions .fn-tile { flex-direction: row; align-items: baseline; gap: var(--s1); padding: 6px var(--s3); border-left-width: 0; } .explorer-fonctions .fn-tile-text, .explorer-fonctions .fn-tile-unit { display: none; } }
+@media (min-width: 720px) { .explorer-fonctions { display: grid; grid-template-columns: repeat(5, 1fr); width: 100%; } }
+.explorer-select { min-width: 14rem; }
+.explorer-tout { margin-top: var(--s4); }
+
+/* Carte d'œuvre dans les listes : plus d'étiquettes empilées, les fonctions tiennent sur une ligne. */
+.work-libre { display: inline-block; vertical-align: 3px; margin-left: var(--s2); padding: 1px 8px; border-radius: 999px; background: var(--ochre-pale); color: var(--ochre-text); font: 700 0.6875rem/1.6 var(--font-text); font-style: normal; letter-spacing: .02em; }
+.work-fonctions { display: flex; flex-wrap: wrap; gap: 2px var(--s3); margin-top: var(--s1); font-size: var(--text-xs); font-weight: 600; color: var(--muted); }
+.work-fn { display: inline-flex; align-items: center; gap: 5px; }
+.work-fn::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--fn, var(--line)); }
+.work-court { font-weight: 500; }
+/* Sur téléphone, le champ prend toute la largeur et « Chercher le livre » passe dessous. */
+@media (max-width: 479px) { .accueil-recherche { flex-direction: column; } .accueil-recherche .btn { width: 100%; } }
+/* Sur grand écran, la colonne de filtres propose déjà les classes : pas de doublon. */
+@media (min-width: 960px) { .explorer-titre:has(label), .explorer-select { display: none; } }

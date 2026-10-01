@@ -87,12 +87,11 @@ export function OeuvresScreen({ params }: { params: URLSearchParams }) {
       </div>
 
       {!access.premium && (
-        <p class="small muted quota">
-          {FREE_WORKS} fiches en accès libre.{" "}
-          <button type="button" class="link-btn" aria-pressed={gratuites} onClick={() => go(q, filters, !gratuites)}>
-            {gratuites ? "Voir toutes les œuvres" : "Les afficher"}
+        <p class="quota">
+          <button type="button" class={`chip chip-libres${gratuites ? " chip-on" : ""}`} aria-pressed={gratuites} onClick={() => go(q, filters, !gratuites)}>
+            {gratuites && <Icon name="check" size={16} />}{FREE_WORKS} fiches gratuites
           </button>
-          {" · "}<AchatLien label="Tout débloquer" />
+          <AchatLien label="Tout débloquer" />
         </p>
       )}
 
@@ -114,9 +113,9 @@ export function OeuvresScreen({ params }: { params: URLSearchParams }) {
           )}
 
           {accueil && (
-            <section class="browse" aria-labelledby="browse-title">
-              <h2 id="browse-title" class="results-count">Par fonction littéraire</h2>
-              <div class="fn-grid">
+            <section class="explorer" aria-labelledby="browse-title">
+              <h2 id="browse-title" class="explorer-titre">Par fonction littéraire</h2>
+              <div class="explorer-fonctions">
                 {FONCTIONS.map(f => (
                   <a key={f} class={`fn-tile ${fnClass(f)}`} href={href(["oeuvres"], { fonction: f })}>
                     <span class="fn-tile-title">{f}</span>
@@ -125,29 +124,27 @@ export function OeuvresScreen({ params }: { params: URLSearchParams }) {
                   </a>
                 ))}
               </div>
+
+              {(counts.get("programme")?.some(([, n]) => n > 0) ?? false) && (
+                <>
+                  <h2 class="explorer-titre"><label for="programme">Au programme en Côte d'Ivoire</label></h2>
+                  <select id="programme" class="select explorer-select" value="" onChange={e => {
+                    const v = (e.target as HTMLSelectElement).value;
+                    if (v) location.hash = href(["oeuvres"], { programme: v });
+                  }}>
+                    <option value="">Choisir une classe</option>
+                    {counts.get("programme")!.filter(([, n]) => n > 0).map(([niveau, n]) => (
+                      <option key={niveau} value={niveau}>{niveau} ({n})</option>
+                    ))}
+                  </select>
+                </>
+              )}
+
+              <button type="button" class="btn btn-secondary explorer-tout" aria-expanded={toutVoir} onClick={() => setToutVoir(!toutVoir)}>
+                {toutVoir ? "Masquer la liste" : `Voir toutes les œuvres (${OEUVRES.length})`}
+                <Icon name={toutVoir ? "expand_less" : "expand_more"} size={18} />
+              </button>
             </section>
-          )}
-
-          {accueil && (counts.get("programme")?.some(([, n]) => n > 0) ?? false) && (
-            <div class="programme-choix">
-              <label for="programme" class="small muted">Au programme en Côte d'Ivoire</label>
-              <select id="programme" class="select" value="" onChange={e => {
-                const v = (e.target as HTMLSelectElement).value;
-                if (v) location.hash = href(["oeuvres"], { programme: v });
-              }}>
-                <option value="">Choisir une classe</option>
-                {counts.get("programme")!.filter(([, n]) => n > 0).map(([niveau, n]) => (
-                  <option key={niveau} value={niveau}>{niveau} ({n})</option>
-                ))}
-              </select>
-            </div>
-          )}
-
-          {accueil && (
-            <button type="button" class="link-btn voir-tout" aria-expanded={toutVoir} onClick={() => setToutVoir(!toutVoir)}>
-              {toutVoir ? "Masquer la liste des œuvres" : `Voir toutes les œuvres (${OEUVRES.length})`}
-              <Icon name={toutVoir ? "expand_less" : "expand_more"} size={18} />
-            </button>
           )}
 
           {listeVisible && (

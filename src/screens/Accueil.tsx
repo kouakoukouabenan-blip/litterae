@@ -9,7 +9,7 @@ import { ReponseAlerte } from "../components/ReponseAlerte";
 import { useState } from "preact/hooks";
 import { href } from "../lib/router";
 
-/** Écran d'accueil : une recherche et les trois choses que l'élève vient faire. Les leçons ont leur propre écran (Cours). */
+/** Écran d'accueil : la recherche d'œuvres, puis les autres choses que l'élève vient faire. Les leçons ont leur propre écran (Cours). */
 export function AccueilScreen() {
   const [lues] = useStored<string[]>("lecons-lues", []);
   const suivante = LECONS.find(l => !lues.includes(l.id));
@@ -31,25 +31,31 @@ export function AccueilScreen() {
           <input type="search" value={q} placeholder="Thème, auteur…" enterkeyhint="search" autocomplete="off"
             onInput={e => setQ((e.target as HTMLInputElement).value)} />
         </label>
-        <button type="submit" class="btn btn-primary">Chercher</button>
+        <button type="submit" class="btn btn-primary">Chercher le livre</button>
       </form>
+      <p class="accueil-astuce">Cherche une illustration par thème, auteur, titre ou argument parmi {OEUVRES.length} fiches d'œuvres.</p>
 
       <nav class="choix" aria-label="Que veux-tu faire ?">
-        <a class="choix-carte choix-oeuvres" href="#/oeuvres">
-          <Icon name="local_library" size={26} />
-          <span class="choix-titre">Trouver des exemples</span>
-          <span class="choix-detail">{OEUVRES.length} fiches d'œuvres, classées par argument</span>
-        </a>
         <a class="choix-carte choix-methode" href={nbLues === 0 ? "#/cours" : `#/cours/${(suivante ?? LECONS[0]).id}`}>
           <Icon name="menu_book" size={24} />
           <span class="choix-titre">{nbLues === 0 ? "Apprendre la méthode" : suivante ? "Continuer la méthode" : "Revoir la méthode"}</span>
           <span class="choix-detail">{nbLues === 0 ? `${LECONS.length} leçons courtes` : `${nbLues} leçon${nbLues > 1 ? "s" : ""} sur ${LECONS.length}`}</span>
           {nbLues > 0 && <span class="progress-bar" aria-hidden="true"><span style={{ width: `${(nbLues / LECONS.length) * 100}%` }} /></span>}
         </a>
+        <a class="choix-carte choix-corriges" href="#/sujets">
+          <Icon name="history_edu" size={24} />
+          <span class="choix-titre">Sujets corrigés</span>
+          <span class="choix-detail">{SUJETS.length} copies modèles</span>
+        </a>
         <a class="choix-carte choix-entrainer" href="#/entrainement">
           <Icon name="edit" size={24} />
           <span class="choix-titre">M'entraîner</span>
           <span class="choix-detail">{SUJETS.length} sujets type bac</span>
+        </a>
+        <a class="choix-carte choix-outils" href="#/outils">
+          <Icon name="inventory_2" size={24} />
+          <span class="choix-titre">Dictionnaire</span>
+          <span class="choix-detail">Mots et formules utiles</span>
         </a>
       </nav>
 
