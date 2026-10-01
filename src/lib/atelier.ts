@@ -11,6 +11,8 @@ export interface Brouillon {
   theme: string;
   these: string;
   orientations: string[];
+  /** Orientation écrite par l'élève avec ses mots, en plus ou à la place des choix. */
+  orientationLibre: string;
   motscles: { mot: string; def: string }[];
   reformulation: string;
   problematique: string;
@@ -32,7 +34,7 @@ export const ORIENTATIONS = ["Engagement", "Esthétique", "Évasion", "Lyrique",
 const argVide = (): ArgumentPlan => ({ arg: "", expl: "", ex: "" });
 
 export const brouillonVide = (): Brouillon => ({
-  theme: "", these: "", orientations: [], motscles: [{ mot: "", def: "" }], reformulation: "", problematique: "",
+  theme: "", these: "", orientations: [], orientationLibre: "", motscles: [{ mot: "", def: "" }], reformulation: "", problematique: "",
   axe1: { titre: "", args: [argVide(), argVide()] },
   axe2: { titre: "", args: [argVide(), argVide()] },
   intro: "", phraseIntro: "", paragraphes1: [], transition: "", paragraphes2: [], conclusion: "",
@@ -40,6 +42,9 @@ export const brouillonVide = (): Brouillon => ({
 });
 
 export const nouvelArgument = argVide;
+
+/** Orientation telle que l'élève l'a donnée : les choix cochés, puis ce qu'il a écrit. */
+export const orientationDonnee = (b: Brouillon) => [b.orientations.join(", "), b.orientationLibre.trim()].filter(Boolean).join(" · ");
 
 const cle = (num: string) => `atelier:${num}`;
 // Un brouillon enregistré par une version plus ancienne garde ses réponses, les champs ajoutés depuis sont vides.
@@ -61,7 +66,7 @@ const rempli = (s: string | undefined) => (s ?? "").trim().length > 0;
 export function avancement(b: Brouillon | null): number {
   if (!b) return 0;
   const cases: boolean[] = [
-    rempli(b.theme), rempli(b.these), b.orientations.length > 0,
+    rempli(b.theme), rempli(b.these), b.orientations.length > 0 || rempli(b.orientationLibre),
     b.motscles.some(m => rempli(m.mot) && rempli(m.def)), rempli(b.reformulation), rempli(b.problematique)
   ];
   for (const axe of [b.axe1, b.axe2]) {

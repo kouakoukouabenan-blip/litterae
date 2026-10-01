@@ -9,7 +9,7 @@ import { useAccess } from "../lib/access";
 import { href, replaceRoute } from "../lib/router";
 import { envoyerMessage, type EchecEnvoi } from "../lib/contact";
 import {
-  ORIENTATIONS, avancement, nouvelArgument, redaction, useBrouillon,
+  ORIENTATIONS, avancement, orientationDonnee, nouvelArgument, redaction, useBrouillon,
   type Axe, type Brouillon
 } from "../lib/atelier";
 import { NotFound } from "./NotFound";
@@ -116,7 +116,7 @@ export function AtelierScreen({ num, params }: { num: string; params: URLSearchP
   const texte = redaction(b);
   const plan = (axe: Axe) => axe.args.map((a, i) => [`Argument ${i + 1}`, [a.arg, a.ex].filter(s => s.trim()).join(" · ")] as [string, string]);
   const comprehension: [string, string][] = [
-    ["Thème", b.theme], ["Thèse", b.these], ["Orientation", b.orientations.join(", ")],
+    ["Thème", b.theme], ["Thèse", b.these], ["Orientation", orientationDonnee(b)],
     ["Reformulation", b.reformulation], ["Problématique", b.problematique]
   ];
 
@@ -165,13 +165,16 @@ export function AtelierScreen({ num, params }: { num: string; params: URLSearchP
               aide={<Aide court="Le point de vue de l'auteur, souvent entre guillemets.">{!b.these && <button type="button" class="link-btn" onClick={() => maj({ these: sujet.citation })}>Reprendre la citation</button>}</Aide>} />
             <fieldset class="atelier-champ">
               <legend class="field-label">Orientation</legend>
-              <div class="atelier-aide"><Aide court="Choisis-en une ou deux." detail="L'orientation est la fonction que l'auteur donne au thème." /></div>
+              <div class="atelier-aide"><Aide court="Choisis-la ou écris-la." detail="L'orientation est la fonction que l'auteur donne au thème." /></div>
               <div class="atelier-choix">
                 {ORIENTATIONS.map(o => (
                   <button key={o} type="button" class="chip" aria-pressed={b.orientations.includes(o)}
                     onClick={() => maj({ orientations: b.orientations.includes(o) ? b.orientations.filter(x => x !== o) : [...b.orientations, o] })}>{o}</button>
                 ))}
               </div>
+              <textarea class="textarea atelier-texte atelier-orientation" rows={2} aria-label="Orientation écrite avec tes mots"
+                placeholder="Ou écris-la : ex. engagement, l'écrivain doit défendre les sans-voix"
+                value={b.orientationLibre} onInput={e => maj({ orientationLibre: val(e) })} />
             </fieldset>
             <fieldset class="atelier-champ">
               <legend class="field-label">Mots-clés</legend>
@@ -201,7 +204,7 @@ export function AtelierScreen({ num, params }: { num: string; params: URLSearchP
 
         {etape === 1 && (
           <div class="atelier-etape">
-            <Rappel lignes={[["Reformulation", b.reformulation], ["Orientation", b.orientations.join(", ")]]} />
+            <Rappel lignes={[["Reformulation", b.reformulation], ["Orientation", orientationDonnee(b)]]} />
             <PlanAxe n={1} axe={b.axe1} set={axe1 => maj({ axe1 })}
               question={`Pour trouver les arguments, demande-toi : pourquoi peut-on dire que ${b.reformulation.trim() ? `« ${b.reformulation.trim().replace(/\.$/, "")} »` : "la thèse est juste"} ?`} />
             <PlanAxe n={2} axe={b.axe2} set={axe2 => maj({ axe2 })}

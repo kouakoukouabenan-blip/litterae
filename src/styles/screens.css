@@ -334,3 +334,4 @@
 .guide-etapes li { display: flex; gap: var(--s3); align-items: flex-start; }
 .guide-etapes strong { display: block; color: var(--ink-strong); }
 .guide-texte { display: block; font-size: var(--text-sm); color: var(--muted); }
+.atelier-orientation { margin-top: var(--s2); }
