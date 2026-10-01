@@ -43,6 +43,7 @@ export const LECONS: Lecon[] = [
   {p:"Chaque paragraphe développe un seul argument, en trois temps."},
   {def:[["Argument","La littérature dénonce les problèmes de la société."],["Explication","En effet, la littérature met à nu les difficultés vécues par les peuples. Ce faisant, elle accuse les bourreaux dans le souci d'améliorer la vie des opprimés."],["Illustration","Une œuvre précise qui prouve l'argument."]]},
   {astuce:"Pour vérifier qu'un argument est pertinent, demande-toi : pourquoi peut-on dire que + reformulation ? Si ton argument ne répond pas clairement, change-le."},
+  {astuce:"Dans ta copie, souligne toujours le titre de l'œuvre que tu cites, par exemple : Une si longue lettre de Mariama Bâ. Sur un livre imprimé ou dans l'application, le titre est écrit en italique ; à la main, on le souligne."},
   {lien:{texte:"Trouver une œuvre pour illustrer un argument",href:"#/oeuvres"}}
  ]},
  {id:"conclusion",titre:"Rédiger la conclusion",duree:"5 min",blocs:[
