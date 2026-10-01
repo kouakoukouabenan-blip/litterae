@@ -5,6 +5,7 @@ import { Icon } from "./Icon";
 import { NavTabs } from "./Nav";
 import { InstallButton } from "./Install";
 import { Cloche } from "./Annonces";
+import { Partager, type Partage } from "./Partager";
 
 interface Props {
   /** Titre court affiché dans la barre du haut sur mobile pour les pages de détail. */
@@ -12,10 +13,12 @@ interface Props {
   /** Page parente : affiche un bouton Retour. */
   back?: string;
   wide?: boolean;
+  /** Contenu à partager : une petite icône apparaît dans la barre du haut. */
+  partage?: { type: Partage; cle: string; titre: string; texte: string; chemin: string };
   children: ComponentChildren;
 }
 
-export function Page({ title, back, wide, children }: Props) {
+export function Page({ title, back, wide, partage, children }: Props) {
   useEffect(() => {
     document.title = title ? `${title} · Litterae` : "Litterae";
   }, [title]);
@@ -34,6 +37,7 @@ export function Page({ title, back, wide, children }: Props) {
           </a>
           {back && title ? <p class="topbar-title">{title}</p> : <span class="topbar-spacer" />}
           <NavTabs />
+          {partage && <Partager {...partage} />}
           <Cloche />
           <InstallButton />
         </div>

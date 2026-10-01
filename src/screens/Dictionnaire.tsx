@@ -1,4 +1,5 @@
 import { Fragment } from "preact";
+import { Partager, extrait } from "../components/Partager";
 import { useEffect, useMemo, useRef, useState } from "preact/hooks";
 import dico from "../data/dictionnaire.json";
 import type { Dictionnaire, EntreeDico, Fonction, MotDico } from "../data/types";
@@ -192,7 +193,7 @@ export function DicoRecherche({ q, onChange }: { q: string; onChange: (q: string
   );
 }
 
-export function DicoResultats({ q, fonction, onChange }: { q: string; fonction: string | null; onChange: (q: string, fonction: string | null) => void }) {
+export function DicoResultats({ q, fonction, mot, onChange }: { q: string; fonction: string | null; mot?: string | null; onChange: (q: string, fonction: string | null) => void }) {
   const terms = queryTerms(q);
   const access = useAccess();
   const vus = useConsultes();
@@ -230,6 +231,8 @@ export function DicoResultats({ q, fonction, onChange }: { q: string; fonction: 
   };
   // Une nouvelle recherche (lien, retour) referme la carte.
   useEffect(() => setOuvert(null), [q, fonction]);
+  // Lien partagé « #/outils?mot=… » : la carte du mot s'ouvre directement.
+  useEffect(() => { if (mot && entrees.some(e => e.mot === mot)) ouvrir(mot); }, [mot]);
   // Renvoi « voir COMBAT » : ouvre directement la carte du mot quand il existe.
   const voir = (mot: string) => {
     const n = normalize(mot);
@@ -248,6 +251,8 @@ export function DicoResultats({ q, fonction, onChange }: { q: string; fonction: 
       <article class={`dico-carte ${entreeOuverte.fonctions?.[0] ? fnClass(entreeOuverte.fonctions[0]) : ""}`} aria-labelledby="dico-carte-titre">
         <div class="dico-carte-tete">
           <button type="button" class="link-btn dico-retour" onClick={fermer}><Icon name="arrow_back" size={18} />Retour aux mots</button>
+          <Partager type="mot" cle={entreeOuverte.mot} titre={entreeOuverte.mot} chemin={`#/outils?mot=${encodeURIComponent(entreeOuverte.mot)}`}
+            texte={`${entreeOuverte.mot} (${entreeOuverte.nature})${complete(entreeOuverte) ? ` : ${extrait((entreeOuverte as { sens: string }).sens, 300)}` : ""}\n\nDans le dictionnaire littéraire de Litterae :`} />
           <h2 id="dico-carte-titre" class="dico-tete">
             <span class="dico-mot">{entreeOuverte.mot}</span>{" "}
             <span class="dico-nature">{entreeOuverte.nature}</span>

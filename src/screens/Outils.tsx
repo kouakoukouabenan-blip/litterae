@@ -73,7 +73,7 @@ export function OutilsScreen() {
         )}
       </div>
 
-      {vue === "dictionnaire" && <DicoResultats q={q} fonction={fonction} onChange={dico} />}
+      {vue === "dictionnaire" && <DicoResultats q={q} fonction={fonction} mot={params.get("mot")} onChange={dico} />}
 
       {vue === "formules" && (
         <div class="reading reading-left" role="tabpanel">

@@ -32,7 +32,10 @@ export function SujetScreen({ num }: { num: string }) {
   const citees = oeuvresCitees(s);
 
   return (
-    <Page title={`Sujet ${s.num}`} back="#/sujets">
+    <Page title={`Sujet ${s.num}`} back="#/sujets" partage={{
+      type: "sujet", cle: s.num, titre: `Sujet ${s.num}`, chemin: `#/sujets/${s.num}`,
+      texte: `Sujet de dissertation ${s.num} :\n« ${s.citation} »\n${s.auteur}. Expliquez et discutez.\n\nLe corrigé (plan détaillé, introduction, conclusion) est sur Litterae :`
+    }}>
       <article class="reading">
         <header class="page-header">
           <p class="eyebrow">Sujet {s.num} · {s.orientation}</p>

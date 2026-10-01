@@ -1,4 +1,5 @@
 import { useEffect } from "preact/hooks";
+import { extrait } from "../components/Partager";
 import { LECONS } from "../lib/lecons";
 import type { BlocLecon } from "../data/types";
 import { Page } from "../components/Page";
@@ -49,7 +50,12 @@ export function LeconScreen({ id }: { id: string }) {
   const l = LECONS[i], prev = LECONS[i - 1], next = LECONS[i + 1];
 
   return (
-    <Page title={`Leçon ${i + 1}`} back="#/cours">
+    <Page title={`Leçon ${i + 1}`} back="#/cours" partage={{
+      type: "lecon", cle: l.id, titre: l.titre, chemin: `#/cours/${l.id}`,
+      texte: [`Leçon ${i + 1} : « ${l.titre} » (${l.duree} de lecture).`,
+        !l.payante && extrait((l.blocs.find(b => "p" in b) as { p: string } | undefined)?.p),
+        "À lire sur Litterae, la dissertation littéraire pas à pas :"].filter(Boolean).join("\n\n")
+    }}>
       <article class="reading">
         <header class="page-header">
           <p class="eyebrow">Leçon {i + 1} sur {LECONS.length} · {l.duree}</p>

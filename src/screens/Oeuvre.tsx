@@ -1,4 +1,5 @@
 import { noter, noterFiche } from "../lib/stats";
+import { extrait } from "../components/Partager";
 import { useEffect, useState } from "preact/hooks";
 import { Page } from "../components/Page";
 import { Icon } from "../components/Icon";
@@ -80,7 +81,16 @@ export function OeuvreScreen({ id }: { id: string }) {
   const sujets = sujetsCitant(id);
 
   return (
-    <Page title={w.titre} back="#/oeuvres">
+    <Page title={w.titre} back="#/oeuvres" partage={{
+      type: "oeuvre", cle: id, titre: w.titre, chemin: `#/oeuvres/${encodeURIComponent(id)}`,
+      texte: [`${w.titre}, ${/^[aeiouyàâéèêëîïôöùûü]/i.test(w.auteur) ? "d'" : "de "}${w.auteur}`,
+        [w.genre, w.paysTexte].filter(Boolean).join(" · "),
+        w.themes.length ? `Thèmes : ${w.themes.slice(0, 5).join(", ")}.` : "",
+        w.fonctions.length ? `Fonctions littéraires : ${w.fonctions.join(", ")}.` : "",
+        // Début du résumé seulement pour les fiches gratuites : le reste fait partie de l'accès complet.
+        w.libre ? extrait(w.resume) : "",
+        "Fiche complète sur Litterae :"].filter(Boolean).join("\n")
+    }}>
       <article class="reading">
         <header class="page-header">
           <p class="eyebrow">{w.genre}{w.precision ? ` · ${w.precision}` : ""}</p>
