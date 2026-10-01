@@ -328,3 +328,9 @@
 .question-copie summary { cursor: pointer; font-weight: 600; color: var(--green); }
 .question-copie .question-texte { margin-top: var(--s2); }
 @media (max-width: 380px) { .atelier-rappel dl { grid-template-columns: 1fr; } }
+.entrainement-traiter { align-self: flex-start; margin-top: var(--s2); min-height: 36px; padding: 0 var(--s3); font-size: var(--text-sm); }
+.guide-lien { font-size: inherit; text-decoration: underline; text-underline-offset: 3px; min-height: 0; }
+.guide-etapes { list-style: none; margin: 0 0 var(--s4); padding: 0; display: flex; flex-direction: column; gap: var(--s3); }
+.guide-etapes li { display: flex; gap: var(--s3); align-items: flex-start; }
+.guide-etapes strong { display: block; color: var(--ink-strong); }
+.guide-texte { display: block; font-size: var(--text-sm); color: var(--muted); }
