@@ -4,7 +4,7 @@ import { Icon } from "../components/Icon";
 import { InstallBanner } from "../components/Install";
 import { Annonces, InvitationNotifs } from "../components/Annonces";
 import { useStored } from "../lib/storage";
-import { NB_DETAILLEES, OEUVRES, SUJETS } from "../lib/data";
+import { OEUVRES, SUJETS } from "../lib/data";
 import { lienContact } from "../lib/contact";
 import { ReponseAlerte } from "../components/ReponseAlerte";
 
@@ -21,7 +21,7 @@ export function CoursScreen() {
       <header class="home-header">
         <p class="eyebrow">Français · Terminale</p>
         <h1 class="home-title">La dissertation <em>littéraire</em>, pas à pas</h1>
-        <p class="lede">{LECONS.length} leçons, {SUJETS.length} sujets corrigés, {OEUVRES.length} œuvres dont {NB_DETAILLEES} fiches détaillées.</p>
+        <p class="lede">{LECONS.length} leçons · {SUJETS.length} sujets · {OEUVRES.length} œuvres</p>
       </header>
 
       <ReponseAlerte />

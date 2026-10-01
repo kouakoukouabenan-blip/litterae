@@ -35,8 +35,8 @@ const dateCourte = (t: number) => new Date(t).toLocaleDateString("fr-FR", { day:
 /** Conditions affichées avant d'écrire, pour tout le monde. */
 function Consignes({ premium }: { premium: boolean }) {
   return (
-    <section class="consignes" aria-labelledby="consignes-titre">
-      <h2 id="consignes-titre" class="consignes-titre">Avant d'écrire</h2>
+    <details class="repli consignes">
+      <summary>Avant d'écrire : 5 règles simples</summary>
       <ul class="bullets">
         <li>Une seule question par message, écrite en phrases complètes, sans langage SMS.</li>
         <li>Précise la leçon, le sujet ou l'œuvre concernés. Depuis une fiche, c'est indiqué pour toi.</li>
@@ -46,7 +46,7 @@ function Consignes({ premium }: { premium: boolean }) {
           ? `La réponse peut prendre quelques jours, davantage en période d'examens. Elle arrive ici, dans « Mes questions ». ${QUESTIONS_EN_ATTENTE} questions en attente au maximum.`
           : "La réponse peut prendre quelques jours, davantage en période d'examens."}</li>
       </ul>
-    </section>
+    </details>
   );
 }
 
@@ -146,7 +146,7 @@ export function ContactScreen({ params }: { params: URLSearchParams }) {
     <Page title="Contact" back="#/a-propos">
       <div class="reading">
         <PageHeader eyebrow="Contact" title="Écrire à l'auteur">
-          Une question sur la méthode, une leçon ou une œuvre à ajouter, une erreur repérée : chaque message est lu par Prof {EDITEUR}.
+          Chaque message est lu par Prof {EDITEUR}.
         </PageHeader>
 
         {premium && (
@@ -173,7 +173,7 @@ export function ContactScreen({ params }: { params: URLSearchParams }) {
             <Consignes premium={premium} />
             {!premium && (
               <p class="contact-premium small">
-                Avec l'accès complet, tu reçois la réponse de l'auteur directement dans l'application.{" "}
+                Réponse dans l'appli avec l'accès complet.{" "}
                 <AchatLien label="Acheter l'accès" /> · <a href="#/acces">J'ai une clé</a>
               </p>
             )}

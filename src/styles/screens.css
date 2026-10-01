@@ -264,9 +264,9 @@
 .signaler { margin-top: var(--s6); font-size: var(--text-xs); color: var(--muted); }
 .signaler a { font-weight: 600; }
 .contact-sujets legend { padding: 0; }
-.consignes { margin-bottom: var(--s5); padding: var(--s3) var(--s4); background: var(--surface); border: var(--border) solid var(--line); border-radius: var(--radius-sm); font-size: var(--text-sm); }
-.consignes-titre { font: 700 var(--text-sm)/1.4 var(--font-text); color: var(--ink-strong); margin-bottom: var(--s2); }
-.consignes .bullets { margin: 0; display: flex; flex-direction: column; gap: var(--s1); }
+.consignes { margin-bottom: var(--s3); }
+.consignes .bullets { padding: var(--s3) var(--s4); background: var(--surface); border: var(--border) solid var(--line); border-radius: var(--radius-sm); color: var(--ink); }
+.consignes .bullets { margin: 0 0 var(--s2); display: flex; flex-direction: column; gap: var(--s1); }
 .contact-premium { margin: calc(-1 * var(--s2)) 0 var(--s5); color: var(--muted); }
 .segment .pastille, .pastille { display: inline-block; min-width: 18px; height: 18px; margin-left: var(--s1); padding: 0 5px; border-radius: 9px; background: var(--orange); color: #fff; font-size: 0.6875rem; font-weight: 700; line-height: 18px; text-align: center; vertical-align: 1px; }
 .questions { list-style: none; margin: 0 0 var(--s6); padding: 0; display: flex; flex-direction: column; gap: var(--s3); }
@@ -300,6 +300,8 @@
 .atelier-etape { display: flex; flex-direction: column; gap: var(--s5); }
 .atelier-champ { border: 0; padding: 0; margin: 0; min-width: 0; }
 .atelier-aide { margin: calc(-1 * var(--s1)) 0 var(--s2); font-size: var(--text-sm); color: var(--muted); }
+.aide-btn { font-size: var(--text-sm); text-decoration: underline; text-underline-offset: 3px; }
+.aide-detail { display: block; margin-top: var(--s1); padding: var(--s2) var(--s3); background: var(--surface); border-left: 3px solid var(--line-strong); border-radius: 4px; color: var(--ink); }
 .atelier-texte { min-height: 0; field-sizing: content; }
 .atelier-choix { display: flex; flex-wrap: wrap; gap: var(--s2); }
 .atelier-mot { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--s2); margin-bottom: var(--s3); }

@@ -18,8 +18,7 @@ export function SujetsScreen({ params }: { params: URLSearchParams }) {
   return (
     <Page>
       <PageHeader eyebrow="S'entraîner" title="Sujets corrigés" compact>
-        {SUJETS.length} sujets type bac, entièrement corrigés.
-        {!access.premium && <> Les {FREE_SUBJECTS} premiers sont en accès libre. <AchatLien label="Tout débloquer" /></>}
+        {access.premium ? `${SUJETS.length} sujets type bac, tous corrigés.` : <>{FREE_SUBJECTS} gratuits sur {SUJETS.length}. <AchatLien label="Tout débloquer" /></>}
       </PageHeader>
 
       <div class="sticky-bar">

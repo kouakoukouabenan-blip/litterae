@@ -49,7 +49,7 @@ export function OutilsScreen() {
   return (
     <Page>
       <PageHeader eyebrow="Pendant la rédaction" title="Boîte à outils" compact>
-        <span class="outils-lede">Le sens des mots des sujets, des formules à adapter, les connecteurs logiques et le vocabulaire de chaque orientation.</span>
+        <span class="outils-lede">Mots des sujets, formules et vocabulaire.</span>
       </PageHeader>
 
       <div class="sticky-bar">

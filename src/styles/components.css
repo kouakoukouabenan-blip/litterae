@@ -90,7 +90,8 @@
 .row-top { align-items: flex-start; }
 .row-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
 .row-title { font-weight: 600; color: var(--ink-strong); }
-.row-quote { font-family: var(--font-title); font-style: italic; font-weight: 700; color: var(--ink-strong); line-height: 1.4; }
+.row-quote { font-family: var(--font-title); font-style: italic; font-weight: 700; color: var(--ink-strong); line-height: 1.4;
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 .row-lock { color: var(--muted); display: inline-flex; padding-top: 2px; }
 .list-compact .row { min-height: 48px; padding: var(--s2) var(--s4); }
 .step-num {
@@ -214,7 +215,10 @@
 .notice { display: flex; align-items: center; gap: var(--s2); padding: var(--s3) var(--s4); border-radius: var(--radius-sm); font-weight: 600; margin-bottom: var(--s6); }
 .notice-success { background: var(--green-tint); color: var(--green); }
 .lock-actions { display: flex; flex-wrap: wrap; gap: var(--s2); }
-.acces-aide, .acces-achat { display: flex; flex-direction: column; gap: var(--s3); padding-top: var(--s5); border-top: var(--border) solid var(--line); }
+.acces-achat { display: flex; flex-direction: column; gap: var(--s3); padding-top: var(--s5); border-top: var(--border) solid var(--line); }
+.acces-aide { margin: var(--s4) 0; }
+.acces-aide > :not(summary) { margin-top: var(--s3); }
+.acces-aide > p { color: var(--ink); }
 .acces-note { margin: var(--s4) 0; }
 .access-row { background: var(--surface); border: var(--border) solid var(--line); border-radius: var(--radius); margin-bottom: var(--s5); }
 .access-row > .icon:first-child { color: var(--orange); }
@@ -366,3 +370,12 @@
   .demo-tel, .demo-barre span.en-cours::after, .demo-onde { animation: none; }
   .demo-reperes .trace, .demo-curseur { animation-duration: 1ms; animation-delay: 0ms; }
 }
+
+/* Explication secondaire repliée : une ligne à toucher, le détail à la demande. */
+.repli { font-size: var(--text-sm); color: var(--muted); }
+.repli > summary { cursor: pointer; list-style: none; font-weight: 600; color: var(--green); text-decoration: underline; text-underline-offset: 3px; min-height: 32px; display: flex; align-items: center; }
+.repli > summary::-webkit-details-marker { display: none; }
+.repli[open] > summary { margin-bottom: var(--s2); }
+.repli > p + p { margin-top: var(--s2); }
+.repli > p:not(.small) { font-size: var(--text-sm); }
+.lock-details { margin-top: var(--s1); }

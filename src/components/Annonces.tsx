@@ -39,7 +39,7 @@ export function InvitationNotifs() {
   return (
     <aside class="install-banner" aria-label="Notifications">
       <Icon name="notifications" size={22} />
-      <p class="install-banner-title">{erreur ?? "Reçois les astuces et les promos de Litterae en notification."}</p>
+      <p class="install-banner-title">{erreur ?? "Astuces et promos en notification"}</p>
       <button type="button" class="btn btn-primary" onClick={async () => setErreur(await activer())}>Activer</button>
       <button type="button" class="icon-btn" onClick={reporter} aria-label="Plus tard"><Icon name="close" size={20} /></button>
     </aside>
@@ -61,7 +61,7 @@ export function ReglageNotifs() {
       )}
       {etat === "possible" && (
         <>
-          <p>Reçois les astuces, les nouveautés et les promos de Litterae sur cet appareil, quelques fois par mois au plus.</p>
+          <p>Astuces et promos, quelques fois par mois au plus.</p>
           <button type="button" class="btn btn-primary align-start" onClick={async () => setErreur(await activer())}><Icon name="notifications" size={20} />Activer les notifications</button>
         </>
       )}

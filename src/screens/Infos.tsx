@@ -31,7 +31,7 @@ export function AProposScreen() {
     <Page title="À propos">
       <div class="reading reading-left">
         <PageHeader eyebrow="À propos" title="Ce que fait Litterae">
-          Litterae accompagne les élèves de terminale dans la préparation de la dissertation littéraire au bac.
+          Pour réussir la dissertation littéraire au bac.
         </PageHeader>
         <div class="prose">
           <h2 class="section-title">Fonctionnalités</h2>

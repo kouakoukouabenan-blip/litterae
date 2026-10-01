@@ -61,11 +61,11 @@ export function CarnetScreen() {
       </a>
 
       <h2 class="section-title carnet-titre">Mon carnet</h2>
-      <p class="small muted carnet-intro">Les œuvres que tu as enregistrées et tes notes, prêtes pour le prochain devoir.</p>
+      <p class="small muted carnet-intro">Tes œuvres enregistrées et tes notes.</p>
 
       {!enregistrees.length && !annotees.length ? (
         <EmptyState title="Ton carnet est vide.">
-          <p>Sur la fiche d'une œuvre, touche « Enregistrer » ou écris une note : elle apparaîtra ici.</p>
+          <p>Touche « Enregistrer » sur une fiche d'œuvre.</p>
           <a class="btn btn-primary" href="#/oeuvres">Chercher une œuvre</a>
         </EmptyState>
       ) : (
@@ -82,7 +82,7 @@ export function CarnetScreen() {
               <ul class="works">{annotees.map(w => <li key={w.id}><WorkItem w={w} note={notes[w.id]} /></li>)}</ul>
             </section>
           )}
-          <p class="small muted">Le carnet est gardé dans ce navigateur. Si tu effaces les données du navigateur, il sera perdu.</p>
+          <p class="small muted">Gardé dans ce navigateur : effacer ses données l'efface aussi.</p>
         </div>
       )}
     </Page>

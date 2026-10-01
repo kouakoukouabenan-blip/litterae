@@ -15,7 +15,7 @@ import {
 import { NotFound } from "./NotFound";
 
 const ETAPES = ["Comprendre le sujet", "Plan détaillé", "Introduction", "Développement", "Conclusion", "Ma rédaction"];
-const CONSIGNE = "Expliquez et discutez cette affirmation en vous appuyant sur des œuvres lues ou étudiées.";
+const CONSIGNE = "Expliquez et discutez.";
 
 const ECHECS: Record<EchecEnvoi, string> = {
   "hors-ligne": "Tu es hors connexion. Ta copie reste enregistrée : envoie-la quand tu seras connecté.",
@@ -25,6 +25,19 @@ const ECHECS: Record<EchecEnvoi, string> = {
   "serveur": "L'envoi n'a pas abouti. Réessaie dans quelques minutes."
 };
 
+/** Consigne en quelques mots ; l'explication complète s'ouvre avec « Aide ». */
+function Aide({ court, detail, children }: { court: string; detail?: string; children?: ComponentChildren }) {
+  const [ouvert, setOuvert] = useState(false);
+  return (
+    <>
+      {court}
+      {detail && <> <button type="button" class="link-btn aide-btn" aria-expanded={ouvert} onClick={() => setOuvert(!ouvert)}>{ouvert ? "Masquer" : "Aide"}</button></>}
+      {children && <> {children}</>}
+      {ouvert && <span class="aide-detail">{detail}</span>}
+    </>
+  );
+}
+
 const val = (e: Event) => (e.target as HTMLInputElement | HTMLTextAreaElement).value;
 
 function Champ({ id, label, aide, value, onInput, rows = 2, placeholder }: {
@@ -33,7 +46,7 @@ function Champ({ id, label, aide, value, onInput, rows = 2, placeholder }: {
   return (
     <div class="atelier-champ">
       <label class="field-label" for={id}>{label}</label>
-      {aide && <p class="atelier-aide" id={`${id}-aide`}>{aide}</p>}
+      {aide && <div class="atelier-aide" id={`${id}-aide`}>{aide}</div>}
       <textarea id={id} class="textarea atelier-texte" rows={rows} value={value} placeholder={placeholder}
         style={{ minHeight: `calc(${rows} * 1.5em + 26px)` }}
         aria-describedby={aide ? `${id}-aide` : undefined} onInput={e => onInput(val(e))} />
@@ -67,9 +80,9 @@ function PlanAxe({ n, axe, set, question }: { n: 1 | 2; axe: Axe; set: (a: Axe) 
           <legend>Argument {i + 1}</legend>
           <Champ id={`a${n}-${i}-arg`} label="Argument" rows={1} value={a.arg} onInput={v => majArg(i, "arg", v)} />
           <Champ id={`a${n}-${i}-expl`} label="Explication" value={a.expl} onInput={v => majArg(i, "expl", v)}
-            aide="Reformule l'argument en une ou deux phrases, puis dis ce que cela implique." />
+            aide={<Aide court="Explique l'argument." detail="Reformule l'argument en une ou deux phrases, puis dis ce que cela implique." />} />
           <Champ id={`a${n}-${i}-ex`} label="Illustration" value={a.ex} onInput={v => majArg(i, "ex", v)}
-            aide="Une œuvre précise : titre, auteur, et ce qui dans l'œuvre prouve l'argument." />
+            aide={<Aide court="Une œuvre précise." detail="Le titre, l'auteur, et ce qui dans l'œuvre prouve l'argument." />} />
           {axe.args.length > 1 && (
             <button type="button" class="link-btn atelier-retirer" onClick={() => set({ ...axe, args: axe.args.filter((_, j) => j !== i) })}>
               Retirer cet argument
@@ -147,12 +160,12 @@ export function AtelierScreen({ num, params }: { num: string; params: URLSearchP
         {etape === 0 && (
           <div class="atelier-etape">
             <Champ id="theme" label="Thème" rows={1} value={b.theme} onInput={v => maj({ theme: v })}
-              aide="Pose deux questions : qui parle ? de quoi parle-t-il ? Ce dont il parle est le thème (la littérature, le roman, la poésie, l'écrivain…)." />
+              aide={<Aide court="Qui parle, et de quoi ?" detail="Ce dont l'auteur parle est le thème : la littérature, le roman, la poésie, l'écrivain…" />} />
             <Champ id="these" label="Thèse" value={b.these} onInput={v => maj({ these: v })}
-              aide={<>Le point de vue de l'auteur, le plus souvent entre guillemets. {!b.these && <button type="button" class="link-btn" onClick={() => maj({ these: sujet.citation })}>Reprendre la citation</button>}</>} />
+              aide={<Aide court="Le point de vue de l'auteur, souvent entre guillemets.">{!b.these && <button type="button" class="link-btn" onClick={() => maj({ these: sujet.citation })}>Reprendre la citation</button>}</Aide>} />
             <fieldset class="atelier-champ">
               <legend class="field-label">Orientation</legend>
-              <p class="atelier-aide">La fonction que l'auteur donne au thème. Choisis-en une ou deux.</p>
+              <div class="atelier-aide"><Aide court="Choisis-en une ou deux." detail="L'orientation est la fonction que l'auteur donne au thème." /></div>
               <div class="atelier-choix">
                 {ORIENTATIONS.map(o => (
                   <button key={o} type="button" class="chip" aria-pressed={b.orientations.includes(o)}
@@ -162,7 +175,7 @@ export function AtelierScreen({ num, params }: { num: string; params: URLSearchP
             </fieldset>
             <fieldset class="atelier-champ">
               <legend class="field-label">Mots-clés</legend>
-              <p class="atelier-aide">Les mots importants du sujet, surtout ceux qui justifient l'orientation. Définis-les selon le contexte.</p>
+              <div class="atelier-aide"><Aide court="Définis les mots importants." detail="Surtout ceux qui justifient l'orientation. Donne leur sens dans le contexte du sujet." /></div>
               {b.motscles.map((m, i) => (
                 <div key={i} class="atelier-mot">
                   <input class="input input-texte" aria-label={`Mot-clé ${i + 1}`} placeholder="Mot-clé" value={m.mot}
@@ -180,9 +193,9 @@ export function AtelierScreen({ num, params }: { num: string; params: URLSearchP
               )}
             </fieldset>
             <Champ id="reformulation" label="Reformulation" value={b.reformulation} onInput={v => maj({ reformulation: v })}
-              aide="Dis simplement, en une seule phrase, ce que l'auteur affirme. Commence par le thème." />
+              aide={<Aide court="Ce que l'auteur affirme, en une phrase." detail="Dis-le simplement, avec tes mots. Commence par le thème." />} />
             <Champ id="problematique" label="Problématique" rows={3} value={b.problematique} onInput={v => maj({ problematique: v })}
-              aide="Deux questions : « En quoi… » + la thèse reformulée ? Puis « Cependant… » + les limites de la thèse ?" />
+              aide={<Aide court="« En quoi… ? » puis « Cependant… ? »" detail="Première question : « En quoi… » suivi de la thèse reformulée. Deuxième question : « Cependant… » suivi des limites de la thèse." />} />
           </div>
         )}
 
@@ -200,14 +213,14 @@ export function AtelierScreen({ num, params }: { num: string; params: URLSearchP
           <div class="atelier-etape">
             <Rappel lignes={[...comprehension, ["Partie I", b.axe1.titre], ["Partie II", b.axe2.titre]]} />
             <Champ id="intro" label="Introduction" rows={8} value={b.intro} onInput={v => maj({ intro: v })}
-              aide="Dans l'ordre : une généralité, la thèse entre guillemets suivie de « autrement dit » et ta reformulation, la problématique, puis l'annonce du plan (« Nous répondrons à ces interrogations dans notre analyse. »)." />
+              aide={<Aide court="Généralité, thèse, problématique, annonce du plan." detail="Dans l'ordre : une généralité, la thèse entre guillemets suivie de « autrement dit » et ta reformulation, la problématique, puis l'annonce du plan (« Nous répondrons à ces interrogations dans notre analyse. »)." />} />
           </div>
         )}
 
         {etape === 3 && (
           <div class="atelier-etape">
             <Champ id="phrase-intro" label="Phrase introductive" rows={2} value={b.phraseIntro} onInput={v => maj({ phraseIntro: v })}
-              aide="Elle rappelle la thèse : « Dire que… se justifie aisément », « Il n'est pas erroné de dire que… »." />
+              aide={<Aide court="Elle rappelle la thèse." detail="Par exemple : « Dire que… se justifie aisément » ou « Il n'est pas erroné de dire que… »." />} />
             <h2 class="section-title"><span class="part-num">I.</span> {b.axe1.titre.trim() || "Thèse"}</h2>
             {b.axe1.args.map((a, i) => (
               <div key={i} class="atelier-paragraphe">
@@ -215,11 +228,11 @@ export function AtelierScreen({ num, params }: { num: string; params: URLSearchP
                   vide={`L'argument ${i + 1} n'est pas encore préparé dans le plan détaillé (étape 2).`} />
                 <Champ id={`p1-${i}`} label={`Paragraphe ${i + 1}`} rows={6} value={b.paragraphes1[i] ?? ""}
                   onInput={v => { const p = [...b.paragraphes1]; p[i] = v; maj({ paragraphes1: p }); }}
-                  aide={i === 0 ? "Argument, puis explication (« En effet… »), puis illustration (« Par exemple… »). Commence par « D'abord », « Ensuite », « Enfin »." : undefined} />
+                  aide={i === 0 ? <Aide court="Argument, explication, exemple." detail="L'argument, puis l'explication (« En effet… »), puis l'illustration (« Par exemple… »). Commence par « D'abord », « Ensuite », « Enfin »." /> : undefined} />
               </div>
             ))}
             <Champ id="transition" label="Transition" rows={3} value={b.transition} onInput={v => maj({ transition: v })}
-              aide="Elle rappelle la thèse et annonce l'antithèse, reliées par « cependant », « toutefois » ou « néanmoins »." />
+              aide={<Aide court="Thèse, puis antithèse." detail="Elle rappelle la thèse et annonce l'antithèse, reliées par « cependant », « toutefois » ou « néanmoins »." />} />
             <h2 class="section-title"><span class="part-num">II.</span> {b.axe2.titre.trim() || "Antithèse"}</h2>
             {b.axe2.args.map((a, i) => (
               <div key={i} class="atelier-paragraphe">
@@ -236,7 +249,7 @@ export function AtelierScreen({ num, params }: { num: string; params: URLSearchP
           <div class="atelier-etape">
             <Rappel lignes={[["Problématique", b.problematique], ["Partie I", b.axe1.titre], ...plan(b.axe1), ["Partie II", b.axe2.titre], ...plan(b.axe2)]} />
             <Champ id="conclusion" label="Conclusion" rows={7} value={b.conclusion} onInput={v => maj({ conclusion: v })}
-              aide="Le bilan (« Au terme de notre analyse, retenons que… Cependant… »), ton jugement personnel, qui répond clairement à la problématique, puis une ouverture si tu le souhaites." />
+              aide={<Aide court="Bilan, avis personnel, ouverture." detail="Le bilan (« Au terme de notre analyse, retenons que… Cependant… »), ton jugement personnel, qui répond clairement à la problématique, puis une ouverture si tu le souhaites." />} />
           </div>
         )}
 

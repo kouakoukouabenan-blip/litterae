@@ -9,7 +9,7 @@ export function EntrainementScreen() {
   return (
     <Page title="Sujets d'entraînement" back="#/carnet">
       <PageHeader eyebrow="S'entraîner" title="Sujets d'entraînement" compact>
-        {SUJETS.length} sujets à traiter seul, pas à pas : comprendre le sujet, faire le plan, puis rédiger. Ton travail reste enregistré sur ce téléphone.
+        {SUJETS.length} sujets à rédiger seul, pas à pas.
       </PageHeader>
       <ol class="list" aria-label="Sujets d'entraînement">
         {SUJETS.map(s => {

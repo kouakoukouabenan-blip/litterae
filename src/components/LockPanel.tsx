@@ -17,7 +17,7 @@ export function LockPanel({ reason, contenu }: { reason: string; contenu?: strin
     <section class="lock" aria-labelledby="lock-title">
       <p class="eyebrow eyebrow-icon"><Icon name="lock" size={16} />Accès complet</p>
       <h2 id="lock-title" class="lock-title">{reason}</h2>
-      <p class="lock-prix">Débloque tout pour <strong>{PRICE}</strong>, payés une seule fois.</p>
+      <p class="lock-prix"><strong>{PRICE}</strong>, payés une seule fois.</p>
       <div class="lock-actions">
         {ACHAT_URL ? (
           <a class="btn btn-primary" href={ACHAT_URL} target="_blank" rel="noopener">Acheter l'accès, {PRICE}</a>
@@ -27,13 +27,14 @@ export function LockPanel({ reason, contenu }: { reason: string; contenu?: strin
         <a class="btn btn-secondary" href="#/acces">J'ai une clé d'accès</a>
       </div>
       {ACHAT_URL && <CommentPayerBouton />}
-      {contenu && <p class="lock-contenu">{contenu}</p>}
-      <p class="small">L'accès gratuit comprend le cours, la boîte à outils, les {FREE_SUBJECTS} premiers sujets corrigés et {FREE_WORKS} fiches d'œuvres.</p>
-      <p id="lock-soon" class="small muted">
-        {ACHAT_URL
-          ? "Paiement par Mobile Money (Wave, MTN MoMo, Moov Money…) sur Chariow. Ta clé d'accès arrive par e-mail juste après : pense à regarder dans les spams."
-          : "Le paiement par Mobile Money ouvre très bientôt."}
-      </p>
+      {ACHAT_URL ? (
+        <details class="repli lock-details">
+          <summary>Ce que contient l'accès complet</summary>
+          {contenu && <p class="lock-contenu">{contenu}</p>}
+          <p class="small">L'accès gratuit comprend le cours, la boîte à outils, les {FREE_SUBJECTS} premiers sujets corrigés et {FREE_WORKS} fiches d'œuvres.</p>
+          <p class="small muted">Paiement par Mobile Money (Wave, MTN MoMo, Moov Money…) sur Chariow. Ta clé d'accès arrive par e-mail juste après : pense à regarder dans les spams.</p>
+        </details>
+      ) : <p id="lock-soon" class="small muted">Le paiement par Mobile Money ouvre très bientôt.</p>}
     </section>
   );
 }
