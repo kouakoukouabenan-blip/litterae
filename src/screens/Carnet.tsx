@@ -55,7 +55,7 @@ export function CarnetScreen() {
         <Icon name="edit" size={20} />
         <span class="row-body">
           <span class="row-title">Sujets d'entraînement</span>
-          <span class="meta">Tous les sujets, sans corrigé, pour t'exercer</span>
+          <span class="meta">Rédige tes devoirs pas à pas, sans corrigé</span>
         </span>
         <Icon name="chevron_right" />
       </a>

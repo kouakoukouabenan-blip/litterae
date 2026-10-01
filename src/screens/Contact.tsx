@@ -18,7 +18,8 @@ const CHAMP: Record<SujetContact, { label: string; exemple: string }> = {
   lecon: { label: "La leçon que tu aimerais trouver", exemple: "Ex. : une leçon sur les transitions, avec des exemples." },
   oeuvre: { label: "L'œuvre à ajouter", exemple: "Titre et auteur. Si tu le sais : les thèmes qu'elle permet d'illustrer." },
   erreur: { label: "L'erreur que tu as vue", exemple: "Où se trouve l'erreur, et ce qui serait juste." },
-  autre: { label: "Ton message", exemple: "" }
+  autre: { label: "Ton message", exemple: "" },
+  copie: { label: "Ta copie", exemple: "" }
 };
 
 const ECHECS: Record<EchecEnvoi, string> = {
@@ -76,13 +77,15 @@ function MesQuestions({ questions, onEcrire }: { questions: Question[]; onEcrire
         return (
           <li key={q.id} class={`question ${q.reponse ? "question-repondue" : ""}`}>
             <p class="meta">
-              {SUJETS_CONTACT.find(s => s.id === q.sujet)?.label.replace(/^Poser une question$/, "Question")} · {dateCourte(q.date)}
+              {q.sujet === "copie" ? "Copie envoyée" : SUJETS_CONTACT.find(s => s.id === q.sujet)?.label.replace(/^Poser une question$/, "Question")} · {dateCourte(q.date)}
               {objet && <> · {q.page ? <a href={q.page}>{objet}</a> : objet}</>}
             </p>
-            <p class="question-texte">{corps}</p>
+            {q.sujet === "copie"
+              ? <details class="question-copie"><summary>Voir ma copie</summary><p class="question-texte">{corps}</p></details>
+              : <p class="question-texte">{corps}</p>}
             {q.reponse ? (
               <div class="question-reponse">
-                <p class="question-auteur">Réponse de Prof {EDITEUR}{q.reponseDate ? `, le ${dateCourte(q.reponseDate)}` : ""}</p>
+                <p class="question-auteur">{q.sujet === "copie" ? "Correction" : "Réponse"} de Prof {EDITEUR}{q.reponseDate ? `, le ${dateCourte(q.reponseDate)}` : ""}</p>
                 <p class="question-texte">{q.reponse}</p>
               </div>
             ) : (

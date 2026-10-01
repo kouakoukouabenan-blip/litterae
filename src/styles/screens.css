@@ -281,7 +281,48 @@
 .messages-row { margin-top: calc(-1 * var(--s2)); }
 .access-buy + .messages-row { margin-top: 0; }
 
-/* Sujets d'entraînement : énoncés seuls, avec la consigne de l'examen. */
-.entrainement-consigne { margin-top: var(--s1); font-size: .95rem; color: var(--ink); }
 .entrainement-row { margin-top: calc(-1 * var(--s2)); }
-.entrainement .row:hover, .entrainement > li.row:hover { background: none; }
+
+/* Sujets d'entraînement et atelier de rédaction */
+.entrainement-etat { margin-top: var(--s1); font-size: var(--text-xs); font-weight: 700; color: var(--muted); }
+.entrainement-encours { color: var(--ochre-text); }
+.entrainement-fini { color: var(--green); }
+.sujet-atelier { display: inline-block; margin-top: var(--s2); }
+.atelier .page-header .citation { margin-bottom: var(--s2); }
+.atelier-etapes { margin-bottom: var(--s5); padding-bottom: var(--s4); border-bottom: 1px solid var(--line); }
+.atelier-etapes ol { list-style: none; margin: 0; padding: 0; display: flex; gap: var(--s2); }
+.atelier-pastille { width: 36px; height: 36px; border-radius: 50%; border: var(--border) solid var(--line-strong); background: var(--surface); color: var(--ink); font-weight: 700; }
+.atelier-pastille[aria-current="step"] { background: var(--green); border-color: var(--green); color: var(--on-dark); }
+.atelier-etape-nom { margin-top: var(--s2); font-size: var(--text-sm); }
+.atelier-barre { height: 6px; margin-top: var(--s2); border-radius: 3px; background: var(--line); overflow: hidden; }
+.atelier-barre span { display: block; height: 100%; background: var(--orange); transition: width .2s; }
+.atelier-pct { margin-top: var(--s1); }
+.atelier-etape { display: flex; flex-direction: column; gap: var(--s5); }
+.atelier-champ { border: 0; padding: 0; margin: 0; min-width: 0; }
+.atelier-aide { margin: calc(-1 * var(--s1)) 0 var(--s2); font-size: var(--text-sm); color: var(--muted); }
+.atelier-texte { min-height: 0; field-sizing: content; }
+.atelier-choix { display: flex; flex-wrap: wrap; gap: var(--s2); }
+.atelier-mot { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--s2); margin-bottom: var(--s3); }
+.atelier-mot .input { grid-column: 1; }
+.atelier-mot .textarea { grid-column: 1; }
+.atelier-mot .icon-btn { grid-column: 2; grid-row: 1; }
+.atelier-axe { display: flex; flex-direction: column; gap: var(--s4); }
+.atelier-arg { display: flex; flex-direction: column; gap: var(--s4); margin: 0; padding: var(--s4); background: var(--surface); border: var(--border) solid var(--line); border-radius: var(--radius); }
+.atelier-arg legend { padding: 0 var(--s2); font: 700 var(--text-md) var(--font-title); color: var(--orange); }
+.atelier-retirer { align-self: flex-start; color: var(--muted); }
+.atelier-axe > .btn { align-self: flex-start; }
+.atelier-rappel { padding: var(--s3) var(--s4); background: var(--green-tint); border-left: 4px solid var(--green); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: var(--text-sm); }
+.atelier-rappel dl { display: grid; grid-template-columns: max-content 1fr; gap: var(--s1) var(--s3); margin: 0; }
+.atelier-rappel dt { font-weight: 700; color: var(--green); }
+.atelier-rappel dd { margin: 0; white-space: pre-line; overflow-wrap: anywhere; }
+.atelier-paragraphe { display: flex; flex-direction: column; gap: var(--s3); }
+.atelier-copie { padding: var(--s5) var(--s4); background: var(--surface); border: var(--border) solid var(--line); border-radius: var(--radius); font-family: var(--font-title); line-height: 1.7; }
+.atelier-copie p { text-indent: 1.5em; white-space: pre-line; }
+.atelier-copie p + p { margin-top: var(--s3); }
+.atelier-envoye { margin: 0; align-items: flex-start; }
+.atelier-premium { padding: var(--s3) var(--s4); border: 1px solid var(--line-strong); border-radius: var(--radius-sm); }
+.atelier .pager-link { cursor: pointer; font: inherit; font-weight: 600; text-align: left; }
+.atelier .pager-next { text-align: right; }
+.question-copie summary { cursor: pointer; font-weight: 600; color: var(--green); }
+.question-copie .question-texte { margin-top: var(--s2); }
+@media (max-width: 380px) { .atelier-rappel dl { grid-template-columns: 1fr; } }

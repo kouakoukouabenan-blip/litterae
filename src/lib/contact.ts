@@ -4,7 +4,8 @@ import { platform } from "./install";
 import { appareil, licence } from "./licence";
 import { read, useStored, write } from "./storage";
 
-export type SujetContact = "question" | "lecon" | "oeuvre" | "erreur" | "autre";
+/** « copie » : devoir envoyé depuis l'atelier de rédaction (accès complet), absent du formulaire de contact. */
+export type SujetContact = "question" | "lecon" | "oeuvre" | "erreur" | "autre" | "copie";
 
 export const SUJETS_CONTACT: { id: SujetContact; label: string }[] = [
   { id: "question", label: "Poser une question" },
