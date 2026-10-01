@@ -18,7 +18,9 @@ const ITEMS = [
 ] as const;
 
 function useSection() {
-  return useRoute().path[0] ?? "cours";
+  const section = useRoute().path[0] ?? "cours";
+  // Les sujets d'entraînement s'ouvrent depuis Mon espace.
+  return section === "entrainement" ? "carnet" : section;
 }
 
 /** Onglets dans la barre du haut, sur tablette et ordinateur. */

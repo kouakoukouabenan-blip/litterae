@@ -59,6 +59,13 @@ export function retirer() {
   write("mes-questions", []);
 }
 
+/** Recharge le contenu payant depuis le serveur (même appareil : aucune place utilisée). */
+export async function rechargerContenu() {
+  const l = licence();
+  if (!l || !navigator.onLine) return false;
+  return (await activer(l.cle)) === null;
+}
+
 /**
  * Vérifie une fois par jour que la clé est toujours valide (révocation après un remboursement),
  * et recharge le contenu payant quand il a été enrichi sur le serveur (même appareil : aucune place utilisée).

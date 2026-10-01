@@ -10,6 +10,7 @@ import { SujetScreen } from "./screens/Sujet";
 import { OeuvresScreen } from "./screens/Oeuvres";
 import { OeuvreScreen } from "./screens/Oeuvre";
 import { OutilsScreen } from "./screens/Outils";
+import { EntrainementScreen } from "./screens/Entrainement";
 import { CarnetScreen } from "./screens/Carnet";
 import { NotFound } from "./screens/NotFound";
 import { AProposScreen, CguScreen, ConfidentialiteScreen } from "./screens/Infos";
@@ -17,7 +18,8 @@ import { InstallGate, InstallGuide } from "./components/Install";
 import { CommentPayer } from "./components/CommentPayer";
 import { AccesScreen } from "./screens/Acces";
 import { ContactScreen } from "./screens/Contact";
-import { reverifier } from "./lib/licence";
+import { licence, rechargerContenu, reverifier } from "./lib/licence";
+import { contenuEnRetard } from "./lib/data";
 import { demarrerStats, noter } from "./lib/stats";
 import { actualiserContenuLibre } from "./lib/libre";
 import { actualiserQuestions } from "./lib/contact";
@@ -43,7 +45,15 @@ function useScrollMemory(key: string) {
 
 export function App() {
   useEffect(() => {
-    reverifier();
+    // Site mis à jour avec de nouveaux sujets ou fiches : le contenu payant est rechargé tout de suite,
+    // puis la page est relancée pour les afficher (une seule fois, si le serveur les a bien envoyés).
+    const l = licence();
+    if (l && contenuEnRetard(l.contenu)) {
+      rechargerContenu().then(ok => {
+        const n = licence();
+        if (ok && n && !contenuEnRetard(n.contenu)) location.reload();
+      });
+    } else reverifier();
     prevenirAchatHorsLigne();
     demarrerStats();
     actualiserContenuLibre();
@@ -69,6 +79,7 @@ export function App() {
     case "oeuvres": screen = id ? <OeuvreScreen id={id} /> : <OeuvresScreen params={params} />; break;
     case "outils": screen = <OutilsScreen />; break;
     case "carnet": screen = <CarnetScreen />; break;
+    case "entrainement": screen = <EntrainementScreen />; break;
     case "a-propos": screen = <AProposScreen />; break;
     case "cgu": screen = <CguScreen />; break;
     case "confidentialite": screen = <ConfidentialiteScreen />; break;

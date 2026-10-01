@@ -280,3 +280,8 @@
 .carnet-intro { margin: var(--s1) 0 var(--s4); }
 .messages-row { margin-top: calc(-1 * var(--s2)); }
 .access-buy + .messages-row { margin-top: 0; }
+
+/* Sujets d'entraînement : énoncés seuls, avec la consigne de l'examen. */
+.entrainement-consigne { margin-top: var(--s1); font-size: .95rem; color: var(--ink); }
+.entrainement-row { margin-top: calc(-1 * var(--s2)); }
+.entrainement .row:hover, .entrainement > li.row:hover { background: none; }

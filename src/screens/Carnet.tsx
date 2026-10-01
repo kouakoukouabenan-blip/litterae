@@ -51,6 +51,14 @@ export function CarnetScreen() {
       </a>
       {!licence() && <p class="small muted access-buy">Pas encore de clé ? <AchatLien label={`Acheter l'accès complet, ${PRICE}`} /></p>}
       <LigneMessages />
+      <a class="row access-row entrainement-row" href="#/entrainement">
+        <Icon name="edit" size={20} />
+        <span class="row-body">
+          <span class="row-title">Sujets d'entraînement</span>
+          <span class="meta">Tous les sujets, sans corrigé, pour t'exercer</span>
+        </span>
+        <Icon name="chevron_right" />
+      </a>
 
       <h2 class="section-title carnet-titre">Mon carnet</h2>
       <p class="small muted carnet-intro">Les œuvres que tu as enregistrées et tes notes, prêtes pour le prochain devoir.</p>
