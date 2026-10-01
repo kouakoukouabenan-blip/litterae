@@ -31,7 +31,8 @@ function Bloc({ b }: { b: BlocLecon }) {
     );
   if ("modele" in b) return <figure class="model"><figcaption>Exemple rédigé</figcaption><p>{b.modele}</p></figure>;
   if ("plan" in b) return <ol class="outline">{b.plan.map(x => <li key={x}>{x}</li>)}</ol>;
-  if ("lien" in b) return <a class="btn btn-secondary align-start" href={b.lien.href}><Icon name="local_library" size={20} />{b.lien.texte}</a>;
+  // Lien venu du serveur : seulement vers une page de l'appli ou un site https.
+  if ("lien" in b) return /^(https:\/\/|#\/)/.test(b.lien.href) && <a class="btn btn-secondary align-start" href={b.lien.href}><Icon name="local_library" size={20} />{b.lien.texte}</a>;
   return null;
 }
 

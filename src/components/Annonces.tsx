@@ -17,7 +17,7 @@ export function Annonces() {
           <p class="annonce-type">{NOMS[a.type] ?? "Message"}{a.urgent && <span class="annonce-urgent">Urgent</span>}</p>
           <p id={`annonce-${a.id}`} class="annonce-titre">{a.titre}</p>
           {a.texte && <p class="annonce-texte">{a.texte}</p>}
-          {a.lien && (
+          {a.lien && /^(https:\/\/|#\/)/.test(a.lien) && (
             <a class="btn btn-primary align-start" href={a.lien} onClick={() => clic(a.id)}
               {...(a.lien.startsWith("http") ? { target: "_blank", rel: "noopener" } : {})}>
               {a.lienTexte || "Voir"}
