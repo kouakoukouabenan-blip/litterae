@@ -168,3 +168,14 @@
 html[data-glisse="droite"] main.page > :not(.segments):not(:has(.segments)), html[data-glisse="droite"] main.page > * .segments ~ * { animation: glisse-droite .32s cubic-bezier(.2, .8, .3, 1) both; }
 html[data-glisse="gauche"] main.page > :not(.segments):not(:has(.segments)), html[data-glisse="gauche"] main.page > * .segments ~ * { animation: glisse-gauche .32s cubic-bezier(.2, .8, .3, 1) both; }
 @media (prefers-reduced-motion: reduce) { .segments-curseur { transition: none; } html[data-glisse] main.page > * { animation: none !important; } }
+
+/* Œuvres : grande barre de recherche, puis les cinq fonctions en petit, sur une rangée. */
+.search-bar .field { min-height: 56px; }
+.search-bar .field input { font-size: 1.0625rem; }
+.search-bar .filter-btn { min-height: 56px; }
+.fn-rangee { display: flex; flex-wrap: wrap; gap: 6px; margin-top: var(--s3); }
+.fn-mini { display: inline-flex; align-items: center; min-height: 30px; padding: 0 10px; border-radius: 999px; background: color-mix(in srgb, var(--fn) 10%, white); color: color-mix(in srgb, var(--fn) 85%, black); font-size: 0.75rem; font-weight: 700; text-decoration: none; }
+.fn-mini:hover { background: color-mix(in srgb, var(--fn) 18%, white); }
+@media (max-width: 719px) { .fn-rangee { justify-content: space-between; gap: 4px; } .fn-mini { padding: 0 8px; } }
+.quota { margin-top: var(--s4); }
+@media (max-width: 389px) { .fn-mini { padding: 0 6px; font-size: 0.6875rem; } .fn-rangee { gap: 2px; } }

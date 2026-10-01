@@ -88,6 +88,13 @@ export function OeuvresScreen({ params }: { params: URLSearchParams }) {
       </div>
       </div>
 
+      {/* Raccourcis par fonction : une petite rangée sous la recherche, seulement à l'arrivée. */}
+      {accueil && (
+        <nav class="fn-rangee" aria-label="Œuvres par fonction littéraire">
+          {FONCTIONS.map(f => <a key={f} class={`fn-mini ${fnClass(f)}`} href={href(["oeuvres"], { fonction: f })}>{f}</a>)}
+        </nav>
+      )}
+
       {!access.premium && (
         <p class="quota">
           <button type="button" class={`chip chip-libres${gratuites ? " chip-on" : ""}`} aria-pressed={gratuites} onClick={() => go(q, filters, !gratuites)}>
@@ -115,34 +122,10 @@ export function OeuvresScreen({ params }: { params: URLSearchParams }) {
           )}
 
           {accueil && (
-            <section class="explorer" aria-labelledby="browse-title">
-              <h2 id="browse-title" class="explorer-titre">Par fonction littéraire</h2>
-              <div class="explorer-fonctions">
-                {FONCTIONS.map(f => (
-                  <a key={f} class={`fn-chip ${fnClass(f)}`} href={href(["oeuvres"], { fonction: f })}>{f}</a>
-                ))}
-              </div>
-
-              {(counts.get("programme")?.some(([, n]) => n > 0) ?? false) && (
-                <>
-                  <h2 class="explorer-titre"><label for="programme">Au programme en Côte d'Ivoire</label></h2>
-                  <select id="programme" class="select explorer-select" value="" onChange={e => {
-                    const v = (e.target as HTMLSelectElement).value;
-                    if (v) location.hash = href(["oeuvres"], { programme: v });
-                  }}>
-                    <option value="">Choisir une classe</option>
-                    {counts.get("programme")!.filter(([, n]) => n > 0).map(([niveau, n]) => (
-                      <option key={niveau} value={niveau}>{niveau} ({n})</option>
-                    ))}
-                  </select>
-                </>
-              )}
-
-              <button type="button" class="btn btn-secondary explorer-tout" aria-expanded={toutVoir} onClick={() => setToutVoir(!toutVoir)}>
-                {toutVoir ? "Masquer la liste" : `Voir toutes les œuvres (${OEUVRES.length})`}
-                <Icon name={toutVoir ? "expand_less" : "expand_more"} size={18} />
-              </button>
-            </section>
+            <button type="button" class="btn btn-secondary explorer-tout" aria-expanded={toutVoir} onClick={() => setToutVoir(!toutVoir)}>
+              {toutVoir ? "Masquer la liste" : `Voir toutes les œuvres (${OEUVRES.length})`}
+              <Icon name={toutVoir ? "expand_less" : "expand_more"} size={18} />
+            </button>
           )}
 
           {listeVisible && (
