@@ -15,7 +15,7 @@ import {
   type FacetKey, type Filters
 } from "../lib/search";
 import { plural } from "../lib/text";
-import { FONCTION_TEXTE, fnClass } from "../lib/fonctions";
+import { fnClass } from "../lib/fonctions";
 import { AchatLien } from "../components/Achat";
 import { lienContact } from "../lib/contact";
 import { noterRecherche } from "../lib/stats";
@@ -117,11 +117,7 @@ export function OeuvresScreen({ params }: { params: URLSearchParams }) {
               <h2 id="browse-title" class="explorer-titre">Par fonction littéraire</h2>
               <div class="explorer-fonctions">
                 {FONCTIONS.map(f => (
-                  <a key={f} class={`fn-tile ${fnClass(f)}`} href={href(["oeuvres"], { fonction: f })}>
-                    <span class="fn-tile-title">{f}</span>
-                    <span class="fn-tile-text">{FONCTION_TEXTE[f]}</span>
-                    <span class="fn-tile-count">{(n => <>{n}<span class="fn-tile-unit"> {n > 1 ? "œuvres" : "œuvre"}</span></>)(counts.get("fonction")!.find(([v]) => v === f)?.[1] ?? 0)}</span>
-                  </a>
+                  <a key={f} class={`fn-chip ${fnClass(f)}`} href={href(["oeuvres"], { fonction: f })}>{f}</a>
                 ))}
               </div>
 

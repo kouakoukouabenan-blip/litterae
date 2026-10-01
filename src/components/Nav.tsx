@@ -15,7 +15,8 @@ const ITEMS = [
   { section: "cours", label: "Cours", icon: "menu_book" },
   { section: "sujets", label: "Sujets", icon: "history_edu" },
   { section: "oeuvres", label: "Œuvres", icon: "local_library" },
-  { section: "outils", label: "Outils", long: "Boîte à outils", icon: "inventory_2" }
+  // Sur téléphone, la boîte à outils s'ouvre depuis l'accueil (tuile Dictionnaire) : quatre onglets suffisent.
+  { section: "outils", label: "Outils", long: "Boîte à outils", icon: "inventory_2", ordinateur: true }
 ] as const;
 
 function useSection() {
@@ -43,7 +44,7 @@ export function BottomNav() {
   const current = useSection();
   return (
     <nav class="bottom-nav" aria-label="Navigation principale">
-      {ITEMS.map(i => {
+      {ITEMS.filter(i => !("ordinateur" in i)).map(i => {
         const active = current === i.section;
         return (
           <a key={i.section} href={`#/${i.section}`} class="bottom-nav-item" aria-current={active ? "page" : undefined}>

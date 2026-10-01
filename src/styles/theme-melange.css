@@ -141,3 +141,9 @@
 @media (max-width: 479px) { .accueil-recherche { flex-direction: column; } .accueil-recherche .btn { width: 100%; } }
 /* Sur grand écran, la colonne de filtres propose déjà les classes : pas de doublon. */
 @media (min-width: 960px) { .explorer-titre:has(label), .explorer-select { display: none; } }
+
+/* Fonctions littéraires sur la page Œuvres : petits boutons neutres, une pastille de couleur chacun. */
+.explorer-fonctions { display: flex !important; flex-wrap: wrap; gap: var(--s2); width: auto !important; }
+.fn-chip { display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 0 var(--s3); border-radius: 999px; background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); color: var(--ink-strong); font-size: var(--text-sm); font-weight: 600; text-decoration: none; }
+.fn-chip::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--fn); }
+.fn-chip:hover { box-shadow: inset 0 0 0 1px var(--fn); }
