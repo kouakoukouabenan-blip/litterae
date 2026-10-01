@@ -279,7 +279,7 @@
  {
   "num": "17",
   "auteur": "Tshiyombo — poète congolais, sur Le Brouillard",
-  "citation": "Mon œuvre est une poésie sensible et douloureuse, tout entière sortie du silence de la nuit et des brumes. Elle exprime l'amertume devant l'opprobre d'un peuple asservi.",
+  "citation": "Mon œuvre est une poésie sensible et douloureuse, tout entière sortie du silence de la nuit et des brumes. Elle exprime l'amertume devant l'opprobre d'un peuple asservi, qui ne sait plus dénombrer les étoiles perlées de rosée.",
   "orientation": "Lyrique / Engagement"
  },
  {
@@ -287,5 +287,83 @@
   "auteur": "Friedrich Nietzsche",
   "citation": "Une œuvre d'art n'est supérieure que si elle est, en même temps, un symbole et l'expression exacte d'une réalité.",
   "orientation": "Esthétique / Social"
+ },
+ {
+  "num": "19",
+  "auteur": "Alexandre Soljenitsyne, prix Nobel de littérature 1970 — BAC blanc, Lycée moderne de Korhogo",
+  "citation": "Une littérature (...) qui n'ose pas communiquer à la société ses réalités, ses propres aspirations, qui n'est pas capable d'apercevoir à temps les dangers moraux et sociaux qui la guettent ne mérite même pas le nom de littérature.",
+  "orientation": "Engagement / Social"
+ },
+ {
+  "num": "20",
+  "auteur": "Un penseur — BAC blanc d'Agboville",
+  "citation": "Il est du devoir de tout écrivain de livrer bataille pour la liberté.",
+  "orientation": "Engagement"
+ },
+ {
+  "num": "21",
+  "auteur": "Alexandre Jardin, écrivain français — BAC blanc régional de San Pedro",
+  "citation": "La littérature répond au désir de nous arracher à la violence du monde.",
+  "orientation": "Évasion"
+ },
+ {
+  "num": "22",
+  "auteur": "Ahmadou Kourouma, lors d'un entretien — BAC blanc régional de Daloa",
+  "citation": "Ce qui compte, c'est le plaisir d'un texte. Il faut que les lecteurs trouvent dans la littérature autre chose que ce qu'ils lisent tous les jours dans l'exercice de leur vie professionnelle : elle doit leur donner un plaisir et leur permettre de rêver.",
+  "orientation": "Évasion / Esthétique"
+ },
+ {
+  "num": "23",
+  "auteur": "Sony Labou Tansi — avertissement de Les Sept Solitudes de Lorsa Lopez (1985)",
+  "citation": "Être poète, de nos jours, c'est vouloir de toutes ses forces, de toute son âme, et de toute sa chair, face aux fusils, face à l'argent qui lui aussi devient un fusil, et surtout face à la vérité reçue […] qu'aucun visage de la réalité humaine ne soit poussé sous le silence de l'histoire.",
+  "orientation": "Engagement"
+ },
+ {
+  "num": "24",
+  "auteur": "Sujet — BAC blanc régional de Divo",
+  "citation": "Le roman, c'est la vie, c'est du réel devenu langage.",
+  "orientation": "Social"
+ },
+ {
+  "num": "25",
+  "auteur": "Bottey Zadi Zaourou, écrivain ivoirien",
+  "citation": "L'écrivain est un artiste, un producteur de beau. C'est un créateur de la parole artistique.",
+  "orientation": "Esthétique"
+ },
+ {
+  "num": "26",
+  "auteur": "Un scientiste, faisant la critique de la littérature",
+  "citation": "L'univers de la littérature, c'est l'univers de la fiction : les espaces, les personnages… Tout est inventé. La littérature est en totale rupture avec le réel.",
+  "orientation": "Évasion"
+ },
+ {
+  "num": "27",
+  "auteur": "Jean Cocteau",
+  "citation": "Je ne crois pas à ce terme à la mode : l'évasion. Je crois à l'invasion. Je crois qu'au lieu de s'évader par une œuvre, on est envahi par elle. (…) Ce qui est beau, c'est d'être envahi, habité, inquiété, obsédé, dérangé par une œuvre.",
+  "orientation": "Évasion / Engagement"
+ },
+ {
+  "num": "28",
+  "auteur": "Alfred de Musset — La Nuit de mai (1835)",
+  "citation": "Les plus désespérés sont les chants les plus beaux.",
+  "orientation": "Lyrique / Esthétique"
+ },
+ {
+  "num": "29",
+  "auteur": "Michelet",
+  "citation": "L'écrivain est le bâton de l'aveugle, sans l'écrivain le monde évoluerait vers la soumission et l'acquiescement.",
+  "orientation": "Engagement"
+ },
+ {
+  "num": "30",
+  "auteur": "Émile Zola — Le Roman expérimental (1880) · Examen régional de Yopougon",
+  "citation": "L'imagination n'est plus la qualité maîtresse du romancier.",
+  "orientation": "Social / Engagement"
+ },
+ {
+  "num": "31",
+  "auteur": "Milan Kundera — L'Art du roman (1986) · Bac régional de Bouaflé",
+  "citation": "Le personnage du roman n'est pas une simulation de l'être vivant. C'est un être imaginé, un ego expérimental.",
+  "orientation": "Évasion / Esthétique"
  }
 ]
