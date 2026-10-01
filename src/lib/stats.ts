@@ -2,13 +2,14 @@ import { ACHAT_URL, SERVEUR_URL } from "./site";
 import { parseHash } from "./router";
 import { appareil } from "./licence";
 import { isInstalled, platform } from "./install";
+import { read, write } from "./storage";
 
 /**
  * Statistiques anonymes pour l'éditeur : un identifiant d'appareil tiré au hasard, les parties ouvertes,
  * les fiches consultées et les messages de l'accueil vus ou cliqués. Aucun nom, aucune adresse.
  * Les événements sont regroupés et envoyés en une fois pour économiser les données mobiles.
  */
-export type Evenement = { t: "ecran" | "oeuvre" | "vue" | "clic" | "notif" | "sujet" | "lecon" | "mot" | "recherche" | "vide" | "verrou" | "achat"; ref: string };
+export type Evenement = { t: "ecran" | "oeuvre" | "vue" | "clic" | "notif" | "sujet" | "lecon" | "mot" | "recherche" | "vide" | "verrou" | "achat" | "parcours"; ref: string };
 
 let file: Evenement[] = [];
 let minuterie: ReturnType<typeof setTimeout> | undefined;
@@ -34,6 +35,33 @@ export function noter(e: Evenement) {
   if (file.some(x => x.t === e.t && x.ref === e.ref)) return;
   file.push(e);
   minuterie ??= setTimeout(envoyer, 8000);
+}
+
+/**
+ * Parcours anonyme : l'appareil signale seulement qu'il franchit un palier (1re fiche ouverte, sujet commencé…),
+ * une seule fois. Le détail de ce que l'élève ouvre reste sur son téléphone.
+ */
+function palier(ref: string) {
+  const faits = read<string[]>("parcours", []);
+  if (faits.includes(ref)) return;
+  write("parcours", [...faits, ref]);
+  noter({ t: "parcours", ref });
+}
+
+const PALIERS_FICHES = [1, 2, 6];
+
+export function noterFiche(id: string) {
+  const vues = read<string[]>("parcours-fiches", []);
+  if (!vues.includes(id)) write("parcours-fiches", [...vues, id]);
+  const n = vues.includes(id) ? vues.length : vues.length + 1;
+  for (const p of PALIERS_FICHES) if (n >= p) palier(`fiches:${p}`);
+}
+
+/** Sujet de l'atelier commencé, terminé, copie envoyée. */
+export function noterAtelier(num: string, pct: number, envoye: boolean) {
+  if (pct > 0) palier(`debut:${num}`);
+  if (pct === 100) palier(`fini:${num}`);
+  if (envoye) palier(`envoye:${num}`);
 }
 
 /** Partie de l'appli où se trouve l'élève, pour savoir d'où viennent les achats (entonnoir du tableau de bord). */

@@ -1,4 +1,5 @@
 import { read, useStored } from "./storage";
+import { noterAtelier } from "./stats";
 
 /**
  * Atelier de rédaction : le brouillon d'un sujet, gardé sur le téléphone.
@@ -54,7 +55,10 @@ export const lireBrouillon = (num: string) => complet(read<Partial<Brouillon> | 
 
 export function useBrouillon(num: string): [Brouillon, (b: Brouillon) => void] {
   const [b, ecrire] = useStored<Partial<Brouillon> | null>(cle(num), null);
-  return [complet(b) ?? brouillonVide(), nb => ecrire({ ...nb, modifie: Date.now() })];
+  return [complet(b) ?? brouillonVide(), nb => {
+    ecrire({ ...nb, modifie: Date.now() });
+    noterAtelier(num, avancement(nb), !!nb.envoye);
+  }];
 }
 
 const rempli = (s: string | undefined) => (s ?? "").trim().length > 0;

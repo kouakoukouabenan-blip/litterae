@@ -1,4 +1,4 @@
-import { noter } from "../lib/stats";
+import { noter, noterFiche } from "../lib/stats";
 import { useEffect, useState } from "preact/hooks";
 import { Page } from "../components/Page";
 import { Icon } from "../components/Icon";
@@ -70,7 +70,7 @@ function contenuFiche(w: Oeuvre) {
 
 export function OeuvreScreen({ id }: { id: string }) {
   const w = oeuvre(id);
-  useEffect(() => { if (w) noter({ t: "oeuvre", ref: id }); }, [id]);
+  useEffect(() => { if (w) { noter({ t: "oeuvre", ref: id }); noterFiche(id); } }, [id]);
   const access = useAccess();
   const { isSaved, toggle } = useSaved();
   const libre = !!w && access.canOpenWork(id);
