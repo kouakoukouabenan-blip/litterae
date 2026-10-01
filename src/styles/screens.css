@@ -81,6 +81,7 @@
 
 /* Recherche d'œuvres */
 .search-bar { display: flex; gap: var(--s2); max-width: 44rem; }
+.search-bar input::placeholder { color: var(--muted); opacity: 1; }
 .filter-btn { min-height: var(--control-h-main); position: relative; }
 .count-badge { display: inline-grid; place-items: center; min-width: 20px; height: 20px; padding: 0 5px; border-radius: 6px; background: var(--orange); color: #fff; font-size: 0.75rem; font-weight: 700; }
 .quota { margin: var(--s2) 0 0; }

@@ -180,7 +180,7 @@ export function DicoRecherche({ q, onChange }: { q: string; onChange: (q: string
       <label class="field">
         <Icon name="search" />
         <span class="sr-only">Chercher un mot du sujet</span>
-        <input type="search" value={q} placeholder="Un mot du sujet : écho, voix, beau…" enterkeyhint="search" autocomplete="off"
+        <input type="search" value={q} placeholder="Écris un mot ici (ex. : écho, beau)" enterkeyhint="search" autocomplete="off"
           autocapitalize="off" spellcheck={false} onInput={e => onChange((e.target as HTMLInputElement).value)} />
         {q && (
           <button type="button" class="icon-btn dico-effacer" onClick={() => onChange("")} aria-label="Effacer la recherche">
