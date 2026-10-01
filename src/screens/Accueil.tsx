@@ -54,8 +54,8 @@ export function AccueilScreen() {
         </a>
         <a class="choix-carte choix-outils" href="#/outils">
           <Icon name="inventory_2" size={24} />
-          <span class="choix-titre">Dictionnaire</span>
-          <span class="choix-detail">Mots et formules utiles</span>
+          <span class="choix-titre">Boîte à outils</span>
+          <span class="choix-detail">Dictionnaire, formules, vocabulaire</span>
         </a>
       </nav>
 

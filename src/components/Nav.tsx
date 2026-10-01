@@ -14,15 +14,13 @@ const ITEMS = [
   { section: "accueil", label: "Accueil", icon: "home" },
   { section: "cours", label: "Cours", icon: "menu_book" },
   { section: "sujets", label: "Sujets", icon: "history_edu" },
-  { section: "oeuvres", label: "Œuvres", icon: "local_library" },
-  // Sur téléphone, la boîte à outils s'ouvre depuis l'accueil (tuile Dictionnaire) : quatre onglets suffisent.
-  { section: "outils", label: "Outils", long: "Boîte à outils", icon: "inventory_2", ordinateur: true }
+  { section: "oeuvres", label: "Œuvres", icon: "local_library" }
 ] as const;
 
 function useSection() {
   const section = useRoute().path[0] ?? "accueil";
-  // Les sujets d'entraînement sont le second onglet de Sujets.
-  return section === "entrainement" ? "sujets" : section;
+  // Les sujets d'entraînement sont le second onglet de Sujets ; la boîte à outils se range avec le cours.
+  return section === "entrainement" ? "sujets" : section === "outils" ? "cours" : section;
 }
 
 /** Onglets dans la barre du haut, sur tablette et ordinateur. */
@@ -32,7 +30,7 @@ export function NavTabs() {
     <nav class="nav-tabs" aria-label="Navigation principale">
       {ITEMS.map(i => (
         <a key={i.section} href={`#/${i.section}`} class="nav-tab" aria-current={current === i.section ? "page" : undefined}>
-          {"long" in i ? i.long : i.label}
+          {i.label}
         </a>
       ))}
     </nav>
@@ -44,7 +42,7 @@ export function BottomNav() {
   const current = useSection();
   return (
     <nav class="bottom-nav" aria-label="Navigation principale">
-      {ITEMS.filter(i => !("ordinateur" in i)).map(i => {
+      {ITEMS.map(i => {
         const active = current === i.section;
         return (
           <a key={i.section} href={`#/${i.section}`} class="bottom-nav-item" aria-current={active ? "page" : undefined}>

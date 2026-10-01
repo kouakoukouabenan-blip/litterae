@@ -147,3 +147,11 @@
 .fn-chip { display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 0 var(--s3); border-radius: 999px; background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); color: var(--ink-strong); font-size: var(--text-sm); font-weight: 600; text-decoration: none; }
 .fn-chip::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--fn); }
 .fn-chip:hover { box-shadow: inset 0 0 0 1px var(--fn); }
+
+/* Cours : les leçons, puis la boîte à outils. */
+.cours-section { margin: var(--s5) 0 var(--s3); }
+.page-header + .cours-section { margin-top: var(--s2); }
+.outil-icone { width: 36px; height: 36px; border-radius: 10px; display: inline-grid; place-items: center; background: var(--green-tint); color: var(--green); flex: none; }
+/* Atelier : lien direct vers l'outil utile à ce champ. */
+.atelier-outil { font-weight: 600; color: var(--green); white-space: nowrap; }
+.atelier-outil::before { content: "· "; color: var(--muted); font-weight: 400; }

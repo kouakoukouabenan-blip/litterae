@@ -47,7 +47,7 @@ export function OutilsScreen() {
   };
 
   return (
-    <Page>
+    <Page title="Boîte à outils" back="#/cours">
       <PageHeader eyebrow="Pendant la rédaction" title="Boîte à outils" compact>
         <span class="outils-lede">Mots des sujets, formules et vocabulaire.</span>
       </PageHeader>
