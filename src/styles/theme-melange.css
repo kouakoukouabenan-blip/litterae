@@ -203,3 +203,15 @@ html[data-glisse="gauche"] main.page > :not(.segments):not(:has(.segments)), htm
 .results:not(.en-attente) .works { animation: resultats-arrivent .25s ease-out; }
 @keyframes resultats-arrivent { from { opacity: .4; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) { .field.cherche > .icon, .results .works { animation: none; } }
+
+/* Toutes les grandes barres de recherche (accueil, œuvres, dictionnaire) : même style blanc cerclé de vert. */
+.search-bar .field, .accueil-recherche .field { min-height: 58px; background: var(--surface); box-shadow: inset 0 0 0 2px var(--green), 0 4px 14px rgba(15, 61, 46, .10); border-radius: 999px; padding-left: var(--s4); }
+.search-bar .field > .icon, .accueil-recherche .field > .icon { color: var(--green); width: 24px; height: 24px; }
+.search-bar .field input, .accueil-recherche .field input { height: 54px; font-size: 1.0625rem; font-weight: 500; color: var(--ink-strong); }
+.search-bar .field input::placeholder, .accueil-recherche .field input::placeholder { color: var(--muted); font-weight: 400; }
+.search-bar .field:focus-within, .accueil-recherche .field:focus-within { box-shadow: inset 0 0 0 2px var(--green), 0 0 0 4px var(--green-tint), 0 4px 14px rgba(15, 61, 46, .10); }
+.search-bar .filter-btn { min-height: 58px; min-width: 58px; border-radius: 999px; }
+.accueil-recherche .btn { min-height: 54px; }
+.search-bar .field input { font-size: 1rem; }
+.search-bar:not(.dico-search) .field { padding-left: var(--s3); }
+@media (max-width: 379px) { .search-bar .filter-btn { min-width: 50px; padding: 0; } .search-bar .field input { font-size: .9375rem; } }
