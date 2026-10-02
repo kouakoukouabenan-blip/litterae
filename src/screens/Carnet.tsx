@@ -61,7 +61,8 @@ export function MesFichesScreen() {
   return (
     <Page title="Mon carnet">
       <OeuvresOnglets actif="carnet" />
-      <PageHeader title="Mon carnet" compact>Tes œuvres enregistrées et tes notes.</PageHeader>
+      <h1 class="sr-only">Mon carnet</h1>
+      <p class="lede carnet-lede">Tes œuvres enregistrées et tes notes.</p>
 
       {!enregistrees.length && !annotees.length ? (
         <EmptyState title="Ton carnet est vide.">

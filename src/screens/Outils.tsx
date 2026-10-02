@@ -2,7 +2,6 @@ import { Fragment } from "preact";
 import outils from "../data/outils.json";
 import type { Outils } from "../data/types";
 import { Page } from "../components/Page";
-import { PageHeader } from "../components/PageHeader";
 import { Icon } from "../components/Icon";
 import { copyText } from "../components/Toast";
 import { href, replaceRoute, useRoute } from "../lib/router";
@@ -50,9 +49,8 @@ export function OutilsScreen() {
   return (
     <Page title="Boîte à outils">
       <CoursOnglets actif="outils" />
-      <PageHeader eyebrow="Pendant la rédaction" title="Boîte à outils" compact>
-        <span class="outils-lede">Mots des sujets, formules et vocabulaire.</span>
-      </PageHeader>
+      {/* Le bouton « Boîte à outils » au-dessus sert déjà de titre. */}
+      <h1 class="sr-only">Boîte à outils</h1>
 
       <div class="sticky-bar">
         <div class="onglets" role="tablist" aria-label="Rubriques de la boîte à outils">

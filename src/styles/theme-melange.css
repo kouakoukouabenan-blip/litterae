@@ -193,3 +193,4 @@ html[data-glisse="gauche"] main.page > :not(.segments):not(:has(.segments)), htm
 .topbar .espace-btn:hover { background: color-mix(in srgb, var(--green) 88%, white); }
 .topbar .espace-btn[aria-current="page"] { background: var(--green); color: #fff; box-shadow: 0 0 0 3px var(--green-tint); }
 .topbar .espace-btn .nav-pastille { top: -1px; right: -1px; box-shadow: 0 0 0 2px var(--surface); }
+.carnet-lede { margin: 0 0 var(--s3); font-size: var(--text-sm); }
