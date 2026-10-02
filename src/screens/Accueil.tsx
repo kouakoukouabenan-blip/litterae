@@ -24,7 +24,7 @@ export function AccueilScreen() {
       </header>
 
       {/* La recherche d'exemples d'abord : c'est ce que cherche l'élève qui a une dissertation à rendre. */}
-      <form class="accueil-recherche" role="search" onSubmit={e => { e.preventDefault(); location.hash = href(["oeuvres"], q.trim() ? { q: q.trim() } : undefined); }}>
+      <form class="accueil-recherche" role="search" onSubmit={e => { e.preventDefault(); (document.activeElement as HTMLElement | null)?.blur(); location.hash = href(["oeuvres"], q.trim() ? { q: q.trim() } : undefined); }}>
         <label class="field">
           <Icon name="search" />
           <span class="sr-only">Chercher des exemples</span>

@@ -20,6 +20,7 @@ import { AchatLien } from "../components/Achat";
 import { lienContact } from "../lib/contact";
 import { noterRecherche } from "../lib/stats";
 import { OeuvresOnglets } from "../components/SujetsOnglets";
+import { useSaisieDifferee } from "../lib/saisie";
 
 const INDEX = buildIndex(OEUVRES);
 const PAGE = 30;
@@ -54,6 +55,7 @@ export function OeuvresScreen({ params }: { params: URLSearchParams }) {
     const cur = filters[k];
     go(q, { ...filters, [k]: cur.includes(v) ? cur.filter(x => x !== v) : [...cur, v] });
   };
+  const saisie = useSaisieDifferee(q, v => go(v, filters));
   const accueil = !q && !nbFiltres && !gratuites;
   // Ce que l'élève cherche (mots tapés, argument ou thème choisi) suit jusqu'à la fiche.
   const suite = new URLSearchParams([
@@ -74,11 +76,11 @@ export function OeuvresScreen({ params }: { params: URLSearchParams }) {
 
       <div class="sticky-bar">
       <div class="search-bar" role="search">
-        <label class="field">
+        <label class={`field${saisie.attente ? " cherche" : ""}`}>
           <Icon name="search" />
           <span class="sr-only">Rechercher une œuvre</span>
-          <input type="search" value={q} placeholder="Titre, auteur, thème, pays…" enterkeyhint="search" autocomplete="off"
-            onInput={e => go((e.target as HTMLInputElement).value, filters)} />
+          <input type="search" value={saisie.texte} placeholder="Titre, auteur, thème, pays…" enterkeyhint="search" autocomplete="off"
+            onInput={e => saisie.saisir((e.target as HTMLInputElement).value)} onKeyDown={saisie.clavier} />
         </label>
         <button type="button" class="btn btn-secondary filter-btn" onClick={() => sheet.current?.showModal()} aria-haspopup="dialog">
           <Icon name="tune" size={20} />
@@ -109,7 +111,7 @@ export function OeuvresScreen({ params }: { params: URLSearchParams }) {
           <FacetPanel facets={FACETS} counts={counts} filters={filters} onToggle={toggle} />
         </aside>
 
-        <section class="results" aria-labelledby="results-title">
+        <section class={`results${saisie.attente ? " en-attente" : ""}`} aria-labelledby="results-title" aria-busy={saisie.attente}>
           {nbFiltres > 0 && (
             <div class="active-filters">
               {FACETS.flatMap(f => filters[f.key].map(v => (
@@ -136,7 +138,7 @@ export function OeuvresScreen({ params }: { params: URLSearchParams }) {
 
           {!listeVisible ? null : results.length ? (
             <>
-              <ul class="works">
+              <ul class="works" key={key}>
                 {results.slice(0, limit).map(w => (
                   <li key={w.id}><WorkItem w={w} terms={terms} suite={suite} saved={isSaved(w.id)} open={access.canOpenWork(w.id)} free={!access.premium && !!w.libre} /></li>
                 ))}

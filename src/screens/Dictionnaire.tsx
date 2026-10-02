@@ -1,3 +1,4 @@
+import { useSaisieDifferee } from "../lib/saisie";
 import { Fragment } from "preact";
 import { Partager, extrait } from "../components/Partager";
 import { useEffect, useMemo, useRef, useState } from "preact/hooks";
@@ -176,15 +177,16 @@ function Guide({ onVoir }: { onVoir: (m: string) => void }) {
 
 /** Barre de recherche, placée dans la barre figée de la boîte à outils. */
 export function DicoRecherche({ q, onChange }: { q: string; onChange: (q: string) => void }) {
+  const saisie = useSaisieDifferee(q, onChange, 300);
   return (
     <div class="search-bar dico-search" role="search">
-      <label class="field">
+      <label class={`field${saisie.attente ? " cherche" : ""}`}>
         <Icon name="search" />
         <span class="sr-only">Chercher un mot du sujet</span>
-        <input type="search" value={q} placeholder="Cherche un mot (ex. : écho, beau)" enterkeyhint="search" autocomplete="off"
-          autocapitalize="off" spellcheck={false} onInput={e => onChange((e.target as HTMLInputElement).value)} />
-        {q && (
-          <button type="button" class="icon-btn dico-effacer" onClick={() => onChange("")} aria-label="Effacer la recherche">
+        <input type="search" value={saisie.texte} placeholder="Cherche un mot (ex. : écho, beau)" enterkeyhint="search" autocomplete="off"
+          autocapitalize="off" spellcheck={false} onInput={e => saisie.saisir((e.target as HTMLInputElement).value)} onKeyDown={saisie.clavier} />
+        {saisie.texte && (
+          <button type="button" class="icon-btn dico-effacer" onClick={saisie.effacer} aria-label="Effacer la recherche">
             <Icon name="close" size={20} />
           </button>
         )}

@@ -194,3 +194,12 @@ html[data-glisse="gauche"] main.page > :not(.segments):not(:has(.segments)), htm
 .topbar .espace-btn[aria-current="page"] { background: var(--green); color: #fff; box-shadow: 0 0 0 3px var(--green-tint); }
 .topbar .espace-btn .nav-pastille { top: -1px; right: -1px; box-shadow: 0 0 0 2px var(--surface); }
 .carnet-lede { margin: 0 0 var(--s3); font-size: var(--text-sm); }
+
+/* Pendant la frappe : la loupe fait de petits cercles (l'appli cherche), les anciens résultats pâlissent. */
+@keyframes loupe-cherche { 0% { transform: translate(0, 0); } 25% { transform: translate(2px, -2px); } 50% { transform: translate(4px, 0); } 75% { transform: translate(2px, 2px); } 100% { transform: translate(0, 0); } }
+.field.cherche > .icon { animation: loupe-cherche .7s linear infinite; color: var(--green); }
+.results { transition: opacity .2s; }
+.results.en-attente { opacity: .45; }
+.results:not(.en-attente) .works { animation: resultats-arrivent .25s ease-out; }
+@keyframes resultats-arrivent { from { opacity: .4; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .field.cherche > .icon, .results .works { animation: none; } }
