@@ -187,3 +187,9 @@ html[data-glisse="gauche"] main.page > :not(.segments):not(:has(.segments)), htm
 .dico-search .field input { height: 54px; font-size: 1.0625rem; font-weight: 500; color: var(--ink-strong); }
 .dico-search .field input::placeholder { color: var(--muted); font-weight: 400; }
 .dico-search .field:focus-within { box-shadow: inset 0 0 0 2px var(--green), 0 0 0 4px var(--green-tint), 0 4px 14px rgba(15, 61, 46, .10); }
+
+/* Mon espace : l'icône de profil dans un rond vert. */
+.topbar .espace-btn { width: 38px; height: 38px; min-width: 38px; padding: 0; border-radius: 50%; background: var(--green); color: #fff; display: inline-grid; place-items: center; }
+.topbar .espace-btn:hover { background: color-mix(in srgb, var(--green) 88%, white); }
+.topbar .espace-btn[aria-current="page"] { background: var(--green); color: #fff; box-shadow: 0 0 0 3px var(--green-tint); }
+.topbar .espace-btn .nav-pastille { top: -1px; right: -1px; box-shadow: 0 0 0 2px var(--surface); }
