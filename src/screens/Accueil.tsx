@@ -36,10 +36,10 @@ export function AccueilScreen() {
       <p class="accueil-astuce">Cherche une illustration par thème, auteur, titre ou argument parmi {OEUVRES.length} fiches d'œuvres.</p>
 
       <nav class="choix" aria-label="Que veux-tu faire ?">
-        <a class="choix-carte choix-methode" href={nbLues === 0 ? "#/cours" : `#/cours/${(suivante ?? LECONS[0]).id}`}>
+        <a class="choix-carte choix-methode" href={suivante && nbLues > 0 ? `#/cours/${suivante.id}` : "#/cours"}>
           <Icon name="menu_book" size={24} />
           <span class="choix-titre">{nbLues === 0 ? "Apprendre la méthode" : suivante ? "Continuer la méthode" : "Revoir la méthode"}</span>
-          <span class="choix-detail">{nbLues === 0 ? `${LECONS.length} leçons courtes` : `${nbLues} leçon${nbLues > 1 ? "s" : ""} sur ${LECONS.length}`}</span>
+          <span class="choix-detail">{nbLues === 0 ? `${LECONS.length} leçons courtes` : suivante ? `Reprendre à la leçon ${LECONS.indexOf(suivante) + 1}` : `${LECONS.length} leçons lues`}</span>
           {nbLues > 0 && <span class="progress-bar" aria-hidden="true"><span style={{ width: `${(nbLues / LECONS.length) * 100}%` }} /></span>}
         </a>
         <a class="choix-carte choix-corriges" href="#/sujets">
