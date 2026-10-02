@@ -179,3 +179,11 @@ html[data-glisse="gauche"] main.page > :not(.segments):not(:has(.segments)), htm
 @media (max-width: 719px) { .fn-rangee { justify-content: space-between; gap: 4px; } .fn-mini { padding: 0 8px; } }
 .quota { margin-top: var(--s4); }
 @media (max-width: 389px) { .fn-mini { padding: 0 6px; font-size: 0.6875rem; } .fn-rangee { gap: 2px; } }
+
+/* Dictionnaire : une grande barre de recherche bien visible, blanche et cerclée de vert. */
+.dico-search { margin-top: var(--s4); }
+.dico-search .field { min-height: 58px; background: var(--surface); box-shadow: inset 0 0 0 2px var(--green), 0 4px 14px rgba(15, 61, 46, .10); border-radius: 999px; padding-left: var(--s4); }
+.dico-search .field > .icon { color: var(--green); width: 24px; height: 24px; }
+.dico-search .field input { height: 54px; font-size: 1.0625rem; font-weight: 500; color: var(--ink-strong); }
+.dico-search .field input::placeholder { color: var(--muted); font-weight: 400; }
+.dico-search .field:focus-within { box-shadow: inset 0 0 0 2px var(--green), 0 0 0 4px var(--green-tint), 0 4px 14px rgba(15, 61, 46, .10); }
