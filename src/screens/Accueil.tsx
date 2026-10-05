@@ -6,6 +6,7 @@ import { Annonces, InvitationNotifs } from "../components/Annonces";
 import { useStored } from "../lib/storage";
 import { OEUVRES, SUJETS } from "../lib/data";
 import { ReponseAlerte } from "../components/ReponseAlerte";
+import { Suggestions } from "../components/Suggestions";
 import { useState } from "preact/hooks";
 import { href } from "../lib/router";
 
@@ -59,6 +60,7 @@ export function AccueilScreen() {
         </a>
       </nav>
 
+      <Suggestions />
       <ReponseAlerte />
       <Annonces />
       <InstallBanner />

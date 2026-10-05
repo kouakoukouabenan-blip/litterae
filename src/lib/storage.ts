@@ -51,3 +51,17 @@ export function useStored<T>(key: string, fallback: T): [T, (v: T) => void] {
 export function conserverDonnees() {
   navigator.storage?.persist?.().catch(() => {});
 }
+
+/** Noms des valeurs stockées qui commencent par `debut` (brouillons de l'atelier, par exemple). */
+export function cles(debut: string): string[] {
+  const noms = new Set([...memory.keys()].filter(k => k.startsWith(debut)));
+  try {
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (k?.startsWith(PREFIX + debut)) noms.add(k.slice(PREFIX.length));
+    }
+  } catch {
+    // Stockage indisponible : seulement la copie en mémoire.
+  }
+  return [...noms];
+}

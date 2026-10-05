@@ -1,6 +1,6 @@
 import { ICONS, type IconName } from "./icons";
 
-type BaseName = Exclude<IconName, `${string}-fill`>;
+export type BaseName = Exclude<IconName, `${string}-fill`>;
 
 export function Icon({ name, filled = false, size = 22 }: { name: BaseName; filled?: boolean; size?: number }) {
   const key = (filled && `${name}-fill` in ICONS ? `${name}-fill` : name) as IconName;

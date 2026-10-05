@@ -3,6 +3,7 @@ import { fermerMessages, marquerLue, ouvrirMessages, useAnnonces, type Annonce }
 import { useNotifs } from "../lib/notifications";
 import { aDecouvert, useInstall } from "../lib/install";
 import { Icon } from "./Icon";
+import { changerRappels, JOURS_AVANT_RAPPEL, preparerRappel, rappelsActifs } from "../lib/rappels";
 
 const NOMS = { promo: "Promo", message: "Message", astuce: "Astuce" };
 const dateCourte = (t: number) => new Date(t).toLocaleDateString("fr-FR", { day: "numeric", month: "long" });
@@ -98,8 +99,8 @@ export function InvitationNotifs() {
   return (
     <aside class="install-banner" aria-label="Notifications">
       <Icon name="notifications" size={22} />
-      <p class="install-banner-title">{erreur ?? "Astuces et promos en notification"}</p>
-      <button type="button" class="btn btn-primary" onClick={async () => setErreur(await activer())}>Activer</button>
+      <p class="install-banner-title">{erreur ?? "Rappels, astuces et promos en notification"}</p>
+      <button type="button" class="btn btn-primary" onClick={async () => { const e = await activer(); setErreur(e); if (!e) preparerRappel(); }}>Activer</button>
       <button type="button" class="icon-btn" onClick={reporter} aria-label="Plus tard"><Icon name="close" size={20} /></button>
     </aside>
   );
@@ -108,6 +109,7 @@ export function InvitationNotifs() {
 /** Réglage des notifications sur la page À propos. */
 export function ReglageNotifs() {
   const { etat, activer, desactiver } = useNotifs();
+  const [rappels, setRappels] = useState(rappelsActifs);
   const [erreur, setErreur] = useState<string | null>(null);
   return (
     <>
@@ -115,13 +117,21 @@ export function ReglageNotifs() {
       {etat === "abonne" && (
         <>
           <p>Tu reçois les astuces et les promos de Litterae sur cet appareil.</p>
+          <label class="check-ligne">
+            <input type="checkbox" checked={rappels} onChange={e => { const v = (e.target as HTMLInputElement).checked; setRappels(v); changerRappels(v); }} />
+            <span>Me rappeler ce que je faisais si je ne reviens pas pendant {JOURS_AVANT_RAPPEL} jours</span>
+          </label>
+          <details class="repli">
+            <summary>Comment ça marche ?</summary>
+            <p class="small muted">Ton téléphone choisit le rappel (sujet commencé, leçon suivante, œuvre proche de tes lectures). Le serveur sait seulement quand l'envoyer, jamais ce que tu lis. Deux rappels au plus, puis plus rien tant que tu ne reviens pas.</p>
+          </details>
           <button type="button" class="btn btn-secondary align-start" onClick={desactiver}>Ne plus recevoir</button>
         </>
       )}
       {etat === "possible" && (
         <>
-          <p>Astuces et promos, quelques fois par mois au plus.</p>
-          <button type="button" class="btn btn-primary align-start" onClick={async () => setErreur(await activer())}><Icon name="notifications" size={20} />Activer les notifications</button>
+          <p>Astuces et promos quelques fois par mois au plus, et un rappel si tu t'absentes quelques jours.</p>
+          <button type="button" class="btn btn-primary align-start" onClick={async () => { const e = await activer(); setErreur(e); if (!e) preparerRappel(); }}><Icon name="notifications" size={20} />Activer les notifications</button>
         </>
       )}
       {etat === "installer-iphone" && <p>Sur iPhone, les notifications marchent une fois Litterae installée sur l'écran d'accueil (iOS 16.4 ou plus récent). Installe-la, puis ouvre-la depuis son icône pour les activer.</p>}

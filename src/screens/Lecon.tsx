@@ -12,6 +12,7 @@ import { LECONS_GRATUITES, ouvrirLecon, useAccesLecons, type EchecLecon } from "
 import { AchatLien } from "../components/Achat";
 import { LigneContact } from "../components/LigneContact";
 import { noter } from "../lib/stats";
+import { noterVue } from "../lib/historique";
 import { synchroniser } from "../lib/synchro";
 
 function Bloc({ b }: { b: BlocLecon }) {
@@ -75,7 +76,7 @@ function OuvertureLecon({ echec, reessayer }: { echec: EchecLecon | null; reessa
 
 export function LeconScreen({ id }: { id: string }) {
   const i = LECONS.findIndex(l => l.id === id);
-  useEffect(() => { if (i > -1) noter({ t: "lecon", ref: id }); }, [id]);
+  useEffect(() => { if (i > -1) { noter({ t: "lecon", ref: id }); noterVue("lecon", id); } }, [id]);
   const [lues, setLues] = useStored<string[]>("lecons-lues", []);
   const acces = useAccesLecons();
   // Leçon gratuite ouverte pendant cette visite : son texte vient d'arriver sur l'appareil.

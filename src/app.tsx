@@ -28,6 +28,7 @@ import { synchroniser } from "./lib/synchro";
 import { demarrerStats, noter } from "./lib/stats";
 import { actualiserQuestions } from "./lib/contact";
 import { prevenirAchatHorsLigne } from "./components/Achat";
+import { preparerRappel } from "./lib/rappels";
 
 function useScrollMemory(key: string) {
   const positions = useRef(new Map<string, number>());
@@ -59,7 +60,10 @@ export function App() {
     actualiserQuestions();
     document.addEventListener("visibilitychange", () => {
       if (document.visibilityState === "visible") { actualiserQuestions(); synchroniser(); }
+      // En quittant l'appli : le rappel personnel (s'il part) proposera la suite de ce que l'élève vient de faire.
+      else preparerRappel();
     });
+    setTimeout(preparerRappel, 4000);
     // Ouverture depuis une notification : l'adresse porte le numéro du message.
     const depuisNotif = new URLSearchParams(location.search).get("annonce");
     if (depuisNotif) {

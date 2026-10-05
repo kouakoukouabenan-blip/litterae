@@ -1,4 +1,5 @@
 import { noter, noterFiche } from "../lib/stats";
+import { noterVue } from "../lib/historique";
 import { extrait } from "../components/Partager";
 import { useEffect, useState } from "preact/hooks";
 import { Page } from "../components/Page";
@@ -154,7 +155,7 @@ export function OeuvreScreen({ id, params }: { id: string; params: URLSearchPara
     const t = setTimeout(() => document.getElementById("argument-trouve")?.scrollIntoView({ block: "start" }), 120);
     return () => clearTimeout(t);
   }, [id, trouve]);
-  useEffect(() => { if (w) { noter({ t: "oeuvre", ref: id }); noterFiche(id); } }, [id]);
+  useEffect(() => { if (w) { noter({ t: "oeuvre", ref: id }); noterFiche(id); noterVue("oeuvre", id); } }, [id]);
   const { isSaved, toggle } = useSaved();
   const lisible = libre && !aOuvrir && echec !== "limite";
   if (!w) return <NotFound what="Cette œuvre n'existe pas." back="#/oeuvres" />;
