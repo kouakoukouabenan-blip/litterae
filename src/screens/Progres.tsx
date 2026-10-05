@@ -1,6 +1,7 @@
 import { Page } from "../components/Page";
 import { PageHeader } from "../components/PageHeader";
 import { Icon } from "../components/Icon";
+import { Flamme } from "../components/Flamme";
 import { OBJECTIF_DU_JOUR, useBilan } from "../lib/progres";
 import { cartesDuJour, nbCartes, useSuivis } from "../lib/revisions";
 import { maitrise } from "../lib/maitrise";
@@ -26,7 +27,7 @@ export function ProgresScreen() {
 
       <section class="progres-haut">
         <div class="progres-serie">
-          <span class="progres-chiffre">{b.serie}</span>
+          <span class="progres-flamme"><Flamme taille={34} eteinte={!b.serie} /><span class="progres-chiffre">{b.serie}</span></span>
           <span><strong>{b.serie > 1 ? "jours d'affilée" : "jour d'affilée"}</strong><span class="meta">Record : {plural(b.record, "jour")}</span></span>
         </div>
         <div class="progres-objectif">
