@@ -223,3 +223,20 @@ html[data-glisse="gauche"] main.page > :not(.segments):not(:has(.segments)), htm
 .fiche-echec p { margin: 0; }
 .quota { flex-wrap: wrap; row-gap: var(--s2); }
 .quota-texte { white-space: nowrap; }
+
+/* Accueil sur téléphone : resserré pour que « Pour toi » se voie sans faire défiler. */
+@media (max-width: 719px) {
+  .home-header { margin-bottom: var(--s3); }
+  .home-header .eyebrow { display: none; }
+  .home-title { font-size: 1.5rem; margin-bottom: 0; }
+  .accueil-astuce { display: none; }
+  .accueil-recherche { margin-bottom: var(--s4); }
+  .choix { gap: var(--s2); margin-bottom: var(--s5); }
+  .choix .choix-carte { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: var(--s2); row-gap: 2px; align-items: center; padding: var(--s3); border-radius: 16px; }
+  .choix .choix-carte .icon { margin: 0; }
+  .choix .choix-titre { font-size: 0.9375rem; }
+  /* Le détail (nombre de sujets, leçon où reprendre) reste sur ordinateur ; la barre de progression suffit ici. */
+  .choix .choix-detail { display: none; }
+  .choix .choix-carte .progress-bar { grid-column: 1 / -1; margin-top: var(--s1); }
+  .pour-toi { margin-top: 0; }
+}
