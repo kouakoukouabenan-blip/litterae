@@ -215,3 +215,11 @@ html[data-glisse="gauche"] main.page > :not(.segments):not(:has(.segments)), htm
 .search-bar .field input { font-size: 1rem; }
 .search-bar:not(.dico-search) .field { padding-left: var(--s3); }
 @media (max-width: 379px) { .search-bar .filter-btn { min-width: 50px; padding: 0; } .search-bar .field input { font-size: .9375rem; } }
+
+/* Fiche gratuite au choix : une ligne discrète sous l'auteur, et l'attente de l'ouverture. */
+.fiche-quota { margin: var(--s2) 0 0; }
+.fiche-chargement { margin: var(--s5) 0; }
+.fiche-echec { display: flex; flex-direction: column; align-items: flex-start; gap: var(--s3); margin: var(--s5) 0; padding: var(--s4); border-radius: var(--radius, 12px); background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); }
+.fiche-echec p { margin: 0; }
+.quota { flex-wrap: wrap; row-gap: var(--s2); }
+.quota-texte { white-space: nowrap; }

@@ -3,11 +3,12 @@ import { read, write } from "./storage";
 import type { BlocLecon, IdeeIllustration, MotDico, Oeuvre } from "../data/types";
 
 /**
- * Fiches gratuites choisies par l'éditeur depuis son tableau de bord, avec leurs éventuelles corrections.
- * Gardées sur l'appareil ; une nouvelle liste est prise en compte à l'ouverture suivante.
+ * Ce que l'éditeur change depuis son tableau de bord (corrections, fiches et leçons ajoutées, mots…).
+ * Gardé sur l'appareil ; une nouvelle version est prise en compte à l'ouverture suivante.
  */
 export interface ContenuLibre {
   revision: number;
+  /** Anciennes fiches gratuites imposées : toujours vide (l'élève choisit ses 10 fiches), ignoré. */
   gratuites: string[];
   oeuvres: Record<string, { resume: string | null; idees: IdeeIllustration[]; exemple: string | null }>;
   /** Autres champs corrigés depuis le tableau de bord (titre, auteur, thèmes…), pour toutes les fiches. */

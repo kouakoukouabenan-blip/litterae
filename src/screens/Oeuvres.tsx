@@ -7,7 +7,7 @@ import { FacetPanel } from "../components/Facets";
 import { WorkItem } from "../components/WorkItem";
 import { OEUVRES } from "../lib/data";
 import { FONCTIONS } from "../data/types";
-import { FREE_WORKS, useAccess } from "../lib/access";
+import { useAccess } from "../lib/access";
 import { useSaved } from "../lib/carnet";
 import { href, replaceRoute } from "../lib/router";
 import {
@@ -36,12 +36,9 @@ export function OeuvresScreen({ params }: { params: URLSearchParams }) {
   const sheet = useRef<HTMLDialogElement>(null);
   const key = params.toString();
 
-  const gratuites = params.get("gratuites") === "1" && !access.premium;
-  // Sans clé, les fiches gratuites passent en tête, dans l'ordre habituel à l'intérieur de chaque groupe.
-  const results = useMemo(() => {
-    const r = search(INDEX, q, filters).filter(w => !gratuites || w.libre);
-    return access.premium ? r : [...r.filter(w => w.libre), ...r.filter(w => !w.libre)];
-  }, [key, access.premium]);
+  // « Mes fiches ouvertes » : les fiches gratuites que l'élève a déjà choisies.
+  const gratuites = params.get("gratuites") === "1" && !access.premium && access.nbOuvertes > 0;
+  const results = useMemo(() => search(INDEX, q, filters).filter(w => !gratuites || access.workOpened(w.id)), [key, access.premium, access.nbOuvertes]);
   const counts = useMemo(() => new Map(FACETS.map(f => [f.key, facetCounts(INDEX, q, filters, f)])), [key]);
   useEffect(() => setLimit(PAGE), [key]);
   useEffect(() => noterRecherche("oeuvres", q, results.length), [q]);
@@ -99,9 +96,12 @@ export function OeuvresScreen({ params }: { params: URLSearchParams }) {
 
       {!access.premium && (
         <p class="quota">
-          <button type="button" class={`chip chip-libres${gratuites ? " chip-on" : ""}`} aria-pressed={gratuites} onClick={() => go(q, filters, !gratuites)}>
-            {gratuites && <Icon name="check" size={16} />}{FREE_WORKS} fiches gratuites
-          </button>
+          {access.nbOuvertes > 0 && (
+            <button type="button" class={`chip chip-libres${gratuites ? " chip-on" : ""}`} aria-pressed={gratuites} onClick={() => go(q, filters, !gratuites)}>
+              {gratuites && <Icon name="check" size={16} />}Mes fiches ouvertes ({access.nbOuvertes})
+            </button>
+          )}
+          {access.restantes > 0 && <span class="muted quota-texte">{plural(access.restantes, "fiche gratuite", "fiches gratuites")} à ouvrir</span>}
           <AchatLien label="Tout débloquer" />
         </p>
       )}
@@ -140,7 +140,7 @@ export function OeuvresScreen({ params }: { params: URLSearchParams }) {
             <>
               <ul class="works" key={key}>
                 {results.slice(0, limit).map(w => (
-                  <li key={w.id}><WorkItem w={w} terms={terms} suite={suite} saved={isSaved(w.id)} open={access.canOpenWork(w.id)} free={!access.premium && !!w.libre} /></li>
+                  <li key={w.id}><WorkItem w={w} terms={terms} suite={suite} saved={isSaved(w.id)} open={access.canOpenWork(w.id)} free={access.workOpened(w.id)} /></li>
                 ))}
               </ul>
               {results.length > limit && (

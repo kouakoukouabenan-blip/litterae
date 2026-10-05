@@ -21,9 +21,9 @@ for (const w of oeuvres) {
   if (!w.fonctions?.length) err(at, "aucune fonction littéraire");
   for (const f of [...(w.fonctions ?? []), ...(w.idees ?? []).map(i => i.fonction)]) if (!FONCTIONS.includes(f)) err(at, `fonction inconnue « ${f} »`);
   // Le site est public : une fiche payante ne doit contenir ni résumé ni texte d'illustration.
-  if (!w.libre && (w.resume || w.idees?.some(i => i.texte))) err(at, "contenu payant présent dans les données publiques");
+  // Les 10 fiches gratuites sont au choix de l'élève et demandées au serveur : aucune n'est publiée en entier.
+  if (w.libre || w.resume || w.exemple || w.idees?.some(i => i.texte)) err(at, "contenu payant présent dans les données publiques");
 }
-if (oeuvres.filter(w => w.libre).length !== 10) err("œuvres", "il faut exactement 10 fiches gratuites");
 
 const motsDico = new Set();
 for (const e of dico.entrees) {

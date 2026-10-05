@@ -51,7 +51,7 @@ export function AProposScreen() {
           </dl>
 
           <h2 class="section-title">Accès gratuit et accès complet</h2>
-          <p>Gratuit : le cours, la boîte à outils (avec 10 mots du dictionnaire au choix), les {FREE_SUBJECTS} premiers sujets corrigés et {FREE_WORKS} fiches d'œuvres choisies par l'auteur, signalées « Gratuite ».</p>
+          <p>Gratuit : le cours, la boîte à outils (avec 10 mots du dictionnaire au choix), les {FREE_SUBJECTS} premiers sujets corrigés et {FREE_WORKS} fiches d'œuvres au choix (la recherche dans toutes les œuvres reste libre).</p>
           <p>Accès complet : tous les sujets et toutes les fiches, pour {PRICE} payés une seule fois par Mobile Money, et les réponses de l'auteur à tes questions directement dans l'application. Tu reçois une clé d'accès par e-mail, valable sur 2 appareils. <AchatLien label="Acheter une clé sur Chariow" /></p>
 
           {!installed && (
@@ -90,7 +90,7 @@ export function CguScreen() {
       <p>Litterae propose un cours de méthode, des sujets corrigés, des résumés d'œuvres et des outils de rédaction. Ces contenus sont une aide à l'apprentissage : ils ne remplacent ni l'enseignement de ton professeur ni la lecture des œuvres. Les résumés et corrigés sont rédigés avec soin mais peuvent contenir des erreurs ; tu peux les signaler depuis la page <a href="#/contact?sujet=erreur">Contact</a>.</p>
 
       <h2 class="section-title">4. Accès gratuit</h2>
-      <p>Sans paiement, tu as accès au cours, à la boîte à outils, aux {FREE_SUBJECTS} premiers sujets corrigés et à {FREE_WORKS} fiches d'œuvres choisies par l'éditeur. L'éditeur peut faire évoluer le contenu de l'accès gratuit.</p>
+      <p>Sans paiement, tu as accès au cours, à la boîte à outils, aux {FREE_SUBJECTS} premiers sujets corrigés et à {FREE_WORKS} fiches d'œuvres de ton choix, comptées sur ton appareil. L'éditeur peut faire évoluer le contenu de l'accès gratuit.</p>
 
       <h2 class="section-title">5. Accès complet</h2>
       <p>L'accès complet coûte {PRICE} (francs CFA), payés une seule fois. Il ouvre l'ensemble des sujets corrigés et des fiches d'œuvres, y compris ceux ajoutés par la suite, pour la durée de vie du service.</p>
@@ -124,7 +124,7 @@ export function ConfidentialiteScreen() {
       <ul class="bullets">
         <li>Les leçons que tu as lues.</li>
         <li>Les œuvres enregistrées et tes notes personnelles.</li>
-        <li>Les fiches gratuites déjà ouvertes.</li>
+        <li>Les fiches d'œuvres et les mots du dictionnaire ouverts gratuitement.</li>
         <li>Ton choix concernant l'installation de l'application.</li>
         <li>Si tu as acheté l'accès complet : ta clé d'accès, le contenu débloqué et un identifiant anonyme de l'appareil.</li>
       </ul>

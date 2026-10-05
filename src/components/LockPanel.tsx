@@ -32,7 +32,7 @@ export function LockPanel({ reason, contenu }: { reason: string; contenu?: strin
           <summary>Ce que contient l'accès et comment payer</summary>
           <CommentPayerBouton />
           {contenu && <p class="lock-contenu">{contenu}</p>}
-          <p class="small">L'accès gratuit comprend le cours, la boîte à outils, les {FREE_SUBJECTS} premiers sujets corrigés et {FREE_WORKS} fiches d'œuvres.</p>
+          <p class="small">L'accès gratuit comprend le cours, la boîte à outils, les {FREE_SUBJECTS} premiers sujets corrigés et {FREE_WORKS} fiches d'œuvres de ton choix.</p>
           <p class="small muted">Paiement par Mobile Money (Wave, MTN MoMo, Moov Money…) sur Chariow. Ta clé d'accès arrive par e-mail juste après : pense à regarder dans les spams.</p>
         </details>
       ) : <p id="lock-soon" class="small muted">Le paiement par Mobile Money ouvre très bientôt.</p>}

@@ -17,6 +17,8 @@ import { LigneContact } from "../components/LigneContact";
 import { Highlight } from "../components/Highlight";
 import { queryTerms } from "../lib/search";
 import { normalize } from "../lib/text";
+import { FICHES_GRATUITES, ouvrirFiche, useFichesOuvertes, type EchecFiche } from "../lib/fiches";
+import { AchatLien } from "../components/Achat";
 
 function Note({ id }: { id: string }) {
   const { notes, setNote } = useNotes();
@@ -112,8 +114,38 @@ function contenuFiche(w: Oeuvre) {
   return `Cette fiche contient un résumé complet, ${n} idée${n > 1 ? "s" : ""} d'illustration reliée${n > 1 ? "s" : ""} aux fonctions de la littérature et une phrase d'exemple prête à recopier.`;
 }
 
+/** Ouverture d'une fiche gratuite : un court message pendant l'envoi, ou ce qui bloque. */
+function OuvertureFiche({ echec, reessayer }: { echec: EchecFiche | null; reessayer: () => void }) {
+  if (!echec) return <p class="muted fiche-chargement" role="status">Ouverture de la fiche…</p>;
+  return (
+    <div class="fiche-echec" role="alert">
+      <p>{echec === "hors-ligne" ? "Connecte-toi à Internet pour ouvrir cette fiche. Elle restera ensuite sur ton téléphone."
+        : echec === "trop" ? "Trop de fiches ouvertes depuis cette connexion. Réessaie dans une heure."
+        : "La fiche n'a pas pu s'ouvrir."}</p>
+      <button type="button" class="btn btn-secondary" onClick={reessayer}>Réessayer</button>
+    </div>
+  );
+}
+
 export function OeuvreScreen({ id, params }: { id: string; params: URLSearchParams }) {
-  const w = oeuvre(id);
+  const base = oeuvre(id);
+  const access = useAccess();
+  const ouvertes = useFichesOuvertes();
+  // Fiche ouverte gratuitement pendant cette visite : son texte vient d'arriver sur l'appareil.
+  const texte = !access.premium ? ouvertes[id] : undefined;
+  const w = base && texte && !base.resume ? { ...base, ...texte, exemple: texte.exemple ?? base.exemple } : base;
+  const libre = !!w && access.canOpenWork(id);
+  const aOuvrir = !!w && libre && !access.premium && !texte;
+  const [echec, setEchec] = useState<EchecFiche | null>(null);
+  const [essai, setEssai] = useState(0);
+  // Sans clé, ouvrir la fiche la compte dans les 10 gratuites (comme un mot du dictionnaire).
+  useEffect(() => {
+    if (!aOuvrir) return;
+    let actif = true;
+    setEchec(null);
+    ouvrirFiche(id).then(r => { if (actif && typeof r === "string") setEchec(r); });
+    return () => { actif = false; };
+  }, [id, aOuvrir, essai]);
   const terms = queryTerms(params.get("q") ?? "");
   const trouve = w ? argumentCherche(w, params, terms) : -1;
   // Arrivé depuis une recherche : la fiche s'ouvre sur l'argument qui correspond.
@@ -123,16 +155,15 @@ export function OeuvreScreen({ id, params }: { id: string; params: URLSearchPara
     return () => clearTimeout(t);
   }, [id, trouve]);
   useEffect(() => { if (w) { noter({ t: "oeuvre", ref: id }); noterFiche(id); } }, [id]);
-  const access = useAccess();
   const { isSaved, toggle } = useSaved();
-  const libre = !!w && access.canOpenWork(id);
+  const lisible = libre && !aOuvrir && echec !== "limite";
   if (!w) return <NotFound what="Cette œuvre n'existe pas." back="#/oeuvres" />;
 
   const saved = isSaved(id);
   const sujets = sujetsCitant(id);
 
   return (
-    <Page title={w.titre} back="#/oeuvres" actions={libre && (
+    <Page title={w.titre} back="#/oeuvres" actions={lisible && (
       <button type="button" class="icon-btn" aria-pressed={saved} aria-label={saved ? "Retirer de mon carnet" : "Enregistrer dans mon carnet"}
         onClick={() => { toggle(id); toast(saved ? "Retirée du carnet." : "Enregistrée dans ton carnet."); }}>
         <Icon name="bookmark" filled={saved} />
@@ -143,8 +174,8 @@ export function OeuvreScreen({ id, params }: { id: string; params: URLSearchPara
         [w.genre, w.paysTexte].filter(Boolean).join(" · "),
         w.themes.length ? `Thèmes : ${w.themes.slice(0, 5).join(", ")}.` : "",
         w.fonctions.length ? `Fonctions littéraires : ${w.fonctions.join(", ")}.` : "",
-        // Début du résumé seulement pour les fiches gratuites : le reste fait partie de l'accès complet.
-        w.libre ? extrait(w.resume) : "",
+        // Début du résumé seulement pour une fiche ouverte gratuitement : le reste fait partie de l'accès complet.
+        texte ? extrait(w.resume) : "",
         "Fiche complète sur Litterae :"].filter(Boolean).join("\n")
     }}>
       <article class="reading">
@@ -152,11 +183,16 @@ export function OeuvreScreen({ id, params }: { id: string; params: URLSearchPara
           <p class="eyebrow">{w.genre}{w.precision ? ` · ${w.precision}` : ""}</p>
           <h1 class="page-title work-page-title">{w.titre}</h1>
           <p class="lede">{w.auteur}{w.paysTexte && ` · ${w.paysTexte}`}</p>
+          {texte && (
+            <p class="small muted fiche-quota">Fiche gratuite {access.nbOuvertes} sur {FICHES_GRATUITES}. <AchatLien label="Tout débloquer" /></p>
+          )}
         </header>
 
-        {!libre ? (
+        {aOuvrir && echec !== "limite" ? (
+          <OuvertureFiche echec={echec} reessayer={() => setEssai(essai + 1)} />
+        ) : !lisible ? (
           <>
-            <LockPanel reason="Cette fiche fait partie de l'accès complet." contenu={contenuFiche(w)} />
+            <LockPanel reason={`Tu as ouvert tes ${FICHES_GRATUITES} fiches gratuites.`} contenu={contenuFiche(w)} />
             <ArgumentsListe w={w} ouvert={false} trouve={trouve} terms={terms} />
           </>
         ) : (

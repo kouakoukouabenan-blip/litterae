@@ -10,7 +10,7 @@ interface Props {
   note?: string;
   /** Fiche accessible : le résumé peut s'afficher dans la liste. */
   open?: boolean;
-  /** Fiche en accès libre, signalée tant que l'accès complet n'est pas activé. */
+  /** Fiche gratuite déjà ouverte par l'élève, signalée tant que l'accès complet n'est pas activé. */
   free?: boolean;
   /** Recherche en cours, transmise à la fiche pour l'ouvrir sur l'argument qui correspond. */
   suite?: string;
@@ -21,7 +21,7 @@ export function WorkItem({ w, terms = [], saved = false, note, open = true, free
   return (
     <a class="work" href={`#/oeuvres/${w.id}${suite ? `?${suite}` : ""}`}>
       <span class="work-head">
-        <span class="work-title"><Highlight text={w.titre} terms={terms} />{free && <span class="work-libre">Gratuite</span>}</span>
+        <span class="work-title"><Highlight text={w.titre} terms={terms} />{free && <span class="work-libre">Ouverte</span>}</span>
         {saved && <span class="work-saved" title="Enregistrée"><Icon name="bookmark" filled size={18} /><span class="sr-only">Enregistrée</span></span>}
         {locked && <span class="work-lock" title="Réservée à l'accès complet"><Icon name="lock" size={18} /><span class="sr-only">Réservée à l'accès complet</span></span>}
       </span>

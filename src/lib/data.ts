@@ -4,26 +4,27 @@ import dico from "../data/dictionnaire.json";
 import type { ContenuPayant, Oeuvre, Sujet, SujetApercu } from "../data/types";
 import { licence } from "./licence";
 import { contenuLibre } from "./libre";
+import { fichesOuvertes } from "./fiches";
 
 // Données publiques (partie gratuite), complétées par le contenu payant si une clé a été validée.
 const payant = licence()?.contenu;
-// Fiches gratuites choisies depuis le tableau de bord (sinon, celles du site publié).
+// Corrections et fiches ajoutées depuis le tableau de bord.
 const libre = contenuLibre();
+// Fiches gratuites que l'élève a déjà ouvertes (10 au choix) : leur texte est gardé sur l'appareil.
+const ouvertes = fichesOuvertes();
 
 const ajoutees = (libre?.ajouts?.oeuvres ?? []).filter(w => w?.id && w.titre);
 
+/** Texte de la fiche quand l'élève y a accès : contenu payant, sinon fiche gratuite déjà ouverte. */
+const avecTexte = (w: Oeuvre): Oeuvre => {
+  const p = payant?.oeuvres[w.id] ?? ouvertes[w.id];
+  return p ? { ...w, resume: p.resume, idees: p.idees, exemple: p.exemple ?? w.exemple ?? null, libre: false } : { ...w, libre: false };
+};
+
 export const OEUVRES: Oeuvre[] = [
-  ...(oeuvres as Oeuvre[]).map(o => {
-    const w = { ...o, ...libre?.corrections?.[o.id] };
-    const p = payant?.oeuvres[w.id] ?? libre?.oeuvres[w.id];
-    const estLibre = libre ? libre.gratuites.includes(w.id) : w.libre;
-    return p ? { ...w, resume: p.resume, idees: p.idees, exemple: p.exemple ?? w.exemple, libre: estLibre } : { ...w, libre: estLibre };
-  }),
+  ...(oeuvres as Oeuvre[]).map(o => avecTexte({ ...o, ...libre?.corrections?.[o.id] })),
   // Fiches ajoutées depuis le tableau de bord, classées avec les autres par titre.
-  ...ajoutees.map(w => {
-    const p = payant?.oeuvres[w.id];
-    return p ? { ...w, resume: p.resume, idees: p.idees, exemple: p.exemple ?? null } : w;
-  })
+  ...ajoutees.map(avecTexte)
 ].sort((a, b) => a.titre.localeCompare(b.titre, "fr"));
 
 export const SUJETS: (Sujet | SujetApercu)[] = (sujets as (Sujet | SujetApercu)[]).map(
