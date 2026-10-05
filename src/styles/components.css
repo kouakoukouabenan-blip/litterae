@@ -168,7 +168,7 @@
 
 /* Feuille de filtres (téléphone) */
 .sheet {
-  width: 100%; max-width: 32rem; max-height: 88dvh;
+  width: 100%; max-width: 32rem; max-height: 88vh; max-height: 88dvh;
   margin: auto auto 0; padding: 0;
   border: 0; border-radius: var(--radius) var(--radius) 0 0;
   background: var(--surface); color: var(--ink);
@@ -177,7 +177,8 @@
 .sheet[open] { display: flex; }
 .sheet::backdrop { background: rgba(26, 26, 26, 0.45); }
 .sheet-head { display: flex; align-items: center; justify-content: space-between; padding: var(--s2) var(--s2) var(--s2) var(--s4); border-bottom: 1px solid var(--line); }
-.sheet-body { overflow-y: auto; padding: var(--s4); flex: 1; }
+/* « 1 1 auto » et non « 1 » : avec une base à 0 %, Safari sur iPhone écrase le contenu à une ligne. */
+.sheet-body { overflow-y: auto; -webkit-overflow-scrolling: touch; padding: var(--s4); flex: 1 1 auto; min-height: 0; }
 .sheet-foot-single { grid-template-columns: 1fr !important; }
 .sheet-foot { display: grid; grid-template-columns: auto 1fr; gap: var(--s2); padding: var(--s3) var(--s4) calc(var(--s3) + env(safe-area-inset-bottom)); border-top: 1px solid var(--line); }
 @media (min-width: 720px) { .sheet { margin: auto; border-radius: var(--radius); } }
