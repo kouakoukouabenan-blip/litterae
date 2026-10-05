@@ -54,7 +54,7 @@ export function InstallGuide() {
         <button type="button" class="icon-btn" onClick={() => ref.current?.close()} aria-label="Fermer"><Icon name="close" /></button>
       </div>
       <div class="sheet-body">
-        <p>Une fois installée, Litterae s'ouvre depuis ton écran d'accueil comme une application, en plein écran, et le cours reste lisible sans connexion.</p>
+        <p>Une fois installée, Litterae s'ouvre depuis ton écran d'accueil comme une application, en plein écran, et les leçons déjà ouvertes restent lisibles sans connexion.</p>
         <Steps />
         <p class="small muted">Litterae ne prend presque pas de place : moins de 1 Mo, sans passer par le Play Store ni l'App Store.</p>
       </div>

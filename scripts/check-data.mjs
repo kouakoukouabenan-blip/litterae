@@ -53,6 +53,10 @@ for (const s of sujets) {
   }
 }
 
+// Leçons : le site public n'a que leurs titres (5 gratuites au choix, demandées au serveur).
+const lecons = readFileSync(new URL("../src/data/lecons.ts", import.meta.url), "utf8");
+if (/blocs:\s*\[\s*[^\]\s]/.test(lecons)) err("leçons", "texte de leçon présent dans les données publiques");
+
 if (errors.length) {
   console.error(`${errors.length} problème(s) dans les données :\n- ${errors.join("\n- ")}`);
   process.exit(1);

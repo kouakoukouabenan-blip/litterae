@@ -80,9 +80,8 @@ export interface Lecon {
   id: string;
   titre: string;
   duree: string;
+  /** Vide tant que le texte n'est pas sur l'appareil (accès complet ou leçon gratuite ouverte). */
   blocs: BlocLecon[];
-  /** Leçon ajoutée depuis le tableau de bord et réservée à l'accès complet. */
-  payante?: boolean;
 }
 
 export interface Outils {
@@ -127,7 +126,7 @@ export interface ContenuPayant {
   quiz?: Record<string, QuestionQuiz[]>;
   /** Dictionnaire littéraire complet (absent des clés activées avant son ajout). */
   dictionnaire?: EntreeDico[];
-  /** Leçons payantes ajoutées depuis le tableau de bord. */
+  /** Texte de toutes les leçons : celles du guide et celles ajoutées ou modifiées depuis le tableau de bord. */
   lecons?: Record<string, BlocLecon[]>;
 }
 

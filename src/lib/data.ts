@@ -5,6 +5,7 @@ import type { ContenuPayant, Oeuvre, Sujet, SujetApercu } from "../data/types";
 import { licence } from "./licence";
 import { contenuLibre } from "./libre";
 import { fichesOuvertes } from "./fiches";
+import { LECONS as LECONS_GUIDE } from "../data/lecons";
 
 // Données publiques (partie gratuite), complétées par le contenu payant si une clé a été validée.
 const payant = licence()?.contenu;
@@ -39,6 +40,8 @@ export const estComplet = (s: Sujet | SujetApercu): s is Sujet => "intro" in s;
  */
 export const contenuEnRetard = (c: ContenuPayant) =>
   (sujets as (Sujet | SujetApercu)[]).some(s => !estComplet(s) && !c.sujets.some(p => p.num === s.num)) ||
+  // Clés activées avant que le texte des leçons du guide passe dans le contenu payant.
+  LECONS_GUIDE.some(l => !c.lecons?.[l.id]?.length) ||
   (c.dictionnaire?.length ?? 0) < dico.entrees.length ||
   (oeuvres as Oeuvre[]).some(w => w.resume === null && !(w.id in c.oeuvres));
 
