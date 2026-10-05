@@ -18,7 +18,8 @@ export interface ContenuLibre {
   /** Fiches et leçons ajoutées depuis le tableau de bord (texte vide si payantes). */
   ajouts?: {
     oeuvres: Oeuvre[];
-    lecons: { id: string; titre: string; duree: string; libre: boolean; blocs: BlocLecon[] }[];
+    /** `quiz` : nombre de questions du quiz écrit dans le tableau de bord (les questions viennent avec le contenu payant). */
+    lecons: { id: string; titre: string; duree: string; libre: boolean; blocs: BlocLecon[]; quiz?: number }[];
   };
   /** Mots du dictionnaire ajoutés ou modifiés depuis le tableau de bord (sans le sens). */
   mots?: MotDico[];

@@ -39,7 +39,7 @@ function useDerniersOnglets() {
 function useSection() {
   const section = useRoute().path[0] ?? "accueil";
   // Les sujets d'entraînement sont le second onglet de Sujets ; la boîte à outils se range avec le cours.
-  return section === "entrainement" ? "sujets" : section === "outils" ? "cours" : section === "mes-fiches" ? "oeuvres" : section;
+  return ["defi", "revisions", "progres"].includes(section) ? "accueil" : section === "entrainement" ? "sujets" : section === "outils" ? "cours" : section === "mes-fiches" ? "oeuvres" : section;
 }
 
 /** Onglets dans la barre du haut, sur tablette et ordinateur. */

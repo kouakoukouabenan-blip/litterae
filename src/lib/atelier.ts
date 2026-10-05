@@ -1,5 +1,6 @@
 import { read, useStored } from "./storage";
 import { noterAtelier } from "./stats";
+import { marquer } from "./progres";
 
 /**
  * Atelier de rédaction : le brouillon d'un sujet, gardé sur le téléphone.
@@ -58,6 +59,7 @@ export function useBrouillon(num: string): [Brouillon, (b: Brouillon) => void] {
   return [complet(b) ?? brouillonVide(), nb => {
     ecrire({ ...nb, modifie: Date.now() });
     noterAtelier(num, avancement(nb), !!nb.envoye);
+    marquer(`atelier:${num}`);
   }];
 }
 

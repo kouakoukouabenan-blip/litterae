@@ -23,6 +23,9 @@ import { InstallGate, InstallGuide } from "./components/Install";
 import { CommentPayer } from "./components/CommentPayer";
 import { AccesScreen } from "./screens/Acces";
 import { ContactScreen } from "./screens/Contact";
+import { DefiScreen } from "./screens/Defi";
+import { RevisionsScreen } from "./screens/Revisions";
+import { ProgresScreen } from "./screens/Progres";
 import { reverifier } from "./lib/licence";
 import { synchroniser } from "./lib/synchro";
 import { demarrerStats, noter } from "./lib/stats";
@@ -95,6 +98,9 @@ export function App() {
     case "confidentialite": screen = <ConfidentialiteScreen />; break;
     case "acces": screen = <AccesScreen params={params} />; break;
     case "contact": screen = <ContactScreen params={params} />; break;
+    case "defi": screen = <DefiScreen />; break;
+    case "revisions": screen = <RevisionsScreen />; break;
+    case "progres": screen = <ProgresScreen />; break;
     default: screen = <NotFound />;
   }
 

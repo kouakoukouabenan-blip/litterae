@@ -148,6 +148,7 @@ export function ConfidentialiteScreen() {
       <h2 class="section-title">Notifications</h2>
       <p>Si tu acceptes les notifications, ton navigateur fournit une adresse technique d'envoi, gardée sur notre serveur pour t'envoyer les messages de Litterae. Elle ne permet pas de t'identifier. Tu peux arrêter à tout moment depuis la page À propos ou les réglages du navigateur.</p>
       <p>Rappels : si tu ne reviens pas pendant 3 jours, Litterae peut te rappeler ce que tu faisais. Le texte du rappel est choisi sur ton téléphone, à partir de ce que tu y as ouvert ; notre serveur garde seulement la date à laquelle réveiller ton téléphone (repoussée à chaque visite), jamais ce que tu lis. Les suggestions « Pour toi » de l'accueil sont calculées de la même façon, sur ton téléphone. Tu peux couper les rappels depuis la page À propos.</p>
+      <p>Ta progression (série de jours, objectif du jour, révisions, défis, niveau par étape) est aussi calculée et gardée sur ton téléphone. Notre serveur reçoit seulement des totaux anonymes : un objectif du jour atteint, un défi relevé, une séance de révision, une série de 3, 7, 14 ou 30 jours.</p>
 
       <h2 class="section-title">Publicité</h2>
       <p>Litterae n'affiche pas de publicité et ne transmet aucune donnée à des annonceurs.</p>

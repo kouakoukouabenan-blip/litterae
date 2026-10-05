@@ -1,4 +1,5 @@
 import { read, write } from "./storage";
+import { marquer } from "./progres";
 
 /**
  * Ce que l'élève a ouvert récemment (fiches, sujets corrigés, leçons), gardé seulement sur son téléphone.
@@ -14,4 +15,5 @@ export const historique = () => read<Vue[]>(CLE, []);
 export function noterVue(t: Vue["t"], id: string) {
   const reste = historique().filter(v => !(v.t === t && v.id === id));
   write(CLE, [{ t, id, d: Date.now() }, ...reste].slice(0, MAX));
+  marquer(`${t}:${id}`);
 }

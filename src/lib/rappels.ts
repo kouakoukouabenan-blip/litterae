@@ -2,6 +2,7 @@ import { SERVEUR_URL } from "./site";
 import { read, write } from "./storage";
 import { etatNotif } from "./notifications";
 import { texteRappel } from "./suggestions";
+import { bilan } from "./progres";
 
 /**
  * Rappels personnels : si l'élève ne revient pas pendant 3 jours, une notification lui propose
@@ -10,11 +11,20 @@ import { texteRappel } from "./suggestions";
  * Le texte est choisi sur le téléphone et rangé dans un cache que lit le service worker (public/push-sw.js).
  * Le serveur sait seulement quand réveiller le téléphone : jamais ce que l'élève a lu.
  * Sans retour de l'élève, un 2e rappel part une semaine plus tard, puis plus rien.
+ * Avec une série d'au moins 2 jours, le rappel part dès le lendemain soir pour qu'elle ne s'arrête pas.
  */
 export const JOURS_AVANT_RAPPEL = 3;
 const CACHE = "litterae-rappel";
 const ACTIFS = "rappels-actifs";
-const PROGRAMME = "rappel-programme";
+const PROGRAMME = "rappel-cible";
+
+/** 18 h (UTC) du jour situé `jours` jours après aujourd'hui. */
+function heureDuRappel(t: number, jours: number) {
+  const d = new Date(t);
+  d.setUTCDate(d.getUTCDate() + jours);
+  d.setUTCHours(18, 0, 0, 0);
+  return d.getTime();
+}
 
 export const rappelsActifs = () => read<boolean>(ACTIFS, true);
 
@@ -35,7 +45,10 @@ async function envoyer(corps: object) {
 async function rangerTexte() {
   if (!("caches" in window)) return;
   const c = await caches.open(CACHE);
-  await c.put("/rappel", new Response(JSON.stringify({ ...texteRappel(), date: Date.now() }), { headers: { "content-type": "application/json" } }));
+  // Le texte d'une série ne vaut que pour le lendemain ; le 2e rappel, une semaine après, propose de recommencer.
+  const texte = { ...texteRappel(), date: Date.now(), expire: Date.now() + 2 * 864e5,
+    ensuite: { titre: "Ta dissertation t'attend", texte: "Reprends avec le défi du jour : un sujet, 5 minutes, 2 arguments.", lien: "#/defi" } };
+  await c.put("/rappel", new Response(JSON.stringify(texte), { headers: { "content-type": "application/json" } }));
 }
 
 /**
@@ -46,11 +59,14 @@ export async function preparerRappel() {
   if (!SERVEUR_URL || etatNotif() !== "abonne" || !rappelsActifs()) return;
   try {
     await rangerTexte();
-    if (Date.now() - read<number>(PROGRAMME, 0) < 12 * 3600e3 || !navigator.onLine) return;
+    const jours = bilan().serie >= 2 ? 1 : JOURS_AVANT_RAPPEL;
+    // Même calcul que le serveur : 18 h (UTC, heure d'Abidjan) le jour du rappel. On ne le redit que s'il change.
+    const cible = heureDuRappel(Date.now(), jours);
+    if (read<number>(PROGRAMME, 0) === cible || !navigator.onLine) return;
     const endpoint = await adresse();
     if (!endpoint) return;
-    await envoyer({ endpoint, jours: JOURS_AVANT_RAPPEL });
-    write(PROGRAMME, Date.now());
+    await envoyer({ endpoint, jours });
+    write(PROGRAMME, cible);
   } catch {
     // Hors connexion : ce sera fait à la prochaine visite.
   }

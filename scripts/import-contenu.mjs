@@ -20,7 +20,7 @@ const publiques = oeuvres.map(w =>
   ({ ...w, resume: null, exemple: null, detaillee: detaillee(w), idees: w.idees.map(i => ({ texte: "", fonction: i.fonction, argument: i.argument })) })
 );
 const sujetsPublics = sujets.map((s, i) =>
-  i < gratuites.sujets ? s : { num: s.num, auteur: s.auteur, citation: s.citation, orientation: s.orientation }
+  i < gratuites.sujets ? s : { num: s.num, auteur: s.auteur, citation: s.citation, orientation: s.orientation, notion: s.notion, themes: s.themes }
 );
 
 const out = new URL("../src/data/", import.meta.url);

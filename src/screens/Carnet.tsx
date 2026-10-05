@@ -46,6 +46,14 @@ export function CarnetScreen() {
         <Icon name="chevron_right" />
       </a>
       {!licence() && <p class="small muted access-buy">Pas encore de clé ? <AchatLien label={`Acheter l'accès complet, ${PRICE}`} /></p>}
+      <a class="row access-row" href="#/progres">
+        <Icon name="history_edu" size={20} />
+        <span class="row-body">
+          <span class="row-title">Ma progression</span>
+          <span class="meta">Série de jours, révisions, défi du jour, niveau par étape</span>
+        </span>
+        <Icon name="chevron_right" />
+      </a>
       <LigneMessages />
     </Page>
   );

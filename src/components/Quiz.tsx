@@ -8,7 +8,10 @@ import { useStored } from "../lib/storage";
 import { plural } from "../lib/text";
 import { AchatLien } from "./Achat";
 import { Icon } from "./Icon";
+import { ajouterCarte, cleQuiz } from "../lib/revisions";
+import { marquer } from "../lib/progres";
 import { useVerrou } from "./LockPanel";
+import { contenuLibre } from "../lib/libre";
 
 const NOMBRES = apercu as Record<string, number>;
 /** Quiz offert à tous (le premier), pour découvrir l'entraînement. */
@@ -16,7 +19,8 @@ const LIBRES = libres as Record<string, QuestionQuiz[]>;
 
 /** Quiz en bas d'une leçon : le premier est offert, les autres font partie de l'accès complet. */
 export function QuizLecon({ id }: { id: string }) {
-  const nombre = NOMBRES[id];
+  // Leçons du guide : nombre publié avec le site ; leçons ajoutées : nombre donné par le tableau de bord.
+  const nombre = NOMBRES[id] ?? contenuLibre()?.ajouts?.lecons.find(l => l.id === id)?.quiz;
   if (!nombre) return null;
   const l = licence();
   const offert = LIBRES[id]?.length ? LIBRES[id] : undefined;
@@ -75,6 +79,9 @@ function Questions({ id, questions }: { id: string; questions: QuestionQuiz[] })
     if (choix !== null) return;
     setChoix(i);
     if (i === questions[n].bonne) setScore(score + 1);
+    // La question reviendra dans les révisions (demain si l'élève s'est trompé).
+    ajouterCarte(cleQuiz(id, n), i === questions[n].bonne);
+    marquer(`quiz:${id}`);
   }
   function suivante() {
     const dernier = n + 1 >= questions.length;

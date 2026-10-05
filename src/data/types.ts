@@ -47,6 +47,10 @@ export interface SujetApercu {
   auteur: string;
   citation: string;
   orientation: string;
+  /** Idée du sujet en quelques mots (« Dénoncer l'injustice »). */
+  notion?: string;
+  /** Thèmes des œuvres qui peuvent l'illustrer (mêmes mots que les thèmes des fiches). */
+  themes?: string[];
 }
 
 export interface Sujet extends SujetApercu {

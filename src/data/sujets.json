@@ -66,7 +66,17 @@
     }
    ]
   },
-  "conclu": "Au terme de notre analyse, retenons que la littérature porte efficacement la voix de ceux que la société réduit au silence, faisant de l'écrivain un combattant des injustices. Cependant, au-delà de cette fonction engagée, la littérature embrasse aussi la quête du beau, le besoin d'évasion et l'expression du moi profond. En vérité, c'est précisément cette richesse de fonctions — militer, embellir, rêver, ressentir — qui fait de la littérature l'un des arts les plus complets et les plus indispensables à l'humanité. On se demanderait toutefois si, à l'ère des réseaux sociaux, le roman ne trouve pas dans le hashtag militaire un concurrent inattendu."
+  "conclu": "Au terme de notre analyse, retenons que la littérature porte efficacement la voix de ceux que la société réduit au silence, faisant de l'écrivain un combattant des injustices. Cependant, au-delà de cette fonction engagée, la littérature embrasse aussi la quête du beau, le besoin d'évasion et l'expression du moi profond. En vérité, c'est précisément cette richesse de fonctions — militer, embellir, rêver, ressentir — qui fait de la littérature l'un des arts les plus complets et les plus indispensables à l'humanité. On se demanderait toutefois si, à l'ère des réseaux sociaux, le roman ne trouve pas dans le hashtag militaire un concurrent inattendu.",
+  "notion": "Donner une voix aux sans-voix",
+  "themes": [
+   "Oppression",
+   "Injustice",
+   "Pauvreté",
+   "Condition féminine",
+   "Colonisation",
+   "Dignité",
+   "Misère"
+  ]
  },
  {
   "num": "02",
@@ -131,7 +141,14 @@
     }
    ]
   },
-  "conclu": "Au terme de cette analyse, retenons que la littérature a effectivement pour vocation de faire du beau — la recherche de la perfection formelle est une dignité que l'écrivain ne devrait jamais sacrifier. Cependant, au-delà de cette ambition esthétique, la littérature admet une fonction militante qui fait d'elle un outil précieux au service de la société. Loin d'être contradictoires, ces deux fonctions se complètent et confèrent à l'œuvre écrite toute sa profondeur. L'on se demanderait toutefois si, dans nos sociétés de plus en plus tournées vers l'image et la vitesse, la littérature ne doit pas redoubler d'esthétisme pour séduire d'abord, avant de convaincre."
+  "conclu": "Au terme de cette analyse, retenons que la littérature a effectivement pour vocation de faire du beau — la recherche de la perfection formelle est une dignité que l'écrivain ne devrait jamais sacrifier. Cependant, au-delà de cette ambition esthétique, la littérature admet une fonction militante qui fait d'elle un outil précieux au service de la société. Loin d'être contradictoires, ces deux fonctions se complètent et confèrent à l'œuvre écrite toute sa profondeur. L'on se demanderait toutefois si, dans nos sociétés de plus en plus tournées vers l'image et la vitesse, la littérature ne doit pas redoubler d'esthétisme pour séduire d'abord, avant de convaincre.",
+  "notion": "L'art pour l'art",
+  "themes": [
+   "Art",
+   "Poésie",
+   "Beauté",
+   "Beauté et forme"
+  ]
  },
  {
   "num": "03",
@@ -196,174 +213,423 @@
     }
    ]
   },
-  "conclu": "Au terme de notre analyse, il ressort que la littérature ancrée dans l'observation fidèle de la réalité offre une profondeur et une authenticité remarquables, faisant de l'écrivain un précieux témoin de son époque. Cependant, la fiction et l'imagination sont tout autant des voies vers la vérité — parfois plus directes et plus pénétrantes. En définitive, le véritable écrivain n'est ni un reporter ni un pur rêveur, mais quelqu'un qui sait que la frontière entre le réel observé et le réel inventé est souvent le lieu où naît la grande littérature."
+  "conclu": "Au terme de notre analyse, il ressort que la littérature ancrée dans l'observation fidèle de la réalité offre une profondeur et une authenticité remarquables, faisant de l'écrivain un précieux témoin de son époque. Cependant, la fiction et l'imagination sont tout autant des voies vers la vérité — parfois plus directes et plus pénétrantes. En définitive, le véritable écrivain n'est ni un reporter ni un pur rêveur, mais quelqu'un qui sait que la frontière entre le réel observé et le réel inventé est souvent le lieu où naît la grande littérature.",
+  "notion": "Le réalisme : peindre la société",
+  "themes": [
+   "Société",
+   "Pauvreté",
+   "Misère",
+   "Corruption",
+   "Ville",
+   "Exploitation"
+  ]
  },
  {
   "num": "04",
   "auteur": "Gilles Vigneault — entretien journalistique",
   "citation": "Tous les poètes sont engagés ; ils doivent être des révolutionnaires, non pas en maniant des bombes, mais par leur désir de changer le monde, de l'améliorer.",
-  "orientation": "Engagement"
+  "orientation": "Engagement",
+  "notion": "L'écrivain qui veut changer le monde",
+  "themes": [
+   "Révolte",
+   "Révolution",
+   "Liberté",
+   "Résistance",
+   "Engagement",
+   "Espoir"
+  ]
  },
  {
   "num": "05",
   "auteur": "James Riley — Les Voleurs d'histoires",
   "citation": "On lit des romans parce qu'on s'ennuie, parce qu'on a envie de s'amuser.",
-  "orientation": "Évasion"
+  "orientation": "Évasion",
+  "notion": "Lire pour s'amuser",
+  "themes": [
+   "Aventure",
+   "Voyage",
+   "Rêve",
+   "Quête",
+   "Comédie",
+   "Amour"
+  ]
  },
  {
   "num": "06",
   "auteur": "Roger Caillot",
   "citation": "Une littérature existe dans une société donnée ; elle en reçoit l'empreinte et, en retour, lui imprime une direction.",
-  "orientation": "Social"
+  "orientation": "Social",
+  "notion": "Littérature et société s'influencent",
+  "themes": [
+   "Société",
+   "Tradition et modernité",
+   "Tradition",
+   "Modernité",
+   "Politique",
+   "Indépendance"
+  ]
  },
  {
   "num": "07",
   "auteur": "Alain Mabanckou — TV5",
   "citation": "Le livre va dans le sens de notre relecture de l'histoire.",
-  "orientation": "Engagement / Social"
+  "orientation": "Engagement / Social",
+  "notion": "Relire l'histoire",
+  "themes": [
+   "Histoire",
+   "Mémoire",
+   "Colonisation",
+   "Esclavage",
+   "Indépendance",
+   "Guerre"
+  ]
  },
  {
   "num": "08",
   "auteur": "Fatou Diome — Radio France, avril 2021",
   "citation": "J'écris pour dire que la lâche sérénité des silencieux garantit la victoire des injustes.",
-  "orientation": "Engagement"
+  "orientation": "Engagement",
+  "notion": "Dénoncer l'injustice",
+  "themes": [
+   "Injustice",
+   "Justice",
+   "Corruption",
+   "Dictature",
+   "Oppression",
+   "Racisme"
+  ]
  },
  {
   "num": "09",
   "auteur": "Charles Baudelaire",
   "citation": "La poésie n'a pas d'autre but qu'elle-même.",
-  "orientation": "Esthétique"
+  "orientation": "Esthétique",
+  "notion": "La poésie pure",
+  "themes": [
+   "Poésie",
+   "Beauté",
+   "Beauté et forme",
+   "Art",
+   "Spleen"
+  ]
  },
  {
   "num": "10",
   "auteur": "Oscar Wilde",
   "citation": "Un artiste doit créer de belles choses, mais sans rien y mettre de sa propre vie.",
-  "orientation": "Esthétique"
+  "orientation": "Esthétique",
+  "notion": "L'art sans la vie de l'auteur",
+  "themes": [
+   "Art",
+   "Beauté",
+   "Poésie",
+   "Mémoire",
+   "Enfance"
+  ]
  },
  {
   "num": "11",
   "auteur": "Jean Giraudoux — L'Impromptu de Paris (1937)",
   "citation": "Le mot comprendre n'existe pas au théâtre. Le vrai public ne comprend pas, il ressent. Le théâtre n'est pas un théorème mais un spectacle.",
-  "orientation": "Évasion / Esthétique"
+  "orientation": "Évasion / Esthétique",
+  "notion": "Le théâtre : ressentir plutôt que comprendre",
+  "themes": [
+   "Tragédie",
+   "Comédie",
+   "Passion",
+   "Destin",
+   "Absurdité"
+  ]
  },
  {
   "num": "12",
   "auteur": "André Brink",
   "citation": "La vocation essentielle de l'écrivain réside dans sa croisade impitoyable contre l'hypocrisie, la dissimulation et le mensonge.",
-  "orientation": "Engagement"
+  "orientation": "Engagement",
+  "notion": "Combattre l'hypocrisie et le mensonge",
+  "themes": [
+   "Hypocrisie",
+   "Corruption",
+   "Satire",
+   "Trahison",
+   "Manipulation",
+   "Religion"
+  ]
  },
  {
   "num": "13",
   "auteur": "Jean Giono",
   "citation": "Le poète doit être un professeur d'espérance. À cette seule condition, il a sa place à côté des hommes qui travaillent.",
-  "orientation": "Engagement / Social"
+  "orientation": "Engagement / Social",
+  "notion": "Le poète, professeur d'espérance",
+  "themes": [
+   "Espoir",
+   "Solidarité",
+   "Humanité",
+   "Résistance",
+   "Lutte"
+  ]
  },
  {
   "num": "14",
   "auteur": "Marie Vareille — Écrire un roman",
   "citation": "L'écrivain écrit parce qu'il a envie de raconter des histoires qui divertissent.",
-  "orientation": "Évasion"
+  "orientation": "Évasion",
+  "notion": "Écrire pour divertir",
+  "themes": [
+   "Aventure",
+   "Comédie",
+   "Voyage",
+   "Amour",
+   "Rêve"
+  ]
  },
  {
   "num": "15",
   "auteur": "Alain Mabanckou — à propos de la littérature africaine",
   "citation": "Dès qu'apparait le souci de signifier quelque chose d'autre — d'extérieur à l'art — la littérature commence à reculer.",
-  "orientation": "Esthétique"
+  "orientation": "Esthétique",
+  "notion": "L'art contre le message",
+  "themes": [
+   "Art",
+   "Poésie",
+   "Beauté et forme",
+   "Engagement",
+   "Culture"
+  ]
  },
  {
   "num": "16",
   "auteur": "Maxime Gorki",
   "citation": "Quand un écrivain crée un bon livre, il touche le cœur avec des mots. À sa volonté, le cœur gémit, se lamente, se remplit de colère ou au contraire de sérénité et de joie.",
-  "orientation": "Lyrique / Esthétique"
+  "orientation": "Lyrique / Esthétique",
+  "notion": "Toucher le cœur du lecteur",
+  "themes": [
+   "Amour",
+   "Mort",
+   "Passion",
+   "Solitude",
+   "Mélancolie",
+   "Tragédie"
+  ]
  },
  {
   "num": "17",
   "auteur": "Tshiyombo — poète congolais, sur Le Brouillard",
   "citation": "Mon œuvre est une poésie sensible et douloureuse, tout entière sortie du silence de la nuit et des brumes. Elle exprime l'amertume devant l'opprobre d'un peuple asservi, qui ne sait plus dénombrer les étoiles perlées de rosée.",
-  "orientation": "Lyrique / Engagement"
+  "orientation": "Lyrique / Engagement",
+  "notion": "La poésie de la souffrance d'un peuple",
+  "themes": [
+   "Oppression",
+   "Colonisation",
+   "Esclavage",
+   "Exil",
+   "Mélancolie",
+   "Négritude"
+  ]
  },
  {
   "num": "18",
   "auteur": "Friedrich Nietzsche",
   "citation": "Une œuvre d'art n'est supérieure que si elle est, en même temps, un symbole et l'expression exacte d'une réalité.",
-  "orientation": "Esthétique / Social"
+  "orientation": "Esthétique / Social",
+  "notion": "Le symbole et le réel",
+  "themes": [
+   "Société",
+   "Mythe",
+   "Destin",
+   "Absurdité",
+   "Humanité"
+  ]
  },
  {
   "num": "19",
   "auteur": "Alexandre Soljenitsyne, prix Nobel de littérature 1970 — BAC blanc, Lycée moderne de Korhogo",
   "citation": "Une littérature (...) qui n'ose pas communiquer à la société ses réalités, ses propres aspirations, qui n'est pas capable d'apercevoir à temps les dangers moraux et sociaux qui la guettent ne mérite même pas le nom de littérature.",
-  "orientation": "Engagement / Social"
+  "orientation": "Engagement / Social",
+  "notion": "Montrer les dangers qui guettent la société",
+  "themes": [
+   "Société",
+   "Corruption",
+   "Politique",
+   "Dictature",
+   "Désillusion",
+   "Violence"
+  ]
  },
  {
   "num": "20",
   "auteur": "Un penseur — BAC blanc d'Agboville",
   "citation": "Il est du devoir de tout écrivain de livrer bataille pour la liberté.",
-  "orientation": "Engagement"
+  "orientation": "Engagement",
+  "notion": "Se battre pour la liberté",
+  "themes": [
+   "Liberté",
+   "Dictature",
+   "Tyrannie",
+   "Résistance",
+   "Oppression",
+   "Indépendance"
+  ]
  },
  {
   "num": "21",
   "auteur": "Alexandre Jardin, écrivain français — BAC blanc régional de San Pedro",
   "citation": "La littérature répond au désir de nous arracher à la violence du monde.",
-  "orientation": "Évasion"
+  "orientation": "Évasion",
+  "notion": "Fuir la violence du monde",
+  "themes": [
+   "Rêve",
+   "Voyage",
+   "Guerre",
+   "Violence",
+   "Nature",
+   "Amour"
+  ]
  },
  {
   "num": "22",
   "auteur": "Ahmadou Kourouma, lors d'un entretien — BAC blanc régional de Daloa",
   "citation": "Ce qui compte, c'est le plaisir d'un texte. Il faut que les lecteurs trouvent dans la littérature autre chose que ce qu'ils lisent tous les jours dans l'exercice de leur vie professionnelle : elle doit leur donner un plaisir et leur permettre de rêver.",
-  "orientation": "Évasion / Esthétique"
+  "orientation": "Évasion / Esthétique",
+  "notion": "Le plaisir du texte",
+  "themes": [
+   "Comédie",
+   "Satire",
+   "Aventure",
+   "Amour",
+   "Tradition orale"
+  ]
  },
  {
   "num": "23",
   "auteur": "Sony Labou Tansi — avertissement de Les Sept Solitudes de Lorsa Lopez (1985)",
   "citation": "Être poète, de nos jours, c'est vouloir de toutes ses forces, de toute son âme, et de toute sa chair, face aux fusils, face à l'argent qui lui aussi devient un fusil, et surtout face à la vérité reçue […] qu'aucun visage de la réalité humaine ne soit poussé sous le silence de l'histoire.",
-  "orientation": "Engagement"
+  "orientation": "Engagement",
+  "notion": "Résister à la force et à l'argent",
+  "themes": [
+   "Dictature",
+   "Pouvoir",
+   "Argent",
+   "Violence",
+   "Résistance",
+   "Corruption"
+  ]
  },
  {
   "num": "24",
   "auteur": "Sujet — BAC blanc régional de Divo",
   "citation": "Le roman, c'est la vie, c'est du réel devenu langage.",
-  "orientation": "Social"
+  "orientation": "Social",
+  "notion": "Le roman, miroir de la vie",
+  "themes": [
+   "Société",
+   "Famille",
+   "Pauvreté",
+   "Ville",
+   "Mariage",
+   "Jeunesse"
+  ]
  },
  {
   "num": "25",
   "auteur": "Bottey Zadi Zaourou, écrivain ivoirien",
   "citation": "L'écrivain est un artiste, un producteur de beau. C'est un créateur de la parole artistique.",
-  "orientation": "Esthétique"
+  "orientation": "Esthétique",
+  "notion": "L'écrivain, créateur de beau",
+  "themes": [
+   "Art",
+   "Poésie",
+   "Beauté",
+   "Tradition orale",
+   "Culture"
+  ]
  },
  {
   "num": "26",
   "auteur": "Un scientiste, faisant la critique de la littérature",
   "citation": "L'univers de la littérature, c'est l'univers de la fiction : les espaces, les personnages… Tout est inventé. La littérature est en totale rupture avec le réel.",
-  "orientation": "Évasion"
+  "orientation": "Évasion",
+  "notion": "Fiction et réel",
+  "themes": [
+   "Rêve",
+   "Mythe",
+   "Aventure",
+   "Société",
+   "Histoire"
+  ]
  },
  {
   "num": "27",
   "auteur": "Jean Cocteau",
   "citation": "Je ne crois pas à ce terme à la mode : l'évasion. Je crois à l'invasion. Je crois qu'au lieu de s'évader par une œuvre, on est envahi par elle. (…) Ce qui est beau, c'est d'être envahi, habité, inquiété, obsédé, dérangé par une œuvre.",
-  "orientation": "Évasion / Engagement"
+  "orientation": "Évasion / Engagement",
+  "notion": "L'œuvre qui nous dérange",
+  "themes": [
+   "Absurdité",
+   "Folie",
+   "Violence",
+   "Conscience",
+   "Culpabilité"
+  ]
  },
  {
   "num": "28",
   "auteur": "Alfred de Musset — La Nuit de mai (1835)",
   "citation": "Les plus désespérés sont les chants les plus beaux.",
-  "orientation": "Lyrique / Esthétique"
+  "orientation": "Lyrique / Esthétique",
+  "notion": "La beauté de la douleur",
+  "themes": [
+   "Mort",
+   "Solitude",
+   "Mélancolie",
+   "Spleen",
+   "Amour",
+   "Exil"
+  ]
  },
  {
   "num": "29",
   "auteur": "Michelet",
   "citation": "L'écrivain est le bâton de l'aveugle, sans l'écrivain le monde évoluerait vers la soumission et l'acquiescement.",
-  "orientation": "Engagement"
+  "orientation": "Engagement",
+  "notion": "L'écrivain qui éveille les consciences",
+  "themes": [
+   "Conscience",
+   "Oppression",
+   "Dictature",
+   "Liberté",
+   "Éducation",
+   "Révolte"
+  ]
  },
  {
   "num": "30",
   "auteur": "Émile Zola — Le Roman expérimental (1880) · Examen régional de Yopougon",
   "citation": "L'imagination n'est plus la qualité maîtresse du romancier.",
-  "orientation": "Social / Engagement"
+  "orientation": "Social / Engagement",
+  "notion": "Le roman, observation du réel",
+  "themes": [
+   "Société",
+   "Pauvreté",
+   "Misère",
+   "Science",
+   "Ville",
+   "Exploitation"
+  ]
  },
  {
   "num": "31",
   "auteur": "Milan Kundera — L'Art du roman (1986) · Bac régional de Bouaflé",
   "citation": "Le personnage du roman n'est pas une simulation de l'être vivant. C'est un être imaginé, un ego expérimental.",
-  "orientation": "Évasion / Esthétique"
+  "orientation": "Évasion / Esthétique",
+  "notion": "Le personnage, un être imaginé",
+  "themes": [
+   "Identité",
+   "Quête",
+   "Destin",
+   "Absurdité",
+   "Initiation"
+  ]
  }
 ]

@@ -9,7 +9,7 @@ import { read, write } from "./storage";
  * les fiches consultées et les messages de l'accueil vus ou cliqués. Aucun nom, aucune adresse.
  * Les événements sont regroupés et envoyés en une fois pour économiser les données mobiles.
  */
-export type Evenement = { t: "ecran" | "oeuvre" | "vue" | "clic" | "notif" | "sujet" | "lecon" | "mot" | "recherche" | "vide" | "verrou" | "achat" | "parcours" | "partage" | "gratuit"; ref: string };
+export type Evenement = { t: "ecran" | "oeuvre" | "vue" | "clic" | "notif" | "sujet" | "lecon" | "mot" | "recherche" | "vide" | "verrou" | "achat" | "parcours" | "partage" | "gratuit" | "progres"; ref: string };
 
 let file: Evenement[] = [];
 let minuterie: ReturnType<typeof setTimeout> | undefined;

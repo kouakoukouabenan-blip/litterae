@@ -10,6 +10,10 @@ import { avancement, lireBrouillon } from "./atelier";
 import { numero, sujetsEntrainement } from "./entrainement";
 import { historique, type Vue } from "./historique";
 import { cles, read } from "./storage";
+import { bilan } from "./progres";
+import { cartesDuJour } from "./revisions";
+import { defiFaitAujourdhui, sujetDuJour } from "./defi";
+import { etapeFaible } from "./maitrise";
 
 /**
  * Suggestions personnelles, calculées sur le téléphone à partir de ce que l'élève a ouvert
@@ -140,17 +144,56 @@ function ficheDuCarnet(h: Vue[], maintenant: number): Suggestion | null {
   };
 }
 
+/** Défi du jour, tant qu'il n'est pas relevé. */
+function defi(): Suggestion | null {
+  if (defiFaitAujourdhui()) return null;
+  const s = sujetDuJour();
+  return {
+    cle: "defi", icone: "edit", lien: "#/defi",
+    titre: "Défi du jour", detail: `Sujet ${numero(s.num)} : 2 arguments en 5 minutes`,
+    notif: { titre: "Le défi du jour t'attend", texte: "Un sujet type bac, 5 minutes pour trouver 2 arguments et 2 œuvres." }
+  };
+}
+
+/** Cartes à revoir aujourd'hui (mots du dictionnaire, questions de quiz). */
+function revisions(): Suggestion | null {
+  const n = cartesDuJour().length;
+  if (!n) return null;
+  return {
+    cle: "revisions", icone: "history_edu", lien: "#/revisions",
+    titre: `Révise ${n > 1 ? `${n} cartes` : "une carte"}`, detail: "Mots et quiz à revoir aujourd'hui",
+    notif: { titre: `${n > 1 ? `${n} cartes` : "Une carte"} à réviser`, texte: "Deux minutes pour ne pas oublier les mots et les règles vus ces derniers jours." }
+  };
+}
+
+/** Étape de la dissertation la plus faible, avec ce qui la ferait progresser (si l'élève peut l'ouvrir). */
+function etapeATravailler(premium: boolean): Suggestion | null {
+  const e = etapeFaible();
+  if (!e || e.score >= 60) return null;
+  const lecon = e.conseil.lien.match(/^#\/cours\/(.+)$/)?.[1];
+  const ouvertes = leconsOuvertes();
+  if (lecon && !premium && !ouvertes[lecon] && Object.keys(ouvertes).length >= LECONS_GRATUITES) return null;
+  return {
+    cle: `etape-${e.id}`, icone: "menu_book", lien: e.conseil.lien,
+    titre: `À travailler : ${e.nom.charAt(0).toLowerCase()}${e.nom.slice(1)}`, detail: e.conseil.texte,
+    notif: { titre: `Progresse sur une étape : ${e.nom.toLowerCase()}`, texte: `${e.conseil.texte}, c'est là que tu peux gagner le plus de points.` }
+  };
+}
+
 /** Toutes les suggestions du moment, la plus utile d'abord. */
 export function suggestions(maintenant = Date.now()): Suggestion[] {
   const premium = !!licence();
   const h = historique();
   const jour = Math.floor(maintenant / JOUR);
-  return [sujetCommence(), leconSuivante(premium), sujetCitant(h, premium), oeuvreProche(h, premium, jour), ficheDuCarnet(h, maintenant)]
+  return [sujetCommence(), defi(), revisions(), sujetCitant(h, premium), etapeATravailler(premium), leconSuivante(premium), oeuvreProche(h, premium, jour), ficheDuCarnet(h, maintenant)]
     .filter((s): s is Suggestion => !!s);
 }
 
 /** Texte du rappel envoyé si l'élève ne revient pas : la suggestion la plus utile, sinon une invitation simple. */
 export function texteRappel(): { titre: string; texte: string; lien: string } {
+  // Série en cours : le rappel part le lendemain soir, avant qu'elle ne s'arrête.
+  const serie = bilan().serie;
+  if (serie >= 2) return { titre: `Garde ta série de ${serie} jours`, texte: "Relève le défi du jour en 5 minutes pour la continuer.", lien: "#/defi" };
   const s = suggestions()[0];
   if (s) return { ...s.notif, lien: s.lien };
   if (!read<string[]>("lecons-lues", []).length)

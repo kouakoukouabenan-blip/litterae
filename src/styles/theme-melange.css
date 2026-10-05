@@ -239,6 +239,9 @@ html[data-glisse="gauche"] main.page > :not(.segments):not(:has(.segments)), htm
   .choix .detail-long { display: none; }
   .choix .choix-carte .progress-bar { grid-column: 1 / -1; margin-top: var(--s1); }
   .pour-toi { margin-top: 0; }
+  .choix { margin-bottom: var(--s4); }
+  .pour-toi-liste { gap: 6px; }
+  .pour-toi-ligne { min-height: 52px; padding-top: 6px; padding-bottom: 6px; }
 }
 
 @media (min-width: 720px) { .detail-court { display: none; } }

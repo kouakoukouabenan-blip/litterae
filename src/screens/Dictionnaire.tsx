@@ -1,3 +1,5 @@
+import { ajouterCarte, cleMot } from "../lib/revisions";
+import { marquer } from "../lib/progres";
 import { useSaisieDifferee } from "../lib/saisie";
 import { Fragment } from "preact";
 import { Partager, extrait } from "../components/Partager";
@@ -195,6 +197,12 @@ export function DicoRecherche({ q, onChange }: { q: string; onChange: (q: string
   );
 }
 
+/** Mot lu : il compte dans la journée et revient plus tard dans les révisions. */
+function retenir(mot: string) {
+  ajouterCarte(cleMot(mot));
+  marquer(`mot:${mot}`);
+}
+
 export function DicoResultats({ q, fonction, mot, onChange }: { q: string; fonction: string | null; mot?: string | null; onChange: (q: string, fonction: string | null) => void }) {
   const terms = queryTerms(q);
   const access = useAccess();
@@ -222,10 +230,11 @@ export function DicoResultats({ q, fonction, mot, onChange }: { q: string; fonct
     setOuvert(mot);
     scrollTo(0, 0);
     const e = entrees.find(x => x.mot === mot);
-    if (!e || complete(e)) { setEtat(null); return; }
+    if (!e || complete(e)) { setEtat(null); if (e) retenir(mot); return; }
     setEtat("chargement");
     const r = await consulter(mot);
     setEtat(typeof r === "string" ? r : null);
+    if (typeof r !== "string") retenir(mot);
   };
   const fermer = () => {
     setOuvert(null);

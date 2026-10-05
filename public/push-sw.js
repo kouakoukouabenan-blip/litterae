@@ -10,6 +10,8 @@ async function rappel() {
   } catch {
     // Pas encore de texte rangé.
   }
+  // Texte périmé (série d'il y a plusieurs jours) : on prend le texte prévu pour la suite.
+  if (r?.expire && Date.now() > r.expire && r.ensuite) r = r.ensuite;
   const lien = typeof r?.lien === "string" && r.lien.startsWith("#/") ? r.lien : "#/accueil";
   return { id: "rappel", titre: r?.titre || "Litterae", texte: r?.texte || "Ta dissertation avance mieux un peu chaque jour. Reprends où tu en étais.", lien };
 }
