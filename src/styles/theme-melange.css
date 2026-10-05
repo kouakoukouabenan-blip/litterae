@@ -215,3 +215,14 @@ html[data-glisse="gauche"] main.page > :not(.segments):not(:has(.segments)), htm
 .search-bar .field input { font-size: 1rem; }
 .search-bar:not(.dico-search) .field { padding-left: var(--s3); }
 @media (max-width: 379px) { .search-bar .filter-btn { min-width: 50px; padding: 0; } .search-bar .field input { font-size: .9375rem; } }
+
+/* Version « Œuvres au centre » : cinq places, le bouton Œuvres en grand rond vert qui dépasse de la barre. */
+.bottom-nav { grid-template-columns: repeat(5, 1fr) !important; overflow: visible; }
+.bottom-nav-centre { position: relative; }
+.bottom-nav-centre .bottom-nav-icone { width: 58px; height: 58px; margin-top: -26px; border-radius: 50%; background: var(--green) !important; color: #fff; display: grid !important; place-items: center; padding: 0 !important; box-shadow: 0 6px 16px rgba(15, 61, 46, .30), 0 0 0 5px var(--surface); transition: transform .2s; }
+.bottom-nav-centre .bottom-nav-icone .icon { width: 28px; height: 28px; background: none !important; padding: 0 !important; }
+.bottom-nav-centre[aria-current="page"] .bottom-nav-icone { background: var(--green) !important; box-shadow: 0 6px 16px rgba(15, 61, 46, .30), 0 0 0 5px var(--surface), 0 0 0 8px var(--ochre-pale); }
+.bottom-nav-centre:active .bottom-nav-icone { transform: scale(.94); }
+.bottom-nav-item .bottom-nav-icone .nav-pastille { top: 0; right: 10px; }
+/* Sur téléphone, Mon espace est dans la barre du bas : plus besoin de l'icône en haut. */
+@media (max-width: 719px) { .topbar .espace-btn { display: none; } }

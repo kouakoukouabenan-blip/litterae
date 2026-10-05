@@ -10,12 +10,14 @@ function Pastille() {
   return <span class="nav-pastille" aria-label={`${nouvellesReponses} nouvelle${nouvellesReponses > 1 ? "s" : ""} réponse${nouvellesReponses > 1 ? "s" : ""}`} />;
 }
 
-// « Mon espace » est l'icône de profil en haut à droite (EspaceBouton), pour laisser la place à l'accueil.
+// Sur téléphone, Œuvres est au centre de la barre du bas, en grand rond vert ; « Mon espace » ferme la barre.
+// Sur ordinateur, « Mon espace » reste l'icône de profil en haut à droite (EspaceBouton).
 const ITEMS = [
   { section: "accueil", label: "Accueil", icon: "home" },
   { section: "cours", label: "Cours", icon: "menu_book" },
+  { section: "oeuvres", label: "Œuvres", icon: "local_library", centre: true },
   { section: "sujets", label: "Sujets", icon: "history_edu", lien: "entrainement" },
-  { section: "oeuvres", label: "Œuvres", icon: "local_library" }
+  { section: "carnet", label: "Mon espace", icon: "person", telephone: true }
 ] as const;
 
 /** Pages à deux onglets : l'onglet de la barre du bas qui les regroupe. */
@@ -48,7 +50,7 @@ export function NavTabs() {
   const lien = useDerniersOnglets();
   return (
     <nav class="nav-tabs" aria-label="Navigation principale">
-      {ITEMS.map(i => (
+      {ITEMS.filter(i => !("telephone" in i)).map(i => (
         <a key={i.section} href={lien(i)} class="nav-tab" aria-current={current === i.section ? "page" : undefined}>
           {i.label}
         </a>
@@ -66,8 +68,8 @@ export function BottomNav() {
       {ITEMS.map(i => {
         const active = current === i.section;
         return (
-          <a key={i.section} href={lien(i)} class="bottom-nav-item" aria-current={active ? "page" : undefined}>
-            <span class="bottom-nav-icone"><Icon name={i.icon} filled={active} /></span>
+          <a key={i.section} href={lien(i)} class={`bottom-nav-item${"centre" in i ? " bottom-nav-centre" : ""}`} aria-current={active ? "page" : undefined}>
+            <span class="bottom-nav-icone"><Icon name={i.icon} filled={active || "centre" in i} />{i.section === "carnet" && <Pastille />}</span>
             <span>{i.label}</span>
           </a>
         );
