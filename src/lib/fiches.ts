@@ -2,6 +2,7 @@ import type { IdeeIllustration } from "../data/types";
 import { licence } from "./licence";
 import { read, useStored, write } from "./storage";
 import { SERVEUR_URL } from "./site";
+import { noterGratuit } from "./stats";
 
 /**
  * Fiches d'œuvres sans clé : le site public n'a que de quoi chercher et filtrer.
@@ -31,7 +32,9 @@ export async function ouvrirFiche(id: string): Promise<TexteFiche | EchecFiche> 
     if (r.status === 429) return "trop";
     if (!r.ok || !d?.fiche) return "erreur";
     // Relu juste avant d'écrire : une autre fiche a pu être ouverte entre-temps.
-    write(CLE, { ...fichesOuvertes(), [id]: d.fiche });
+    const avant = fichesOuvertes();
+    write(CLE, { ...avant, [id]: d.fiche });
+    if (!licence() && !avant[id]) noterGratuit("fiche", Object.keys(avant).length + 1);
     return d.fiche as TexteFiche;
   } catch {
     return "erreur";

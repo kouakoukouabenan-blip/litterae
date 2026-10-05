@@ -2,6 +2,7 @@ import type { EntreeDico } from "../data/types";
 import { licence } from "./licence";
 import { read, useStored, write } from "./storage";
 import { SERVEUR_URL } from "./site";
+import { noterGratuit } from "./stats";
 
 /**
  * Dictionnaire littéraire : le site public ne contient que la liste des mots.
@@ -27,6 +28,7 @@ export async function consulter(mot: string): Promise<EntreeDico | EchecConsulta
     const d = await r.json().catch(() => null);
     if (!r.ok || !d?.entree) return "erreur";
     write(CLE, { ...vus, [mot]: d.entree });
+    if (!licence()) noterGratuit("mot", Object.keys(vus).length + 1);
     return d.entree as EntreeDico;
   } catch {
     return "erreur";

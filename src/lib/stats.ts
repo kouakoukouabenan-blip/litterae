@@ -9,7 +9,7 @@ import { read, write } from "./storage";
  * les fiches consultées et les messages de l'accueil vus ou cliqués. Aucun nom, aucune adresse.
  * Les événements sont regroupés et envoyés en une fois pour économiser les données mobiles.
  */
-export type Evenement = { t: "ecran" | "oeuvre" | "vue" | "clic" | "notif" | "sujet" | "lecon" | "mot" | "recherche" | "vide" | "verrou" | "achat" | "parcours" | "partage"; ref: string };
+export type Evenement = { t: "ecran" | "oeuvre" | "vue" | "clic" | "notif" | "sujet" | "lecon" | "mot" | "recherche" | "vide" | "verrou" | "achat" | "parcours" | "partage" | "gratuit"; ref: string };
 
 let file: Evenement[] = [];
 let minuterie: ReturnType<typeof setTimeout> | undefined;
@@ -55,6 +55,14 @@ export function noterFiche(id: string) {
   if (!vues.includes(id)) write("parcours-fiches", [...vues, id]);
   const n = vues.includes(id) ? vues.length : vues.length + 1;
   for (const p of PALIERS_FICHES) if (n >= p) palier(`fiches:${p}`);
+}
+
+/**
+ * Fiche, leçon ou mot gratuit ouvert sans clé : seulement son rang (« fiche:3 » = 3e fiche gratuite de l'appareil),
+ * pour savoir chaque jour combien de contenus gratuits sont ouverts et combien d'élèves arrivent au bout.
+ */
+export function noterGratuit(type: "fiche" | "lecon" | "mot", rang: number) {
+  noter({ t: "gratuit", ref: `${type}:${rang}` });
 }
 
 /** Sujet de l'atelier commencé, terminé, copie envoyée. */

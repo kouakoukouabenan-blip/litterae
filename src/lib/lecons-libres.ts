@@ -2,6 +2,7 @@ import type { BlocLecon } from "../data/types";
 import { licence } from "./licence";
 import { read, useStored, write } from "./storage";
 import { SERVEUR_URL } from "./site";
+import { noterGratuit } from "./stats";
 
 /**
  * Leçons sans clé : le site public n'a que leur titre. L'élève en lit 5 de son choix
@@ -29,7 +30,9 @@ export async function ouvrirLecon(id: string): Promise<BlocLecon[] | EchecLecon>
     const d = await r.json().catch(() => null);
     if (r.status === 429) return "trop";
     if (!r.ok || !Array.isArray(d?.blocs)) return "erreur";
-    write(CLE, { ...leconsOuvertes(), [id]: d.blocs });
+    const avant = leconsOuvertes();
+    write(CLE, { ...avant, [id]: d.blocs });
+    if (!licence() && !avant[id]) noterGratuit("lecon", Object.keys(avant).length + 1);
     return d.blocs as BlocLecon[];
   } catch {
     return "erreur";
