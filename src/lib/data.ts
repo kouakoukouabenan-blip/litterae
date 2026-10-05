@@ -1,5 +1,6 @@
 import oeuvres from "../data/oeuvres.json";
 import sujets from "../data/sujets.json";
+import dico from "../data/dictionnaire.json";
 import type { ContenuPayant, Oeuvre, Sujet, SujetApercu } from "../data/types";
 import { licence } from "./licence";
 import { contenuLibre } from "./libre";
@@ -32,11 +33,12 @@ export const SUJETS: (Sujet | SujetApercu)[] = (sujets as (Sujet | SujetApercu)[
 export const estComplet = (s: Sujet | SujetApercu): s is Sujet => "intro" in s;
 
 /**
- * Le contenu payant gardé sur l'appareil est plus ancien que le site : un sujet ou une œuvre
- * publiés depuis la validation de la clé n'y figurent pas (ils resteraient verrouillés).
+ * Le contenu payant gardé sur l'appareil est plus ancien que le site : un sujet, une œuvre
+ * ou des mots du dictionnaire publiés depuis la validation de la clé n'y figurent pas.
  */
 export const contenuEnRetard = (c: ContenuPayant) =>
   (sujets as (Sujet | SujetApercu)[]).some(s => !estComplet(s) && !c.sujets.some(p => p.num === s.num)) ||
+  (c.dictionnaire?.length ?? 0) < dico.entrees.length ||
   (oeuvres as Oeuvre[]).some(w => w.resume === null && !(w.id in c.oeuvres));
 
 /** Nombre de fiches avec résumé complet et idées d'illustration rédigées. */
