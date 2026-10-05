@@ -16,10 +16,17 @@ import { registerSW } from "virtual:pwa-register";
 conserverDonnees();
 
 // Nouvelle version en ligne : elle s'installe et la page se recharge seule, pour ne jamais garder
-// un ancien code avec de nouvelles images. Vérifie aussi toutes les heures si l'appli reste ouverte.
+// un ancien code avec de nouvelles images. Vérifie aussi toutes les heures si l'appli reste ouverte,
+// et chaque fois que l'élève revient dans l'appli laissée en arrière-plan (téléphone : elle n'est pas relancée).
 registerSW({
   immediate: true,
-  onRegisteredSW(_url, reg) { if (reg) setInterval(() => { if (navigator.onLine) reg.update(); }, 60 * 60 * 1000); }
+  onRegisteredSW(_url, reg) {
+    if (!reg) return;
+    let derniere = Date.now();
+    const verifier = () => { if (navigator.onLine && Date.now() - derniere > 60_000) { derniere = Date.now(); reg.update().catch(() => {}); } };
+    setInterval(verifier, 60 * 60 * 1000);
+    document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") verifier(); });
+  }
 });
 
 render(<App />, document.getElementById("app")!);
