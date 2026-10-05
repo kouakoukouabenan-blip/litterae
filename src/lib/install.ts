@@ -37,8 +37,22 @@ export function platform(): Platform {
   return "desktop";
 }
 
-/** Sur iPhone, seul Safari (ou un navigateur récent via Partager) sait ajouter à l'écran d'accueil. */
-export const isIosSafari = () => platform() === "ios" && !/CriOS|FxiOS|EdgiOS|OPiOS/.test(navigator.userAgent);
+/**
+ * Sur iPhone, trois cas pour ajouter Litterae à l'écran d'accueil :
+ * - « safari » : Safari (bouton Partager) ;
+ * - « autre » : Chrome, Edge, Firefox… qui passent aussi par Partager depuis iOS 16.4 ;
+ * - « integre » : le navigateur caché de Facebook, Instagram, TikTok, Snapchat… qui ne sait pas installer :
+ *   il faut d'abord ouvrir la page dans Safari.
+ */
+export type NavigateurIos = "safari" | "autre" | "integre";
+export function navigateurIos(): NavigateurIos {
+  const ua = navigator.userAgent;
+  if (/FBAN|FBAV|FB_IAB|Instagram|musical_ly|BytedanceWebview|TikTok|Snapchat|Twitter|LinkedInApp|Line\/|GSA\//.test(ua)) return "integre";
+  if (/CriOS|FxiOS|EdgiOS|OPiOS|OPT\//.test(ua)) return "autre";
+  // Une app qui affiche le site sans le nom « Safari » dans son identité est un navigateur intégré.
+  if (!/Safari\//.test(ua)) return "integre";
+  return "safari";
+}
 
 export function isInstalled() {
   return (

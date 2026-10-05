@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "preact/hooks";
-import { aDecouvert, dejaInstallee, isIosSafari, platform, useInstall } from "../lib/install";
+import { aDecouvert, dejaInstallee, navigateurIos, platform, useInstall } from "../lib/install";
 import { useRoute } from "../lib/router";
 import { Icon } from "./Icon";
 
@@ -11,22 +11,56 @@ export function useInstallAction() {
   return { ...install, start: async () => { if (!(await install.prompt())) openGuide(); } };
 }
 
+/** Bouton qui copie l'adresse la page, pour la coller dans Safari. */
+function CopierAdresse() {
+  const [copie, setCopie] = useState(false);
+  const copier = async () => {
+    const url = location.href.split("#")[0];
+    try { await navigator.clipboard.writeText(url); setCopie(true); }
+    catch { window.prompt("Copie cette adresse :", url); }
+  };
+  return (
+    <button type="button" class="btn btn-secondary install-copier" onClick={copier}>
+      <Icon name="content_copy" size={18} />{copie ? "Adresse copiée" : "Copier l'adresse"}
+    </button>
+  );
+}
+
+/** Marche à suivre sur iPhone et iPad : il n'y a pas de bouton d'installation automatique. */
+function StepsIos() {
+  const nav = navigateurIos();
+  if (nav === "integre")
+    return (
+      <>
+        <p class="install-note">Ce navigateur (Facebook, TikTok…) ne sait pas installer : passe d'abord par <strong>Safari</strong>.</p>
+        <ol class="install-steps">
+          <li>Touche <strong>•••</strong> (ou l'icône de partage) en haut ou en bas de l'écran, puis <strong>Ouvrir dans Safari</strong>. Sinon, copie l'adresse et colle-la dans Safari.</li>
+          <li>Dans Safari, touche <strong>Partager</strong> <Icon name="ios_share" size={18} />, puis <strong>Sur l'écran d'accueil</strong> et <strong>Ajouter</strong>.</li>
+        </ol>
+        <CopierAdresse />
+      </>
+    );
+  return (
+    <>
+      <p class="install-note">Sur iPhone, l'installation se fait à la main, en 3 gestes :</p>
+      <ol class="install-steps">
+        {nav === "safari" ? (
+          <li>Touche le bouton <strong>Partager</strong> <Icon name="ios_share" size={18} /> en bas de Safari. Tu ne le vois pas ? Touche d'abord <strong>•••</strong> à droite de l'adresse.</li>
+        ) : (
+          <li>Touche le bouton <strong>Partager</strong> <Icon name="ios_share" size={18} /> à droite de la barre d'adresse.</li>
+        )}
+        <li>Fais défiler vers le bas (ou touche <strong>Plus</strong>) et choisis <strong>Sur l'écran d'accueil</strong>.</li>
+        <li>Touche <strong>Ajouter</strong> en haut à droite. L'icône Litterae apparaît sur ton écran d'accueil, souvent sur la dernière page.</li>
+      </ol>
+      <p class="small muted">« Sur l'écran d'accueil » n'apparaît pas ? Ouvre cette page dans Safari et recommence.</p>
+      {nav === "autre" && <CopierAdresse />}
+    </>
+  );
+}
+
 export function Steps() {
   const p = platform();
-  if (p === "ios")
-    return isIosSafari() ? (
-      <ol class="install-steps">
-        <li>Touche le bouton <strong>Partager</strong> <Icon name="ios_share" size={18} /> en bas de Safari.</li>
-        <li>Fais défiler et choisis <strong>Sur l'écran d'accueil</strong>.</li>
-        <li>Touche <strong>Ajouter</strong> en haut à droite.</li>
-      </ol>
-    ) : (
-      <ol class="install-steps">
-        <li>Copie l'adresse de cette page.</li>
-        <li>Ouvre-la dans <strong>Safari</strong> : c'est lui qui permet l'installation sur iPhone.</li>
-        <li>Touche <strong>Partager</strong> <Icon name="ios_share" size={18} />, puis <strong>Sur l'écran d'accueil</strong>.</li>
-      </ol>
-    );
+  if (p === "ios") return <StepsIos />;
   if (p === "android")
     return (
       <ol class="install-steps">
@@ -46,20 +80,26 @@ export function Steps() {
 /** Fenêtre « Comment installer », montée une seule fois dans l'application. */
 export function InstallGuide() {
   const ref = useRef<HTMLDialogElement>(null);
-  openGuide = () => ref.current?.showModal();
+  openGuide = () => {
+    const d = ref.current;
+    if (!d) return;
+    // Anciens iPhone (avant iOS 15.4) : pas de showModal, on ouvre la fenêtre quand même.
+    if (typeof d.showModal === "function") d.showModal(); else d.setAttribute("open", "");
+  };
+  const fermer = () => { const d = ref.current; if (!d) return; if (typeof d.close === "function") d.close(); else d.removeAttribute("open"); };
   return (
-    <dialog ref={ref} class="sheet" aria-labelledby="install-title" onClick={e => e.target === ref.current && ref.current?.close()}>
+    <dialog ref={ref} class="sheet" aria-labelledby="install-title" onClick={e => e.target === ref.current && fermer()}>
       <div class="sheet-head">
         <h2 id="install-title" class="section-title">Installer Litterae</h2>
-        <button type="button" class="icon-btn" onClick={() => ref.current?.close()} aria-label="Fermer"><Icon name="close" /></button>
+        <button type="button" class="icon-btn" onClick={fermer} aria-label="Fermer"><Icon name="close" /></button>
       </div>
       <div class="sheet-body">
-        <p>Une fois installée, Litterae s'ouvre depuis ton écran d'accueil comme une application, en plein écran, et les leçons déjà ouvertes restent lisibles sans connexion.</p>
+        {platform() !== "ios" && <p>Une fois installée, Litterae s'ouvre depuis ton écran d'accueil comme une application, en plein écran, et les leçons déjà ouvertes restent lisibles sans connexion.</p>}
         <Steps />
-        <p class="small muted">Litterae ne prend presque pas de place : moins de 1 Mo, sans passer par le Play Store ni l'App Store.</p>
+        {platform() !== "ios" && <p class="small muted">Litterae ne prend presque pas de place : moins de 1 Mo, sans passer par le Play Store ni l'App Store.</p>}
       </div>
       <div class="sheet-foot sheet-foot-single">
-        <button type="button" class="btn btn-primary" onClick={() => ref.current?.close()}>J'ai compris</button>
+        <button type="button" class="btn btn-primary" onClick={fermer}>J'ai compris</button>
       </div>
     </dialog>
   );

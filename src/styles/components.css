@@ -195,6 +195,9 @@
 .install-steps { padding-left: 1.4em; display: flex; flex-direction: column; gap: var(--s3); margin: var(--s4) 0; }
 .install-steps li::marker { color: var(--orange); font-weight: 700; }
 .install-steps .icon { vertical-align: -4px; color: var(--green); }
+.install-note { font-weight: 600; }
+.install-note + .install-steps { margin-top: var(--s3); }
+.install-copier { display: inline-flex; align-items: center; gap: var(--s2); margin: var(--s3) 0; }
 .sheet-body > p + p { margin-top: var(--s3); }
 .tag-free { background: var(--ochre-pale); color: var(--ochre-text); }
 
