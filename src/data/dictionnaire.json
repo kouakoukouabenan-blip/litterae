@@ -41,6 +41,32 @@
  ],
  "entrees": [
   {
+   "mot": "ABSURDE",
+   "nature": "nom / adjectif",
+   "fonctions": [
+    "Lyrique",
+    "Engagement"
+   ],
+   "cles": "absurdite actions angoisse aucun beckett camus cherche choque comprendre condition dans denoncer des dit divorce donne elle engagement entre existence homme humaine ionesco letranger litterature logique lyrique marche monde montre parait parlent pas personnages philosophie privee que qui raison renvoie rhinoceros sans sens societe souvent sujet sur tete theatre une vie"
+  },
+  {
+   "mot": "ACADÉMISME",
+   "nature": "nom",
+   "fonctions": [
+    "Esthétique"
+   ],
+   "cles": "africaine anciens art audace avant-garde debat des ecriture est esthetique europeens forme fuir imiter innovation inventer les modeles mot oppose originalite pejoratif pour presque refuser regles respect sans scolaire servilement sur toujours trop une"
+  },
+  {
+   "mot": "ACCULTURATION",
+   "nature": "nom",
+   "fonctions": [
+    "Engagement",
+    "Sociale"
+   ],
+   "cles": "africain alienation ambigue assimilation autre colonial coloniale contact contexte culture culturelle deracinement dominante ecole effet eleve elle eloigne engagement identite instrument langue laventure origine perte propre religion sociale sous transformation une voisins"
+  },
+  {
    "mot": "ACQUIESCER",
    "nature": "verbe",
    "fonctions": [
@@ -49,9 +75,34 @@
    "cles": "accepter affirmer contenter dire discuter doit ecrivain engagement est liberte monde murakami oui pas peut poete pour sans soumettre tel tout"
   },
   {
+   "mot": "ACUITÉ",
+   "nature": "nom",
+   "fonctions": [
+    "Sociale"
+   ],
+   "cles": "analyse autres avec clairement echapper ecrivain epoque finesse grande laisser les lucidite observe observer pas peindre precision que regard rien sans signifie sociale societe son temoin une voient voit"
+  },
+  {
    "mot": "AFFIRMATION (ASSERTION, CONCEPTION, OPINION, POINT DE VUE)",
    "nature": "noms",
    "cles": "auteur cette change defendue designent discute discutez employe explique expliquez idee ils methode mot par pas signifie synonymes these"
+  },
+  {
+   "mot": "AFRO-PESSIMISME",
+   "nature": "nom",
+   "fonctions": [
+    "Engagement",
+    "Sociale"
+   ],
+   "cles": "africain afrique afro-optimisme appeler avenir beaucoup cede changement contemporain contraire critiquent demie denoncer desesperer designe devoir echecs engagement espoir est forcement guerres les litterature lui misere montrer mot oeuvres pas peignent piege pire politiques pour present que qui reproche roman sans sociale sombre son tres vie violence vision"
+  },
+  {
+   "mot": "AGENT DE CHANGEMENT",
+   "nature": "expression",
+   "fonctions": [
+    "Engagement"
+   ],
+   "cles": "africain appliquee chose conscience contribuer doit ecrivain engagement etre eveilleur evoluer expression font ils les litterature mentalites outil personne provoque qui signifie societe transformation transformer une voisins"
   },
   {
    "mot": "AILLEURS",
@@ -60,6 +111,58 @@
     "Évasion"
    ],
    "cles": "autre est evasion imaginaire invente lecteur lieu monde pas pour quete qui quitte quotidien reel son"
+  },
+  {
+   "mot": "ALCHIMIE DU VERBE / MAGIE DU VERBE",
+   "nature": "expression",
+   "fonctions": [
+    "Esthétique"
+   ],
+   "cles": "alchimiste beaute dans des elle enfer est esthetique expression ici langage les magique mots ordinaire ordinaires parole plomb poesie poete pouvoir presque realite rimbaud saison signifie transformait transforme transformer une vient voir"
+  },
+  {
+   "mot": "ALIÉNATION / ALIÉNÉ",
+   "nature": "nom / adjectif",
+   "fonctions": [
+    "Engagement"
+   ],
+   "cles": "africain aider alienus appartient autre avec blancs colonial colonisateur colonise contexte courant dans desaliener doit elle engagement est fanon folie identite juge langage latin les liberer liberte litterature masques noire peau pense perte presque profit propre qui retrouver sens son sujet toujours valeurs vient"
+  },
+  {
+   "mot": "ALLÉGORIE",
+   "nature": "nom",
+   "fonctions": [
+    "Esthétique",
+    "Engagement"
+   ],
+   "cles": "abstraite africaines allegorique autre avec balance censure concrete contourner critiquer demie des dictatures engagement est esthetique faux histoire idee image invente justice katamalanasie mort nommer oeuvre par parabole parler pays personnage pour quand raconte reels representation sans sert signifier squelette symbole une vie voisins"
+  },
+  {
+   "mot": "ALLUSION",
+   "nature": "nom",
+   "fonctions": [
+    "Engagement",
+    "Esthétique"
+   ],
+   "cles": "accuser allusions auteur avec chose clairement complicite creer critique critiquer deviner doit elle engagement esthetique evoquer lecteur maniere nommer ouvertement par permet prudence sans suggere une voilee"
+  },
+  {
+   "mot": "ALTÉRITÉ",
+   "nature": "nom",
+   "fonctions": [
+    "Évasion",
+    "Sociale"
+   ],
+   "cles": "autre celui culture cultures decouverte decouvrir des dialogue difference different differents elle est etre evasion fait hommes litterature nous ouvre personne peuple qui rencontre rimbaud sociale soi"
+  },
+  {
+   "mot": "AMBIGUÏTÉ / AMBIGU",
+   "nature": "nom / adjectif",
+   "fonctions": [
+    "Sociale",
+    "Esthétique"
+   ],
+   "cles": "accepte ambigue aventure choc choses compris contraires cultures dechire des destin deux double elle entre equivoque esthetique etre facons garde grande laventure lectures oeuvre part partagee peut plusieurs qui richesse sens situation sociale toute une voisins"
   },
   {
    "mot": "ÂME",
@@ -95,9 +198,125 @@
    "cles": "agreablement comme distraire envie est evasion faire lecture loisir parce passer rire temps vue"
   },
   {
+   "mot": "ANACHRONISME",
+   "nature": "nom",
+   "fonctions": [
+    "Sociale"
+   ],
+   "cles": "anachronique aux chose conte correspond dans date depasse depassee elle epoque erreur est existait genre idee juge litterature moderne pas placer plus pratique qui realites serait sociale son temps une"
+  },
+  {
+   "mot": "ANALEPSE / PROLEPSE (FLASH-BACK)",
+   "nature": "noms",
+   "fonctions": [
+    "Esthétique"
+   ],
+   "cles": "annonce anticipation arriere art cassent chronologique commence construit creer eclairer elles est esthetique evenement fin futur ordre par passe pour present puis raconte recit remonte retour roman suspense techniques temps"
+  },
+  {
+   "mot": "ANCRAGE / ANCRÉ",
+   "nature": "nom / adjectif",
+   "fonctions": [
+    "Sociale",
+    "Engagement"
+   ],
+   "cles": "africain ancree attache aux chose concrets culture culturel dans des engagement enracinement est etre fait liee lieu oeuvre part problemes quelque realite realites reel roman sociale societe solidement son temps une"
+  },
+  {
+   "mot": "ANESTHÉSIE DE LA CONSCIENCE",
+   "nature": "expression",
+   "fonctions": [
+    "Engagement",
+    "Évasion"
+   ],
+   "cles": "accusee anesthesier combattre consciences contraire contre critique des divertissement douleur endormie endormissement endort engagement esprit est etre evasion eveil fait ici injustices les lieu litterature oublier peuple peut problemes pur qui supprime une"
+  },
+  {
+   "mot": "ANGOISSE EXISTENTIELLE / CRISE EXISTENTIELLE",
+   "nature": "expression",
+   "fonctions": [
+    "Lyrique"
+   ],
+   "cles": "absurde devant dit donnait doute elle est exprime homme inquietude lyrique mal moment mort neant personne peurs poesie profonde qui sens ses siecle solitude tout une vide vie voisins"
+  },
+  {
+   "mot": "ANTI-HÉROS",
+   "nature": "nom",
+   "fonctions": [
+    "Sociale",
+    "Engagement"
+   ],
+   "cles": "dechu des echec engagement est faible fama grandeur heros incarne independances lache les ordinaire personnage plus plutot prince principal proche qualites que realisme realite recit rend ridicule sans satire sert sociale soleils traditionnel"
+  },
+  {
+   "mot": "ANTIPHRASE",
+   "nature": "nom",
+   "fonctions": [
+    "Engagement"
+   ],
+   "cles": "apparent appelle arme bataille boucherie cache candide consiste contraire courage denonciation devant dire eloge engagement est figure heroique ironie lache moquer pense pour principale quel qui satire une voir voltaire"
+  },
+  {
    "mot": "ANTITHÈSE",
    "nature": "nom",
    "cles": "axe contenu deuxieme est idee limite oppose qui these ton"
+  },
+  {
+   "mot": "APHORISME",
+   "nature": "nom",
+   "fonctions": [
+    "Esthétique"
+   ],
+   "cles": "aphorismes beaucoup cette citation courte des dissertation dit elle est esthetique expliquer facon force formule frappante homme les maxime meme mots pensee peu phrase qui resume sentence sont souvent style sujets une voisins"
+  },
+  {
+   "mot": "APOLITISME / APOLITIQUE",
+   "nature": "nom / adjectif",
+   "fonctions": [
+    "Esthétique",
+    "Évasion"
+   ],
+   "cles": "art aussi certains contraire degagement disent doit ecrivain engage engagement est esthetique evasion favorise parti pas piege place politique position pouvoir prendre que refus refuser rester servir une voir"
+  },
+  {
+   "mot": "APOLOGIE",
+   "nature": "nom",
+   "fonctions": [
+    "Engagement"
+   ],
+   "cles": "bonne cause comme defend defense discours doit eloge engagement est excuse faire fait idee juste pas personne piege presenter qui roman une vengeance violence"
+  },
+  {
+   "mot": "ARCHÉTYPE",
+   "nature": "nom",
+   "fonctions": [
+    "Sociale"
+   ],
+   "cles": "archetypal autres categorie copies des dont est heros hommes hypocrite hypocrites ideal les mere modele personnage personnage-type primitif represente sage sociale sont tartuffe tous toute traitre type une voisins"
+  },
+  {
+   "mot": "ARGUMENTATION / RHÉTORIQUE",
+   "nature": "noms",
+   "fonctions": [
+    "Engagement"
+   ],
+   "cles": "agir argument argumentatifs arguments art auditoire avec bien candide cesaire chaque colonialisme construit conte convaincre defendre des discours dissertation elle-meme engagement essai est exemples fable genres idee implacable les methode pamphlet parler persuader philosophique pour prepare sont suivant sur une"
+  },
+  {
+   "mot": "ARME DE COMBAT / INSTRUMENT DE LUTTE / OUTIL DE TRANSFORMATION",
+   "nature": "expression",
+   "fonctions": [
+    "Engagement"
+   ],
+   "cles": "action annoncent armes avec cause ces changer colonialisme comme discours ecrivain elle engagement est expressions fait fonction images injustice litterature mots moyen plume presentent presque qui sert ses societe soldat sur toujours une voir"
+  },
+  {
+   "mot": "ARRIÈRE-PLAN HISTORIQUE",
+   "nature": "expression",
+   "fonctions": [
+    "Sociale"
+   ],
+   "cles": "1947-1948 aide appuie bois bouts cheminots colonisation comprendre connaitre contexte dans deroule des dieu evenement greve guerres independances inspiree lequel les message oeuvre pour qui reel roman sociale sur une"
   },
   {
    "mot": "ART",
@@ -116,6 +335,22 @@
    "cles": "autre beaute but contraire doctrine elle engagement est esthetique gautier laquelle liee message morale parnasse que refus selon theophile utile uvre"
   },
   {
+   "mot": "ARTIFICE / ARTIFICIEL",
+   "nature": "nom / adjectif",
+   "fonctions": [
+    "Esthétique"
+   ],
+   "cles": "art artifices beaute cacher des doit est esthetique etre exces fabrique factice habile idees moyen naturel ornement pas pejoratif peu pleine poesie qui sans sens simple sincerite style technique travaillee trompeur une vide voisins"
+  },
+  {
+   "mot": "ARTISANAT DU MOT",
+   "nature": "expression",
+   "fonctions": [
+    "Esthétique"
+   ],
+   "cles": "artisan assembler bois choisir ciselure comme ecrire ecriture ecrivain effort elle est esthetique insiste inspiration langue les menuisier mots patient plutot polir que style sur technique travail travaille vision voisins"
+  },
+  {
    "mot": "ARTISTE",
    "nature": "nom",
    "cles": "art belles celui choses concerne createurs cree creer des doit ecrivain ecrivains est idee large les mot musicien pas peintre plus poete que qui seulement tous uvres"
@@ -127,6 +362,14 @@
     "Engagement"
    ],
    "cles": "colonisation dictature engagement liberte pouvoir prive reduit servitude soumis"
+  },
+  {
+   "mot": "ASSIMILATION",
+   "nature": "nom",
+   "fonctions": [
+    "Engagement"
+   ],
+   "cles": "acculturation action adopter alienation ambigue coloniale colonisateur colonise comprendre contre copie culture devenir engagement est faire francaise general integrer langue laventure les nee negritude partie politique qui refuser sens une valeurs voisins voulait"
   },
   {
    "mot": "ASSUJETTI",
@@ -151,6 +394,56 @@
    "cles": "auteur autobiographique camara comme enfant est laye lui-meme lyrique noir par presente propre recit social vie"
   },
   {
+   "mot": "AUTOCENSURE",
+   "nature": "nom",
+   "fonctions": [
+    "Engagement"
+   ],
+   "cles": "adoucit avant censure dire ecrivain engagement etre expression impose liberte lui-meme meme ose par peur plus pousse pouvoir propos que religion societe son tait tout voir"
+  },
+  {
+   "mot": "AUTOCRATIE / AUTORITARISME",
+   "nature": "noms",
+   "fonctions": [
+    "Engagement"
+   ],
+   "cles": "attendant betes chefs critique decide demie denonce des detenu dictature engagement est gouvernent gouverner homme impose les libertes limite maniere nation obeissance par peres pouvoir qui roman sauvages seul seuls totalitarisme tout une vie voisins vote"
+  },
+  {
+   "mot": "AUTONOMIE DE L'ART",
+   "nature": "expression",
+   "fonctions": [
+    "Esthétique"
+   ],
+   "cles": "cause contraire defend ecrivain elle engage esthetique idee laquelle lui-meme mettre morale pas plume politique pour prolonge refuse religion selon service servir trouve une utile valeur voir"
+  },
+  {
+   "mot": "AVANT-GARDE",
+   "nature": "nom",
+   "fonctions": [
+    "Esthétique",
+    "Engagement"
+   ],
+   "cles": "annonce art artiste autres aux avance avant comme des ecrivain engagement est esthetique etre formes guide innovation invente les marche militaire mouvement nouvelles ouvre parfois peuple poete qui sens societe son sur temps tete troupe voie voit"
+  },
+  {
+   "mot": "BANALITÉ DU QUOTIDIEN",
+   "nature": "expression",
+   "fonctions": [
+    "Évasion",
+    "Sociale"
+   ],
+   "cles": "contraire dans donner echapper eclat est evasion fait fuir jours lecture les lire litterature lui ordinaire peindre peut qui realisme repetitif routine sans sens sociale sortir tous vie voir"
+  },
+  {
+   "mot": "BARBARIE",
+   "nature": "nom",
+   "fonctions": [
+    "Engagement"
+   ],
+   "cles": "absence accusation appelait barbares cesaire civilisation colonialisme colonisateur colonisation colonises contre cruaute defend discours elle elle-meme engagement est humanite les litterature montre peuples piege rempart retourne sauvage sur violence"
+  },
+  {
    "mot": "BEAU / BEAUTÉ",
    "nature": "adjectif / nom",
    "fonctions": [
@@ -159,12 +452,88 @@
    "cles": "designe esthetique forme formelle harmonie par perfection plaisir plait qui recherche son style sur travail"
   },
   {
+   "mot": "BEAUX-ARTS / BELLES-LETTRES",
+   "nature": "noms",
+   "fonctions": [
+    "Esthétique"
+   ],
+   "cles": "architecture art arts beau ces cherchent comme consideree designent dimension eloquence esthetique expressions insistent les litterature musique ornement parure peinture poesie qui roman sculpture serait-elle sont sont-elles sur une"
+  },
+  {
    "mot": "BIEN",
    "nature": "nom",
    "fonctions": [
     "Engagement"
    ],
    "cles": "apporte art bon engagement est etre faire moralement oppose pour qui reconfort rendre service signifie soulagement utile"
+  },
+  {
+   "mot": "BILAN DES INDÉPENDANCES",
+   "nature": "expression",
+   "fonctions": [
+    "Engagement",
+    "Sociale"
+   ],
+   "cles": "1960 africain africains annees apres attendant betes corruption critique decus demie desenchantement desillusion devenus dictatures dresse ecart engagement entre espoirs est fin grand les montre pauvrete pays porte promesses que realite regard roman sauvages sociale soleils sont sur theme vie voisins vote"
+  },
+  {
+   "mot": "BLÂME / BLÂMER",
+   "nature": "nom / verbe",
+   "fonctions": [
+    "Engagement"
+   ],
+   "cles": "avec comedie condamne defauts des deux discours ecrivain elle eloge engagement est faces hommes juge jugement les loue montre morale pour qui reproche satire une vertu vice voir"
+  },
+  {
+   "mot": "BOURGEOISIE / BOURGEOIS",
+   "nature": "nom / adjectif",
+   "fonctions": [
+    "Sociale",
+    "Engagement"
+   ],
+   "cles": "afrique aisee apparences apres argent art attache aux classe commercants confort critique elite engagement esprit etroit flatte fonctionnaires gouts independances les nationale nouvelle parle pejoratif pense plaire pour proprietaires satisfaite sens sociale une"
+  },
+  {
+   "mot": "BOVARYSME",
+   "nature": "nom",
+   "fonctions": [
+    "Évasion"
+   ],
+   "cles": "amour autre bovary comme confondre dangers dans des emma entretiennent est evasion flaubert heroine illusion illusions ils lecteurs les livres madame mot nourries par perd poussent que qui realite reve rever romans ses tendance vient vivre voir vouloir"
+  },
+  {
+   "mot": "BURLESQUE",
+   "nature": "nom / adjectif",
+   "fonctions": [
+    "Évasion",
+    "Engagement"
+   ],
+   "cles": "avec bouffon comique decalage engagement evasion exagere extravagant fonde grotesque inverse langage largement noble parodie plus ridicule rire satire scene sujet sur traiter une voir vulgaire"
+  },
+  {
+   "mot": "CANON LITTÉRAIRE",
+   "nature": "expression",
+   "fonctions": [
+    "Esthétique"
+   ],
+   "cles": "africaine celles classiques comme conquis considerees dans des desormais ecole elle ensemble entrer est esthetique etre etudie etudiee grande les litterature majeure modeles oeuvre oeuvres place reconnu une"
+  },
+  {
+   "mot": "CARICATURE",
+   "nature": "nom",
+   "fonctions": [
+    "Engagement"
+   ],
+   "cles": "aussi caricatural colon commandant critiquer defauts dire engagement est exagere faire grossis groupe jugement les medaille negre personne piege portrait pour qui ridiculiser rire satire ses simplifie sont traits trop une veut vieux"
+  },
+  {
+   "mot": "CASTIGAT RIDENDO MORES",
+   "nature": "expression",
+   "fonctions": [
+    "Engagement",
+    "Évasion"
+   ],
+   "cles": "aider associe comedie corrige corriger defauts des devise elle engagement est evasion faire formule hommes latine les mari moeurs moliere par pour pretendants riant rire tartuffe traduction trois"
   },
   {
    "mot": "CATHARSIS",
@@ -183,6 +552,41 @@
    "cles": "controle derange engagement exerce expression interdit liberte par pouvoir qui"
   },
   {
+   "mot": "CHOC DES CULTURES",
+   "nature": "expression",
+   "fonctions": [
+    "Sociale",
+    "Engagement"
+   ],
+   "cles": "africain africaine ambigue brutale conflits coranique debinto dechire dechirement deux diallo differentes ecole engagement entre est frasques incomprehension interieur laventure les majeur mari modernite occidentale pretendants produit qui rencontre roman samba sociale theme tradition trois vit"
+  },
+  {
+   "mot": "CHRONIQUE",
+   "nature": "nom",
+   "fonctions": [
+    "Sociale"
+   ],
+   "cles": "actualite chroniqueur dans des epoque est evenements ils jour journal moeurs negre ordre paris peinture produits raconte recit roman romancier rubrique sociale societe son sont sur temoignage temps une vie"
+  },
+  {
+   "mot": "CLASSICISME / CLASSIQUE",
+   "nature": "nom / adjectif",
+   "fonctions": [
+    "Esthétique",
+    "Engagement"
+   ],
+   "cles": "actuelle anciens chaque cid clarte corneille des devient devise elle engagement esthetique fonde fontaine francais generation imitation instruire litteraire moliere mouvement oeuvre ordre phedre plaire quand qui racine raison reference regles reste sens siecle sur tartuffe temps traverse trouve une xviie"
+  },
+  {
+   "mot": "CLICHÉ",
+   "nature": "nom",
+   "fonctions": [
+    "Esthétique",
+    "Engagement"
+   ],
+   "cles": "africains afrique banal banale beaucoup blanc briser cliches combattent combattre comme detruire devenue doit ecrivains elle engagement esthetique expression faite faites groupe idee idees image les litterature neige prejuges primitive stereotype style sur toute toutes trop utilisee"
+  },
+  {
    "mot": "COLONISATION / COLONIALISME",
    "nature": "noms",
    "fonctions": [
@@ -199,12 +603,79 @@
    "cles": "armer bataille cause croisade defendre donner ecrivain engagement figure les lutte lutter mene moyens plume pour resistance signifie une utilise voisins"
   },
   {
+   "mot": "COMÉDIE",
+   "nature": "nom",
+   "fonctions": [
+    "Évasion",
+    "Engagement"
+   ],
+   "cles": "aussi avec comique comportement corriger critique defauts des divertir divertissement elle engagement est evasion fait figure fin heureuse hommes hypocrite jouer les mari moeurs moyens pas peint piece pretendants qui rire ses societe tartuffe theatre trois types une voir"
+  },
+  {
    "mot": "COMIQUE",
    "nature": "adjectif / nom",
    "fonctions": [
     "Évasion"
    ],
    "cles": "avare caractere evasion exemples fait gestes moliere mots qui repetition rire situation types"
+  },
+  {
+   "mot": "COMPROMISSION",
+   "nature": "nom",
+   "fonctions": [
+    "Engagement"
+   ],
+   "cles": "accepter argent arrangement avec celui compromis contraire doit ecrivain engagement est fait integrite intellectuel interet malhonnete pas pour pouvoir principes qui refuser ses son toute trahir vendre vendu"
+  },
+  {
+   "mot": "CONDITION FÉMININE",
+   "nature": "expression",
+   "fonctions": [
+    "Engagement",
+    "Sociale"
+   ],
+   "cles": "acces africaine aux dans decrit denoncer des devoirs dot droits ecole elle engagement faites femme femmes force grand injustices les lettre litterature longue mari mariage mariama montre oppression polygamie pour pretendants senegal ses situation sociale societe souffrances souvent theme trois une"
+  },
+  {
+   "mot": "CONDITION HUMAINE",
+   "nature": "expression",
+   "fonctions": [
+    "Lyrique",
+    "Sociale"
+   ],
+   "cles": "aimer chercher commun depasse elle epoque est etre homme hommes interroge les litterature lyrique mourir naitre oeuvre parle pays portee que qui reflechit sens sociale son souffrir sur tous une universelle voir"
+  },
+  {
+   "mot": "CONFESSION / CONFIDENCE",
+   "nature": "noms",
+   "fonctions": [
+    "Lyrique"
+   ],
+   "cles": "auteur autobiographie aveu confie epanchement est fautes intimes lecteur les lettre litterature livre longue lyrique masque oeuvre partage pensees plus poesie poete sans secret sentiments ses une voisins"
+  },
+  {
+   "mot": "CONFLIT DE GÉNÉRATIONS",
+   "nature": "expression",
+   "fonctions": [
+    "Sociale"
+   ],
+   "cles": "africains anciens argent attaches attires choisi dans entre est etudes famille frequent jeunes juliette les mari mariage modernite opposition par pretendants refuse roman sociale theatre theme tradition tres trois ville"
+  },
+  {
+   "mot": "CONFORMISME / CONFORMISTE",
+   "nature": "nom / adjectif",
+   "fonctions": [
+    "Engagement"
+   ],
+   "cles": "agit attitude celui comme contraires contre critique different doit ecrivain engagement esprit etre eux-memes gens les lutter monde originalite par pense penser peur pousser qui rhinoceros sans secouer subversion tout"
+  },
+  {
+   "mot": "CONNOTATION / DÉNOTATION",
+   "nature": "noms",
+   "fonctions": [
+    "Esthétique"
+   ],
+   "cles": "absence astre connote denote designe dictionnaire emotions est esthetique expliquer ici images jour les mais mort mot mystere nuit pas peur politique pour pouvoir premier secondaire sens soleil suggere sujet une utile valeurs"
   },
   {
    "mot": "CONSCIENCE",
@@ -215,6 +686,22 @@
    "cles": "capacite comprendre consciences engagement eveiller faire les moral ouvrir prise probleme sens signifie sur vit yeux"
   },
   {
+   "mot": "CONSCIENCE CRITIQUE / REGARD CRITIQUE",
+   "nature": "expression",
+   "fonctions": [
+    "Engagement"
+   ],
+   "cles": "accepter apprend apprendre capacite defauts developper distance elle engagement forme idee juger lecteur les lieu litterature lui monde par reflechir societe soi-meme subir une voir"
+  },
+  {
+   "mot": "CONSOLATION / CONSOLER",
+   "nature": "nom / verbe",
+   "fonctions": [
+    "Lyrique"
+   ],
+   "cles": "apaise apaisement blesses ceux coeurs compris console douleur ecrire ecrivain elle lecteur les litterature lyrique peine peut poesie qui reconfort sentir souffrent soulagement therapie une voisins"
+  },
+  {
    "mot": "CONTE",
    "nature": "nom",
    "fonctions": [
@@ -223,12 +710,36 @@
    "cles": "afrique bodiel court divertit education enseigne est evasion griot hampate imaginaire lie oral oralite petit qui recit souvent"
   },
   {
+   "mot": "CONTESTATION / CONTESTER",
+   "nature": "nom / verbe",
+   "fonctions": [
+    "Engagement"
+   ],
+   "cles": "action africain autorite cause colonial contestataire conteste dictatures discuter ecrivain engagement est etabli idee les litterature opposer ordre pouvoir puis qui refuser remet revolte subversion une voisins"
+  },
+  {
    "mot": "CONVICTION",
    "nature": "nom",
    "fonctions": [
     "Engagement"
    ],
    "cles": "croyance engagement esthetique ferme idee morale opposee politique pure religieuse"
+  },
+  {
+   "mot": "CORRUPTION / CORROMPU",
+   "nature": "nom / adjectif",
+   "fonctions": [
+    "Engagement"
+   ],
+   "cles": "afrique argent avantage comment corrompre degradation denonce des dirigeants donner elites engagement enrichissent fait grand illegalement injuste jeunesse les montre morale obtenir politique pour recevoir roman satire sociale theme"
+  },
+  {
+   "mot": "COUP DE THÉÂTRE",
+   "nature": "expression",
+   "fonctions": [
+    "Évasion"
+   ],
+   "cles": "action arrivee bouleverse brusquement change courant elle est evasion evenement inattendu pere peripetie qui rebondissement retournement sens situation surprenant suspense voisins"
   },
   {
    "mot": "COURANT LITTÉRAIRE",
@@ -244,9 +755,27 @@
    "cles": "beau beaute cherche chose createur creee designe ecrivain esthetique imagination inventer nouveau produire quelque qui uvre"
   },
   {
+   "mot": "CRISE IDENTITAIRE / QUÊTE IDENTITAIRE",
+   "nature": "expression",
+   "fonctions": [
+    "Engagement",
+    "Lyrique"
+   ],
+   "cles": "africain ambigue celui centraux cultures dechirement deux engagement entre est heros identite intime laventure lyrique negritude occidental pays pleine plus qui racines recherche roman sait ses soi-meme themes trouble"
+  },
+  {
    "mot": "CRITIQUE",
    "nature": "nom / verbe",
    "cles": "aussi blamer celui critiquer critiques debattent defauts denoncer denonciation depend est juge jugement jugent les litteraire litteraires pas personnes piege qui sens sociale societe sujet sur une uvre uvres"
+  },
+  {
+   "mot": "CRITIQUE SOCIALE",
+   "nature": "expression",
+   "fonctions": [
+    "Engagement",
+    "Sociale"
+   ],
+   "cles": "avec bois bouts changer confondre corruption defauts denonciation des dieu engagement est faire germinal inegalites injustices juger les litteraire montre nefastes oeuvres pas pauvrete pour realiste roman societe traditions une voir"
   },
   {
    "mot": "CROISADE",
@@ -266,6 +795,40 @@
    "cles": "defense engagement identite instruction personnelle peuple savoirs social traditions valeurs"
   },
   {
+   "mot": "DÉCADENCE",
+   "nature": "nom",
+   "fonctions": [
+    "Sociale",
+    "Esthétique"
+   ],
+   "cles": "avec chefferie chute contraire courant cultivent declin des dynastie ecrivains essor esthetique fama fin gout independances lente les malinke moeurs perdu pessimistes pouvoir prince qui raffines renaissance siecle sociale societe soleils tout traditionnelle une valeur vit xixe"
+  },
+  {
+   "mot": "DÉCOLONISATION DES ESPRITS",
+   "nature": "expression",
+   "fonctions": [
+    "Engagement"
+   ],
+   "cles": "alienation colonisation complexes debarrasser decoloniser developpee doit drapeau engagement est faut idee imposes independance les liberation mentale modeles ngugi notamment par pas politique prejuges qui suffit suivre thiong voir vraie"
+  },
+  {
+   "mot": "DÉGAGEMENT / DÉGAGÉ",
+   "nature": "nom / adjectif",
+   "fonctions": [
+    "Esthétique",
+    "Évasion"
+   ],
+   "cles": "abandonner apolitisme art autonomie cause consacre contraire deserteur ecrivain engagement engager est-ce est-il esthetique evasion lui-meme mettre oeuvre peuple refuse refuser service son une voir"
+  },
+  {
+   "mot": "DÉMYSTIFICATION / DÉMYSTIFIER",
+   "nature": "nom / verbe",
+   "fonctions": [
+    "Engagement"
+   ],
+   "cles": "action cachee ceux colonisation contraire demystifie derriere dictateur ecrivain engagement fausse gloire gouvernent idealisation illusion mensonge montre montrer mystification pouvoir qui tradition une verite visage vrai"
+  },
+  {
    "mot": "DÉNONCER / DÉNONCIATION",
    "nature": "verbe / nom",
    "fonctions": [
@@ -274,12 +837,93 @@
    "cles": "accuser cesser critiquer denonce des engagement exploitation faire germinal injustice mal mineurs montrer pour publiquement une"
   },
   {
+   "mot": "DÉNOUEMENT",
+   "nature": "nom",
+   "fonctions": [
+    "Esthétique"
+   ],
+   "cles": "action comedie dans denouer esthetique fin heros heureuse intrigue malheureuse mort mot noeud piece recit resout souvent structure theatre tragedie tragique une vient"
+  },
+  {
    "mot": "DÉPAYSER / DÉPAYSEMENT",
    "nature": "verbe / nom",
    "fonctions": [
     "Évasion"
    ],
    "cles": "ailleurs cadre changer donner etre evasion impression pays"
+  },
+  {
+   "mot": "DÉPOSSESSION",
+   "nature": "nom",
+   "fonctions": [
+    "Engagement",
+    "Sociale"
+   ],
+   "cles": "ambigue appartient aussi aux biens colonialisme colonisation culture culturelle dans discours elle engagement entreprise etre fait fut identite langue laventure les leur leurs mais materielle nous parle peuples pouvoir pris prive qui richesses sociale sujets sur terres une"
+  },
+  {
+   "mot": "DÉRACINEMENT / DÉRACINÉ",
+   "nature": "nom / adjectif",
+   "fonctions": [
+    "Lyrique",
+    "Sociale"
+   ],
+   "cles": "africain ailleurs ambigue arrache chez contraire culture ecole enracinement etranger etrangere etre exil fait forme identite intellectuel laventure lui lyrique negre par paris partout plus reconnait sent ses sociale souffrance terre traditions ville"
+  },
+  {
+   "mot": "DÉRIVE DICTATORIALE",
+   "nature": "expression",
+   "fonctions": [
+    "Engagement"
+   ],
+   "cles": "africain attendant betes central chef comment culte demie des deviennent dictature elections engagement glissement independances issus les liberateurs montre postcolonial pouvoir progressif regimes repression roman sauvages theme truquees tyrans vers vie voir vote"
+  },
+  {
+   "mot": "DÉSENCHANTEMENT / DÉSILLUSION",
+   "nature": "noms",
+   "fonctions": [
+    "Lyrique",
+    "Engagement"
+   ],
+   "cles": "africain afrique apres bilan celui comme decouvre des dit engagement espoirs est exprime fama illusions image independances les loin lyrique nuee perte que qui realite reves roman sauterelles ses soleils souvent sur tomberent tristesse une voir"
+  },
+  {
+   "mot": "DÉTERMINISME",
+   "nature": "nom",
+   "fonctions": [
+    "Sociale"
+   ],
+   "cles": "arbitre arrive cause choisit contraire decide des destin determines est facteurs fatalite germinal heredite idee leur libre milieu montre naturalisme par pas pauvrete personnage personnages prisonnier que qui social sociale societe son tout voir zola"
+  },
+  {
+   "mot": "DEUS EX MACHINA",
+   "nature": "expression",
+   "fonctions": [
+    "Esthétique"
+   ],
+   "cles": "antique arrive aujourd bloquee commode denouement descendait dieu esthetique expression fin hasard heureuse hui inattendue latine machine par peu pour qui regler repose scene situation solution sorti sur theatre trop une vraisemblable"
+  },
+  {
+   "mot": "DIALECTIQUE",
+   "nature": "nom / adjectif",
+   "cles": "antithese art autre choses confrontant depassement des deux dissertation examiner facon idees limites methode nourrissent opposees plan puis qui raisonner relation ses sujet synthese these traiter une"
+  },
+  {
+   "mot": "DIALOGUE DE SOURDS",
+   "nature": "expression",
+   "fonctions": [
+    "Sociale",
+    "Esthétique"
+   ],
+   "cles": "administration anciens autre chacun colon colonise comique comprendre comprennent conflit deux discussion ecouter elle entre est esthetique faire ils incommunicabilite jeunes langue medaille meka meme mondes montrer negre parle parlent pas rhinoceros rire sans sert sociale theatre vieux voir"
+  },
+  {
+   "mot": "DIATRIBE / INVECTIVE / IMPRÉCATION",
+   "nature": "noms",
+   "fonctions": [
+    "Engagement"
+   ],
+   "cles": "agressive attaque ces colon colonialisme combat contre critique discours engagement est injurieuse lancee malediction malheur mots pamphlet parole passionnee pigments poeme quelqu signalent souhait souvent sur trois une violente voir"
   },
   {
    "mot": "DICTATURE",
@@ -298,12 +942,62 @@
    "cles": "cherche conte education engagement enseigner exemples fable instruire qui"
   },
   {
+   "mot": "DIDASCALIE",
+   "nature": "nom",
+   "fonctions": [
+    "Esthétique"
+   ],
+   "cles": "acteurs auteur basse decor dite ecrite elle est esthetique gestes indication italique jeu les mise par parle pas personnage precise que scene souvent theatre ton une voix"
+  },
+  {
+   "mot": "DIGRESSION",
+   "nature": "nom",
+   "fonctions": [
+    "Esthétique"
+   ],
+   "cles": "africaine alourdir attendant auteur autre betes chants chose conte conteur contraire dans des detours digressions dissertation ecarte elle enrichir est esthetique fait faut faute frequente griot interrompent les multiplie oralite parler passage peut pour principal proverbes recit reflexion rester sauvages ses son souvenir sujet une vote"
+  },
+  {
+   "mot": "DILEMME",
+   "nature": "nom",
+   "fonctions": [
+    "Lyrique",
+    "Esthétique"
+   ],
+   "cles": "amour chacune choisir choix cid coeur cornelien dechirement deux doit dramatique entre est esthetique faut graves honneur impossible inconvenients lyrique ont pas pere piege possibilites probleme qui ressort rodrigue simple situation son tragedie"
+  },
+  {
+   "mot": "DIMENSION LUDIQUE / DIMENSION ESTHÉTIQUE",
+   "nature": "expressions",
+   "fonctions": [
+    "Évasion",
+    "Esthétique"
+   ],
+   "cles": "amuse au-dela aussi beaute ces conte devinettes divertissement enseigne est evasion expressions images instruit jeu jeux lire mais message montrer mots oeuvre part pas plaisir rire rythme servent seulement style une voir"
+  },
+  {
+   "mot": "DISCOURS RAPPORTÉ",
+   "nature": "expression",
+   "fonctions": [
+    "Esthétique"
+   ],
+   "cles": "analyser avec celle dans direct dit entend esthetique fama glisse guillemets indirect kourouma les libre maniere mele narrateur parole paroles pars part pensees personnage point pour rapporter sans subordonnee tirets une utile verbe voix vue"
+  },
+  {
    "mot": "DISSIMULATION",
    "nature": "nom",
    "fonctions": [
     "Engagement"
    ],
    "cles": "action cacher ecrivain engagement hypocrisie mensonge qui revele verite"
+  },
+  {
+   "mot": "DISTANCE CRITIQUE / DISTANCIATION",
+   "nature": "noms",
+   "fonctions": [
+    "Engagement"
+   ],
+   "cles": "aux avec brecht contraire doit emotion empeche emporter engagement faire garder identification identifier illusion juger laisser lecteur lieu lucidite par pas permet personnages pour qui recul reflechir reflechisse seulement spectateur texte theatre une vivre"
   },
   {
    "mot": "DISTRACTION",
@@ -322,9 +1016,52 @@
    "cles": "amuser contraire des distraire divertissent engagement evasion faire faits histoires les oublier passe-temps plaire pour qui recits soucis"
   },
   {
+   "mot": "DOGMATISME / DOGMATIQUE",
+   "nature": "nom / adjectif",
+   "fonctions": [
+    "Engagement"
+   ],
+   "cles": "absolues accepter attitude candide celui ceux combat comme contraire critique croient des detenir discussion doute engagement enseigne esprit faire idees ideologie impose lieu moque oeuvre pangloss politique qui reflechir religion sans ses tolerance une verite verites voltaire"
+  },
+  {
+   "mot": "DOMINATION / DOMINÉ",
+   "nature": "nom / adjectif",
+   "fonctions": [
+    "Engagement",
+    "Sociale"
+   ],
+   "cles": "asservissement autre boy colon coloniale colonise comment cruelle decrit denonce devoile dictateur engagee engagement exerce femme groupe homme les lettre litterature longue mecanismes montre oppression pauvre peuple pouvoir rapports riche roman sociale sur tient une vie ville voisins"
+  },
+  {
+   "mot": "DOUBLE ÉNONCIATION",
+   "nature": "expression",
+   "fonctions": [
+    "Esthétique"
+   ],
+   "cles": "adresse aussi auteur autre aux comprend dramaturge esthetique les meme par parle particularite personnage personnages plus public quand que replique salle souvent spectateur spectateurs temps theatre vise"
+  },
+  {
    "mot": "DRAMATURGE",
    "nature": "nom",
    "cles": "auteur pieces sujet theatre theme"
+  },
+  {
+   "mot": "DRAME",
+   "nature": "nom",
+   "fonctions": [
+    "Esthétique",
+    "Sociale"
+   ],
+   "cles": "bourgeois catastrophe comique conditions courant des esthetique evenement genre grotesque hugo mele noble peint personnages qui refuse romantique sens separer siecle sociale sublime theatre toutes tragique victor voir vulgaire xixe xviiie"
+  },
+  {
+   "mot": "DUALITÉ",
+   "nature": "nom",
+   "fonctions": [
+    "Sociale",
+    "Lyrique"
+   ],
+   "cles": "afrique ambigue ame bien coexistence coranique corps cree dans dechirement deux diallo douloureuse ecole elements elle entre est interieur laventure lyrique mal meme modernite occident occidentale opposes partage personnage realite samba sociale souvent tradition une vit"
   },
   {
    "mot": "DYSTOPIE",
@@ -333,6 +1070,14 @@
     "Engagement"
    ],
    "cles": "1984 avertir cauchemardesque contraire decrit engagement exemple lecteur qui recit societe une utopie"
+  },
+  {
+   "mot": "ÉCART POÉTIQUE",
+   "nature": "expression",
+   "fonctions": [
+    "Esthétique"
+   ],
+   "cles": "avec bouleverse cet comme des difference entre est esthetique images inattendues jours langage langue les licence litteraire litterarite monde mots nait ordinaire ordre parle pas poesie poete qui rend sons texte tous tout travailles voir"
   },
   {
    "mot": "ÉCHO",
@@ -356,9 +1101,42 @@
    "cles": "acte activite art auteur bien comme est faire maniere pas precise produire propre sens souvent style sujet texte"
   },
   {
+   "mot": "ÉCRITURE BLANCHE",
+   "nature": "expression",
+   "fonctions": [
+    "Esthétique"
+   ],
+   "cles": "adopte apparente aussi auteur barthes camus contraire degre dit emotion esthetique etranger juger letranger lyrisme mere meursault mort neutre orne ornement pas propos raconte roland sans semble sobre style une zero"
+  },
+  {
    "mot": "ÉCRIVAIN",
    "nature": "nom",
    "cles": "des dramaturge ecrit essayiste litteraires personne poete qui romancier sujet theme uvres"
+  },
+  {
+   "mot": "ÉCRIVAIN-GRIOT / GRIOT",
+   "nature": "noms",
+   "fonctions": [
+    "Sociale",
+    "Engagement"
+   ],
+   "cles": "africain afrique attendant aussi betes chante comme conseille conserve des ecrivain educateur engagement est familles garde gardien griotisme heritier histoire independances inspire les louanges lui memoire moderne ouest parle parole peuple porte-parole pour qui rois sauvages sociale soleils son style transmet voit vote"
+  },
+  {
+   "mot": "ÉCRIVAIN-MARTYR",
+   "nature": "expression",
+   "fonctions": [
+    "Engagement"
+   ],
+   "cles": "assassinat censure certains cout des devenus ecrits ecrivain ecrivains engagement exemple exil expression ils ken leur liberte martyrs montrer nigeria ont paie par paye prison prix que qui saro-wiwa sert ses sont vie"
+  },
+  {
+   "mot": "ÉDIFICATION / ÉDIFIER",
+   "nature": "nom / verbe",
+   "fonctions": [
+    "Sociale"
+   ],
+   "cles": "attention aussi bonne conduite construire conte des didactique donne edifiante eduquer exemple faire faut instruire meilleur modeles montre moral moraliser oeuvre par pas plan quelqu rendre signifie sociale sur une visee voisins"
   },
   {
    "mot": "ÉDUCATION / ÉDUQUER",
@@ -369,12 +1147,65 @@
    "cles": "caractere des engagement esprit former instruire transmettre valeurs"
   },
   {
+   "mot": "ÉLÉGIE / ÉLÉGIAQUE",
+   "nature": "nom / adjectif",
+   "fonctions": [
+    "Lyrique"
+   ],
+   "cles": "amour des deuil disparu douce ecrit elegies est etre exprime hosties lyrique melancolique morts noires perdu plainte plaintive pleure poeme poete qui senghor ses sur ton tristesse voix"
+  },
+  {
+   "mot": "ÉLOGE / PANÉGYRIQUE",
+   "nature": "noms",
+   "fonctions": [
+    "Lyrique",
+    "Engagement"
+   ],
+   "cles": "africaines afrique blame celebre chants chose colonisation contraire des discours elle engagement est excessif fait font griot hosties lenfant les louange lyrique meprisait negritude noir noires parfois personne peuple poesie qualites que qui satire solennel une valeurs"
+  },
+  {
+   "mot": "ÉLOQUENCE",
+   "nature": "nom",
+   "fonctions": [
+    "Esthétique",
+    "Engagement"
+   ],
+   "cles": "africaine argumentation arme art bien cesaire cherche colonialisme colonises convaincre dans des discours elle emouvoir engagee engagement essentielle est esthetique griot litterature met orale palabre par parler parole persuader peuples qui rhetorique service son sur tradition une voir"
+  },
+  {
+   "mot": "ÉMANCIPATION / LIBÉRATION",
+   "nature": "noms",
+   "fonctions": [
+    "Engagement",
+    "Sociale"
+   ],
+   "cles": "affranchissement aux bois bouts chemin colonises des dieu domination elle engagement epouser esprit etre face fait femme individu les lettre liberer litterature longue mari outil peuples peut prejuges prend pretendants ramatoulaye refuse sociale tamsir tradition trois tutelle une voisins"
+  },
+  {
    "mot": "ÉMOTION",
    "nature": "nom",
    "fonctions": [
     "Lyrique"
    ],
    "cles": "avec des emeut emouvoir langage lecteur lyrique mots par plaisir ressenti sentiment touche toucher trouble vif voisins"
+  },
+  {
+   "mot": "ÉMOUVOIR",
+   "nature": "verbe",
+   "fonctions": [
+    "Lyrique",
+    "Engagement"
+   ],
+   "cles": "agir art attendrir aussi aux avec buts chemin classiques combat convaincre deja des emeut emotion engagement est faire idees indigner instruire lecteur lyrique ouvre pathetique peut plaire pleurer pour sensibilite servir toucher trembler trois voir"
+  },
+  {
+   "mot": "EMPATHIE",
+   "nature": "nom",
+   "fonctions": [
+    "Lyrique",
+    "Sociale"
+   ],
+   "cles": "autres autrui avec capacite compassion comprend des developpe eprouver fait identification lecture les lui lyrique mettre mieux nous personnages place pour ressent ressentir roman sociale souffre toundi vie vivant voisins"
   },
   {
    "mot": "EMPREINTE",
@@ -385,6 +1216,14 @@
    "cles": "chose influence laissee litterature marque par profonde quelque sociale societe sur"
   },
   {
+   "mot": "ENCHÂSSEMENT / RÉCIT ENCHÂSSÉ",
+   "nature": "noms",
+   "fonctions": [
+    "Esthétique"
+   ],
+   "cles": "abyme africains arrete autre consiste conte contes dans des esthetique frequent histoire inserer integrent interieur laisser legendes les mille mise nuits personnage place pour principale procede qui raconte roman romancier romans son une voir"
+  },
+  {
    "mot": "ENGAGEMENT / ENGAGÉ",
    "nature": "nom / adjectif",
    "fonctions": [
@@ -393,12 +1232,43 @@
    "cles": "cause combats contraire dans defend engagee est esthetique evasion impliquer les litterature mettre militant plume sartre service son synonyme temps une"
   },
   {
+   "mot": "ENJEU",
+   "nature": "nom",
+   "cles": "dans debat dire ecrivain est esthetique etre gagner importance introduction jeu litterature meme merite methode mission montrer moral parle perdre peut politique posee pourquoi pouvoir question qui role societe sociologique sujet touche"
+  },
+  {
    "mot": "ENNUI",
    "nature": "nom",
    "fonctions": [
     "Évasion"
    ],
    "cles": "celui echapper etat evasion faire interet lassitude lire manque pour qui rien"
+  },
+  {
+   "mot": "ENRACINEMENT / ENRACINÉ",
+   "nature": "nom / adjectif",
+   "fonctions": [
+    "Sociale",
+    "Engagement"
+   ],
+   "cles": "africain ambigue attachement attentif autres aux contraire culture deracinement doit ecrivain engagement etre fidele laventure lenfant mais monde noir ouvert ouverture ouvrant parle profond racines rester senghor ses sociale terre tout traditions"
+  },
+  {
+   "mot": "ENSEIGNEMENT MORAL / LEÇON",
+   "nature": "expression",
+   "fonctions": [
+    "Sociale"
+   ],
+   "cles": "apprend auditeur bien clairement conte didactique dite doit elle etre fable fin laissee lecteur mal mari morale oeuvre par peut pretendants retenir sait sociale souvent sur termine trois une voir"
+  },
+  {
+   "mot": "ÉPISTOLAIRE",
+   "nature": "adjectif",
+   "fonctions": [
+    "Lyrique",
+    "Esthétique"
+   ],
+   "cles": "adressee africain aissatou amie confidence connu ecrit est esthetique exemple fait favorise forme lettre lettres livre longue lyrique mariama par plus qui ramatoulaye roman seule son sous une"
   },
   {
    "mot": "ÉPOPÉE",
@@ -417,12 +1287,45 @@
    "cles": "attente autres aux avenir celui confiance croire donne encourager engagement envie guider mieux professeur qui"
   },
   {
+   "mot": "ESSAI",
+   "nature": "nom",
+   "fonctions": [
+    "Engagement"
+   ],
+   "cles": "argumentatif argumente auteur avis cesaire colonialisme dans denonce different directement discours donne engagement est fanon fiction genre librement montaigne oeuvre prose qui raconte reflechit roman sans son sujet sur tentative une"
+  },
+  {
    "mot": "ESTHÉTIQUE",
    "nature": "adjectif / nom",
    "fonctions": [
     "Esthétique"
    ],
    "cles": "artistique beau concerne contraire engagement qualite qui theorie"
+  },
+  {
+   "mot": "ESTHÉTISME / CULTE DU BEAU",
+   "nature": "nom / expression",
+   "fonctions": [
+    "Esthétique"
+   ],
+   "cles": "art attitude au-dessus aux avec beaute belle cherche concerne confondre dans ecrivain engagement esthetique fleurs forme general ils les leur mal meme message morale oppose oublieraient pas peuple place plutot poetes pour proche qui reproche souffrances sujets tout utilite"
+  },
+  {
+   "mot": "ÉTHIQUE",
+   "nature": "nom / adjectif",
+   "fonctions": [
+    "Engagement",
+    "Sociale"
+   ],
+   "cles": "conduite consequences des doit ecrivain engagement ensemble faire guident honnetete lecteurs les morale mots ont parle principes proche propagande qui refus respect responsabilite ses sociale sur une verite"
+  },
+  {
+   "mot": "EUPHÉMISME",
+   "nature": "nom",
+   "fonctions": [
+    "Esthétique"
+   ],
+   "cles": "adoucit cacher choquante contraire des designer dure est esthetique etre figure hyperbole incidents langage maniere massacres mensonger mort nous parle peut politesse pour pouvoir pudeur qui quittes realite regime une verite"
   },
   {
    "mot": "ÉVASION",
@@ -433,6 +1336,14 @@
    "cles": "contraire echapper engagement fuir imagination quotidien realite reve voyage"
   },
   {
+   "mot": "ÉVEILLEUR DE CONSCIENCE",
+   "nature": "expression",
+   "fonctions": [
+    "Engagement"
+   ],
+   "cles": "africain agir bois bouts cruelle dans dieu doit eclaireur ecrivain endormi engagement etre expression frequente guide les mission ouvre peuple pour pousser qui reflechir reveiller role sentinelle situation son sujets sur tres vigie ville voisins yeux"
+  },
+  {
    "mot": "EXALTER / EXALTATION",
    "nature": "verbe / nom",
    "fonctions": [
@@ -441,12 +1352,54 @@
    "cles": "autre avec celebration celebrer des enthousiasme esthetique excitation mettre mots pouvoirs puissance sens valeur verbe vive"
   },
   {
+   "mot": "EXEMPLARITÉ / EXEMPLAIRE",
+   "nature": "nom / adjectif",
+   "fonctions": [
+    "Sociale"
+   ],
+   "cles": "archetype bien colon colonises des destin didactique est eviter exemple faussete faut imiter lecteur les mal meka modele montre personnage peut promesses qualite qui servir sociale tous voir"
+  },
+  {
+   "mot": "EXIL / EXPATRIATION",
+   "nature": "noms",
+   "fonctions": [
+    "Lyrique",
+    "Sociale"
+   ],
+   "cles": "afrique ambigue aussi bannissement chant chez choix contrainte distance ecrit ecrivain etranger etre etudes europe exile fait frequent hors interieur laventure lyrique natal negre neuf nostalgie nourrit par paris pays peut politique regard sentir sociale soi son souffrance sur theme travail vivre"
+  },
+  {
+   "mot": "EXISTENTIALISME",
+   "nature": "nom",
+   "fonctions": [
+    "Engagement"
+   ],
+   "cles": "absurde actes avance beauvoir camus choix definit elle engagee engagement est existentialistes fait fixee homme idee laquelle les letranger libre liee litterature nature par pas philosophie pour responsable sartre selon ses siecle simone vie voir xxe"
+  },
+  {
+   "mot": "EXOTISME",
+   "nature": "nom",
+   "fonctions": [
+    "Évasion",
+    "Esthétique"
+   ],
+   "cles": "africains afrique aussi autres brousse colonial coloniale comme critique dans decor depaysement ecrivains est esthetique etrange etranger etre europeens evasion fauves forme gout lecteurs les litterature lointain montrait ont pays peinture peut pittoresque pour presente que qui reduisait roman sauvage souvent une voir"
+  },
+  {
    "mot": "EXPÉRIENCE",
    "nature": "nom",
    "fonctions": [
     "Lyrique"
    ],
    "cles": "acquise appuie auteur autobiographique connaissance ecrit est etranger lyrique mon que rien sur uvre vecu vivant"
+  },
+  {
+   "mot": "EXPOSITION / SCÈNE D'EXPOSITION",
+   "nature": "nom / expression",
+   "fonctions": [
+    "Esthétique"
+   ],
+   "cles": "atangana comprend conflit curiosite debut denouement depart doit elle enjeu entre epoque esthetique eveillant fille incipit informer juliette les lieu partie personnages premiere presente qui roman situation spectateur theatre tout voir"
   },
   {
    "mot": "EXPRIMER / EXPRESSION",
@@ -478,12 +1431,72 @@
    "cles": "evasion fait intervenir invente magie monde qui surnaturel"
   },
   {
+   "mot": "FARCE",
+   "nature": "nom",
+   "fonctions": [
+    "Évasion",
+    "Sociale"
+   ],
+   "cles": "absurde age baton burlesque ces comique coups courte devient elections evasion figure gros joue justice moyen parodie piece populaire proces quelqu ridicule rire sens situation sociale sont tour tourne tromperies une voir"
+  },
+  {
+   "mot": "FATALITÉ / FATALISME",
+   "nature": "noms",
+   "fonctions": [
+    "Sociale",
+    "Engagement"
+   ],
+   "cles": "antigone attitude celui changer combat condition decide des destin determinisme disant echapper ecrit engagee engagement est etait fatum force hommes ils independances latin les leur litterature malheur misere moteur pas peuvent phedre puissent qui resigne sans sociale soleils souvent tragedie une voir"
+  },
+  {
    "mot": "FICTION",
    "nature": "nom",
    "fonctions": [
     "Évasion"
    ],
    "cles": "assumee avec confondre contraire est evasion invente invention irreel mensonge pas qui realite recit une"
+  },
+  {
+   "mot": "FIGURE DE STYLE",
+   "nature": "expression",
+   "fonctions": [
+    "Esthétique"
+   ],
+   "cles": "anaphore antithese auteur beaute belle citer comparaison dissertation ecriture elles esthetique euphemisme expression figures font forte frappante hyperbole langage les litote metaphore montrer ordinaire personnification peut plus poesie pour procede qui rend transforment travail une"
+  },
+  {
+   "mot": "FIL CONDUCTEUR",
+   "nature": "expression",
+   "cles": "dans devoir dissertation doit donne element est etre exil idee leitmotiv les lui methode oeuvre parties poemes problematique qui raisonnement recueil relie revient son tous toutes une unite voir"
+  },
+  {
+   "mot": "FINALITÉ DE L'ART / FINALITÉ DE LA LITTÉRATURE",
+   "nature": "expression",
+   "fonctions": [
+    "Engagement",
+    "Esthétique",
+    "Évasion",
+    "Lyrique",
+    "Sociale"
+   ],
+   "cles": "but centrale classique consoler denoncer dissertation divertir ecrivain emouvoir engagement est est-elle esthetique evasion fonction instruire liberer lyrique mission nombreux plaire question quoi role sert-elle seulement sociale sujet sujets sur temoigner vocation voisins"
+  },
+  {
+   "mot": "FOCALISATION / NARRATEUR OMNISCIENT",
+   "nature": "nom / expression",
+   "fonctions": [
+    "Esthétique"
+   ],
+   "cles": "boy camera colonial comme connaitre decouvre esthetique exterieur externe impose interne journal lequel les letranger monde par pensees personnage point raconte sait sans ses toundi tout une vie voit vue yeux zero"
+  },
+  {
+   "mot": "FOLKLORE / FOLKLORIQUE",
+   "nature": "nom / adjectif",
+   "fonctions": [
+    "Sociale",
+    "Évasion"
+   ],
+   "cles": "africain afrique chants contes costumes culture danses defend des ecrivain elle ensemble evasion image montrer negritude pas pejoratif peuple pittoresque populaires reduire reduit sens seulement sociale superficielle traditions une valeurs veut vitrine vivante"
   },
   {
    "mot": "FONCTION",
@@ -508,9 +1521,44 @@
    "cles": "action apprentissage education engagement esprit former"
   },
   {
+   "mot": "FRANCOPHONIE / FRANCOPHONE",
+   "nature": "nom / adjectif",
+   "fonctions": [
+    "Sociale",
+    "Engagement"
+   ],
+   "cles": "africains afrique antilles audience celle conquerir culture debat des ecrire ecrite ecrivains engagement enrichi ensemble est est-ce fait francais france frequent hors ils langue les leur litterature maghreb maternelle ont partage pays personnes quebec qui sociale trahir une voir"
+  },
+  {
+   "mot": "FUTILITÉ / FUTILE",
+   "nature": "nom / adjectif",
+   "fonctions": [
+    "Évasion"
+   ],
+   "cles": "autres aux caractere certains contraire dans dictature elle est est-elle evasion face faim guerre importance intellectuel jugent litterature luxe necessite pays poesie qui repondent sans serieux sujet sur urgences utilite vitale voir"
+  },
+  {
+   "mot": "GÉNIE",
+   "nature": "nom",
+   "fonctions": [
+    "Esthétique",
+    "Lyrique"
+   ],
+   "cles": "africain caractere comme contes conteur creer croyances dans des don esprit esthetique exceptionnel extraordinaires fait histoire hugo inspire langue les lyrique oeuvres parole peuple poete propre romantiques son surnaturel talent tient une victor vivre voient"
+  },
+  {
    "mot": "GENRE LITTÉRAIRE",
    "nature": "nom",
    "cles": "categorie conte des essai partagent poesie qui regles roman theatre uvres"
+  },
+  {
+   "mot": "GROTESQUE",
+   "nature": "nom / adjectif",
+   "fonctions": [
+    "Engagement",
+    "Esthétique"
+   ],
+   "cles": "africains associe attendant betes bizarre burlesque caricature dans demie des dictateurs drame effrayant engagement est esthetique exagere fait fois guide hugo inquietant jusqu laideur les peindre personnage pour providentiel qui ridicule rire romanciers romantique sauvages sublime tout utilisent victor vie voir vote"
   },
   {
    "mot": "GUIDE",
@@ -519,6 +1567,23 @@
     "Engagement"
    ],
    "cles": "celui chemin ecrivain engagement montre oriente qui societe"
+  },
+  {
+   "mot": "HERMÉTISME / OBSCURITÉ",
+   "nature": "noms",
+   "fonctions": [
+    "Esthétique"
+   ],
+   "cles": "autres cache caractere certains clarte comprendre contraire coupe demande difficile ecrit effort elite eloignent esoterisme esthetique ils images inities lecteur leur opacite peuple poesie poete poetes pour que quelques rares repondent reproche reserve sens simplicite son texte une voisins"
+  },
+  {
+   "mot": "HÉROS / HÉROÏSME",
+   "nature": "noms",
+   "fonctions": [
+    "Engagement",
+    "Esthétique"
+   ],
+   "cles": "anti-heros antigone aussi bois bouts cause collectifs contraire courage des destin deviennent dieu ecrase engagement entier epique epopee est esthetique etre exceptionnel faute grevistes hamartia heroique independance les lui oeuvre par personnage peuple principal qui son tout tragedie tragique une voir"
   },
   {
    "mot": "HISTOIRE",
@@ -534,12 +1599,64 @@
    "cles": "age celui epoque fidelement passe qui raconte realisme signifie sociale son specialiste"
   },
   {
+   "mot": "HUMANISME / HUMANISTE",
+   "nature": "nom / adjectif",
+   "fonctions": [
+    "Engagement",
+    "Sociale"
+   ],
+   "cles": "centre cesaire chaque colonialisme colonisateur contre culture defend denonce dignite discours ecrase elle engagement est etre faux homme hosties humain litterature met montaigne mouvement negritude noires parle pensee qui rabelais raison renaissance senghor siecle sociale sur toute valeur xvie"
+  },
+  {
+   "mot": "HUMOUR NOIR",
+   "nature": "expression",
+   "fonctions": [
+    "Engagement",
+    "Esthétique"
+   ],
+   "cles": "avec candide chez choquant choses demie denoncer engagement esthetique fait frappante frequent graves guerre horreur horribles insupportable kourouma labou les misere mort permet plus qui raconte rend rire sony supporter tansi tortures vie violence"
+  },
+  {
+   "mot": "HYBRIDITÉ / MÉTISSAGE",
+   "nature": "noms",
+   "fonctions": [
+    "Esthétique",
+    "Sociale"
+   ],
+   "cles": "africaines afrique attendant avec betes chant chez comme conte culturel des differents ecrit elements esthetique francais genres hybridation independances kourouma langues les linguistique malinke malinkise melange mele mots occident parle pensee plusieurs pratique qui roman sauvages sociale soleils tournures vote"
+  },
+  {
+   "mot": "HYPERBOLE",
+   "nature": "nom",
+   "fonctions": [
+    "Esthétique"
+   ],
+   "cles": "contraire dans demesure dictateur emouvoir epopee est esthetique euphemisme exageration faire figure frapper frequente griot grossit larmes litote louange mourir ocean portrait pour qui realite rendre repose ridicule rire satire sur tout"
+  },
+  {
    "mot": "HYPOCRISIE",
    "nature": "nom",
    "fonctions": [
     "Engagement"
    ],
    "cles": "comportement demasque ecrivain engagement etre faire faux qui semblant vertueux"
+  },
+  {
+   "mot": "HYPOTYPOSE",
+   "nature": "nom",
+   "fonctions": [
+    "Esthétique"
+   ],
+   "cles": "bataille choquer comme croit description elle emouvoir esthetique fosse germinal lecteur les met mine misere par peint precise scene sert sous tableau une vivante voir yeux zola"
+  },
+  {
+   "mot": "IDÉALISATION / IDÉALISME",
+   "nature": "noms",
+   "fonctions": [
+    "Lyrique",
+    "Évasion"
+   ],
+   "cles": "afrique atteindre attitude belle camara celui colonisation contraire croit elle est evasion hosties ideal idealisee idealiser laye lenfant les lyrique montre negritude noir noires oubliant parfois pas plus presenter qui realisme realite reproche souffrances une veut"
   },
   {
    "mot": "IDENTITÉ",
@@ -554,6 +1671,15 @@
    "mot": "IDÉOLOGIE",
    "nature": "nom",
    "cles": "auteur defendues ensemble groupe idees morales par politiques sociales"
+  },
+  {
+   "mot": "ILLUSION THÉÂTRALE / ILLUSION ROMANESQUE",
+   "nature": "expressions",
+   "fonctions": [
+    "Esthétique",
+    "Évasion"
+   ],
+   "cles": "auteurs avec briser chose comique corneille croit devant distanciation effet est esthetique evasion fait fiction invente lecteur lequel les lit meme mimesis nous oublie par personnages peuvent piece que realisme renforcer spectateur theatre titre une vivre voir voit vraisemblance"
   },
   {
    "mot": "IMAGINAIRE",
@@ -573,9 +1699,42 @@
    "cles": "creer des esthetique evasion faculte idees images invention nouvelles"
   },
   {
+   "mot": "IN MEDIAS RES",
+   "nature": "expression",
+   "fonctions": [
+    "Esthétique"
+   ],
+   "cles": "action choses commence danger dans des dire directement est esthetique expression histoire incipit latine lecteur ligne milieu ouvre personnage pleine plonge prealable premiere presentation qui recit roman sans veut voir"
+  },
+  {
+   "mot": "INCIPIT / EXPLICIT",
+   "nature": "noms",
+   "fonctions": [
+    "Esthétique"
+   ],
+   "cles": "accrocher annonce cadre commence debut denouement dernieres des deuil doit est esthetique exposition fin ibrahima independances kone lecteur les letranger lignes medias mort oeuvre pages par phrase premiere premieres presente res roman soleils une voir"
+  },
+  {
+   "mot": "INCOMMUNICABILITÉ",
+   "nature": "nom",
+   "fonctions": [
+    "Sociale",
+    "Esthétique"
+   ],
+   "cles": "absurde beckett choc communiquer comprendre cultures des dialogue entre esthetique etres grand hommes impossibilite ionesco les medaille montre negre parlent personnages pour rhinoceros romans sans sociale sourds theatre theme vieux voir vraiment"
+  },
+  {
    "mot": "INDIFFÉRENCE",
    "nature": "nom",
    "cles": "absence autour aux engager interet lui pas passe pour problemes qui refus reprochait soi son temps"
+  },
+  {
+   "mot": "INDIGNATION / S'INDIGNER",
+   "nature": "nom / verbe",
+   "fonctions": [
+    "Engagement"
+   ],
+   "cles": "action agir cherche colere colonialisme cruelle discours ecrivain engage engagement honteuse indifferent indigne injustice lecteur par pas peut pour pousser provoquee provoquer recit rester revolte scandale sur suscite une ville voisins"
   },
   {
    "mot": "INFORMATION",
@@ -620,6 +1779,22 @@
    "cles": "appel comme contre engagement etre figure peut poesie pouvoir presentee revolte soulevement violent"
   },
   {
+   "mot": "INTELLECTUEL",
+   "nature": "nom / adjectif",
+   "fonctions": [
+    "Engagement"
+   ],
+   "cles": "africain ambigue aupres avec compromission conscience dans defendre des doit ecrivain engagement engager esprit eveilleur guider idees intervient ivoire laventure les parlent pas penseur personne peuple peut pour pouvoir professeur publique qui responsabilite rester servant son sujets tour trahir travaille vie voir"
+  },
+  {
+   "mot": "INTERTEXTUALITÉ",
+   "nature": "nom",
+   "fonctions": [
+    "Esthétique"
+   ],
+   "cles": "allusion auteur autre autres avec cesaire citation dans dialogue enrichit esthetique exemple lecteur lecture les oeuvre oeuvres par parodie pastiche presence que reconnait reecrit reecriture reprend shakespeare tempete texte toute une voir"
+  },
+  {
    "mot": "INTRIGUE",
    "nature": "nom",
    "fonctions": [
@@ -628,12 +1803,38 @@
    "cles": "des enchainement evasion evenements recit suspense"
   },
   {
+   "mot": "INTROSPECTION",
+   "nature": "nom",
+   "fonctions": [
+    "Lyrique"
+   ],
+   "cles": "ambigue autobiographie choix coeur confession elle est interieur intime journal laventure lettre livre longue lyrique monologue observation pensees poesie ramatoulaye revisite sentiments ses soi-meme une vie voir"
+  },
+  {
    "mot": "IRONIE",
    "nature": "nom",
    "fonctions": [
     "Engagement"
    ],
    "cles": "contraire dire engagement moquer pense pour satire"
+  },
+  {
+   "mot": "JEU DE MOTS",
+   "nature": "expression",
+   "fonctions": [
+    "Esthétique",
+    "Évasion"
+   ],
+   "cles": "a-peu-pres aussi cachant calembour comique critique denoncer des designe dimension double effet epoque est esthetique evasion fait independances joue les ludique mais malinke peut poetique qui rire sens soleil soleils sons sur titre une voir"
+  },
+  {
+   "mot": "JUSTICE POÉTIQUE",
+   "nature": "expression",
+   "fonctions": [
+    "Sociale",
+    "Esthétique"
+   ],
+   "cles": "belle bons cette comme conte contes dans ecrivains est esthetique fin injuste lequel les mechant mechants montrer oeuvre pour principe puni punis que realistes recompenses refusent respecte selon sociale sont souvent toujours trop une vie"
   },
   {
    "mot": "LÂCHE / LÂCHETÉ",
@@ -652,6 +1853,15 @@
    "cles": "art capacite designe est esthetique exprimer litterature mots peuple systeme"
   },
   {
+   "mot": "LANGUE MATERNELLE / LANGUE VÉHICULAIRE",
+   "nature": "expressions",
+   "fonctions": [
+    "Sociale",
+    "Engagement"
+   ],
+   "cles": "africain afrique apprise aussi baoule communiquer dans debat differentes dioula doit-il ecrire ecrivain eloigner engagement entre est famille francais francophonie frequent langage langues large mais ouest peuples plus premiere public sert sociale toucher une voir wolof"
+  },
+  {
    "mot": "LARMES",
    "nature": "nom",
    "cles": "sensibilite voir"
@@ -662,6 +1872,23 @@
    "cles": "destinataire lit personne public qui uvre"
   },
   {
+   "mot": "LÉGENDE",
+   "nature": "nom",
+   "fonctions": [
+    "Sociale",
+    "Évasion"
+   ],
+   "cles": "accompagne baoule celebre conte des devenue elle evasion explique histoire image mele merveilleux mythe nom oralement personne pokou proche qui recit reine sociale soundjata texte traditionnel transmis une unit"
+  },
+  {
+   "mot": "LEITMOTIV",
+   "nature": "nom",
+   "fonctions": [
+    "Esthétique"
+   ],
+   "cles": "chaque comme conducteur dans decisif donne est esthetique etranger fil fois idee image lui moment mot oeuvre phrase plusieurs qui refrain revient soleil son une unite voir"
+  },
+  {
    "mot": "LIBERTÉ",
    "nature": "nom",
    "fonctions": [
@@ -670,9 +1897,58 @@
    "cles": "agir artiste contrainte ecrire engagement expression pouvoir sans"
   },
   {
+   "mot": "LIBRE ARBITRE",
+   "nature": "expression",
+   "fonctions": [
+    "Engagement"
+   ],
+   "cles": "antigone autres choisir choisit decider destin determinisme elle engagee engagement enterrer etre eveiller fatalite frere homme lecteur les liberte litterature loi lui-meme malgre oppose par pousse sans son use veut"
+  },
+  {
+   "mot": "LICENCE POÉTIQUE",
+   "nature": "expression",
+   "fonctions": [
+    "Esthétique"
+   ],
+   "cles": "avec creer des ecart ecrit effet encor esthetique grammaire langue les liberte mots ordre orthographe par poete pour prend que regles respecter retire rime rythme syllabe une vers voir"
+  },
+  {
+   "mot": "LITOTE",
+   "nature": "nom",
+   "fonctions": [
+    "Esthétique"
+   ],
+   "cles": "aime amour avouer chimene cid contraire dit elle entendre esthetique exprime faire figure hais hyperbole ironie moins par plus point pour pudeur qui retenue sans signifie son suggere une"
+  },
+  {
+   "mot": "LITTÉRARITÉ",
+   "nature": "nom",
+   "fonctions": [
+    "Esthétique"
+   ],
+   "cles": "art artistique dans des doit ecart engagee est esthetique evoque fait fond forme idee images les litteraire message montrer oeuvre pas poetique pour qui rester rythme sans seulement sujets texte tract transmet travail une voir"
+  },
+  {
    "mot": "LITTÉRATURE",
    "nature": "nom",
    "cles": "activite art artistique des ecrire ecrites ensemble frequent langage ont plus qui theme une uvres valeur"
+  },
+  {
+   "mot": "LITTÉRATURE DE MASSE / LITTÉRATURE DE JEUNESSE",
+   "nature": "expressions",
+   "fonctions": [
+    "Évasion",
+    "Sociale"
+   ],
+   "cles": "adolescents beaucoup ces cherche discuter divertit ecrite elle enfants est evasion expressions facilite gare instruit large les lui parfois plaire plus policiers pour public reproche romans sentimentaux servent sociale surtout tres vend vise"
+  },
+  {
+   "mot": "LUMIÈRES (PHILOSOPHIE DES)",
+   "nature": "nom",
+   "fonctions": [
+    "Engagement"
+   ],
+   "cles": "ancetres arme candide combat combattre comme diderot eclairer eclaireur ecrivain engage engagement fanatisme hommes idees ignorance injustice intolerance les montesquieu mouvement par philosophe philosophes qui raison rire rousseau siecle sont utilise veut voir voltaire xviiie"
   },
   {
    "mot": "LUTTE",
@@ -683,12 +1959,80 @@
    "cles": "combat voir"
   },
   {
+   "mot": "LUXE INTELLECTUEL",
+   "nature": "expression",
+   "fonctions": [
+    "Évasion",
+    "Engagement"
+   ],
+   "cles": "argent ceux contraire dans discuter engagement est est-elle evasion expression faim frequente futilite idee inutile laquelle les litterature lutte necessite ont paysan peuple peut plaisir poesie pour qui reserve selon serait sujets survivre temps these vitale voir"
+  },
+  {
    "mot": "LYRIQUE / LYRISME",
    "nature": "adjectif / nom",
    "fonctions": [
     "Lyrique"
    ],
    "cles": "amour contraire des deuil expression joie lyre mot personnels sentiments social tristesse vient"
+  },
+  {
+   "mot": "MAL DU SIÈCLE",
+   "nature": "expression",
+   "fonctions": [
+    "Lyrique"
+   ],
+   "cles": "chateaubriand dans debut decue degout ennui epoque fleurs generation jeunesse largement les lyrique malaise melancolie monde musset par pas place plus poete romantique romantisme son souffre spleen tristesse trouve une vivre voir xixe"
+  },
+  {
+   "mot": "MANICHÉISME / MANICHÉEN",
+   "nature": "nom / adjectif",
+   "fonctions": [
+    "Engagement"
+   ],
+   "cles": "autre bon bons boy camps colon colonise complexite contraire cote cruelle dans des deux engagee engagement etre les litterature manicheenne mauvais mechants monde nuance parfois personnages plus que qui reproche roman sans separe sont symboles these tombe tout une vie ville vision"
+  },
+  {
+   "mot": "MANIFESTE",
+   "nature": "nom / adjectif",
+   "fonctions": [
+    "Engagement",
+    "Esthétique"
+   ],
+   "cles": "adjectif clair engagement est esthetique etudiant evident idees injustice les litteraire mouvement negritude noir poeme politique pour presente proclame programme qui revue surrealisme texte une veritable"
+  },
+  {
+   "mot": "MARGINALITÉ / MARGINAL",
+   "nature": "nom / adjectif",
+   "fonctions": [
+    "Sociale",
+    "Lyrique"
+   ],
+   "cles": "celui choix dehors des ecrivain est etranger exclu exclusion exterieur fou independances jeu jouer les letranger lui-meme lyrique maudit meursault normes par parfois poete qui refuse regarde situation sociale societe soleils vit"
+  },
+  {
+   "mot": "MARRONNAGE / MARRON",
+   "nature": "nom / adjectif",
+   "fonctions": [
+    "Engagement"
+   ],
+   "cles": "antillaise cesaire colonialisme culture culturelle des devient discours echappaient echappe ecriture ecrivain engagement esclaves figure forme fuite glissant important litterature maitre marrons par plantations qui refus resistance sens soumettre sur theme toute"
+  },
+  {
+   "mot": "MASQUE",
+   "nature": "nom",
+   "fonctions": [
+    "Sociale",
+    "Esthétique"
+   ],
+   "cles": "africaines apparence arrache boy cache ceremonies chose dans des devoiler devots dissimulation est esthetique faux figure hypocrisie les leur moliere montre nature objet oter porte quelqu qui sens sociale tartuffe theatre trompeuse une verite vie visage voir vraie"
+  },
+  {
+   "mot": "MÉLANCOLIE / SPLEEN",
+   "nature": "noms",
+   "fonctions": [
+    "Lyrique"
+   ],
+   "cles": "baudelaire cause degout douce ecrase ennui est exprime fleurs les liee lourd lyrique mal nostalgie par passe plus poete precise profonde qui sans sent siecle souvenir souvent temps tristesse vivre voir"
   },
   {
    "mot": "MÉMOIRE",
@@ -715,12 +2059,29 @@
    "cles": "engagement idee lecon morale que transmettre uvre veut"
   },
   {
+   "mot": "MÉTAPHORE",
+   "nature": "nom",
+   "fonctions": [
+    "Esthétique"
+   ],
+   "cles": "allegorie cet comparaison cree dans des deux ecrivain elle est esthetique fait figure filee fortes guide homme images lignes lion lui nuit outil phare plusieurs prolonge qui rapproche realites sans style sur surprenantes une voir"
+  },
+  {
    "mot": "MILITANT",
    "nature": "adjectif / nom",
    "fonctions": [
     "Engagement"
    ],
    "cles": "activement cause engagee fonction litterature lutte militante pour qui une"
+  },
+  {
+   "mot": "MIMÉSIS",
+   "nature": "nom",
+   "fonctions": [
+    "Esthétique",
+    "Sociale"
+   ],
+   "cles": "aristote art contente copier doit-elle ecrivain elle esthetique fonde grec idee imitation imite litterature miroir mot notion pas que question qui realisme realite reel revient signifie sociale souvent suffit transfigure transformer voir vraisemblance"
   },
   {
    "mot": "MIROIR",
@@ -731,12 +2092,37 @@
    "cles": "fidelement figure qui realisme reflete sociale societe surface uvre"
   },
   {
+   "mot": "MISE EN ABYME",
+   "nature": "expression",
+   "fonctions": [
+    "Esthétique"
+   ],
+   "cles": "creation dans devant dont ecrit elle elle-meme enchassement est esthetique fait hamlet heros invite jouee jouer oeuvre piece place procede qui reflechir roi roman sur tableau theatre une voir"
+  },
+  {
+   "mot": "MISE EN SCÈNE",
+   "nature": "expression",
+   "fonctions": [
+    "Esthétique"
+   ],
+   "cles": "acteurs attend calculee choix costumes decor deplacements des didascalie ensemble esthetique evenement existe figure font jeu lumieres organisation passer pour pouvoir qui sens spectacle texte theatre travers tromper une voir vraiment"
+  },
+  {
    "mot": "MONDE",
    "nature": "nom",
    "fonctions": [
     "Engagement"
    ],
    "cles": "ameliorer changer engagement humains les signifie societe terre"
+  },
+  {
+   "mot": "MONOLOGUE / MONOLOGUE INTÉRIEUR",
+   "nature": "nom / expression",
+   "fonctions": [
+    "Lyrique",
+    "Esthétique"
+   ],
+   "cles": "amour cid dans des dilemme directement dit entre esthetique face flot haute heros hesite honneur les lyrique narrateur pensees personnage qui rapporte rodrigue roman sans scene ses seul son sont stances theatre tirade tragique voix"
   },
   {
    "mot": "MORALE",
@@ -750,6 +2136,24 @@
    "mot": "MOT",
    "nature": "nom",
    "cles": "des influence langage mots pouvoir signifie unite verbe voir"
+  },
+  {
+   "mot": "MUSE",
+   "nature": "nom",
+   "fonctions": [
+    "Lyrique",
+    "Esthétique"
+   ],
+   "cles": "aimee artiste arts beaux chacune dans deesses des elle est esthetique femme grecque inspiration inspire inspirent invoque les lyrique mythologie neuf noire personne plus poemes poete pour qui recevoir senghor ses souvent voir"
+  },
+  {
+   "mot": "MUSIQUE DES MOTS / MUSICALITÉ",
+   "nature": "expression / nom",
+   "fonctions": [
+    "Esthétique",
+    "Lyrique"
+   ],
+   "cles": "accompagnes africaine alliterations assonances aussi balafong beaute chantee dans decrit dite elle essentielle est esthetique etre faite faits harmonie hosties imitative imitent indique instruments kora les lyrique noires notamment parle poemes poesie pour quand qui repetitions rimes rythme senghor ses soigne sonore sons sont texte"
   },
   {
    "mot": "MYTHE",
@@ -769,6 +2173,15 @@
    "cles": "avec courant decrit engagement est figure germinal observateur precision principale prolonge qui realisme scientifique siecle sociale societe uvre xixe zola"
   },
   {
+   "mot": "NÉCESSITÉ VITALE",
+   "nature": "expression",
+   "fonctions": [
+    "Engagement",
+    "Lyrique"
+   ],
+   "cles": "aide aussi contraire dire dont ecrire ecrit elle engagement esprit est futilite garde importante litterature luxe lyrique memoire mourir nourrit pain pas passer peut poete pour que resister une vivre"
+  },
+  {
    "mot": "NÉGRITUDE",
    "nature": "nom",
    "fonctions": [
@@ -777,12 +2190,69 @@
    "cles": "cesaire culture damas engagement identite litteraire mouvement noires qui senghor valorise"
   },
   {
+   "mot": "NÉOCOLONIALISME",
+   "nature": "nom",
+   "fonctions": [
+    "Engagement",
+    "Sociale"
+   ],
+   "cles": "ancienne apres attendant autres betes bilan continue culturelle demie des desenchantement dettes dictateur dirigeants domination economique engagement est exterieur formes garder independances interets les majeur matieres neocoloniaux par pays politique postcolonialisme pour premieres puissance qui romans sauvages sert sociale soumis sous soutenu soutenus theme vie voir vote"
+  },
+  {
+   "mot": "NÉOLOGISME",
+   "nature": "nom",
+   "fonctions": [
+    "Esthétique"
+   ],
+   "cles": "auteur beaucoup cesaire cree creent demie des epoque est esthetique exemple idee independances invente kourouma labou les mot negritude nouveau nouvelle originale par pour realite soleils sony tansi traduit une vie vision"
+  },
+  {
+   "mot": "NIHILISME",
+   "nature": "nom",
+   "fonctions": [
+    "Lyrique"
+   ],
+   "cles": "absurde attitude conduit croit dans desespoir destructrice elle lyrique nie personnage pessimisme plus qui revolte rien sens sombre tout toute valeur vaut verite vie voir"
+  },
+  {
+   "mot": "NOSTALGIE",
+   "nature": "nom",
+   "fonctions": [
+    "Lyrique"
+   ],
+   "cles": "afrique avant camara coeur colonisation elle enfance enfant est exil guineenne hosties laye lenfant lieu livre lyrique melancolie mele natal noir noires paris pays perdus personne poesie pour regret revit roman son souvenir temps tristesse une voir"
+  },
+  {
    "mot": "NOUVEAU ROMAN",
    "nature": "nom",
    "fonctions": [
     "Esthétique"
    ],
    "cles": "courant ecriture est esthetique figure intrigue message met personnages plan premier qui rejette robbe-grillet siecle traditionnel une xxe"
+  },
+  {
+   "mot": "NOUVELLE",
+   "nature": "nom",
+   "fonctions": [
+    "Esthétique"
+   ],
+   "cles": "avec centre chute confondre court dit droit essentiel est esthetique evenement fin information long pages pas personnages peu plus quelques recente recit roman seul souvent sur surprenante tout une"
+  },
+  {
+   "mot": "OBJECTIVITÉ / IMPARTIALITÉ",
+   "nature": "noms",
+   "fonctions": [
+    "Sociale"
+   ],
+   "cles": "bovary celui contraire dit ecrivain etre faits flaubert germinal ils les madame mais meler naturalistes objectif parti pas pense personnages peut-il prendre presente pris qualite qui realistes recherchent sans sentiments ses sociale sont subjectivite tels totalement vise"
+  },
+  {
+   "mot": "ODE",
+   "nature": "nom",
+   "fonctions": [
+    "Lyrique"
+   ],
+   "cles": "africaine avec celebre eloge enthousiaste est evenement femme ferveur lyrique pays personne poeme qui sentiment solennel souvent sur ton une voir"
   },
   {
    "mot": "ŒUVRE",
@@ -811,6 +2281,14 @@
    "cles": "contes culture dits epopees griots les memoire par parole proverbes transmission"
   },
   {
+   "mot": "ORIGINALITÉ",
+   "nature": "nom",
+   "fonctions": [
+    "Esthétique"
+   ],
+   "cles": "africanise apporte autres avant-garde avoir caractere cliche copie est esthetique forme francais imitation invente kourouma langue les nouveau nouvelle oeuvre oppose originale pas personnel plagiat qui une vision voir"
+  },
+  {
    "mot": "ORNEMENT",
    "nature": "nom",
    "fonctions": [
@@ -819,12 +2297,62 @@
    "cles": "embellit esthetique figures images qui style"
   },
   {
+   "mot": "PAMPHLET / PAMPHLÉTAIRE",
+   "nature": "nom",
+   "fonctions": [
+    "Engagement"
+   ],
+   "cles": "attaque cesaire colonialisme court diatribe discours engagement europe exageration institution invective ironie menagement personne polemique pouvoir qui sans satire sur texte une use violence violent voir"
+  },
+  {
+   "mot": "PARABOLE",
+   "nature": "nom",
+   "fonctions": [
+    "Sociale"
+   ],
+   "cles": "adhesion allegorie bible cache court decouvrir derriere didactique doit est fable figure histoire ideologie image lecon lecteur morale paraboles qui recit religieuse rhinoceros sens sociale totalitarisme transformation transmet une veritable voir"
+  },
+  {
+   "mot": "PARADOXE / PARADOXAL",
+   "nature": "nom / adjectif",
+   "fonctions": [
+    "Esthétique"
+   ],
+   "cles": "absurde africain analyser avec bati colonisateur commune contient contradictoire contre dans dissertation ecrire ecrivain est esthetique faut gagner idee langue libere mais maitre methode opinion outil perdre pour qui semble situation souvent sujet sur une verite"
+  },
+  {
+   "mot": "PARNASSE / PARNASSIEN",
+   "nature": "nom / adjectif",
+   "fonctions": [
+    "Esthétique"
+   ],
+   "cles": "art beaute bijoux ciselaient coeur comme comptait des engagement epanchements est esthetique esthetisme forme gautier heredia leconte les leurs lisle moitie mouvement parnassiens perfection poetique pour qui recherche refuse seconde seule siecle vers voir xixe"
+  },
+  {
+   "mot": "PARODIE / PASTICHE",
+   "nature": "noms",
+   "fonctions": [
+    "Esthétique",
+    "Engagement"
+   ],
+   "cles": "attendant auteur betes burlesque candide des devient dictateur engagement epique esthetique faux geste heros hommage imite intertextualite jeu kourouma moquer moquerie noble oeuvre par pour recit ridicule sans sauvages souvent style transformant une voir vote"
+  },
+  {
    "mot": "PASSE-TEMPS",
    "nature": "nom",
    "fonctions": [
     "Évasion"
    ],
    "cles": "agreablement evasion fait loisir occupation passer qui temps"
+  },
+  {
+   "mot": "PATHÉTIQUE / PATHOS",
+   "nature": "adjectif / nom",
+   "fonctions": [
+    "Lyrique",
+    "Engagement"
+   ],
+   "cles": "appel boy compassion cote dans denoncer devant discours emotion emouvoir engagement est forte lecteur les logos lyrique miserables mort pitie public qui raison registre saisi scene sert souffrance souvent suscite toundi tristesse une vie voir"
   },
   {
    "mot": "PEINDRE / PEINTURE",
@@ -840,12 +2368,71 @@
    "cles": "auteur critique dans ecrivain personne philosophe qui reflechit sujet these"
   },
   {
+   "mot": "PÉRIPÉTIE",
+   "nature": "nom",
+   "fonctions": [
+    "Esthétique",
+    "Évasion"
+   ],
+   "cles": "action aventure change coup cours dans esthetique evasion evenement heros imprevu intrigue les maintiennent multiplie peripeties piece qui recit relancent suspense theatre une voir"
+  },
+  {
+   "mot": "PERSONNAGE-TYPE",
+   "nature": "expression",
+   "fonctions": [
+    "Sociale"
+   ],
+   "cles": "acheter archetype argent avare avec brutal caricature categorie ceux colon commercant corrompu critiquer croient est fonctionnaire incarne maratre mari peindre personnage personnes pretendants qui represente riche sage sert sociale societe tartuffe tchetgen tout toute trois une vieux voir"
+  },
+  {
+   "mot": "PERSONNIFICATION / PROSOPOPÉE",
+   "nature": "noms",
+   "fonctions": [
+    "Esthétique"
+   ],
+   "cles": "absent afrique animal blessures chose contes continent dans des donne esthetique fait frequentes humains idee les lui-meme mort nuit par parler parole patrie pleure poesie poete prend raconte ses traits une"
+  },
+  {
+   "mot": "PESSIMISME / PESSIMISTE",
+   "nature": "nom / adjectif",
+   "fonctions": [
+    "Engagement",
+    "Lyrique"
+   ],
+   "cles": "africain afro-pessimisme auteur avertissement avoir but choses contraire cote demie des desenchantement engagement est evite independances ira lecteur les lyrique mais mal mauvais montre optimisme penser pessimistes peut pire pour que reveiller romans soleils sont souvent tendance tout vie voir"
+  },
+  {
    "mot": "PEUPLE",
    "nature": "nom",
    "fonctions": [
     "Engagement"
    ],
    "cles": "des engagement ensemble gens habitants les ordinaires pays porte-parole"
+  },
+  {
+   "mot": "PICARESQUE",
+   "nature": "adjectif",
+   "fonctions": [
+    "Sociale",
+    "Évasion"
+   ],
+   "cles": "aventures candide couches critiquer decouvre des differents dit evasion heros les mondes pauvre pays permet personnage picaro qui raconte roman ruse sociale societe structure toutes traverse tres une voyage"
+  },
+  {
+   "mot": "PLAGIAT",
+   "nature": "nom",
+   "fonctions": [
+    "Esthétique"
+   ],
+   "cles": "accuse attribue auteur autre comme confiance contraire copier devoir est esthetique ete fait faute juridique lecteur morale oeuvre originalite ouologuem presenter sienne trahit travail une violence yambo"
+  },
+  {
+   "mot": "PLAIDOYER",
+   "nature": "nom",
+   "fonctions": [
+    "Engagement"
+   ],
+   "cles": "accuse africaine avocat cause colonialisme colonises contraire defend defendre discours droits engagement est femme groupe les lettre litterature longue mariama personne pour qui requisitoire ses sur texte une"
   },
   {
    "mot": "PLAIRE",
@@ -876,6 +2463,49 @@
    "cles": "auteur avec des ecrit emotions engagement est esthetique exprime genre images joue les lyrique mots plus poetique qui son souvent texte vers"
   },
   {
+   "mot": "POÈTE MAUDIT / POÈTE PROPHÈTE",
+   "nature": "expressions",
+   "fonctions": [
+    "Lyrique",
+    "Engagement"
+   ],
+   "cles": "annoncer avenir baudelaire charge croit dans deux eclairer engagement est fleurs guider hommes hugo incompris les lyrique mage mal malheureux mission opposees par pauvre peuple rejete rimbaud role societe souvent sujets une verlaine vers veut victor visions voit voyant"
+  },
+  {
+   "mot": "POÉTIQUE",
+   "nature": "nom / adjectif",
+   "fonctions": [
+    "Esthétique",
+    "Lyrique"
+   ],
+   "cles": "adjectif auteur beaute choix conception ecart ecrire ecriture ensemble est esthetique lyrique maniere negritude nom poesie propre prose qui releve repose rythme senghor ses sur une voir"
+  },
+  {
+   "mot": "POLÉMIQUE",
+   "nature": "nom / adjectif",
+   "fonctions": [
+    "Engagement"
+   ],
+   "cles": "adjectif attaque celui cesaire colonialisme colonisation combat debat defenseurs diatribe directement discours engagee engagement est indignation ironie les litterature nom pamphlet par parole passionne publique querelle registre souvent sur ton vif voir"
+  },
+  {
+   "mot": "POLYPHONIE",
+   "nature": "nom",
+   "fonctions": [
+    "Esthétique"
+   ],
+   "cles": "attendant betes bois bouts complexite dans des dieu donne elle entendre esthetique evite fait imposer langages les montre narrateurs nombreux oeuvre parole personnages peuple plusieurs points presence reel sauvages sembene seule tout une verite voix vote vue"
+  },
+  {
+   "mot": "PORTÉE UNIVERSELLE / UNIVERSALITÉ",
+   "nature": "expression / nom",
+   "fonctions": [
+    "Lyrique",
+    "Sociale"
+   ],
+   "cles": "africaine ambigue amour antigone au-dela aventure avoir capacite condition contexte deux entre epoques homme hommes humaine laventure les lyrique mondes mort oeuvre parler partage pays peut pouvoir reconnait sociale son tous tout toutes traitant une voir"
+  },
+  {
    "mot": "PORTE-PAROLE",
    "nature": "nom",
    "fonctions": [
@@ -884,14 +2514,48 @@
    "cles": "engagement groupe nom parle personne qui"
   },
   {
+   "mot": "POSTCOLONIALISME / POSTCOLONIAL",
+   "nature": "nom / adjectif",
+   "fonctions": [
+    "Engagement",
+    "Sociale"
+   ],
+   "cles": "analysent apres bilan celle colon colonisation dans demie denonce des dictateur domination engagement est etudes identite independances langue les litteratures maitres neocolonialisme nouveaux periode postcoloniale postcoloniales qui roman sociale societes soleils suit traces vie voir"
+  },
+  {
+   "mot": "POSTÉRITÉ",
+   "nature": "nom",
+   "fonctions": [
+    "Lyrique",
+    "Sociale"
+   ],
+   "cles": "apres auteur conquis ecrire ecrivain elle empreinte est futures garde generations gloire laisser les lue lyrique memoire mort oeuvre peut pour siecles sociale son toujours trace traverse une voir"
+  },
+  {
    "mot": "POUVOIR",
    "nature": "nom",
    "cles": "agir autorite capacite choisir critiquer denoncer des deux gouvernants gouverne langage les lis mots phrase piege politique pour pouvoirs puissance qui sens verbe"
   },
   {
+   "mot": "PRÉCIOSITÉ / PRÉCIEUX",
+   "nature": "nom / adjectif",
+   "fonctions": [
+    "Esthétique"
+   ],
+   "cles": "artificiel complique contraire dans des devient elle eloigne esthetique extension extreme inities jeu langage langue les manieres moliere moque mouvement naturel par peuple pour precieuses qui raffinement recherche ridicules siecle simplicite style trop xviie"
+  },
+  {
    "mot": "PROBLÉMATIQUE",
    "nature": "nom",
    "cles": "dans deux elle figure introduction par questions serie soulevees these trois"
+  },
+  {
+   "mot": "PROPAGANDE",
+   "nature": "nom",
+   "fonctions": [
+    "Engagement"
+   ],
+   "cles": "action agent certaines coloniale critique demie des devenir dictateur doit ecrivain engage engagees engagement esprit garder idees ideologie imposer manipulation mensonge oeuvres organisee par parti pas population pour repetition reproche rhinoceros son souvent une unique vie voir"
   },
   {
    "mot": "PROSE",
@@ -946,6 +2610,15 @@
    "cles": "evasion histoire narration racontee"
   },
   {
+   "mot": "RÉCIT INITIATIQUE / ROMAN D'APPRENTISSAGE",
+   "nature": "expressions",
+   "fonctions": [
+    "Sociale",
+    "Évasion"
+   ],
+   "cles": "adulte africaine age ambigue candide circoncision dans depart des echecs enfance enfant epreuves est evasion formation heros initiation jeune jusqu laventure laye lenfant noir passage quete qui quitte raconte rite sociale tradition transformation travers voisins voyage"
+  },
+  {
    "mot": "REFLET / REFLÉTER",
    "nature": "nom / verbe",
    "fonctions": [
@@ -982,6 +2655,14 @@
    "mot": "ROMAN / ROMANCIER",
    "nature": "noms",
    "cles": "auteur est frequent invente long plus prose recit souvent theme tres"
+  },
+  {
+   "mot": "ROMAN À THÈSE",
+   "nature": "expression",
+   "fonctions": [
+    "Engagement"
+   ],
+   "cles": "bois bouts collective comme cruelle defend demonstration demontrer des dieu ecrit engagement histoire idee les lit lui lutte manicheisme manque morale nuance ouvriers parfois personnages politique pour religieuse reproche servent une ville voir"
   },
   {
    "mot": "ROMANTISME",
@@ -1059,6 +2740,14 @@
    "cles": "des ecriture ensemble etude figures procedes style"
   },
   {
+   "mot": "SUBVERSION / SUBVERSIF",
+   "nature": "nom / adjectif",
+   "fonctions": [
+    "Engagement"
+   ],
+   "cles": "action candide cause censure censurent contestation demie des dictatures engagement est etabli fait forme ironie les normal nouvelle oeuvre ordre par pouvoir prestige puissants qui remet renverser rire semble souvent subversive tomber une valeurs vie voir"
+  },
+  {
    "mot": "SURRÉALISME",
    "nature": "nom",
    "fonctions": [
@@ -1124,6 +2813,32 @@
     "Sociale"
    ],
    "cles": "coutumes croyances culture generation modernite opposee parfois sociale transmises"
+  },
+  {
+   "mot": "TRAGÉDIE / TRAGIQUE",
+   "nature": "nom / adjectif",
+   "fonctions": [
+    "Lyrique",
+    "Esthétique"
+   ],
+   "cles": "accepte antigone catharsis cause cid demesure depasse des destin ecrases elle est esthetique face fatalite faute finit force hamartia heroine heros homme hybris ignore ironie issue lyrique mal met mourir nobles orgueil par personnages phedre piece pitie quand que qui sait sans scene situation son spectateur suscite terreur theatre tombe une voir"
+  },
+  {
+   "mot": "TRANSCENDANCE POÉTIQUE / TRANSCENDER",
+   "nature": "expression / verbe",
+   "fonctions": [
+    "Lyrique",
+    "Évasion"
+   ],
+   "cles": "absolu alchimie aller atteindre au-dela au-dessus capacite condition depasser eleve est eternite evasion haute homme lyrique misere monde par plus poesie pour quotidien realite sacre transcende une verbe visible voir"
+  },
+  {
+   "mot": "TRANSFIGURATION ESTHÉTIQUE / TRANSFIGURER",
+   "nature": "expression / verbe",
+   "fonctions": [
+    "Esthétique"
+   ],
+   "cles": "alchimie art baudelaire beau beaute boue copie dit donne ecrivain fait fleurs les lui mal matiere mimesis misere nouveau par pas poete qui realite reel rend sens transfigure transformation une verbe voir"
   },
   {
    "mot": "TRANSFORMATION",
