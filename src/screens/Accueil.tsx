@@ -10,6 +10,11 @@ import { Suggestions } from "../components/Suggestions";
 import { useState } from "preact/hooks";
 import { href } from "../lib/router";
 
+/** Détail d'une case : version courte sur téléphone, où les cases sont étroites. */
+const Detail = ({ long, court }: { long: string; court: string }) => (
+  <span class="choix-detail"><span class="detail-long">{long}</span><span class="detail-court">{court}</span></span>
+);
+
 /** Écran d'accueil : la recherche d'œuvres, puis les autres choses que l'élève vient faire. Les leçons ont leur propre écran (Cours). */
 export function AccueilScreen() {
   const [lues] = useStored<string[]>("lecons-lues", []);
@@ -40,23 +45,24 @@ export function AccueilScreen() {
         <a class="choix-carte choix-methode" href={suivante && nbLues > 0 ? `#/cours/${suivante.id}` : "#/cours"}>
           <Icon name="menu_book" size={24} />
           <span class="choix-titre">{nbLues === 0 ? "Apprendre la méthode" : suivante ? "Continuer la méthode" : "Revoir la méthode"}</span>
-          <span class="choix-detail">{nbLues === 0 ? `${LECONS.length} leçons courtes` : suivante ? `Reprendre à la leçon ${LECONS.indexOf(suivante) + 1}` : `${LECONS.length} leçons lues`}</span>
+          <Detail long={nbLues === 0 ? `${LECONS.length} leçons courtes` : suivante ? `Reprendre à la leçon ${LECONS.indexOf(suivante) + 1}` : `${LECONS.length} leçons lues`}
+            court={nbLues === 0 ? `${LECONS.length} leçons courtes` : suivante ? `Reprendre leçon ${LECONS.indexOf(suivante) + 1}` : "Tout est lu"} />
           {nbLues > 0 && <span class="progress-bar" aria-hidden="true"><span style={{ width: `${(nbLues / LECONS.length) * 100}%` }} /></span>}
         </a>
         <a class="choix-carte choix-corriges" href="#/sujets">
           <Icon name="history_edu" size={24} />
           <span class="choix-titre">Sujets corrigés</span>
-          <span class="choix-detail">{SUJETS.length} copies modèles</span>
+          <Detail long={`${SUJETS.length} copies modèles`} court={`${SUJETS.length} copies modèles`} />
         </a>
         <a class="choix-carte choix-entrainer" href="#/entrainement">
           <Icon name="edit" size={24} />
           <span class="choix-titre">M'entraîner</span>
-          <span class="choix-detail">{SUJETS.length} sujets type bac</span>
+          <Detail long={`${SUJETS.length} sujets type bac`} court={`${SUJETS.length} sujets type bac`} />
         </a>
         <a class="choix-carte choix-outils" href="#/outils">
           <Icon name="inventory_2" size={24} />
           <span class="choix-titre">Boîte à outils</span>
-          <span class="choix-detail">Dictionnaire, formules, vocabulaire</span>
+          <Detail long="Dictionnaire, formules, vocabulaire" court="Dico et formules" />
         </a>
       </nav>
 
