@@ -1,6 +1,8 @@
 import type { Fonction, Oeuvre } from "../data/types";
 import { OEUVRES, SUJETS } from "./data";
 import { sujetsEntrainement, type SujetEntrainement } from "./entrainement";
+import { contenuLibre } from "./libre";
+import { normalize } from "./text";
 import { jourLocal, marquer } from "./progres";
 import { read, useStored, write } from "./storage";
 import { noter } from "./stats";
@@ -43,17 +45,19 @@ const sansAccent = (s: string) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toL
 
 /** Fonctions littéraires d'un sujet, d'après son orientation (« Social / Engagement »). */
 export const fonctionsDuSujet = (num: string): Fonction[] => {
+  // Sujet ajouté depuis le tableau de bord : fonctions cochées par l'éditeur.
+  const ajoute = contenuLibre()?.entrainement?.find(e => e.id === num);
+  if (ajoute) return ajoute.fonctions ?? [];
   const o = SUJETS.find(s => s.num === num)?.orientation ?? "";
   return [...new Set(o.split(/[\/,]/).map(x => FONCTION[sansAccent(x.trim())]).filter(Boolean))];
 };
 
 /** Œuvres qui peuvent illustrer un sujet : thèmes du sujet et fonction littéraire attendue. */
 export function oeuvresPourSujet(num: string, combien = 4): Oeuvre[] {
-  const s = SUJETS.find(x => x.num === num);
-  const themes = s?.themes ?? [];
+  const themes = new Set((SUJETS.find(x => x.num === num)?.themes ?? contenuLibre()?.entrainement?.find(e => e.id === num)?.themes ?? []).map(normalize));
   const fonctions = fonctionsDuSujet(num);
   return OEUVRES.filter(w => w.detaillee)
-    .map(w => ({ w, score: w.themes.filter(t => themes.includes(t)).length * 2 + w.fonctions.filter(f => fonctions.includes(f)).length + (w.niveaux?.length ? 0.5 : 0) }))
+    .map(w => ({ w, score: w.themes.filter(t => themes.has(normalize(t))).length * 2 + w.fonctions.filter(f => fonctions.includes(f)).length + (w.niveaux?.length ? 0.5 : 0) }))
     .filter(x => x.score >= 3)
     .sort((a, b) => b.score - a.score || a.w.titre.localeCompare(b.w.titre, "fr"))
     .slice(0, combien)

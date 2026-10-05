@@ -1,6 +1,6 @@
 import { SERVEUR_URL } from "./site";
 import { read, write } from "./storage";
-import type { BlocLecon, IdeeIllustration, MotDico, Oeuvre } from "../data/types";
+import type { BlocLecon, Fonction, IdeeIllustration, MotDico, Oeuvre } from "../data/types";
 
 /**
  * Ce que l'éditeur change depuis son tableau de bord (corrections, fiches et leçons ajoutées, mots…).
@@ -19,12 +19,12 @@ export interface ContenuLibre {
   ajouts?: {
     oeuvres: Oeuvre[];
     /** `quiz` : nombre de questions du quiz écrit dans le tableau de bord (les questions viennent avec le contenu payant). */
-    lecons: { id: string; titre: string; duree: string; libre: boolean; blocs: BlocLecon[]; quiz?: number }[];
+    lecons: { id: string; titre: string; duree: string; libre: boolean; blocs: BlocLecon[]; quiz?: number; etape?: string }[];
   };
   /** Mots du dictionnaire ajoutés ou modifiés depuis le tableau de bord (sans le sens). */
   mots?: MotDico[];
   /** Sujets d'entraînement ajoutés depuis le tableau de bord (énoncé seul). */
-  entrainement?: { id: string; citation: string; auteur: string; consigne: string; cree: number }[];
+  entrainement?: { id: string; citation: string; auteur: string; consigne: string; cree: number; themes?: string[]; fonctions?: Fonction[] }[];
 }
 
 const CLE = "contenu-libre";

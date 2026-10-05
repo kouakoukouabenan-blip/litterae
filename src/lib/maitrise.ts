@@ -4,6 +4,7 @@ import { historique } from "./historique";
 import { activite } from "./progres";
 import { cles, read } from "./storage";
 import { LECONS } from "./lecons";
+import { contenuLibre } from "./libre";
 
 /**
  * Niveau de maîtrise de chaque étape de la dissertation, calculé sur le téléphone :
@@ -46,10 +47,17 @@ export function maitrise(): Etape[] {
   const enCours = brouillons.sort((a, b) => (b.b!.modifie ?? 0) - (a.b!.modifie ?? 0))[0]?.num;
   const oeuvres = new Set(historique().filter(v => v.t === "oeuvre").map(v => v.id)).size;
   const defis = Object.values(activite()).filter(j => j.includes("defi")).length;
-  const total = apercu as Record<string, number>;
+  const total: Record<string, number> = { ...(apercu as Record<string, number>) };
+  // Leçons ajoutées depuis le tableau de bord, rangées par l'éditeur dans une étape.
+  const ajoutees = (contenuLibre()?.ajouts?.lecons ?? []).filter(l => l.etape);
+  for (const l of ajoutees) if (l.quiz) total[l.id] = l.quiz;
   return DEFS.map(d => {
+    const lecons = [d.lecon, ...ajoutees.filter(l => l.etape === d.id).map(l => l.id)];
     const lecture = lues.includes(d.lecon) ? 20 : 0;
-    const quiz = total[d.lecon] ? 30 * Math.min(1, (meilleurs[d.lecon] ?? 0) / total[d.lecon]) : 0;
+    // Meilleur quiz parmi les leçons de l'étape (celle du guide et les leçons ajoutées).
+    const ratio = Math.max(0, ...lecons.filter(id => total[id]).map(id => Math.min(1, (meilleurs[id] ?? 0) / total[id])));
+    const quiz = lecons.some(id => total[id]) ? 30 * ratio : 0;
+    const aLire = ajoutees.find(l => l.etape === d.id && !lues.includes(l.id));
     const faits = brouillons.filter(x => d.fait(x.b!)).length;
     let pratique = 50 * Math.min(1, faits / 3);
     if (d.id === "exemples") pratique = 20 * Math.min(1, faits / 3) + 15 * Math.min(1, oeuvres / 12) + 15 * Math.min(1, defis / 5);
@@ -59,6 +67,8 @@ export function maitrise(): Etape[] {
       ? { texte: `Lis la leçon ${rang}`, lien: `#/cours/${d.lecon}` }
       : quiz < 24 && total[d.lecon]
         ? { texte: `Fais le quiz de la leçon ${rang}`, lien: `#/cours/${d.lecon}` }
+        : aLire
+          ? { texte: `Lis « ${aLire.titre.length > 40 ? aLire.titre.slice(0, 38).trimEnd() + "…" : aLire.titre} »`, lien: `#/cours/${aLire.id}` }
         : d.id === "exemples" && oeuvres < 12
           ? { texte: "Lis d'autres fiches d'œuvres", lien: "#/oeuvres" }
           : { texte: "Entraîne-toi dans l'atelier", lien: enCours ? `#/entrainement/${enCours}${d.atelier ? `?etape=${d.atelier}` : ""}` : "#/entrainement" };

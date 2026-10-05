@@ -13,6 +13,7 @@ import { cles, read } from "./storage";
 import { bilan } from "./progres";
 import { cartesDuJour } from "./revisions";
 import { defiFaitAujourdhui, sujetDuJour } from "./defi";
+import { normalize } from "./text";
 import { etapeFaible } from "./maitrise";
 
 /**
@@ -93,9 +94,9 @@ let poidsThemes: Map<string, number> | null = null;
 function poids(theme: string) {
   if (!poidsThemes) {
     poidsThemes = new Map();
-    for (const w of OEUVRES) for (const t of w.themes) poidsThemes.set(t, (poidsThemes.get(t) ?? 0) + 1);
+    for (const w of OEUVRES) for (const t of w.themes) poidsThemes.set(normalize(t), (poidsThemes.get(normalize(t)) ?? 0) + 1);
   }
-  return 1 / Math.log(2 + (poidsThemes.get(theme) ?? 0));
+  return 1 / Math.log(2 + (poidsThemes.get(normalize(theme)) ?? 0));
 }
 
 /** Œuvre proche de celles que l'élève vient de lire (thèmes, fonctions, auteur), pas encore ouverte. */
@@ -110,7 +111,9 @@ function oeuvreProche(h: Vue[], premium: boolean, aujourdhui: number): Suggestio
     let score = 0, raison = "", source = lues[0];
     lues.forEach((l, rang) => {
       const recence = 1 - rang * 0.15;
-      const communs = w.themes.filter(t => l.themes.includes(t));
+      // « amour » et « Amour » sont le même thème (fiches écrites à la main dans le tableau de bord).
+      const siens = new Set(l.themes.map(normalize));
+      const communs = w.themes.filter(t => siens.has(normalize(t)));
       const s = (communs.reduce((n, t) => n + poids(t), 0) * 2 + w.fonctions.filter(f => l.fonctions.includes(f)).length * 0.3
         + (w.auteur === l.auteur ? 1.5 : 0)) * recence;
       if (s > 0) score += s;
