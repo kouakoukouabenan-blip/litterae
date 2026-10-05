@@ -1,4 +1,4 @@
-import { useEffect } from "preact/hooks";
+import { useEffect, useState } from "preact/hooks";
 import { extrait } from "../components/Partager";
 import { LECONS } from "../lib/lecons";
 import type { BlocLecon } from "../data/types";
@@ -11,6 +11,7 @@ import { LockPanel } from "../components/LockPanel";
 import { useAccess } from "../lib/access";
 import { LigneContact } from "../components/LigneContact";
 import { noter } from "../lib/stats";
+import { synchroniser } from "../lib/synchro";
 
 function Bloc({ b }: { b: BlocLecon }) {
   if ("p" in b) return <p>{b.p}</p>;
@@ -35,6 +36,27 @@ function Bloc({ b }: { b: BlocLecon }) {
   // Lien venu du serveur : seulement vers une page de l'appli ou un site https.
   if ("lien" in b) return /^(https:\/\/|#\/)/.test(b.lien.href) && <a class="btn btn-secondary align-start" href={b.lien.href}><Icon name="local_library" size={20} />{b.lien.texte}</a>;
   return null;
+}
+
+/**
+ * Leçon publiée depuis le tableau de bord dont le texte n'est pas encore sur l'appareil :
+ * il est demandé au serveur tout de suite, et la page se relance dès qu'il est arrivé.
+ */
+function TexteEnRoute() {
+  const [etat, setEtat] = useState<"charge" | "echec">("charge");
+  const essayer = () => {
+    setEtat("charge");
+    synchroniser(true).then(ok => { if (ok) location.reload(); else setEtat("echec"); });
+  };
+  useEffect(essayer, []);
+  return etat === "charge" ? (
+    <p class="notice notice-court" role="status">Chargement du texte de la leçon…</p>
+  ) : (
+    <div role="status">
+      <p class="notice notice-court"><Icon name="wifi_off" size={20} />Le texte n'a pas pu être chargé. Vérifie ta connexion.</p>
+      <button type="button" class="btn btn-secondary align-start" onClick={essayer}>Réessayer</button>
+    </div>
+  );
 }
 
 export function LeconScreen({ id }: { id: string }) {
@@ -64,7 +86,7 @@ export function LeconScreen({ id }: { id: string }) {
         {verrouillee ? (
           <LockPanel reason="Cette leçon fait partie de l'accès complet." />
         ) : (
-          <div class="prose">{l.blocs.map((b, k) => <Bloc key={k} b={b} />)}</div>
+          l.blocs.length ? <div class="prose">{l.blocs.map((b, k) => <Bloc key={k} b={b} />)}</div> : <TexteEnRoute key={l.id} />
         )}
         <QuizLecon id={l.id} />
         {!verrouillee && <LigneContact page={`#/cours/${l.id}`} objet={`la leçon « ${l.titre} »`} quoi="cette leçon" />}

@@ -23,10 +23,9 @@ import { InstallGate, InstallGuide } from "./components/Install";
 import { CommentPayer } from "./components/CommentPayer";
 import { AccesScreen } from "./screens/Acces";
 import { ContactScreen } from "./screens/Contact";
-import { licence, rechargerContenu, reverifier } from "./lib/licence";
-import { contenuEnRetard } from "./lib/data";
+import { reverifier } from "./lib/licence";
+import { synchroniser } from "./lib/synchro";
 import { demarrerStats, noter } from "./lib/stats";
-import { actualiserContenuLibre } from "./lib/libre";
 import { actualiserQuestions } from "./lib/contact";
 import { prevenirAchatHorsLigne } from "./components/Achat";
 
@@ -50,21 +49,17 @@ function useScrollMemory(key: string) {
 
 export function App() {
   useEffect(() => {
-    // Site mis à jour avec de nouveaux sujets ou fiches : le contenu payant est rechargé tout de suite,
-    // puis la page est relancée pour les afficher (une seule fois, si le serveur les a bien envoyés).
-    const l = licence();
-    if (l && contenuEnRetard(l.contenu)) {
-      rechargerContenu().then(ok => {
-        const n = licence();
-        if (ok && n && !contenuEnRetard(n.contenu)) location.reload();
-      });
-    } else reverifier();
+    // Nouveautés (site mis à jour, ou leçon, fiche, correction publiées depuis le tableau de bord) :
+    // la liste et le contenu payant sont rechargés tout de suite, puis la page est relancée pour les afficher.
+    // Sinon, vérification quotidienne de la clé.
+    synchroniser().then(change => { if (!change) reverifier(); });
     prevenirAchatHorsLigne();
     demarrerStats();
-    actualiserContenuLibre();
-    // Réponses de l'auteur aux questions (accès complet) : au démarrage et au retour dans l'appli.
+    // Réponses de l'auteur aux questions (accès complet) et nouveautés : au démarrage et au retour dans l'appli.
     actualiserQuestions();
-    document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") actualiserQuestions(); });
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "visible") { actualiserQuestions(); synchroniser(); }
+    });
     // Ouverture depuis une notification : l'adresse porte le numéro du message.
     const depuisNotif = new URLSearchParams(location.search).get("annonce");
     if (depuisNotif) {

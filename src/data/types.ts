@@ -119,6 +119,8 @@ export interface Dictionnaire {
 /** Contenu payant renvoyé par le serveur après validation d'une clé. */
 export interface ContenuPayant {
   version: number;
+  /** Numéro des modifications faites depuis le tableau de bord (le même que celui du contenu libre). */
+  revision?: number;
   oeuvres: Record<string, { resume: string | null; idees: IdeeIllustration[]; exemple?: string | null }>;
   sujets: Sujet[];
   /** Quiz par leçon (absent des clés activées avant l'ajout des quiz). */

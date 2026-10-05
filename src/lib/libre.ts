@@ -29,14 +29,16 @@ const CLE = "contenu-libre";
 
 export const contenuLibre = () => read<ContenuLibre | null>(CLE, null);
 
+/** Récupère la dernière version ; vrai si elle a changé depuis celle gardée sur l'appareil. */
 export async function actualiserContenuLibre() {
-  if (!SERVEUR_URL || !navigator.onLine) return;
+  if (!SERVEUR_URL || !navigator.onLine) return false;
   try {
-    const r = await fetch(SERVEUR_URL + "/contenu-libre");
-    if (!r.ok) return;
+    const r = await fetch(SERVEUR_URL + "/contenu-libre", { cache: "no-store" });
+    if (!r.ok) return false;
     const d = (await r.json()) as ContenuLibre;
-    if (Array.isArray(d?.gratuites) && d.revision !== contenuLibre()?.revision) write(CLE, d);
+    if (Array.isArray(d?.gratuites) && d.revision !== contenuLibre()?.revision) { write(CLE, d); return true; }
   } catch {
     // Hors connexion : la liste gardée sur l'appareil reste valable.
   }
+  return false;
 }
