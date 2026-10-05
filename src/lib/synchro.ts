@@ -2,6 +2,9 @@ import type { ContenuPayant } from "../data/types";
 import { contenuEnRetard } from "./data";
 import { actualiserContenuLibre, contenuLibre } from "./libre";
 import { licence, rechargerContenu } from "./licence";
+import { rafraichirFiches } from "./fiches";
+import { rafraichirLecons } from "./lecons-libres";
+import { rafraichirMots } from "./dictionnaire";
 
 /**
  * Le contenu payant gardé sur l'appareil ne suit pas les derniers changements du tableau de bord
@@ -45,6 +48,8 @@ export function synchroniser(force = false): Promise<boolean> {
   enCours = (async () => {
     let change = await actualiserContenuLibre();
     const l = licence();
+    // Sans clé : les fiches, leçons et mots déjà ouverts suivent les corrections de l'éditeur.
+    if (change && !l) await Promise.all([rafraichirFiches(), rafraichirLecons(), rafraichirMots()]);
     if (l && enRetard(l.contenu) && (await rechargerContenu())) {
       // Rechargé mais toujours en retard (serveur pas encore à jour) : pas de relance en boucle.
       const n = licence();

@@ -32,3 +32,18 @@ export async function consulter(mot: string): Promise<EntreeDico | EchecConsulta
     return "erreur";
   }
 }
+
+/** Mots déjà consultés : sens redemandé quand l'éditeur a changé quelque chose (sans compter). */
+export async function rafraichirMots() {
+  const mots = Object.keys(read<Consultes>(CLE, {}));
+  if (!mots.length || !SERVEUR_URL) return;
+  const neufs: Consultes = {};
+  await Promise.all(mots.map(async mot => {
+    try {
+      const r = await fetch(`${SERVEUR_URL}/dictionnaire?mot=${encodeURIComponent(mot)}`);
+      const d = r.ok ? await r.json() : null;
+      if (d?.entree) neufs[mot] = d.entree;
+    } catch { /* hors connexion : on garde l'ancien sens */ }
+  }));
+  if (Object.keys(neufs).length) write(CLE, { ...read<Consultes>(CLE, {}), ...neufs });
+}

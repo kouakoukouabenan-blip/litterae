@@ -37,3 +37,21 @@ export async function ouvrirFiche(id: string): Promise<TexteFiche | EchecFiche> 
     return "erreur";
   }
 }
+
+/**
+ * Fiches déjà ouvertes : leur texte est redemandé quand l'éditeur a changé quelque chose
+ * (sans compter de nouvelle fiche). En cas d'échec, l'ancien texte reste.
+ */
+export async function rafraichirFiches() {
+  const ids = Object.keys(fichesOuvertes());
+  if (!ids.length || !SERVEUR_URL) return;
+  const neuves: Ouvertes = {};
+  await Promise.all(ids.map(async id => {
+    try {
+      const r = await fetch(`${SERVEUR_URL}/fiche?id=${encodeURIComponent(id)}`);
+      const d = r.ok ? await r.json() : null;
+      if (d?.fiche) neuves[id] = d.fiche;
+    } catch { /* hors connexion : on garde l'ancien texte */ }
+  }));
+  if (Object.keys(neuves).length) write(CLE, { ...fichesOuvertes(), ...neuves });
+}

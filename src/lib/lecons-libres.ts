@@ -36,6 +36,21 @@ export async function ouvrirLecon(id: string): Promise<BlocLecon[] | EchecLecon>
   }
 }
 
+/** Leçons déjà ouvertes : texte redemandé quand l'éditeur a changé quelque chose (sans compter). */
+export async function rafraichirLecons() {
+  const ids = Object.keys(leconsOuvertes());
+  if (!ids.length || !SERVEUR_URL) return;
+  const neuves: Ouvertes = {};
+  await Promise.all(ids.map(async id => {
+    try {
+      const r = await fetch(`${SERVEUR_URL}/lecon?id=${encodeURIComponent(id)}`);
+      const d = r.ok ? await r.json() : null;
+      if (Array.isArray(d?.blocs)) neuves[id] = d.blocs;
+    } catch { /* hors connexion : on garde l'ancien texte */ }
+  }));
+  if (Object.keys(neuves).length) write(CLE, { ...leconsOuvertes(), ...neuves });
+}
+
 /** Accès aux leçons : complet avec une clé, sinon les leçons déjà ouvertes et celles qui restent à choisir. */
 export function useAccesLecons() {
   const premium = !!licence();
