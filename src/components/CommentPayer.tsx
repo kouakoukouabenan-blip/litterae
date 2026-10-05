@@ -9,20 +9,22 @@ type Etape = { texte: string; traces: Trace[]; clic?: [number, number] };
  * Les repères (cadre, cercle, soulignement) et le point touché par le curseur sont en pixels de l'image d'origine (1080 × 2209).
  */
 const ETAPES: Etape[] = [
-  { texte: "Dans Litterae, va dans « Mon espace » et touche « Acheter l'accès complet ».", traces: [{ f: "souligne", b: [371, 584, 947, 646] }], clic: [689, 619] },
+  { texte: "Dans Litterae, touche l'icône « Mon espace » en haut de l'écran.", traces: [{ f: "cercle", b: [756, 36, 870, 150] }], clic: [813, 93] },
+  { texte: "Touche « Acheter l'accès complet ».", traces: [{ f: "souligne", b: [399, 656, 1023, 707] }], clic: [711, 682] },
   { texte: "La page de Chariow s'ouvre. Touche « Obtenir la licence ».", traces: [{ f: "cadre", b: [44, 1449, 1036, 1557] }], clic: [541, 1504] },
   { texte: "Écris ton prénom, ton nom, ton e-mail et ton numéro, puis touche « Payer maintenant ». Mets un e-mail que tu consultes : ta clé arrive là.", traces: [{ f: "souligne", b: [46, 913, 1034, 1042] }, { f: "cadre", b: [44, 1888, 1036, 2025] }], clic: [541, 1959] },
   { texte: "Choisis ton moyen de paiement Mobile Money (ici, Wave).", traces: [{ f: "cercle", b: [68, 1242, 1012, 1408] }], clic: [295, 1326] },
   { texte: "Ton application de paiement s'ouvre. Vérifie le montant et confirme.", traces: [{ f: "cadre", b: [68, 1991, 1012, 2122] }], clic: [541, 2058] },
   { texte: "Paiement reçu ! Touche « Retour vers Livres Faciles ».", traces: [{ f: "souligne", b: [271, 668, 812, 748] }, { f: "cadre", b: [66, 1230, 1012, 1338] }], clic: [541, 1284] },
   { texte: "Ta clé d'accès s'affiche : copie-la. Tu la reçois aussi par e-mail.", traces: [{ f: "cercle", b: [90, 1330, 990, 1471] }], clic: [918, 1401] },
-  { texte: "Reviens dans Litterae, va dans « Mon espace » et touche « Accès complet ».", traces: [{ f: "cadre", b: [46, 358, 1034, 555] }], clic: [541, 456] },
-  { texte: "Colle ta clé dans la case, puis touche « Valider ma clé ».", traces: [{ f: "cadre", b: [46, 871, 1034, 1003] }, { f: "souligne", b: [300, 1047, 780, 1178] }], clic: [369, 936] },
-  { texte: "C'est fait : tout Litterae est débloqué sur ton téléphone.", traces: [{ f: "cercle", b: [46, 764, 1034, 956] }] }
+  { texte: "Reviens dans Litterae, dans « Mon espace », et touche « Accès complet ».", traces: [{ f: "cadre", b: [48, 409, 1032, 617] }], clic: [540, 513] },
+  { texte: "Touche « Coller ma clé », ou colle-la toi-même dans la case.", traces: [{ f: "cadre", b: [48, 854, 1032, 1016] }], clic: [312, 1133] },
+  { texte: "Ta clé est dans la case. Touche « Valider ma clé ».", traces: [{ f: "cadre", b: [48, 1064, 1032, 1226] }], clic: [540, 1145] },
+  { texte: "C'est fait : tout Litterae est débloqué sur ton téléphone.", traces: [{ f: "cercle", b: [48, 737, 1032, 948] }] }
 ];
 const DUREE = 5500;
 const DEBUT = 300, ECART = 550;
-const image = (i: number) => `comment-payer/etape-${i + 1}.webp`;
+const image = (i: number) => `comment-payer/paiement-${String(i + 1).padStart(2, "0")}.webp`;
 
 let ouvrir = () => {};
 
@@ -96,7 +98,7 @@ export function CommentPayer() {
             <p class="demo-num">Étape {etape + 1} sur {ETAPES.length}</p>
             <p class="demo-legende">{ETAPES[etape].texte}</p>
           </div>
-          <div class="demo-barre" aria-hidden="true">
+          <div class="demo-barre" aria-hidden="true" style={`--etapes:${ETAPES.length}`}>
             {ETAPES.map((_, i) => <span class={i < etape ? "fait" : i === etape ? (lecture ? "en-cours" : "fait") : ""} style={i === etape && lecture ? `--duree:${DUREE}ms` : undefined} key={i === etape ? `${i}-${lecture}` : i} />)}
           </div>
         </div>
