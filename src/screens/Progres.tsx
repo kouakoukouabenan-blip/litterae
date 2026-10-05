@@ -19,7 +19,10 @@ export function ProgresScreen() {
   const cartes = nbCartes(suivis);
   const etapes = maitrise();
   const defiFait = defiFaitAujourdhui();
-  const evolution = b.joursActifs - b.joursActifsAvant;
+
+  // Un seul conseil : l'étape la plus faible, pour ne pas noyer l'élève.
+  const faible = [...etapes].sort((a, c) => a.score - c.score)[0];
+  const faites = Math.min(b.faitesAujourdhui, OBJECTIF_DU_JOUR);
 
   return (
     <Page title="Ma progression" back="#/accueil">
@@ -27,17 +30,18 @@ export function ProgresScreen() {
 
       <section class="progres-haut">
         <div class="progres-serie">
-          <span class="progres-flamme"><Flamme taille={34} eteinte={!b.serie} /><span class="progres-chiffre">{b.serie}</span></span>
-          <span><strong>{b.serie > 1 ? "jours d'affilée" : "jour d'affilée"}</strong><span class="meta">Record : {plural(b.record, "jour")}</span></span>
+          <Flamme taille={34} eteinte={!b.serie} />
+          <span class="progres-chiffre">{b.serie}</span>
+          <span class="progres-serie-texte"><strong>{b.serie > 1 ? "jours d'affilée" : "jour d'affilée"}</strong>
+            {b.record > b.serie && <span class="meta">Record : {plural(b.record, "jour")}</span>}</span>
         </div>
         <div class="progres-objectif">
           <span class="objectif-points" aria-hidden="true">
-            {Array.from({ length: OBJECTIF_DU_JOUR }, (_, i) => <span key={i} class={i < b.faitesAujourdhui ? "fait" : ""} />)}
+            {Array.from({ length: OBJECTIF_DU_JOUR }, (_, i) => <span key={i} class={i < faites ? "fait" : ""} />)}
           </span>
-          <span class="meta">{b.faitesAujourdhui >= OBJECTIF_DU_JOUR ? "Objectif du jour atteint" : `Objectif du jour : ${Math.min(b.faitesAujourdhui, OBJECTIF_DU_JOUR)} / ${OBJECTIF_DU_JOUR}`}</span>
+          <span class="meta">{faites >= OBJECTIF_DU_JOUR ? "Objectif du jour atteint" : `Aujourd'hui : ${faites} / ${OBJECTIF_DU_JOUR}`}</span>
         </div>
       </section>
-      <p class="small muted progres-aide">Chaque fiche, leçon, mot, révision ou défi compte. Reviens chaque jour pour garder ta série.</p>
 
       <div class="progres-actions">
         <a class={`progres-action${defiFait ? " fait" : ""}`} href="#/defi">
@@ -49,13 +53,16 @@ export function ProgresScreen() {
         <a class={`progres-action${aRevoir ? "" : " fait"}`} href="#/revisions">
           <Icon name={aRevoir ? "history_edu" : "check"} size={22} />
           <span class="row-body"><span class="row-title">Révisions</span>
-            <span class="meta">{aRevoir ? `${plural(aRevoir, "carte")} à revoir` : cartes.total ? "À jour pour aujourd'hui" : "Ouvre des mots et fais des quiz"}</span></span>
+            <span class="meta">{aRevoir ? `${plural(aRevoir, "carte")} à revoir` : cartes.total ? "À jour" : "Rien à revoir pour l'instant"}</span></span>
           <Icon name="chevron_right" size={20} />
         </a>
       </div>
 
       <section class="progres-section" aria-labelledby="semaine-titre">
-        <h2 id="semaine-titre" class="section-title">Ta semaine</h2>
+        <div class="progres-titre">
+          <h2 id="semaine-titre" class="section-title">Cette semaine</h2>
+          <span class="meta">{plural(b.joursActifs, "jour actif", "jours actifs")} sur 7</span>
+        </div>
         <ol class="semaine" aria-label="Jours de la semaine">
           {b.semaine.map((n, i) => (
             <li key={i} class={n === null ? "a-venir" : n >= OBJECTIF_DU_JOUR ? "objectif" : n ? "actif" : ""}>
@@ -64,29 +71,26 @@ export function ProgresScreen() {
             </li>
           ))}
         </ol>
-        <p class="small">
-          {plural(b.joursActifs, "jour actif", "jours actifs")} sur 7, {plural(b.objectifsAtteints, "objectif atteint", "objectifs atteints")}
-          {b.defis ? `, ${plural(b.defis, "défi relevé", "défis relevés")}` : ""}{b.revisions ? `, ${plural(b.revisions, "carte révisée", "cartes révisées")}` : ""}.
-          {" "}{b.joursActifsAvant ? (evolution > 0 ? "Mieux que la semaine dernière." : evolution < 0 ? `La semaine dernière : ${plural(b.joursActifsAvant, "jour actif", "jours actifs")}.` : "Comme la semaine dernière.") : ""}
-        </p>
-        {cartes.total > 0 && <p class="small muted">{plural(cartes.sues, "carte bien retenue", "cartes bien retenues")} sur {cartes.total}.</p>}
       </section>
 
       <section class="progres-section" aria-labelledby="maitrise-titre">
-        <h2 id="maitrise-titre" class="section-title">Ta maîtrise de la dissertation</h2>
+        <h2 id="maitrise-titre" class="section-title">Ta dissertation</h2>
         <ul class="maitrise">
           {etapes.map(e => (
             <li key={e.id}>
-              <span class="maitrise-haut"><strong>{e.nom}</strong><span class="meta">{e.niveau}</span></span>
+              <span class="maitrise-haut"><span>{e.nom}</span><span class="meta">{e.niveau}</span></span>
               <span class="progress-bar" aria-hidden="true"><span style={{ width: `${Math.max(e.score, 3)}%` }} /></span>
-              {e.score < 85 && <a class="small link-strong" href={e.conseil.lien}>{e.conseil.texte}</a>}
             </li>
           ))}
         </ul>
-        <details class="repli">
-          <summary>Comment c'est calculé ?</summary>
-          <p>Pour chaque étape : la leçon lue, ton meilleur score au quiz, et ce que tu as rédigé dans l'atelier (pour les exemples, aussi les fiches lues et les défis). Tout est calculé sur ton téléphone.</p>
-        </details>
+        {faible && faible.score < 85 && (
+          <a class="progres-action" href={faible.conseil.lien}>
+            <Icon name="edit" size={22} />
+            <span class="row-body"><span class="row-title">{faible.conseil.texte}</span>
+              <span class="meta">Pour progresser sur : {faible.nom.toLowerCase()}</span></span>
+            <Icon name="chevron_right" size={20} />
+          </a>
+        )}
       </section>
     </Page>
   );
