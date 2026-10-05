@@ -46,18 +46,18 @@ export function AccueilScreen() {
           <Icon name="menu_book" size={24} />
           <span class="choix-titre">{nbLues === 0 ? "Apprendre la méthode" : suivante ? "Continuer la méthode" : "Revoir la méthode"}</span>
           <Detail long={nbLues === 0 ? `${LECONS.length} leçons courtes` : suivante ? `Reprendre à la leçon ${LECONS.indexOf(suivante) + 1}` : `${LECONS.length} leçons lues`}
-            court={nbLues === 0 ? `${LECONS.length} leçons courtes` : suivante ? `Reprendre leçon ${LECONS.indexOf(suivante) + 1}` : "Tout est lu"} />
+            court={nbLues === 0 ? `${LECONS.length} leçons` : suivante ? `Leçon ${LECONS.indexOf(suivante) + 1} à lire` : "Tout est lu"} />
           {nbLues > 0 && <span class="progress-bar" aria-hidden="true"><span style={{ width: `${(nbLues / LECONS.length) * 100}%` }} /></span>}
         </a>
         <a class="choix-carte choix-corriges" href="#/sujets">
           <Icon name="history_edu" size={24} />
           <span class="choix-titre">Sujets corrigés</span>
-          <Detail long={`${SUJETS.length} copies modèles`} court={`${SUJETS.length} copies modèles`} />
+          <Detail long={`${SUJETS.length} copies modèles`} court={`${SUJETS.length} copies`} />
         </a>
         <a class="choix-carte choix-entrainer" href="#/entrainement">
           <Icon name="edit" size={24} />
           <span class="choix-titre">M'entraîner</span>
-          <Detail long={`${SUJETS.length} sujets type bac`} court={`${SUJETS.length} sujets type bac`} />
+          <Detail long={`${SUJETS.length} sujets type bac`} court={`${SUJETS.length} sujets bac`} />
         </a>
         <a class="choix-carte choix-outils" href="#/outils">
           <Icon name="inventory_2" size={24} />
