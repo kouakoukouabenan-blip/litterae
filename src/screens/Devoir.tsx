@@ -14,6 +14,7 @@ import { noter } from "../lib/stats";
 import { estGarde, garderDevoir, retirerDevoir, useDevoirs, type DevoirGarde } from "../lib/devoirs";
 import { EmptyState } from "../components/EmptyState";
 import { toast } from "../components/Toast";
+import { SujetsOnglets } from "../components/SujetsOnglets";
 
 /** J'ai un devoir : l'élève colle son sujet, l'appli propose un plan, des œuvres, des mots et des sujets corrigés proches. */
 export function DevoirScreen() {
@@ -86,7 +87,8 @@ export function DevoirScreen() {
   }
 
   return (
-    <Page title="J'ai un devoir" back="#/accueil">
+    <Page title="J'ai un devoir">
+      <SujetsOnglets actif="devoir" />
       <PageHeader title="J'ai un devoir" compact>Colle ton sujet : on te donne de quoi bien démarrer.</PageHeader>
 
       <form class="devoir-form" onSubmit={analyser}>

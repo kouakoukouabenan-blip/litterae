@@ -1,5 +1,6 @@
 import type { ComponentChildren } from "preact";
 import { useLayoutEffect, useRef } from "preact/hooks";
+import { useGlisser } from "../lib/glisser";
 
 /** Dernier onglet choisi par groupe : au changement de page, le curseur part de l'ancien onglet. */
 const derniers: Record<string, number> = {};
@@ -47,9 +48,16 @@ export function Segments({ groupe, label, items }: { groupe: string; label: stri
   }, [i, groupe]);
 
   const toucher = () => { try { navigator.vibrate?.(8); } catch { /* pas de vibreur */ } };
+  // Glisser le doigt de côté sur la page : onglet voisin.
+  useGlisser(i, items.length, k => {
+    const s = items[k];
+    toucher();
+    if (s.href) location.hash = s.href;
+    else s.onClick?.();
+  });
 
   return (
-    <nav ref={ref} class="segments" aria-label={label}>
+    <nav ref={ref} class={`segments${items.length > 2 ? " segments-trois" : ""}`} aria-label={label}>
       <span class="segments-curseur" aria-hidden="true" />
       {items.map((s, k) => s.href
         ? <a key={k} class="segment" href={s.href} aria-current={s.actif ? "page" : undefined} onClick={toucher}>{s.label}</a>
@@ -58,11 +66,12 @@ export function Segments({ groupe, label, items }: { groupe: string; label: stri
   );
 }
 
-/** Les deux façons de travailler un sujet, côte à côte en haut de l'onglet Sujets : s'entraîner d'abord. */
-export function SujetsOnglets({ actif }: { actif: "corriges" | "entrainement" }) {
+/** Les façons de travailler un sujet, côte à côte en haut de l'onglet Sujets : s'entraîner d'abord, puis son propre devoir. */
+export function SujetsOnglets({ actif }: { actif: "corriges" | "entrainement" | "devoir" }) {
   return <Segments groupe="sujets" label="Sujets" items={[
     { label: "M'entraîner", href: "#/entrainement", actif: actif === "entrainement" },
-    { label: "Corrigés", href: "#/sujets", actif: actif === "corriges" }
+    { label: "Corrigés", href: "#/sujets", actif: actif === "corriges" },
+    { label: "J'ai un devoir", href: "#/devoir", actif: actif === "devoir" }
   ]} />;
 }
 

@@ -254,3 +254,13 @@ html[data-glisse="gauche"] main.page > :not(.segments):not(:has(.segments)), htm
 .page-title em.titre-oeuvre, .home-title em.titre-oeuvre { font-style: italic; color: inherit; }
 /* Le titre d'une œuvre dans une liste garde son poids : l'italique ne doit pas l'alléger. */
 .work-title .titre-oeuvre, .row-title .titre-oeuvre { font-weight: inherit; }
+
+/* Trois onglets (Sujets) : toute la largeur du téléphone, sans déborder. */
+.segments { max-width: 100%; }
+@media (max-width: 479px) {
+  .segments-trois { display: flex; width: 100%; }
+  .segments-trois .segment { flex: 1 1 auto; min-width: 0; justify-content: center; padding: 0 var(--s2); }
+}
+@media (max-width: 374px) {
+  .segments-trois .segment { padding: 0 6px; font-size: 0.8125rem; letter-spacing: -0.01em; }
+}

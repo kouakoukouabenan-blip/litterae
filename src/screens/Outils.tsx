@@ -7,6 +7,7 @@ import { copyText } from "../components/Toast";
 import { href, replaceRoute, useRoute } from "../lib/router";
 import { CoursOnglets } from "../components/SujetsOnglets";
 import { DicoRecherche, DicoResultats } from "./Dictionnaire";
+import { useGlisser } from "../lib/glisser";
 
 const O = outils as Outils;
 /** Trois rubriques seulement, toutes visibles sur un téléphone sans défiler de côté. */
@@ -45,6 +46,9 @@ export function OutilsScreen() {
     if (nf) p.fonction = nf;
     aller(p);
   };
+
+  // Glisser de côté : rubrique voisine ; depuis le Dictionnaire vers la droite, retour aux Leçons.
+  useGlisser(RUBRIQUES.findIndex(r => r.id === vue), RUBRIQUES.length, k => { aller({ vue: RUBRIQUES[k].id }); scrollTo(0, 0); }, 1);
 
   return (
     <Page title="Boîte à outils">

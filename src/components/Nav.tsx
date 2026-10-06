@@ -19,7 +19,7 @@ const ITEMS = [
 ] as const;
 
 /** Pages à deux onglets : l'onglet de la barre du bas qui les regroupe. */
-const DOUBLES: Record<string, string> = { cours: "cours", outils: "cours", entrainement: "sujets", sujets: "sujets", oeuvres: "oeuvres", "mes-fiches": "oeuvres" };
+const DOUBLES: Record<string, string> = { cours: "cours", outils: "cours", entrainement: "sujets", sujets: "sujets", devoir: "sujets", oeuvres: "oeuvres", "mes-fiches": "oeuvres" };
 
 /**
  * Retient le dernier des deux onglets ouvert dans chaque partie (et la rubrique de la boîte à outils),
@@ -38,8 +38,8 @@ function useDerniersOnglets() {
 
 function useSection() {
   const section = useRoute().path[0] ?? "accueil";
-  // Les sujets d'entraînement sont le second onglet de Sujets ; la boîte à outils se range avec le cours.
-  return ["defi", "devoir", "revisions", "progres"].includes(section) ? "accueil" : section === "entrainement" ? "sujets" : section === "outils" ? "cours" : section === "mes-fiches" ? "oeuvres" : section;
+  // Les sujets d'entraînement et « J'ai un devoir » sont des onglets de Sujets ; la boîte à outils se range avec le cours.
+  return ["defi", "revisions", "progres"].includes(section) ? "accueil" : section === "entrainement" || section === "devoir" ? "sujets" : section === "outils" ? "cours" : section === "mes-fiches" ? "oeuvres" : section;
 }
 
 /** Onglets dans la barre du haut, sur tablette et ordinateur. */
