@@ -1,4 +1,5 @@
 import { useState } from "preact/hooks";
+import { TexteLiens } from "./TexteLiens";
 import type { Annotation } from "../lib/contact";
 
 const NOMS: Record<Annotation["t"], string> = { commentaire: "Commentaire", souligne: "Souligné", barre: "Barré", surligne: "Surligné" };
@@ -43,7 +44,7 @@ export function CopieAnnotee({ texte, debut, annotations }: { texte: string; deb
                 );
               })}
             </p>
-            {ici.map(({ a, num }) => <p key={num} class="annot-bulle"><strong>{num}.</strong> {a.c}</p>)}
+            {ici.map(({ a, num }) => <p key={num} class="annot-bulle"><strong>{num}.</strong> <TexteLiens text={a.c ?? ""} /></p>)}
           </div>
         );
       })}

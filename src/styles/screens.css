@@ -556,3 +556,6 @@
 
 /* Fiche d'œuvre : lien vers le livre (lecture, téléchargement, site officiel) */
 .lien-livre { margin-top: var(--s3); display: inline-flex; gap: var(--s1); }
+
+/* Liens du prof vers un contenu de l'appli, dans ses réponses */
+.lien-contenu { color: var(--green); font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }

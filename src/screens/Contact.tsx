@@ -11,6 +11,7 @@ import {
 } from "../lib/contact";
 import { useAccess } from "../lib/access";
 import { replaceRoute } from "../lib/router";
+import { TexteLiens } from "../components/TexteLiens";
 import { CONTACT_EMAIL, EDITEUR, WHATSAPP } from "../lib/site";
 
 const MAX = 2000;
@@ -91,7 +92,7 @@ function MesQuestions({ questions, onEcrire }: { questions: Question[]; onEcrire
             {q.reponse != null ? (
               <div class="question-reponse">
                 <p class="question-auteur">{q.sujet === "copie" ? "Correction" : "Réponse"} de Prof {EDITEUR}{q.reponseDate ? `, le ${dateCourte(q.reponseDate)}` : ""}</p>
-                <p class="question-texte">{q.reponse || "Lis les annotations sur ta copie ci-dessus."}</p>
+                <p class="question-texte">{q.reponse ? <TexteLiens text={q.reponse} /> : "Lis les annotations sur ta copie ci-dessus."}</p>
               </div>
             ) : (
               <p class="question-attente">En attente de réponse</p>
