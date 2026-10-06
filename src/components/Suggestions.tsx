@@ -1,6 +1,6 @@
 import { Texte } from "./Texte";
 import { useMemo } from "preact/hooks";
-import { prochaineAction, suggestions } from "../lib/suggestions";
+import { decouvertes, prochaineAction, suggestions } from "../lib/suggestions";
 import { Icon } from "./Icon";
 import { Flamme } from "./Flamme";
 import { OBJECTIF_DU_JOUR, recompenseVue, useBilan } from "../lib/progres";
@@ -8,7 +8,11 @@ import { OBJECTIF_DU_JOUR, recompenseVue, useBilan } from "../lib/progres";
 /** « Pour toi » sur l'accueil : trois suggestions au plus, tirées de ce que l'élève a fait sur ce téléphone. */
 export function Suggestions() {
   // La première suggestion est déjà en tête de l'accueil (« Ta prochaine action ») : deux autres ici.
-  const liste = useMemo(() => { const p = prochaineAction().cle; return suggestions().filter(s => !s.horsAccueil && s.cle !== p).slice(0, 2); }, []);
+  // Rien encore sur ce téléphone : des portes d'entrée à la place.
+  const liste = useMemo(() => {
+    const p = prochaineAction().cle;
+    return [...suggestions(), ...decouvertes()].filter(s => !s.horsAccueil && s.cle !== p).slice(0, 2);
+  }, []);
   const b = useBilan();
   if (!liste.length && !b.serie) return null;
   const faites = Math.min(b.faitesAujourdhui, OBJECTIF_DU_JOUR);

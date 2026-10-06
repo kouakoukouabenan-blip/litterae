@@ -192,6 +192,26 @@ export function suggestions(maintenant = Date.now()): Suggestion[] {
     .filter((s): s is Suggestion => !!s);
 }
 
+/**
+ * Portes d'entrée pour un élève qui débute (ou qui a vidé les données de son téléphone) :
+ * « Pour toi » ne reste jamais vide. Seulement ce qu'il n'a pas encore essayé, tout est gratuit.
+ */
+export function decouvertes(): Suggestion[] {
+  const h = historique();
+  const vide = { titre: "", texte: "" };
+  const out: Suggestion[] = [];
+  if (!read<string>("devoir-texte", "").trim())
+    out.push({ cle: "decouvrir-devoir", icone: "content_paste", lien: "#/devoir", titre: "Tu as un devoir ?", detail: "Un plan, des œuvres et des mots pour démarrer", notif: vide });
+  const corrige = SUJETS.slice(0, FREE_SUBJECTS).map(x => x.num).find(n => !h.some(v => v.t === "sujet" && v.id === n));
+  if (corrige && !h.some(v => v.t === "sujet"))
+    out.push({ cle: "decouvrir-corrige", icone: "history_edu", lien: `#/sujets/${corrige}`, titre: `Lis le sujet corrigé ${numero(corrige)}`, detail: "Une dissertation rédigée, partie par partie", notif: vide });
+  if (!h.some(v => v.t === "oeuvre"))
+    out.push({ cle: "decouvrir-oeuvres", icone: "search", lien: "#/oeuvres", titre: "Trouve une œuvre pour tes exemples", detail: "Cherche par thème, auteur ou classe", notif: vide });
+  if (!cles("atelier:").length)
+    out.push({ cle: "decouvrir-atelier", icone: "edit", lien: "#/entrainement", titre: "Traite un sujet type bac", detail: "Pas à pas dans l'atelier", notif: vide });
+  return out;
+}
+
 /** Texte du rappel envoyé si l'élève ne revient pas : la suggestion la plus utile, sinon une invitation simple. */
 export function texteRappel(): { titre: string; texte: string; lien: string } {
   // Série en cours : le rappel part le lendemain soir, avant qu'elle ne s'arrête.
