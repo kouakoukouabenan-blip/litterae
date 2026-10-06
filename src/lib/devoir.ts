@@ -66,7 +66,7 @@ export function decouperSujet(texte: string) {
   return { citation, consigne: m?.[2]?.trim() || "" };
 }
 
-export function analyserSujet(texte: string): Analyse {
+export function analyserSujet(texte: string, combien = 6): Analyse {
   const { citation } = decouperSujet(texte);
   // Thèmes, fonction et mots difficiles : dans la citation seulement (pas dans « Expliquez et discutez »).
   const t = ` ${normalize(citation).replace(/[^a-z' -]/g, " ")} `;
@@ -97,7 +97,8 @@ export function analyserSujet(texte: string): Analyse {
         axe2: discussion ? "Discute : montre les limites de cette idée, avec d'autres exemples." : "Approfondis : montre d'autres façons dont les œuvres le prouvent." };
 
   // Sans thème reconnu : les œuvres au programme qui illustrent la fonction attendue.
-  const oeuvres = oeuvresPour(themes, fonctions, 6, 2).length ? oeuvresPour(themes, fonctions, 6, 2) : oeuvresPour([], fonctions, 4, 1.5);
+  const avecThemes = oeuvresPour(themes, fonctions, combien, 2);
+  const oeuvres = avecThemes.length ? avecThemes : oeuvresPour([], fonctions, Math.min(combien, 6), 1.5);
   const proches = SUJETS.map(s => {
     const ts = new Set((s.themes ?? []).map(normalize));
     const fs = fonctionsDuSujet(s.num);
