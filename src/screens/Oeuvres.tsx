@@ -43,9 +43,9 @@ export function OeuvresScreen({ params }: { params: URLSearchParams }) {
   const results = useMemo(() => search(INDEX, q, filters).filter(w => !gratuites || access.workOpened(w.id)), [key, access.premium, access.nbOuvertes]);
   const counts = useMemo(() => new Map(FACETS.map(f => [f.key, facetCounts(INDEX, q, filters, f)])), [key]);
   useEffect(() => setLimit(PAGE), [key]);
-  // Un sujet entier tapé dans la recherche (6 mots ou plus) ne trouve rien mot à mot :
+  // Un sujet entier tapé dans la recherche (4 mots ou plus) ne trouve rien mot à mot :
   // on le lit comme « J'ai un devoir » (thèmes, fonction) pour proposer les œuvres qui vont avec.
-  const analyse = useMemo(() => (queryTerms(q).length >= 6 && results.length < 3 ? analyserSujet(q, 12) : null), [key, results.length]);
+  const analyse = useMemo(() => (queryTerms(q).length >= 4 && results.length < 3 ? analyserSujet(q, 12) : null), [key, results.length]);
   const parSujet = useMemo(() => {
     if (!analyse) return [];
     const permises = nbFiltres ? new Set(search(INDEX, "", filters).map(w => w.id)) : null;

@@ -1,4 +1,4 @@
-import { useMemo, useState } from "preact/hooks";
+import { useEffect, useMemo, useState } from "preact/hooks";
 import { Page } from "../components/Page";
 import { PageHeader } from "../components/PageHeader";
 import { Icon } from "../components/Icon";
@@ -16,6 +16,12 @@ export function DevoirScreen() {
   const [auteur, setAuteur] = useStored<string>("devoir-auteur", "");
   const [lu, setLu] = useState(() => texte.trim().length >= 20);
   const analyse = useMemo(() => (lu ? analyserSujet(texte) : null), [lu, texte]);
+  // Arrivée avec le sujet déjà tapé sur l'accueil : on montre directement les résultats.
+  useEffect(() => { if (lu) setTimeout(() => {
+    // Sous la barre du haut, qui reste affichée.
+    const el = document.querySelector(".devoir-resultat");
+    if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 90 });
+  }, 50); }, []);
 
   function analyser(e: Event) {
     e.preventDefault();

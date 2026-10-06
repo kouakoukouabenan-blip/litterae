@@ -3,7 +3,7 @@ import { Page } from "../components/Page";
 import { Icon } from "../components/Icon";
 import { InstallBanner } from "../components/Install";
 import { Annonces, InvitationNotifs } from "../components/Annonces";
-import { useStored } from "../lib/storage";
+import { useStored, write } from "../lib/storage";
 import { OEUVRES, SUJETS } from "../lib/data";
 import { ReponseAlerte } from "../components/ReponseAlerte";
 import { ProchaineAction, Suggestions } from "../components/Suggestions";
@@ -42,7 +42,8 @@ export function AccueilScreen() {
         <span class="accueil-boutons">
           <button type="submit" class="btn btn-primary">Chercher le livre</button>
           {/* Le sujet d'un devoir à rendre : plan, œuvres et mots proposés à partir de l'énoncé. */}
-          <a class="btn btn-secondary" href="#/devoir"><Icon name="edit" size={18} />J'ai un devoir</a>
+          {/* Le texte déjà tapé dans la recherche part avec : « J'ai un devoir » l'analyse tout de suite. */}
+          <a class="btn btn-secondary" href="#/devoir" onClick={() => { if (q.trim()) { write("devoir-texte", q.trim()); write("devoir-auteur", ""); } }}><Icon name="edit" size={18} />J'ai un devoir</a>
         </span>
       </form>
       <p class="accueil-astuce">Cherche une illustration par thème, auteur, titre ou argument parmi {OEUVRES.length} fiches d'œuvres.</p>
