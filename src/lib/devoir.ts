@@ -138,7 +138,8 @@ export interface Analyse {
   auteur: string;
   /** Arguments de dissertation que le sujet annonce (« Dénonciation », « Imagination »…). */
   arguments: string[];
-  plan: { axe1: string; axe2: string; args1: string[]; args2: string[] };
+  /** `ex1`, `ex2` : pour chaque argument, une œuvre du sujet qui l'illustre (« *Titre*, Auteur »), ou vide. */
+  plan: { axe1: string; axe2: string; args1: string[]; args2: string[]; ex1: string[]; ex2: string[] };
   oeuvres: Oeuvre[];
   proches: (Sujet | SujetApercu)[];
 }
@@ -403,6 +404,115 @@ function scoresAppris(citation: string): Map<Fonction, number> {
   return total;
 }
 
+// ---- Plan propre à chaque sujet : ses mots, ses thèmes, des arguments et des œuvres qui vont avec ----
+
+/** Thèmes dont on connaît le genre, pour les glisser dans une phrase (« quand elle parle de la colonisation »). */
+const THEMES_FEMININS = new Set(["societe", "identite", "colonisation", "memoire", "tradition", "liberte", "politique", "afrique", "corruption", "justice", "modernite", "famille", "guerre", "femme", "mort", "histoire", "nature", "satire", "oppression", "revolte", "enfance", "violence", "resistance", "tragedie", "dignite", "dictature", "hypocrisie", "foi", "condition feminine", "humanite", "education", "pauvrete", "desillusion", "independance", "trahison", "illusion", "religion", "revolution", "misere", "jeunesse", "solidarite", "ambition", "poesie", "science", "solitude", "tyrannie", "beaute", "aventure", "quete", "survie", "comedie", "culture", "exploitation", "immigration", "amitie", "ville", "tradition orale", "injustice", "spiritualite", "sagesse", "folie", "guerre civile", "passion", "initiation", "morale", "marginalite", "lutte", "melancolie", "loi", "paix", "utopie", "culpabilite", "negritude", "philosophie", "prison", "democratie", "conscience", "identite culturelle", "loyaute", "medecine", "manipulation", "souffrance", "polygamie", "reconciliation", "histoire africaine", "ironie", "oralite", "surveillance", "verite", "seduction", "drogue", "maternite", "vie quotidienne", "civilisation", "esthetique", "exploration", "absence", "condition humaine", "maladie", "emotion", "avarice", "musique", "lutte des classes", "greve", "vengeance", "gloire", "vision", "emancipation", "egalite", "epopee", "hypocrisie sociale", "absurdite", "esclavage", "colonisation", "mythe"]);
+const THEMES_MASCULINS = new Set(["amour", "pouvoir", "destin", "racisme", "exil", "espoir", "sacrifice", "mariage", "art", "voyage", "reve", "temps", "totalitarisme", "capitalisme", "heritage", "engagement", "courage", "spleen", "peuple", "langage", "metissage", "humour", "theatre", "exotisme", "genocide", "travail", "patriarcat", "trauma", "argent", "dilemme", "prejuges"]);
+/** « de la colonisation », « de l'amour », « du pouvoir », « des préjugés » ; null si on ne sait pas l'écrire. */
+function deTheme(theme: string): string | null {
+  const t = theme.trim(), k = normalize(t);
+  if (/^[0-9]/.test(t) || t.includes(" et ")) return null;
+  const nom = t.charAt(0).toLowerCase() + t.slice(1);
+  const pluriel = /s$/.test(k) && !/(ss|is|us)$/.test(k);
+  if (pluriel && THEMES_MASCULINS.has(k)) return `des ${nom}`;
+  const fem = THEMES_FEMININS.has(k), masc = THEMES_MASCULINS.has(k);
+  if (!fem && !masc) return null;
+  if (/^[aeiouyhàâéèêëîïôöùûü]/i.test(nom)) return `de l'${nom}`;
+  return fem ? `de la ${nom}` : `du ${nom}`;
+}
+
+/** Nom de la fonction dans une phrase : « c'est l'engagement ». */
+const NOM_FONCTION: Record<Fonction, string> = { Engagement: "la fonction d'engagement", Sociale: "la fonction sociale", Esthétique: "la fonction esthétique", Évasion: "la fonction d'évasion", Lyrique: "la fonction lyrique" };
+
+/** Nuance de la partie 2, liée au thème du sujet (« {de} » : « de la colonisation »). */
+const NUANCE: Record<Fonction, (de: string) => string> = {
+  Engagement: de => `Nuance : pour toucher le lecteur quand elle parle ${de}, la littérature doit aussi être belle ; elle reste un art avant d'être une arme.`,
+  Sociale: de => `Nuance : la littérature ne se contente pas de montrer la réalité ${de} ; elle fait aussi rêver le lecteur et l'emmène ailleurs.`,
+  Esthétique: de => `Nuance : même quand elle parle ${de}, la littérature ne cherche pas que la beauté ; sa forme sert aussi à dénoncer et à faire réfléchir.`,
+  Évasion: de => `Nuance : même quand elle fait rêver, la littérature parle ${de} et du monde réel ; le rêve cache souvent une critique.`,
+  Lyrique: de => `Nuance : en parlant ${de}, l'écrivain ne parle pas que de lui ; son émotion rejoint celle de tous et peut défendre une cause.`
+};
+
+/**
+ * La thèse de la citation, reprise telle quelle quand elle s'y prête (« la littérature doit être une arme au service du peuple ») :
+ * une seule phrase, assez courte, qui parle de la littérature ou de l'écrivain, sans « je » ni « nous ».
+ */
+function theseDe(citation: string): string | null {
+  const c = citation.replace(/[«»"“”]/g, "").replace(/\s+/g, " ").trim().replace(/[.!…]+$/, "");
+  if (c.length < 15 || c.length > 150 || /[.;?!]\s/.test(c)) return null;
+  if (/\b(je|j'|j’|me|m'|m’|moi|mon|ma|mes|nous|notre|nos|vous|votre|vos|tu|ton|ta|tes)\b/i.test(c)) return null;
+  if (!/^(la littérature|l[’']écrivain|le poète|la poésie|l[’']art|le roman|le romancier|le théâtre|l[’']œuvre|l[’']oeuvre|un écrivain|un poète|une œuvre|un livre|le livre|l[’']artiste|écrire|lire|la lecture|l[’']écriture|le dramaturge|un roman)\b/i.test(c)) return null;
+  return c.charAt(0).toLowerCase() + c.slice(1);
+}
+
+/** La citation entière, entre guillemets, quand elle est assez courte pour être reprise dans un titre. */
+function citationCourte(citation: string): string | null {
+  const c = citation.replace(/[«»"“”]/g, "").replace(/\s+/g, " ").trim().replace(/[.!…]+$/, "");
+  return c.length >= 15 && c.length <= 120 ? c : null;
+}
+
+/** Un nombre tiré du sujet : deux sujets différents ne vont pas chercher leurs exemples au même endroit. */
+function graine(t: string) {
+  let h = 0;
+  for (const c of normalize(t)) h = (h * 31 + c.charCodeAt(0)) >>> 0;
+  return h;
+}
+
+/**
+ * Plan conseillé, construit à partir du sujet lui-même : la thèse avec ses mots, les arguments que les
+ * fiches des œuvres sur ces thèmes illustrent vraiment, une œuvre pour chaque argument, et une nuance liée au thème.
+ */
+function planDuSujet(citation: string, f: Fonction | undefined, f2: Fonction | undefined, discussion: boolean, themes: string[], annonces: string[], oeuvres: Oeuvre[]): Analyse["plan"] {
+  const de = themes.map(deTheme).find((x): x is string => !!x) ?? null;
+  const these = theseDe(citation), courte = citationCourte(citation);
+  const axe1 = !f ? "Explique la citation : ce que l'auteur veut dire, avec des exemples d'œuvres."
+    : these ? `Montre que, selon l'auteur, ${these} : c'est ${NOM_FONCTION[f]}.`
+    : courte ? `Explique ce que veut dire l'auteur par « ${courte} » : pour lui, la littérature est ${IDEE[f]}.`
+    : `Explique la thèse : pour l'auteur, la littérature est ${IDEE[f]}${de ? `, surtout quand elle parle ${de}` : ""}.`;
+  const axe2 = discussion
+    ? (f ? (de ? NUANCE[f](de) : `Nuance : la littérature peut aussi être ${IDEE[OPPOSE[f]]}.`) : "Discute : montre les limites de cette idée, avec d'autres exemples.")
+    : `Approfondis : montre, avec d'autres œuvres${de ? ` qui parlent ${de}` : ""}, d'autres façons dont la littérature le prouve.`;
+
+  // Œuvres du sujet d'abord, puis toutes celles qui partagent ses thèmes : quels arguments illustrent-elles ?
+  const cles = new Set(themes.map(normalize));
+  const surLesThemes = [...oeuvres, ...OEUVRES.filter(w => !oeuvres.includes(w) && w.themes.some(t => cles.has(normalize(t))))];
+  const choisir = (fn: Fonction | undefined, exclus: string[]) => {
+    if (!fn) return [] as string[];
+    const compte = new Map<string, number>();
+    surLesThemes.forEach((w, rang) => {
+      for (const a of new Set(w.idees.filter(i => i.fonction === fn && ARGUMENTS[i.argument]).map(i => i.argument)))
+        compte.set(a, (compte.get(a) ?? 0) + (rang < oeuvres.length ? 2 : 1));
+    });
+    // Un argument rangé ailleurs par une fiche (« éveil des consciences » pour la fonction sociale) reste à sa fonction.
+    const parThemes = [...compte].sort((x, y) => y[1] - x[1]).map(([a]) => a).filter(a => INDICES_ARGUMENTS.find(x => x[0] === a)?.[1] === fn);
+    return [...annonces.filter(a => INDICES_ARGUMENTS.find(x => x[0] === a)![1] === fn), ...parThemes, ...ARGUMENTS_TYPES[fn]]
+      .filter((a, i, t) => t.indexOf(a) === i && !exclus.includes(a)).slice(0, 2);
+  };
+  // Pour chaque argument, une œuvre qui l'illustre, différente d'un argument à l'autre si possible.
+  const prises = new Set<string>();
+  // Aucune œuvre du sujet ne l'illustre : on en prend une ailleurs dans la base, pas toujours la même.
+  const autres = (a: string, fn: Fonction | undefined) => {
+    const l = OEUVRES.filter(x => !prises.has(x.id) && x.idees.some(i => i.argument === a && (!fn || i.fonction === fn)));
+    return l.length ? l[graine(citation + a) % l.length] : undefined;
+  };
+  const exemple = (a: string, fn: Fonction | undefined) => {
+    const w = surLesThemes.find(x => !prises.has(x.id) && x.idees.some(i => i.argument === a && (!fn || i.fonction === fn)))
+      ?? autres(a, fn)
+      ?? surLesThemes.find(x => x.idees.some(i => i.argument === a));
+    if (!w) return "";
+    prises.add(w.id);
+    return `*${w.titre}*, ${w.auteur}`;
+  };
+  const f2b = discussion ? f && OPPOSE[f] : f2 ?? f;
+  const a1 = choisir(f, []), a2 = choisir(f2b, a1);
+  return {
+    axe1, axe2,
+    args1: a1.map(a => ARGUMENTS[a] ?? a), args2: a2.map(a => ARGUMENTS[a] ?? a),
+    ex1: a1.map(a => exemple(a, f)), ex2: a2.map(a => exemple(a, f2b))
+  };
+}
+
 /** `imposee` : la fonction choisie par l'élève quand celle proposée ne lui convient pas ; le plan et les œuvres la suivent. */
 export function analyserSujet(texteTape: string, combien = 6, imposee?: Fonction): Analyse {
   // Écriture SMS et mots courts écrits au son (« ds », « ki », « doi », « na pa ») remis en toutes lettres.
@@ -468,24 +578,11 @@ export function analyserSujet(texteTape: string, combien = 6, imposee?: Fonction
   const discussion = /\?/.test(texte) || /discut|diskut|nuanc|partag|apprec|pensez vous|penser vous|pensez-vous|etes vous|etes-vous|d accord|daccord|dans quelle mesure|selon vous|limites/.test(tout)
     || jetons(consigne).some(m => commencePar(m.cle, cle("discut", false)));
   const f = fonctions[0];
-  const plan = f
-    ? { axe1: `Explique la thèse : pour l'auteur, la littérature est ${IDEE[f]}.`,
-        axe2: discussion ? `Nuance : la littérature peut aussi être ${IDEE[OPPOSE[f]]}.` : `Approfondis : montre d'autres façons dont les œuvres le prouvent.`, args1: [] as string[], args2: [] as string[] }
-    : { axe1: "Explique la citation : ce que l'auteur veut dire, avec des exemples d'œuvres.",
-        axe2: discussion ? "Discute : montre les limites de cette idée, avec d'autres exemples." : "Approfondis : montre d'autres façons dont les œuvres le prouvent.", args1: [] as string[], args2: [] as string[] };
-
   // Arguments annoncés par le sujet (ce qui est nié n'en annonce pas).
   const affirme = normalize(citation).replace(/,/g, " , ").replace(/[^a-z.;!?,]+/g, " ").split(/[.;!?]/).map(p => { const a = affirmeEtNie(p); return a.sujet && a.nie ? a.affirme.replace(a.sujet, "") : a.affirme; }).join(" . ");
   const ma = jetons(affirme).filter(x => !TROP_COURANTS.has(x.brut)), pa = ` ${clesDe(affirme)} `;
   const argumentsTrouves = INDICES_ARGUMENTS.map(([a, fa, l]) => ({ a, fa, n: l.filter(i => indicePresent(ma, i, pa)).length }))
     .filter(x => x.n > 0 && fonctions.includes(x.fa)).sort((x, y) => y.n - x.n).map(x => x.a);
-  const choisir = (fn: Fonction | undefined, exclus: string[]) => fn
-    ? [...argumentsTrouves.filter(a => INDICES_ARGUMENTS.find(x => x[0] === a)![1] === fn), ...ARGUMENTS_TYPES[fn]].filter((a, i, t) => t.indexOf(a) === i && !exclus.includes(a)).slice(0, 2)
-    : [];
-  const args1 = choisir(f, []);
-  const args2 = discussion ? choisir(f && OPPOSE[f], args1) : choisir(fonctions[1] ?? f, args1);
-  plan.args1 = args1.map(a => ARGUMENTS[a] ?? a);
-  plan.args2 = args2.map(a => ARGUMENTS[a] ?? a);
 
   const genres = GENRES.filter(([, ms]) => ms.some(m => mots.some(x => x.brut === m || x.cle === cle(m)))).map(([g]) => g);
   // Sans thème reconnu : les œuvres au programme qui illustrent la fonction attendue.
@@ -493,6 +590,8 @@ export function analyserSujet(texteTape: string, combien = 6, imposee?: Fonction
   // Trop peu d'œuvres sur ces thèmes : on complète avec celles qui illustrent la même fonction.
   const oeuvres = avecThemes.length >= combien ? avecThemes
     : [...avecThemes, ...oeuvresPour([], fonctions, combien, 1.5, genres, argumentsTrouves).filter(w => !avecThemes.includes(w))].slice(0, combien);
+
+  const plan = planDuSujet(brute, f, fonctions[1], discussion, themes, argumentsTrouves, oeuvres);
 
   const importants = mots.filter(m => m.brut.length >= 5 && !TROP_COURANTS.has(m.brut));
   const proches = SUJETS.map(s => {

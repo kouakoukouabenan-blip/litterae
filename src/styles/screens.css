@@ -526,6 +526,7 @@
 .devoir-champ { display: grid; gap: var(--s1); }
 .devoir-args { margin: var(--s1) 0 0; padding-left: 1.1em; display: grid; gap: 2px; font-size: .92em; color: var(--muted); }
 .devoir-args li::marker { color: var(--ochre); }
+.devoir-ex { display: block; font-size: .92em; color: var(--muted); opacity: .9; }
 .devoir-consigne { margin: var(--s2) 0 0; }
 
 /* Sujet entier tapé dans la recherche d'œuvres */

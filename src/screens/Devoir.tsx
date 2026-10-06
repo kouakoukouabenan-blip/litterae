@@ -3,7 +3,8 @@ import { Page } from "../components/Page";
 import { PageHeader } from "../components/PageHeader";
 import { Icon } from "../components/Icon";
 import { useStored, write } from "../lib/storage";
-import { normalize } from "../lib/text";
+import { normalize, sansEtoiles } from "../lib/text";
+import { Texte } from "../components/Texte";
 import { FONCTIONS, type Fonction } from "../data/types";
 import { analyserSujet, decouperSujet } from "../lib/devoir";
 import { fnClass } from "../lib/fonctions";
@@ -79,8 +80,8 @@ export function DevoirScreen() {
       b.axe1.titre = analyse.plan.axe1;
       b.axe2.titre = analyse.plan.axe2;
       // Les arguments proposés deviennent les arguments du plan (l'élève écrit l'explication et l'exemple).
-      analyse.plan.args1.forEach((a, i) => { if (b.axe1.args[i]) b.axe1.args[i].arg = a; });
-      analyse.plan.args2.forEach((a, i) => { if (b.axe2.args[i]) b.axe2.args[i].arg = a; });
+      analyse.plan.args1.forEach((a, i) => { if (b.axe1.args[i]) Object.assign(b.axe1.args[i], { arg: a, ex: sansEtoiles(analyse.plan.ex1[i] ?? "") }); });
+      analyse.plan.args2.forEach((a, i) => { if (b.axe2.args[i]) Object.assign(b.axe2.args[i], { arg: a, ex: sansEtoiles(analyse.plan.ex2[i] ?? "") }); });
       write(`atelier:${num}`, { ...b, modifie: Date.now() });
     }
     location.hash = `#/entrainement/${num}`;
@@ -138,8 +139,8 @@ export function DevoirScreen() {
           <section>
             <h2 class="section-title">Un plan pour démarrer</h2>
             <ol class="devoir-plan">
-              <li><strong>Partie 1.</strong> {analyse.plan.axe1}<Arguments liste={analyse.plan.args1} /></li>
-              <li><strong>Partie 2.</strong> {analyse.plan.axe2}<Arguments liste={analyse.plan.args2} /></li>
+              <li><strong>Partie 1.</strong> {analyse.plan.axe1}<Arguments liste={analyse.plan.args1} exemples={analyse.plan.ex1} /></li>
+              <li><strong>Partie 2.</strong> {analyse.plan.axe2}<Arguments liste={analyse.plan.args2} exemples={analyse.plan.ex2} /></li>
             </ol>
           </section>
 
@@ -185,9 +186,10 @@ export function DevoirScreen() {
   );
 }
 
-/** Les arguments conseillés pour une partie du plan, un par ligne. */
-function Arguments({ liste }: { liste: string[] }) {
-  return liste.length ? <ul class="devoir-args">{liste.map(a => <li key={a}>{a}</li>)}</ul> : null;
+/** Les arguments conseillés pour une partie du plan, un par ligne, chacun avec une œuvre pour l'illustrer. */
+function Arguments({ liste, exemples }: { liste: string[]; exemples: string[] }) {
+  return liste.length ? <ul class="devoir-args">{liste.map((a, i) => <li key={a}>{a}
+    {exemples[i] && <span class="devoir-ex">Par exemple : <Texte text={exemples[i]} /></span>}</li>)}</ul> : null;
 }
 
 /** Mon espace : les devoirs gardés, à rouvrir ou à retirer. */
