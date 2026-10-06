@@ -1,3 +1,4 @@
+import { Texte } from "./Texte";
 import { useState } from "preact/hooks";
 import apercu from "../data/quiz-apercu.json";
 import libres from "../data/quiz-libre.json";
@@ -108,7 +109,7 @@ function Questions({ id, questions }: { id: string; questions: QuestionQuiz[] })
   return (
     <div class="quiz-card">
       <p class="small muted">Question {n + 1} sur {questions.length}</p>
-      <p class="quiz-q">{q.q}</p>
+      <p class="quiz-q"><Texte text={q.q} /></p>
       <ul class="quiz-choix">
         {q.choix.map((c, i) => {
           const etat = choix === null ? "" : i === q.bonne ? "ok" : i === choix ? "faux" : "";
@@ -125,7 +126,7 @@ function Questions({ id, questions }: { id: string; questions: QuestionQuiz[] })
       </ul>
       {choix !== null && (
         <div class="quiz-correction" role="status">
-          <p><strong>{juste ? "Bonne réponse." : "Pas tout à fait."}</strong> {q.pourquoi}</p>
+          <p><strong>{juste ? "Bonne réponse." : "Pas tout à fait."}</strong> <Texte text={q.pourquoi} /></p>
           <button type="button" class="btn btn-primary align-start" onClick={suivante}>
             {n + 1 < questions.length ? "Question suivante" : "Voir mon score"}
           </button>

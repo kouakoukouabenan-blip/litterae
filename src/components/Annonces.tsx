@@ -1,3 +1,4 @@
+import { Texte } from "./Texte";
 import { useEffect, useRef, useState } from "preact/hooks";
 import { fermerMessages, marquerLue, ouvrirMessages, useAnnonces, type Annonce } from "../lib/annonces";
 import { useNotifs } from "../lib/notifications";
@@ -29,10 +30,10 @@ function Message({ a, lue, ouvert, clic }: { a: Annonce; lue: boolean; ouvert: b
       onToggle={e => { if ((e.target as HTMLDetailsElement).open) marquerLue(a.id); }}>
       <summary>
         <span class="message-haut"><span class="message-type">{NOMS[a.type] ?? "Message"}</span>{a.urgent && <span class="annonce-urgent">Urgent</span>}<span class="meta">{dateCourte(a.date)}</span></span>
-        <span class="message-titre">{a.titre}</span>
+        <span class="message-titre"><Texte text={a.titre} /></span>
       </summary>
       <div class="message-corps">
-        {a.texte && <p class="annonce-texte">{a.texte}</p>}
+        {a.texte && <p class="annonce-texte"><Texte text={a.texte} /></p>}
         {lien && (
           <a class="btn btn-primary align-start" href={lien} onClick={() => { clic(a.id); if (lien.startsWith("#")) fermerMessages(); }}
             {...(lien.startsWith("http") ? { target: "_blank", rel: "noopener" } : {})}>
@@ -80,7 +81,7 @@ export function Annonces() {
         <li key={a.id}>
           <button type="button" class={`annonce-ligne annonce-${a.type}${a.urgent ? " annonce-urgente" : ""}`} onClick={() => ouvrirMessages(a.id)}>
             <span class="annonce-type">{NOMS[a.type] ?? "Message"}</span>
-            <span class="annonce-ligne-titre">{a.titre}</span>
+            <span class="annonce-ligne-titre"><Texte text={a.titre} /></span>
             <Icon name="chevron_right" size={20} />
           </button>
         </li>

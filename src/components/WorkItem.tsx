@@ -1,5 +1,5 @@
 import type { Oeuvre } from "../data/types";
-import { Highlight } from "./Highlight";
+import { Texte } from "./Texte";
 import { Icon } from "./Icon";
 import { fnClass } from "../lib/fonctions";
 
@@ -21,15 +21,15 @@ export function WorkItem({ w, terms = [], saved = false, note, open = true, free
   return (
     <a class="work" href={`#/oeuvres/${w.id}${suite ? `?${suite}` : ""}`}>
       <span class="work-head">
-        <span class="work-title"><Highlight text={w.titre} terms={terms} />{free && <span class="work-libre">Ouverte</span>}</span>
+        <span class="work-title"><Texte text={w.titre} terms={terms} titre />{free && <span class="work-libre">Ouverte</span>}</span>
         {saved && <span class="work-saved" title="Enregistrée"><Icon name="bookmark" filled size={18} /><span class="sr-only">Enregistrée</span></span>}
         {locked && <span class="work-lock" title="Réservée à l'accès complet"><Icon name="lock" size={18} /><span class="sr-only">Réservée à l'accès complet</span></span>}
       </span>
-      <span class="meta"><Highlight text={w.auteur} terms={terms} />{w.paysTexte && ` · ${w.paysTexte}`} · {w.genre}</span>
+      <span class="meta"><Texte text={w.auteur} terms={terms} auto={false} />{w.paysTexte && ` · ${w.paysTexte}`} · {w.genre}</span>
       {note ? (
         <span class="work-summary work-note">Ma note : {note}</span>
       ) : w.resume && open ? (
-        <span class="work-summary"><Highlight text={w.resume} terms={terms} /></span>
+        <span class="work-summary"><Texte text={w.resume} terms={terms} /></span>
       ) : null}
       {/* Les fonctions sur une seule ligne discrète, une pastille de couleur chacune. */}
       <span class="work-fonctions">

@@ -4,6 +4,7 @@ import { LECONS } from "../lib/lecons";
 import type { BlocLecon } from "../data/types";
 import { Page } from "../components/Page";
 import { Icon } from "../components/Icon";
+import { Texte } from "../components/Texte";
 import { useStored } from "../lib/storage";
 import { NotFound } from "./NotFound";
 import { QuizLecon } from "../components/Quiz";
@@ -16,25 +17,25 @@ import { noterVue } from "../lib/historique";
 import { synchroniser } from "../lib/synchro";
 
 function Bloc({ b }: { b: BlocLecon }) {
-  if ("p" in b) return <p>{b.p}</p>;
-  if ("h" in b) return <h2 class="section-title">{b.h}</h2>;
-  if ("liste" in b) return <ul class="bullets">{b.liste.map(x => <li key={x}>{x}</li>)}</ul>;
-  if ("astuce" in b) return <aside class="callout"><p class="callout-label">Astuce</p><p>{b.astuce}</p></aside>;
+  if ("p" in b) return <p><Texte text={b.p} /></p>;
+  if ("h" in b) return <h2 class="section-title"><Texte text={b.h} /></h2>;
+  if ("liste" in b) return <ul class="bullets">{b.liste.map(x => <li key={x}><Texte text={x} /></li>)}</ul>;
+  if ("astuce" in b) return <aside class="callout"><p class="callout-label">Astuce</p><p><Texte text={b.astuce} /></p></aside>;
   if ("etapes" in b)
     return (
       <ol class="steps">
-        {b.etapes.map(([t, d]) => <li key={t}><strong>{t}</strong><span>{d}</span></li>)}
+        {b.etapes.map(([t, d]) => <li key={t}><strong><Texte text={t} /></strong><span><Texte text={d} /></span></li>)}
       </ol>
     );
-  if ("sujet" in b) return <blockquote class="citation">{b.sujet}</blockquote>;
+  if ("sujet" in b) return <blockquote class="citation"><Texte text={b.sujet} /></blockquote>;
   if ("def" in b)
     return (
       <dl class="def">
-        {b.def.map(([k, v]) => [<dt key={k}>{k}</dt>, <dd key={k + "d"}>{v}</dd>])}
+        {b.def.map(([k, v]) => [<dt key={k}>{k}</dt>, <dd key={k + "d"}><Texte text={v} /></dd>])}
       </dl>
     );
-  if ("modele" in b) return <figure class="model"><figcaption>Exemple rédigé</figcaption><p>{b.modele}</p></figure>;
-  if ("plan" in b) return <ol class="outline">{b.plan.map(x => <li key={x}>{x}</li>)}</ol>;
+  if ("modele" in b) return <figure class="model"><figcaption>Exemple rédigé</figcaption><p><Texte text={b.modele} /></p></figure>;
+  if ("plan" in b) return <ol class="outline">{b.plan.map(x => <li key={x}><Texte text={x} /></li>)}</ol>;
   // Lien venu du serveur : seulement vers une page de l'appli ou un site https.
   if ("lien" in b) return /^(https:\/\/|#\/)/.test(b.lien.href) && <a class="btn btn-secondary align-start" href={b.lien.href}><Icon name="local_library" size={20} />{b.lien.texte}</a>;
   return null;
@@ -111,7 +112,7 @@ export function LeconScreen({ id }: { id: string }) {
       <article class="reading">
         <header class="page-header">
           <p class="eyebrow">Leçon {i + 1} sur {LECONS.length} · {l.duree}</p>
-          <h1 class="page-title">{l.titre}</h1>
+          <h1 class="page-title"><Texte text={l.titre} /></h1>
           {ouverte && (
             <p class="small muted fiche-quota">Leçon gratuite {acces.nbOuvertes} sur {LECONS_GRATUITES}. <AchatLien label="Tout débloquer" /></p>
           )}

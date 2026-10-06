@@ -245,3 +245,12 @@ html[data-glisse="gauche"] main.page > :not(.segments):not(:has(.segments)), htm
 }
 
 @media (min-width: 720px) { .detail-court { display: none; } }
+
+/* Titres d'œuvres : en italique dans tous les textes, comme on les souligne dans une copie. */
+.titre-oeuvre, cite { font-style: italic; }
+/* Dans un passage déjà en italique, le titre repasse en droit : c'est la règle typographique. */
+.exemple .titre-oeuvre, .citation .titre-oeuvre, .row-quote .titre-oeuvre,
+.model p .titre-oeuvre, .work-note .titre-oeuvre, .dico-nature .titre-oeuvre { font-style: normal; }
+.page-title em.titre-oeuvre, .home-title em.titre-oeuvre { font-style: italic; color: inherit; }
+/* Le titre d'une œuvre dans une liste garde son poids : l'italique ne doit pas l'alléger. */
+.work-title .titre-oeuvre, .row-title .titre-oeuvre { font-weight: inherit; }

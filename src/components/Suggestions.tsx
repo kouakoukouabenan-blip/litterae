@@ -1,3 +1,4 @@
+import { Texte } from "./Texte";
 import { useMemo } from "preact/hooks";
 import { prochaineAction, suggestions } from "../lib/suggestions";
 import { Icon } from "./Icon";
@@ -31,8 +32,8 @@ export function Suggestions() {
             <a class="pour-toi-ligne" href={s.lien}>
               <span class="pour-toi-icone" aria-hidden="true"><Icon name={s.icone} size={20} /></span>
               <span class="pour-toi-texte">
-                <span class="pour-toi-nom">{s.titre}</span>
-                <span class="pour-toi-detail">{s.detail}</span>
+                <span class="pour-toi-nom"><Texte text={s.titre} /></span>
+                <span class="pour-toi-detail"><Texte text={s.detail} /></span>
               </span>
               <Icon name="chevron_right" size={20} />
             </a>
@@ -52,8 +53,8 @@ export function ProchaineAction() {
       <span class="prochaine-icone" aria-hidden="true">{recompense ? <Flamme taille={22} /> : <Icon name={a.icone} size={22} />}</span>
       <span class="prochaine-texte">
         <span class="prochaine-etiquette">Ta prochaine action</span>
-        <span class="prochaine-titre">{a.titre}</span>
-        <span class="prochaine-detail">{a.detail}</span>
+        <span class="prochaine-titre"><Texte text={a.titre} /></span>
+        <span class="prochaine-detail"><Texte text={a.detail} /></span>
       </span>
       <Icon name="arrow_forward" size={22} />
     </a>

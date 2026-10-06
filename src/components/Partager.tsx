@@ -1,6 +1,7 @@
 import { Icon } from "./Icon";
 import { copyText } from "./Toast";
 import { noter } from "../lib/stats";
+import { sansEtoiles } from "../lib/text";
 
 export type Partage = "lecon" | "oeuvre" | "sujet" | "entrainement" | "mot";
 
@@ -9,7 +10,7 @@ export const adresse = (chemin: string) => new URL("./", location.href).href + c
 
 /** Coupe un texte à la fin d'un mot, avec des points de suspension. */
 export function extrait(texte: string | null | undefined, max = 220) {
-  const t = (texte ?? "").replace(/\s+/g, " ").trim();
+  const t = sansEtoiles(texte).replace(/\s+/g, " ").trim();
   if (t.length <= max) return t;
   return t.slice(0, t.lastIndexOf(" ", max - 1) > max * 0.6 ? t.lastIndexOf(" ", max - 1) : max - 1).replace(/[,;:.\s]+$/, "") + "…";
 }
@@ -18,7 +19,9 @@ export function extrait(texte: string | null | undefined, max = 220) {
  * Petite icône « Partager » (barre du haut, ou en-tête de la carte d'un mot) : la fenêtre de partage du téléphone (WhatsApp, SMS…) avec le texte et le lien,
  * ou, sans elle (ordinateur), le texte et le lien copiés.
  */
-export function Partager({ type, cle, titre, texte, chemin }: { type: Partage; cle: string; titre: string; texte: string; chemin: string }) {
+export function Partager({ type, cle, titre: titreBrut, texte: texteBrut, chemin }: { type: Partage; cle: string; titre: string; texte: string; chemin: string }) {
+  // Le texte partagé est lu dans WhatsApp ou un SMS : les étoiles de l'italique n'y ont rien à faire.
+  const titre = sansEtoiles(titreBrut), texte = sansEtoiles(texteBrut);
   const lien = adresse(chemin);
   const partager = async () => {
     noter({ t: "partage", ref: type });

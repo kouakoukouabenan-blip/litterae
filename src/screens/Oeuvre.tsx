@@ -15,9 +15,9 @@ import { fnClass } from "../lib/fonctions";
 import type { Oeuvre } from "../data/types";
 import { argumentsDe } from "../lib/arguments";
 import { LigneContact } from "../components/LigneContact";
-import { Highlight } from "../components/Highlight";
+import { Texte } from "../components/Texte";
 import { queryTerms } from "../lib/search";
-import { normalize } from "../lib/text";
+import { normalize, sansEtoiles } from "../lib/text";
 import { fichesGratuites, ouvrirFiche, useFichesOuvertes, type EchecFiche } from "../lib/fiches";
 import { AchatLien } from "../components/Achat";
 
@@ -58,8 +58,8 @@ function ArgumentsListe({ w, ouvert, trouve, terms }: { w: Oeuvre; ouvert: boole
               <a class={`tag tag-link ${fnClass(a.fonction)}`} href={href(["oeuvres"], { fonction: a.fonction })}>{a.fonction}</a>
               {i === trouve && <span class="argument-trouve-label">Ta recherche</span>}
             </p>
-            <p class="argument-texte"><Highlight text={a.texte} terms={terms} /></p>
-            {ouvert && a.appuis.map(t => <p key={t} class="arg-appui"><Highlight text={t} terms={terms} /></p>)}
+            <p class="argument-texte"><Texte text={a.texte} terms={terms} /></p>
+            {ouvert && a.appuis.map(t => <p key={t} class="arg-appui"><Texte text={t} terms={terms} /></p>)}
             {a.cle && <a class="arg-autres" href={href(["oeuvres"], { argument: a.cle })}>Autres œuvres pour cet argument</a>}
           </li>
         ))}
@@ -100,7 +100,7 @@ function Resume({ texte, ouvrir }: { texte: string; ouvrir: boolean }) {
   const [tout, setTout] = useState(ouvrir);
   return (
     <>
-      {(tout ? paras : paras.slice(0, 1)).map((para, i) => <p key={i}>{para}</p>)}
+      {(tout ? paras : paras.slice(0, 1)).map((para, i) => <p key={i}><Texte text={para} /></p>)}
       {paras.length > 1 && !tout && (
         <button type="button" class="lien-suite" onClick={() => setTout(true)}>Lire tout le résumé<Icon name="expand_more" size={20} /></button>
       )}
@@ -215,10 +215,10 @@ export function OeuvreScreen({ id, params }: { id: string; params: URLSearchPara
               {/* Ce que l'élève recopie : la phrase d'exemple et la référence de l'œuvre. */}
               <section aria-labelledby="copie">
                 <h2 id="copie" class="section-title">Pour ta copie</h2>
-                {w.exemple && <blockquote class="exemple">{w.exemple}</blockquote>}
+                {w.exemple && <blockquote class="exemple"><Texte text={w.exemple} /></blockquote>}
                 <div class="actions copie-actions">
                   {w.exemple && (
-                    <button type="button" class="btn btn-secondary" onClick={() => copyText(w.exemple!, "Phrase copiée.")}>
+                    <button type="button" class="btn btn-secondary" onClick={() => copyText(sansEtoiles(w.exemple!), "Phrase copiée.")}>
                       <Icon name="content_copy" size={20} />Copier la phrase
                     </button>
                   )}

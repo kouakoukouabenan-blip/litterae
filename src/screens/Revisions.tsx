@@ -1,5 +1,6 @@
 import { useMemo, useState } from "preact/hooks";
 import { Page } from "../components/Page";
+import { Texte } from "../components/Texte";
 import { Icon } from "../components/Icon";
 import { EmptyState } from "../components/EmptyState";
 import { LECONS } from "../lib/lecons";
@@ -59,7 +60,7 @@ function CarteRevision({ carte, suivante }: { carte: Carte; suivante: (reussie: 
           <button type="button" class="btn btn-primary align-start" onClick={() => setVu(true)}>Voir le sens</button>
         ) : (
           <>
-            <p class="carte-sens">{e.sens}</p>
+            <p class="carte-sens"><Texte text={e.sens} /></p>
             <div class="carte-actions">
               <button type="button" class="btn btn-secondary" onClick={() => suivante(false)}>Je ne savais pas</button>
               <button type="button" class="btn btn-primary" onClick={() => suivante(true)}><Icon name="check" size={20} />Je savais</button>

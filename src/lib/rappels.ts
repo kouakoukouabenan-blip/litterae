@@ -1,3 +1,4 @@
+import { sansEtoiles } from "./text";
 import { SERVEUR_URL } from "./site";
 import { read, write } from "./storage";
 import { etatNotif } from "./notifications";
@@ -47,7 +48,8 @@ async function rangerTexte() {
   if (!("caches" in window)) return;
   const c = await caches.open(CACHE);
   // Le texte d'une série ne vaut que pour le lendemain ; le 2e rappel, une semaine après, propose de recommencer.
-  const texte = { ...texteRappel(), date: Date.now(), expire: Date.now() + 2 * 864e5,
+  const r = texteRappel();
+  const texte = { ...r, titre: sansEtoiles(r.titre), texte: sansEtoiles(r.texte), date: Date.now(), expire: Date.now() + 2 * 864e5,
     ensuite: { titre: "Ta dissertation t'attend", texte: "Reprends avec le défi du jour : un sujet, 5 minutes, 2 arguments.", lien: "#/defi" } };
   await c.put("/rappel", new Response(JSON.stringify(texte), { headers: { "content-type": "application/json" } }));
 }

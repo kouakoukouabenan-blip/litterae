@@ -1,3 +1,4 @@
+import { Texte } from "../components/Texte";
 import type { RefObject } from "preact";
 import { useRef, useState } from "preact/hooks";
 import { Page } from "../components/Page";
@@ -76,7 +77,7 @@ export function EntrainementScreen() {
                 <span class="sujet-num" aria-hidden="true">{numero(s.num)}</span>
                 <span class="row-body">
                   <span class="sr-only">Sujet {numero(s.num)}</span>
-                  <span class="row-quote">« {s.citation} »</span>
+                  <span class="row-quote">« <Texte text={s.citation} /> »</span>
                   <span class="meta">{s.auteur}</span>
                   {pct ? (
                     <span class={`entrainement-etat ${pct === 100 ? "entrainement-fini" : "entrainement-encours"}`}>

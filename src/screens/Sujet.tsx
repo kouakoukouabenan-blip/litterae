@@ -1,4 +1,5 @@
 import { Icon } from "../components/Icon";
+import { Texte } from "../components/Texte";
 import type { Argument } from "../data/types";
 import { Page } from "../components/Page";
 import { LockPanel } from "../components/LockPanel";
@@ -15,9 +16,9 @@ function Args({ args }: { args: Argument[] }) {
     <ol class="args">
       {args.map((a, k) => (
         <li key={k}>
-          <h4 class="arg-title">{a.titre}</h4>
-          <p>{a.expl}</p>
-          <p class="arg-ex"><span class="arg-ex-label">Illustration</span>{a.ex}</p>
+          <h4 class="arg-title"><Texte text={a.titre} /></h4>
+          <p><Texte text={a.expl} /></p>
+          <p class="arg-ex"><span class="arg-ex-label">Illustration</span><Texte text={a.ex} /></p>
         </li>
       ))}
     </ol>
@@ -41,7 +42,7 @@ export function SujetScreen({ num }: { num: string }) {
       <article class="reading">
         <header class="page-header">
           <p class="eyebrow">Sujet {s.num} · {s.orientation}</p>
-          <blockquote class="citation citation-lg">« {s.citation} »</blockquote>
+          <blockquote class="citation citation-lg">« <Texte text={s.citation} /> »</blockquote>
           <p class="meta">{s.auteur}. Expliquez et discutez.</p>
           <a class="btn btn-secondary align-start sujet-atelier" href={`#/entrainement/${s.num}`}><Icon name="edit" size={20} />M'entraîner sur ce sujet</a>
         </header>
@@ -52,29 +53,29 @@ export function SujetScreen({ num }: { num: string }) {
           <div class="prose">
             <h2 class="section-title">Comprendre le sujet</h2>
             <dl class="def">
-              <dt>Thème</dt><dd>{s.compreh.theme}</dd>
-              <dt>Thèse</dt><dd>{s.compreh.these}</dd>
-              <dt>Reformulation</dt><dd>{s.compreh.reformulation}</dd>
-              <dt>Orientation</dt><dd>{s.compreh.orientation}</dd>
+              <dt>Thème</dt><dd><Texte text={s.compreh.theme} /></dd>
+              <dt>Thèse</dt><dd><Texte text={s.compreh.these} /></dd>
+              <dt>Reformulation</dt><dd><Texte text={s.compreh.reformulation} /></dd>
+              <dt>Orientation</dt><dd><Texte text={s.compreh.orientation} /></dd>
             </dl>
             <h3 class="sub-title">Mots-clés</h3>
             <dl class="def">
-              {s.compreh.motscles.map(m => [<dt key={m.mot}>{m.mot}</dt>, <dd key={m.mot + "d"}>{m.def}</dd>])}
+              {s.compreh.motscles.map(m => [<dt key={m.mot}>{m.mot}</dt>, <dd key={m.mot + "d"}><Texte text={m.def} /></dd>])}
             </dl>
 
             <h2 class="section-title">Introduction</h2>
-            <p>{s.intro}</p>
+            <p><Texte text={s.intro} /></p>
 
-            <h2 class="section-title"><span class="part-num">I.</span> {s.axe1.titre}</h2>
+            <h2 class="section-title"><span class="part-num">I.</span> <Texte text={s.axe1.titre} /></h2>
             <Args args={s.axe1.args} />
 
-            <aside class="callout"><p class="callout-label">Transition</p><p>{s.transition}</p></aside>
+            <aside class="callout"><p class="callout-label">Transition</p><p><Texte text={s.transition} /></p></aside>
 
-            <h2 class="section-title"><span class="part-num">II.</span> {s.axe2.titre}</h2>
+            <h2 class="section-title"><span class="part-num">II.</span> <Texte text={s.axe2.titre} /></h2>
             <Args args={s.axe2.args} />
 
             <h2 class="section-title">Conclusion</h2>
-            <p>{s.conclu}</p>
+            <p><Texte text={s.conclu} /></p>
 
             {citees.length > 0 && (
               <section aria-labelledby="citees">
@@ -83,7 +84,7 @@ export function SujetScreen({ num }: { num: string }) {
                   {citees.map(w => (
                     <li key={w.id}>
                       <a class="row" href={`#/oeuvres/${w.id}`}>
-                        <span class="row-body"><span class="row-title work-title">{w.titre}</span><span class="meta">{w.auteur}</span></span>
+                        <span class="row-body"><span class="row-title work-title"><em class="titre-oeuvre">{w.titre}</em></span><span class="meta">{w.auteur}</span></span>
                       </a>
                     </li>
                   ))}

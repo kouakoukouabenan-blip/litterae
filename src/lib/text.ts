@@ -5,8 +5,12 @@ export const normalize = (s: string | null | undefined) =>
     .replace(/[̀-ͯ]/g, "")
     .toLowerCase()
     .replace(/[’']/g, " ")
+    .replace(/\*/g, "")
     .replace(/\s+/g, " ")
     .trim();
+
+/** Enlève les étoiles qui marquent l'italique : pour un texte copié, partagé ou comparé. */
+export const sansEtoiles = (s: string | null | undefined) => String(s ?? "").replace(/\*([^*\n]+)\*/g, "$1");
 
 export const plural = (n: number, one: string, many = one + "s") => `${n} ${n > 1 ? many : one}`;
 

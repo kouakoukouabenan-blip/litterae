@@ -3,6 +3,7 @@ import sujets from "../data/sujets.json";
 import dico from "../data/dictionnaire.json";
 import type { ContenuPayant, Oeuvre, Sujet, SujetApercu } from "../data/types";
 import { licence } from "./licence";
+import { sansEtoiles } from "./text";
 import { contenuLibre } from "./libre";
 import { fichesOuvertes } from "./fiches";
 import { LECONS as LECONS_GUIDE } from "../data/lecons";
@@ -52,7 +53,7 @@ const byId = new Map(OEUVRES.map(w => [w.id, w]));
 export const oeuvre = (id: string) => byId.get(id);
 
 /** Référence prête à coller dans une copie : titre, auteur, pays. */
-export const reference = (w: Oeuvre) => `${w.titre}, ${w.auteur}${w.paysTexte ? ` (${w.paysTexte})` : ""}`;
+export const reference = (w: Oeuvre) => sansEtoiles(`${w.titre}, ${w.auteur}${w.paysTexte ? ` (${w.paysTexte})` : ""}`);
 
 /** Sans accents ni ponctuation, casse conservée : un titre cité commence par une majuscule. */
 const fold = (s: string) => ` ${s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^A-Za-z0-9]+/g, " ").trim()} `;

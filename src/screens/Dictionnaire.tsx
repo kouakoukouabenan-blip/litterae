@@ -8,7 +8,7 @@ import dico from "../data/dictionnaire.json";
 import type { Dictionnaire, EntreeDico, Fonction, MotDico } from "../data/types";
 import { FONCTIONS } from "../data/types";
 import { Icon } from "../components/Icon";
-import { Highlight } from "../components/Highlight";
+import { Texte as TexteRiche } from "../components/Texte";
 import { EmptyState } from "../components/EmptyState";
 import { OEUVRES } from "../lib/data";
 import { fnClass } from "../lib/fonctions";
@@ -86,7 +86,7 @@ function Texte({ text, terms, onVoir }: { text: string; terms: string[]; onVoir:
   return (
     <>
       {parts.map((p, i) => {
-        if (i % 2 === 0) return <Highlight key={i} text={p} terms={terms} />;
+        if (i % 2 === 0) return <TexteRiche key={i} text={p} terms={terms} />;
         const [voir, ...mot] = p.split(" ");
         const cible = mot.join(" ");
         return (
@@ -316,7 +316,7 @@ export function DicoResultats({ q, fonction, mot, onChange }: { q: string; fonct
                   <li class={fn ? fnClass(fn) : ""}>
                     <button type="button" class="dico-ligne" onClick={() => ouvrir(e.mot)} >
                       <span class="dico-ligne-texte">
-                        <span class="dico-mot"><Highlight text={e.mot} terms={terms} /></span>{" "}
+                        <span class="dico-mot"><TexteRiche text={e.mot} terms={terms} auto={false} /></span>{" "}
                         <span class="dico-nature">{e.nature}</span>
                       </span>
                       <Icon name="chevron_right" size={20} />
