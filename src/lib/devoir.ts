@@ -128,6 +128,9 @@ const GENRES: [string, string[]][] = [
 const CONSIGNE_FORTS = ["expliq", "explic", "comment", "discut", "analys", "illustr", "justifi", "apprec", "partag"].map(m => cle(m, false));
 const CONSIGNE_DEBUTS = /^(vous|en vous|a l aide|a partir|a la lumiere|en vous appuyant|en vous fondant|sur la base|que pensez|qu en pensez|pensez vous|partagez vous|etes vous|dans quelle mesure|selon vous|montrez|dites|etudiez|commentez|expliquez|discutez|analysez|illustrez|justifiez|appreciez)\b/;
 
+/** Une œuvre qui illustre un argument, et en une ligne pourquoi (quand l'élève a accès à la fiche). */
+export interface Exemple { id: string; titre: string; auteur: string; pourquoi: string }
+
 export interface Analyse {
   themes: string[];
   fonctions: Fonction[];
@@ -138,8 +141,18 @@ export interface Analyse {
   auteur: string;
   /** Arguments de dissertation que le sujet annonce (« Dénonciation », « Imagination »…). */
   arguments: string[];
-  /** `ex1`, `ex2` : pour chaque argument, une œuvre du sujet qui l'illustre (« *Titre*, Auteur »), ou vide. */
-  plan: { axe1: string; axe2: string; args1: string[]; args2: string[]; ex1: string[]; ex2: string[] };
+  /** `ex1`, `ex2` : pour chaque argument, les œuvres qui l'illustrent (une, ou deux si la consigne demande d'illustrer). */
+  plan: { axe1: string; axe2: string; args1: string[]; args2: string[]; ex1: Exemple[][]; ex2: Exemple[][]; problematique: string };
+  /** L'autre fonction possible quand l'appli hésite entre deux lectures du sujet. */
+  doute: Fonction | null;
+  /** Très peu d'indices dans le sujet : la fonction proposée est à vérifier. */
+  faible: boolean;
+  /** La fonction que l'auteur rejette (« Je ne crois pas à l'évasion »), s'il en rejette une. */
+  rejet: Fonction | null;
+  /** Le sujet est presque un sujet corrigé : son numéro, et si l'élève peut ouvrir le corrigé (le plan vient alors du corrigé). */
+  corrige: { num: string; ouvert: boolean } | null;
+  /** Ce que demande vraiment l'énoncé : une dissertation littéraire, ou autre chose. */
+  nature: "dissertation" | "commentaire" | "resume" | "generale";
   oeuvres: Oeuvre[];
   proches: (Sujet | SujetApercu)[];
 }
@@ -363,14 +376,74 @@ function auteurConnu(texte: string) {
 /** Noms d'auteurs qui sont aussi des mots courants : jamais reconnus seuls. */
 const MOTS_COURANTS = new Set(["racine", "france", "laforgue", "lafontaine"].map(m => cle(m)));
 
-/** Ce que demande la consigne, en quelques mots. */
-function travailDemande(consigne: string, texte: string, discussion: boolean) {
+/** Ce que demande la consigne. « Commentez » demande aussi d'apprécier, donc de nuancer. */
+function typeDeConsigne(consigne: string, texte: string, tout: string): Consigne {
   const c = normalize(consigne);
-  if (/^(pensez|partagez|etes|que pensez|qu en pensez|dans quelle mesure)/.test(c) || (!c && /\?\s*$/.test(texte))) return "Donner ton avis en discutant l'idée";
-  if (discussion) return "Expliquer puis discuter";
-  if (/comment/.test(c)) return "Expliquer et commenter";
-  if (/illustr/.test(c)) return "Expliquer et illustrer d'exemples";
-  return "Expliquer";
+  if (/^(pensez|partagez|etes|que pensez|qu en pensez|dans quelle mesure)/.test(c) || (!c && /\?\s*$/.test(texte))) return "avis";
+  if (/\?/.test(texte) || /discut|diskut|nuanc|partag|apprec|pensez vous|penser vous|etes vous|d accord|daccord|dans quelle mesure|selon vous|limites/.test(tout)
+    || jetons(consigne).some(m => commencePar(m.cle, cle("discut", false)))) return "discuter";
+  if (/comment/.test(c)) return "commenter";
+  if (/illustr/.test(c)) return "illustrer";
+  return "expliquer";
+}
+const TRAVAIL: Record<Consigne, string> = {
+  avis: "Donner ton avis en discutant l'idée",
+  discuter: "Expliquer puis discuter",
+  commenter: "Expliquer puis apprécier (montrer les limites)",
+  illustrer: "Expliquer et illustrer d'exemples",
+  expliquer: "Expliquer (sans discuter)"
+};
+
+/** L'appli hésite quand la deuxième fonction a presque autant de points que la première. */
+const SEUIL_DOUTE = 0.8;
+
+/** Tournures par lesquelles un auteur écarte une idée. */
+const REJETTE = /\b(n est pas|ne sont pas|n est plus|ne crois pas|ne lis pas|n ecris pas|ne raconte pas|ne chante pas|ne doit pas|n a pas pour|pas pour|non pas|pas fait)\b/;
+/** En dessous, presque aucun indice : la fonction proposée est un simple pari. */
+const SEUIL_FAIBLE = 1;
+
+/**
+ * Le sujet tapé est presque un sujet corrigé : la plupart de ses mots importants s'y retrouvent, dans les deux sens.
+ * Rend le sujet tel que l'élève y a accès (avec son corrigé s'il peut l'ouvrir).
+ */
+function sujetCorrigeProche(citation: string): Sujet | SujetApercu | null {
+  // Mots importants, une fois chacun (sans les mots recollés ou décollés que la lecture essaie en plus).
+  const courants = new Set([...TROP_COURANTS].map(m => cle(m)));
+  const importants = (t: string) => jetons(t).filter((m, i, l) => !m.colle && m.brut.length >= 4 && !courants.has(m.cle) && l.findIndex(x => x.cle === m.cle) === i);
+  const a = importants(citation), sons = clesDe(citation);
+  // Côté élève, les mots collés ou décollés comptent aussi (« sarmer » → « armer », « lecho » → « écho »).
+  const tous = jetons(citation);
+  // Sujet court (« La poésie n'a pas d'autre but qu'elle-même ») : il faut le retrouver presque mot pour mot.
+  if (sons.length >= 14) for (const s of SUJETS) {
+    const t = clesDe(redresser(s.citation));
+    if (t.length >= 14 && (t.includes(sons) || sons.includes(t)) && Math.min(t.length, sons.length) / Math.max(t.length, sons.length) > 0.7) return s;
+  }
+  if (a.length < 4) return null;
+  let mieux: { s: Sujet | SujetApercu; score: number } | null = null;
+  for (const s of SUJETS) {
+    const b = importants(redresser(s.citation));
+    if (b.length < 4) continue;
+    const dansB = a.filter(x => b.some(y => egal(x, y))).length / a.length;
+    const dansA = b.filter(y => tous.some(x => egal(x, y))).length / b.length;
+    // Presque tous les mots du corrigé sont dans le sujet tapé ; l'élève peut en avoir mal écrit ou collé quelques-uns.
+    const score = dansA + dansB;
+    if (dansA >= 0.75 && dansB >= 0.3 && (!mieux || score > mieux.score)) mieux = { s, score };
+  }
+  return mieux?.s ?? null;
+}
+
+/** Débuts de mots qui montrent qu'un sujet parle de littérature (larges exprès : au moindre doute, c'est une dissertation littéraire). */
+const MOTS_LITTERAIRES = /^(litt?er|lettre|ecri|ecrir|poe|poem|roman|oeuvr|livr|lect|lir|lis|lu$|auteur|artis|art$|arts$|theat|drama|scen|spectat|salle|acteur|conte|recit|raconte|personnag|narra|fiction|styl|langa|vers$|mot$|mots$|chant|critiq|comed|comiq|traged|humour|satir|ironi|rime|rythm|image|metaph|recueil|page|texte|verbe|parole|griot|dire$|forme$|fond$|nouvelle|genre|negritude|imagin|inspir|muse|plume|creat|beaute|esthet|exprim|style|journal|intime|autobio|memoires|fabl|hero|langue|lyri|ouvrage|cre|beau|merveill|invent|legende|epope|mythe|fantais|utopi|essai)/;
+
+/** Ce que demande vraiment l'énoncé : un commentaire, un résumé, un sujet de société, ou bien une dissertation littéraire. */
+function natureDuSujet(texte: string, citation: string, auteurCite: boolean): Analyse["nature"] {
+  const t = normalize(texte).replace(/[^a-z ]+/g, " ");
+  if (/\bcommentaire (compose|de texte|litteraire)|\b(vous ferez|faites|faire|redigez) (un|le) commentaire|\bcommentez (ce|le|cet) (texte|poeme|passage|extrait)/.test(t)) return "commentaire";
+  if (/\bresum(ez|er|e) (ce|le|du) texte|\bresume de texte|\bcontraction de texte|\bvous resumerez|\bfaites le resume/.test(t)) return "resume";
+  // Toute la phrase compte, consigne comprise (« à partir des œuvres que vous avez lues »).
+  const mots = normalize(`${citation} ${texte}`).replace(/[^a-z]+/g, " ").split(" ");
+  // Un écrivain cité suffit à en faire un sujet littéraire.
+  return auteurCite || mots.some(m => MOTS_LITTERAIRES.test(m)) ? "dissertation" : "generale";
 }
 
 /**
@@ -459,20 +532,63 @@ function graine(t: string) {
   return h;
 }
 
+/** Chaque fonction en quelques mots, pour la problématique. */
+const EN_BREF: Record<Fonction, string> = {
+  Engagement: "une arme de combat", Sociale: "un miroir de la société", Esthétique: "un art de la forme",
+  Évasion: "un moyen de rêver et de s'évader", Lyrique: "l'expression des sentiments"
+};
+
+/** Ce que l'élève doit faire, d'après la consigne : il décide de la partie 2 et du nombre d'exemples. */
+type Consigne = "expliquer" | "illustrer" | "commenter" | "discuter" | "avis";
+
+/** Une phrase courte, coupée à un mot entier. */
+function court(t: string, max = 150) {
+  const x = t.replace(/\s+/g, " ").trim();
+  if (x.length <= max) return x;
+  const c = x.slice(0, max);
+  return c.slice(0, Math.max(c.lastIndexOf(" "), 60)).replace(/[,;:]$/, "") + "…";
+}
+
+interface Contexte {
+  citation: string;
+  f: Fonction | undefined;
+  f2: Fonction | undefined;
+  consigne: Consigne;
+  discussion: boolean;
+  themes: string[];
+  annonces: string[];
+  oeuvres: Oeuvre[];
+  genres: string[];
+  rejet: Fonction | null;
+}
+
 /**
  * Plan conseillé, construit à partir du sujet lui-même : la thèse avec ses mots, les arguments que les
  * fiches des œuvres sur ces thèmes illustrent vraiment, une œuvre pour chaque argument, et une nuance liée au thème.
+ * Quand l'auteur rejette une fonction (« Je ne crois pas à l'évasion »), la partie 1 défend ce qu'il pense vraiment.
  */
-function planDuSujet(citation: string, f: Fonction | undefined, f2: Fonction | undefined, discussion: boolean, themes: string[], annonces: string[], oeuvres: Oeuvre[]): Analyse["plan"] {
+function planDuSujet({ citation, f: f0, f2: f20, consigne, discussion, themes, annonces, oeuvres, genres, rejet }: Contexte): Analyse["plan"] {
+  // L'auteur rejette la fonction que le sujet évoque le plus : sa thèse est l'autre.
+  const f = rejet && f0 === rejet ? (f20 && f20 !== rejet ? f20 : OPPOSE[rejet]) : f0;
+  const f2 = f20 === f ? f0 : f20;
   const de = themes.map(deTheme).find((x): x is string => !!x) ?? null;
   const these = theseDe(citation), courte = citationCourte(citation);
   const axe1 = !f ? "Explique la citation : ce que l'auteur veut dire, avec des exemples d'œuvres."
     : these ? `Montre que, selon l'auteur, ${these} : c'est ${NOM_FONCTION[f]}.`
+    : rejet && rejet !== f ? `Montre pourquoi, pour l'auteur, la littérature n'est pas d'abord ${IDEE[rejet]} : elle est plutôt ${IDEE[f]}.`
     : courte ? `Explique ce que veut dire l'auteur par « ${courte} » : pour lui, la littérature est ${IDEE[f]}.`
     : `Explique la thèse : pour l'auteur, la littérature est ${IDEE[f]}${de ? `, surtout quand elle parle ${de}` : ""}.`;
+  // Partie 2 : la fonction rejetée par l'auteur est la nuance toute trouvée.
+  const fN = f && (rejet && rejet !== f ? rejet : OPPOSE[f]);
   const axe2 = discussion
-    ? (f ? (de ? NUANCE[f](de) : `Nuance : la littérature peut aussi être ${IDEE[OPPOSE[f]]}.`) : "Discute : montre les limites de cette idée, avec d'autres exemples.")
+    ? (f ? (rejet && rejet !== f ? `Nuance : la littérature peut tout de même être ${IDEE[rejet]}.` : de ? NUANCE[f](de) : `Nuance : la littérature peut aussi être ${IDEE[fN!]}.`) : "Discute : montre les limites de cette idée, avec d'autres exemples.")
     : `Approfondis : montre, avec d'autres œuvres${de ? ` qui parlent ${de}` : ""}, d'autres façons dont la littérature le prouve.`;
+
+  const problematique = !f ? "Que veut dire l'auteur, et a-t-il raison ?"
+    : [rejet && rejet !== f ? `Pourquoi, selon l'auteur, la littérature est-elle ${EN_BREF[f]} plutôt ${/^[aeiouyhé]/.test(EN_BREF[rejet]) ? "qu'" : "que "}${EN_BREF[rejet]} ?`
+      : these ? `En quoi peut-on dire que ${these} ?`
+      : `En quoi la littérature est-elle ${IDEE[f]}${de ? ` quand elle parle ${de}` : ""} ?`,
+    discussion ? `La littérature ne peut-elle pas aussi être ${EN_BREF[fN!]} ?` : "Comment les œuvres le montrent-elles ?"].join(" ");
 
   // Œuvres du sujet d'abord, puis toutes celles qui partagent ses thèmes : quels arguments illustrent-elles ?
   const cles = new Set(themes.map(normalize));
@@ -489,27 +605,53 @@ function planDuSujet(citation: string, f: Fonction | undefined, f2: Fonction | u
     return [...annonces.filter(a => INDICES_ARGUMENTS.find(x => x[0] === a)![1] === fn), ...parThemes, ...ARGUMENTS_TYPES[fn]]
       .filter((a, i, t) => t.indexOf(a) === i && !exclus.includes(a)).slice(0, 2);
   };
-  // Pour chaque argument, une œuvre qui l'illustre, différente d'un argument à l'autre si possible.
+  // Pour chaque argument, une œuvre qui l'illustre (deux si la consigne demande d'illustrer), différente d'un
+  // argument à l'autre, du genre dont parle le sujet si possible, et jamais une fiche encore incomplète.
   const prises = new Set<string>();
-  // Aucune œuvre du sujet ne l'illustre : on en prend une ailleurs dans la base, pas toujours la même.
-  const autres = (a: string, fn: Fonction | undefined) => {
-    const l = OEUVRES.filter(x => !prises.has(x.id) && x.idees.some(i => i.argument === a && (!fn || i.fonction === fn)));
+  const sure = (w: Oeuvre) => w.detaillee !== false;
+  const duGenre = (w: Oeuvre) => !genres.length || genres.includes(w.genre);
+  const illustre = (w: Oeuvre, a: string, fn: Fonction | undefined) => w.idees.some(i => i.argument === a && (!fn || i.fonction === fn));
+  const autres = (a: string, fn: Fonction | undefined, genre: boolean) => {
+    // Aucune œuvre du sujet ne l'illustre : on en prend une ailleurs dans la base, pas toujours la même.
+    const l = OEUVRES.filter(x => !prises.has(x.id) && sure(x) && (!genre || duGenre(x)) && illustre(x, a, fn));
     return l.length ? l[graine(citation + a) % l.length] : undefined;
   };
-  const exemple = (a: string, fn: Fonction | undefined) => {
-    const w = surLesThemes.find(x => !prises.has(x.id) && x.idees.some(i => i.argument === a && (!fn || i.fonction === fn)))
-      ?? autres(a, fn)
-      ?? surLesThemes.find(x => x.idees.some(i => i.argument === a));
-    if (!w) return "";
-    prises.add(w.id);
-    return `*${w.titre}*, ${w.auteur}`;
+  const uneOeuvre = (a: string, fn: Fonction | undefined) =>
+    surLesThemes.find(x => !prises.has(x.id) && sure(x) && duGenre(x) && illustre(x, a, fn))
+    ?? autres(a, fn, true)
+    ?? surLesThemes.find(x => !prises.has(x.id) && sure(x) && illustre(x, a, fn))
+    ?? autres(a, fn, false);
+  const exemples = (a: string, fn: Fonction | undefined): Exemple[] => {
+    const out: Exemple[] = [];
+    for (let k = 0; k < (consigne === "illustrer" ? 2 : 1); k++) {
+      const w = uneOeuvre(a, fn);
+      if (!w) break;
+      prises.add(w.id);
+      // Pourquoi l'œuvre convient : l'idée de la fiche, quand l'élève y a accès.
+      const idee = w.idees.find(i => i.argument === a && i.texte)?.texte ?? "";
+      out.push({ id: w.id, titre: w.titre, auteur: w.auteur, pourquoi: idee ? court(idee) : "" });
+    }
+    return out;
   };
-  const f2b = discussion ? f && OPPOSE[f] : f2 ?? f;
+  const f2b = discussion ? fN : f2 ?? f;
   const a1 = choisir(f, []), a2 = choisir(f2b, a1);
   return {
-    axe1, axe2,
+    axe1, axe2, problematique,
     args1: a1.map(a => ARGUMENTS[a] ?? a), args2: a2.map(a => ARGUMENTS[a] ?? a),
-    ex1: a1.map(a => exemple(a, f)), ex2: a2.map(a => exemple(a, f2b))
+    ex1: a1.map(a => exemples(a, f)), ex2: a2.map(a => exemples(a, f2b))
+  };
+}
+
+/** Le plan d'un sujet corrigé que l'élève peut ouvrir : celui écrit par le professeur. */
+function planDuCorrige(s: Sujet): Analyse["plan"] {
+  const ex = (a: { ex: string }): Exemple[] => a.ex ? [{ id: "", titre: "", auteur: "", pourquoi: court(a.ex, 170) }] : [];
+  // Les questions de l'introduction, sans ce qui les annonce (« Une telle affirmation soulève les questions suivantes : »).
+  const questions = s.intro.match(/[^.?!»]*\?/g)?.map(q => q.replace(/^.*:\s*/, "").trim()).filter(q => q.length > 10) ?? [];
+  return {
+    axe1: s.axe1.titre, axe2: s.axe2.titre,
+    args1: s.axe1.args.map(a => a.titre), args2: s.axe2.args.map(a => a.titre),
+    ex1: s.axe1.args.map(ex), ex2: s.axe2.args.map(ex),
+    problematique: questions.slice(-2).join(" ")
   };
 }
 
@@ -539,11 +681,21 @@ export function analyserSujet(texteTape: string, combien = 6, imposee?: Fonction
     const m = jetons(bout).filter(x => !TROP_COURANTS.has(x.brut)), ph = ` ${clesDe(bout)} `;
     return INDICES.map(([f, liste]) => [f, liste.filter(i => indicePresent(m, i, ph)).reduce((s, i) => s + (i.includes(" ") ? 2 : 1), 0)] as [Fonction, number]);
   };
-  for (const phrase of normalize(citation).replace(/,/g, " , ").replace(/[^a-z.;!?,]+/g, " ").split(/[.;!?]/)) {
+  // Ce que l'auteur rejette (« je ne crois pas à l'évasion », « au lieu de s'évader ») et ce qu'il affirme, par fonction.
+  const rejets = new Map<Fonction, number>(), affirmes = new Map<Fonction, number>();
+  const ajoute = (m: Map<Fonction, number>, f: Fonction, n: number) => m.set(f, (m.get(f) ?? 0) + n);
+  for (const brute of normalize(citation).replace(/,/g, " , ").replace(/[^a-z.;!?,]+/g, " ").split(/[.;!?]/)) {
+    // « au lieu de s'évader par une œuvre » : ce qui suit est écarté par l'auteur.
+    const lieu = brute.match(/\b(?:au lieu d|plutot que d)[a-z]*\s+((?:[a-z]+\s*){1,5})/);
+    const phrase = lieu ? brute.replace(lieu[0], " ") : brute;
+    const ecartees = lieu ? indices(lieu[1]) : [];
+    for (const [f, n] of ecartees) if (n) { plus(f === "Lyrique" ? f : OPPOSE[f], n * 0.5); ajoute(rejets, f, n); }
     const { affirme, nie, sujet } = affirmeEtNie(phrase);
     const niees = indices(nie), duSujet = sujet ? indices(sujet) : [];
     const sujetNie = sujet && !niees.some(([, n]) => n) && duSujet.some(([, n]) => n);
-    for (const [f, n] of indices(affirme)) if (n) plus(f, n);
+    // Un vrai rejet : « n'est pas », « je ne crois pas », « pas pour »… mais pas « ne doit pas faire oublier » (double négation).
+    if (REJETTE.test(phrase) && !/oubli|empech|neglig|exclu|sans/.test(nie)) for (const [f, n] of sujetNie ? duSujet : niees) if (n) ajoute(rejets, f, n);
+    for (const [f, n] of indices(affirme)) if (n) { plus(f, n); ajoute(affirmes, f, n); }
     // Un sentiment nié reste un sentiment (« des gens qui n'ont jamais souri ») : seul le reste est renversé.
     for (const [f, n] of sujetNie ? duSujet : niees) if (n) plus(f === "Lyrique" ? f : OPPOSE[f], n * (sujetNie ? 1.5 : 0.5));
     // Ce qui était compté comme affirmé dans le sujet nié ne compte plus.
@@ -567,6 +719,12 @@ export function analyserSujet(texteTape: string, combien = 6, imposee?: Fonction
   const classes = [...scores].sort((a, b) => b[1] - a[1]);
   const meilleur = classes[0]?.[1] ?? 0;
   const fonctions = imposee ? [imposee] : classes.filter(([, n], i) => n >= 0.3 && (i === 0 || n >= meilleur * 0.45)).map(([f]) => f).slice(0, 2);
+  // La fonction que l'auteur rejette clairement (plus rejetée qu'affirmée) ; un sentiment nié reste un sentiment.
+  const rejet = imposee ? null : ([...rejets].filter(([f, n]) => f !== "Lyrique" && n >= 1 && n > (affirmes.get(f) ?? 0)).sort((a, b) => b[1] - a[1])[0]?.[0] ?? null);
+  // Deux lectures presque aussi probables l'une que l'autre : on le dit, et l'élève peut voir l'autre plan.
+  const second = classes[1];
+  const doute = !imposee && !rejet && second && second[1] >= meilleur * SEUIL_DOUTE ? second[0] : null;
+  const faible = !imposee && meilleur < SEUIL_FAIBLE && !trouves.length;
 
   // Mots du dictionnaire présents dans l'énoncé (« ENGAGEMENT (ENGAGÉ) » : chaque forme compte), sans faute ou presque.
   const dico = motsPublics().filter(e => {
@@ -575,8 +733,8 @@ export function analyserSujet(texteTape: string, combien = 6, imposee?: Fonction
   }).slice(0, 6);
 
   const tout = normalize(texte);
-  const discussion = /\?/.test(texte) || /discut|diskut|nuanc|partag|apprec|pensez vous|penser vous|pensez-vous|etes vous|etes-vous|d accord|daccord|dans quelle mesure|selon vous|limites/.test(tout)
-    || jetons(consigne).some(m => commencePar(m.cle, cle("discut", false)));
+  const type = typeDeConsigne(consigne, texte, tout);
+  const discussion = type === "discuter" || type === "avis" || type === "commenter";
   const f = fonctions[0];
   // Arguments annoncés par le sujet (ce qui est nié n'en annonce pas).
   const affirme = normalize(citation).replace(/,/g, " , ").replace(/[^a-z.;!?,]+/g, " ").split(/[.;!?]/).map(p => { const a = affirmeEtNie(p); return a.sujet && a.nie ? a.affirme.replace(a.sujet, "") : a.affirme; }).join(" . ");
@@ -591,7 +749,11 @@ export function analyserSujet(texteTape: string, combien = 6, imposee?: Fonction
   const oeuvres = avecThemes.length >= combien ? avecThemes
     : [...avecThemes, ...oeuvresPour([], fonctions, combien, 1.5, genres, argumentsTrouves).filter(w => !avecThemes.includes(w))].slice(0, combien);
 
-  const plan = planDuSujet(brute, f, fonctions[1], discussion, themes, argumentsTrouves, oeuvres);
+  // Sujet presque identique à un sujet corrigé : le plan du professeur passe avant le plan automatique.
+  const corrigeProche = sujetCorrigeProche(c0);
+  const plan = corrigeProche && "axe1" in corrigeProche ? planDuCorrige(corrigeProche)
+    : planDuSujet({ citation: brute, f, f2: fonctions[1], consigne: type, discussion, themes, annonces: argumentsTrouves, oeuvres, genres, rejet });
+  const corrige = corrigeProche ? { num: corrigeProche.num, ouvert: "axe1" in corrigeProche } : null;
 
   const importants = mots.filter(m => m.brut.length >= 5 && !TROP_COURANTS.has(m.brut));
   const proches = SUJETS.map(s => {
@@ -601,5 +763,9 @@ export function analyserSujet(texteTape: string, combien = 6, imposee?: Fonction
     return { s, score: themes.filter(x => ts.has(normalize(x))).length * 2 + fonctions.filter(x => fs.includes(x)).length * 1.5 + communs };
   }).filter(x => x.score >= 2.5).sort((a, b) => b.score - a.score).slice(0, 2).map(x => x.s);
 
-  return { themes, fonctions, mots: dico, discussion, arguments: argumentsTrouves, travail: travailDemande(consigne, texte, discussion), auteur, plan, oeuvres, proches };
+  return {
+    themes, fonctions, mots: dico, discussion, arguments: argumentsTrouves, travail: TRAVAIL[type], auteur, plan, oeuvres,
+    proches: corrige ? proches.filter(x => x.num !== corrige.num) : proches,
+    doute, faible, rejet, corrige, nature: natureDuSujet(texte, citation, !!auteur)
+  };
 }

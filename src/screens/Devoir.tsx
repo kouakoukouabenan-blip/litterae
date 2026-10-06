@@ -6,7 +6,7 @@ import { useStored, write } from "../lib/storage";
 import { normalize, sansEtoiles } from "../lib/text";
 import { Texte } from "../components/Texte";
 import { FONCTIONS, type Fonction } from "../data/types";
-import { analyserSujet, decouperSujet } from "../lib/devoir";
+import { analyserSujet, decouperSujet, type Exemple } from "../lib/devoir";
 import { fnClass } from "../lib/fonctions";
 import { ajouterSujetPerso, CONSIGNE } from "../lib/entrainement";
 import { brouillonVide, lireBrouillon } from "../lib/atelier";
@@ -27,7 +27,10 @@ export function DevoirScreen() {
   const cleSujet = normalize(texte);
   const choisie = choisies[cleSujet];
   const [corriger, setCorriger] = useState(false);
+  // L'élève confirme que c'est bien une dissertation littéraire, quand l'appli pense le contraire.
+  const [quandMeme, setQuandMeme] = useState(false);
   const analyse = useMemo(() => (lu ? analyserSujet(texte, 6, choisie) : null), [lu, texte, choisie]);
+  const autreExercice = !!analyse && analyse.nature !== "dissertation" && !quandMeme && !choisie;
   function choisir(f: Fonction | null) {
     const suite = { ...choisies };
     delete suite[cleSujet];
@@ -64,6 +67,7 @@ export function DevoirScreen() {
     setTexte("");
     setAuteur("");
     setLu(false);
+    setQuandMeme(false);
     window.scrollTo({ top: 0 });
     setTimeout(() => (document.querySelector(".devoir-form textarea") as HTMLTextAreaElement | null)?.focus(), 50);
   }
@@ -77,11 +81,12 @@ export function DevoirScreen() {
       const b = brouillonVide();
       b.theme = analyse.themes.slice(0, 3).join(", ");
       b.orientations = analyse.fonctions.slice(0, 1);
+      b.problematique = analyse.plan.problematique;
       b.axe1.titre = analyse.plan.axe1;
       b.axe2.titre = analyse.plan.axe2;
       // Les arguments proposés deviennent les arguments du plan (l'élève écrit l'explication et l'exemple).
-      analyse.plan.args1.forEach((a, i) => { if (b.axe1.args[i]) Object.assign(b.axe1.args[i], { arg: a, ex: sansEtoiles(analyse.plan.ex1[i] ?? "") }); });
-      analyse.plan.args2.forEach((a, i) => { if (b.axe2.args[i]) Object.assign(b.axe2.args[i], { arg: a, ex: sansEtoiles(analyse.plan.ex2[i] ?? "") }); });
+      analyse.plan.args1.forEach((a, i) => { if (b.axe1.args[i]) Object.assign(b.axe1.args[i], { arg: a, ex: enTexte(analyse.plan.ex1[i]) }); });
+      analyse.plan.args2.forEach((a, i) => { if (b.axe2.args[i]) Object.assign(b.axe2.args[i], { arg: a, ex: enTexte(analyse.plan.ex2[i]) }); });
       write(`atelier:${num}`, { ...b, modifie: Date.now() });
     }
     location.hash = `#/entrainement/${num}`;
@@ -96,7 +101,7 @@ export function DevoirScreen() {
         <label class="devoir-champ">
           <span class="field-label">Ton sujet</span>
           <textarea class="textarea" rows={4} value={texte} placeholder="« La littérature doit être une arme au service du peuple. » Expliquez et discutez."
-            onInput={e => { setTexte((e.target as HTMLTextAreaElement).value); setLu(false); }} />
+            onInput={e => { setTexte((e.target as HTMLTextAreaElement).value); setLu(false); setQuandMeme(false); }} />
         </label>
         <label class="devoir-champ">
           <span class="field-label">Auteur de la citation (facultatif)</span>
@@ -108,7 +113,19 @@ export function DevoirScreen() {
       {analyse && (
         <div class="devoir-resultat" aria-live="polite">
           <p class="devoir-avertissement"><Icon name="info" size={18} />Ce sont des propositions faites par l'appli : elles peuvent contenir des erreurs. Vérifie-les avec ton cours et ton professeur.</p>
-          <section>
+          {autreExercice && (
+            <div class="devoir-note">
+              <p>{AUTRE_EXERCICE[analyse.nature]}</p>
+              <button type="button" class="link-btn" onClick={() => setQuandMeme(true)}>C'est bien une dissertation littéraire : voir le plan</button>
+            </div>
+          )}
+          {analyse.corrige && (
+            <div class="devoir-note devoir-note-corrige">
+              <p>Ton sujet est presque le <strong>sujet corrigé {Number(analyse.corrige.num)}</strong>.{analyse.corrige.ouvert ? " Le plan ci-dessous est celui du corrigé." : ""}</p>
+              <a class="link-btn" href={`#/sujets/${analyse.corrige.num}`}>Voir le corrigé</a>
+            </div>
+          )}
+          {!autreExercice && <section>
             <h2 class="section-title">Ce que dit ton sujet</h2>
             {analyse.themes.length || analyse.fonctions.length ? (
               <p class="tags">
@@ -133,16 +150,24 @@ export function DevoirScreen() {
                 {choisie ? "Fonction choisie par toi · Changer" : analyse.fonctions.length ? "Ce n'est pas la bonne fonction ?" : "Choisir la fonction"}
               </button>
             )}
+            {!corriger && analyse.rejet && <p class="small devoir-indice">L'auteur rejette la fonction {NOM[analyse.rejet]} : le plan défend ce qu'il pense vraiment.</p>}
+            {!corriger && analyse.doute && (
+              <p class="small devoir-indice">L'appli hésite : ton sujet peut aussi se lire avec la fonction {NOM[analyse.doute]}.{" "}
+                <button type="button" class="link-btn" onClick={() => choisir(analyse.doute)}>Voir ce plan-là</button></p>
+            )}
+            {!corriger && !analyse.doute && analyse.faible && <p class="small devoir-indice">Ton sujet donne peu d'indices : vérifie la fonction avec ton cours.</p>}
             <p class="small muted devoir-consigne">Consigne : {analyse.travail.toLowerCase()}{!auteur.trim() && analyse.auteur ? ` · Auteur : ${analyse.auteur}` : ""}</p>
-          </section>
+          </section>}
 
-          <section>
+          {!autreExercice && <section>
             <h2 class="section-title">Un plan pour démarrer</h2>
+            {analyse.plan.problematique && <p class="devoir-problematique"><strong>Problématique.</strong> {analyse.plan.problematique}</p>}
             <ol class="devoir-plan">
               <li><strong>Partie 1.</strong> {analyse.plan.axe1}<Arguments liste={analyse.plan.args1} exemples={analyse.plan.ex1} /></li>
               <li><strong>Partie 2.</strong> {analyse.plan.axe2}<Arguments liste={analyse.plan.args2} exemples={analyse.plan.ex2} /></li>
             </ol>
-          </section>
+            <p class="small muted devoir-base">Ce plan est une base : explique chaque argument avec tes mots et vérifie tes exemples dans ton cours.</p>
+          </section>}
 
           {analyse.oeuvres.length > 0 && (
             <section>
@@ -173,7 +198,7 @@ export function DevoirScreen() {
             </section>
           )}
 
-          <button type="button" class="btn btn-primary btn-block" onClick={rediger}><Icon name="edit" size={20} />Rédiger ce sujet dans l'atelier</button>
+          {!autreExercice && <button type="button" class="btn btn-primary btn-block" onClick={rediger}><Icon name="edit" size={20} />Rédiger ce sujet dans l'atelier</button>}
           <div class="devoir-actions">
             <button type="button" class="btn btn-secondary" onClick={garder} disabled={garde} aria-pressed={garde}>
               <Icon name="bookmark" filled={garde} size={20} />{garde ? "Gardé dans Mon espace" : "Garder dans Mon espace"}
@@ -186,10 +211,28 @@ export function DevoirScreen() {
   );
 }
 
-/** Les arguments conseillés pour une partie du plan, un par ligne, chacun avec une œuvre pour l'illustrer. */
-function Arguments({ liste, exemples }: { liste: string[]; exemples: string[] }) {
+/** Nom de la fonction dans une phrase. */
+const NOM: Record<Fonction, string> = { Engagement: "d'engagement", Sociale: "sociale", Esthétique: "esthétique", Évasion: "d'évasion", Lyrique: "lyrique" };
+
+/** Quand l'énoncé n'est pas une dissertation littéraire. */
+const AUTRE_EXERCICE: Record<string, string> = {
+  commentaire: "Ton sujet demande un commentaire de texte. « J'ai un devoir » aide pour la dissertation littéraire : pour un commentaire, appuie-toi sur le texte lui-même.",
+  resume: "Ton sujet demande un résumé de texte. « J'ai un devoir » aide pour la dissertation littéraire, pas pour le résumé.",
+  generale: "Ton sujet ne parle pas de littérature : c'est sans doute une dissertation sur une question de société. Les fonctions de la littérature ne s'appliquent pas ici, mais les œuvres ci-dessous peuvent te donner des exemples."
+};
+
+/** Les œuvres d'un argument, en une ligne pour l'atelier : « Titre, Auteur : pourquoi ». */
+function enTexte(ex: Exemple[] | undefined) {
+  return (ex ?? []).map(e => e.titre ? `${e.titre}, ${e.auteur}${e.pourquoi ? ` : ${sansEtoiles(e.pourquoi)}` : ""}` : sansEtoiles(e.pourquoi)).join(" ; ");
+}
+
+/** Les arguments conseillés pour une partie du plan, un par ligne, chacun avec une ou deux œuvres pour l'illustrer. */
+function Arguments({ liste, exemples }: { liste: string[]; exemples: Exemple[][] }) {
   return liste.length ? <ul class="devoir-args">{liste.map((a, i) => <li key={a}>{a}
-    {exemples[i] && <span class="devoir-ex">Par exemple : <Texte text={exemples[i]} /></span>}</li>)}</ul> : null;
+    {(exemples[i] ?? []).map((e, k) => e.titre ? (
+      <span key={e.id} class="devoir-ex">{k ? "Ou : " : "Par exemple : "}<a href={`#/oeuvres/${encodeURIComponent(e.id)}`}><cite>{e.titre}</cite></a>, {e.auteur}
+        {e.pourquoi && <span class="devoir-pourquoi"><Texte text={e.pourquoi} /></span>}</span>
+    ) : <span key={e.pourquoi} class="devoir-ex">Par exemple : <Texte text={e.pourquoi} /></span>)}</li>)}</ul> : null;
 }
 
 /** Mon espace : les devoirs gardés, à rouvrir ou à retirer. */

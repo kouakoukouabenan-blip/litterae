@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "npm run check:data && tsc --noEmit && vite build",
     "preview": "vite preview",
-    "check:data": "node scripts/check-data.mjs",
+    "check:data": "node scripts/check-data.mjs && node scripts/controle-devoir.mjs",
     "import-contenu": "node scripts/import-contenu.mjs"
   },
   "dependencies": {

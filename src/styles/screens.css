@@ -527,6 +527,16 @@
 .devoir-args { margin: var(--s1) 0 0; padding-left: 1.1em; display: grid; gap: 2px; font-size: .92em; color: var(--muted); }
 .devoir-args li::marker { color: var(--ochre); }
 .devoir-ex { display: block; font-size: .92em; color: var(--muted); opacity: .9; }
+.devoir-ex a { color: inherit; }
+.devoir-ex + .devoir-ex { margin-top: 2px; }
+.devoir-pourquoi { display: block; font-size: .95em; opacity: .85; }
+.devoir-problematique { margin: 0 0 var(--s2); }
+.devoir-base { margin: var(--s2) 0 0; }
+.devoir-indice { margin: var(--s2) 0 0; }
+.devoir-indice .link-btn { font-size: inherit; }
+.devoir-note { margin: 0 0 var(--s3); padding: var(--s2) var(--s3); border-radius: 12px; border: 1px solid var(--line); font-size: var(--text-sm); }
+.devoir-note p { margin: 0 0 var(--s1); }
+.devoir-note .link-btn { font-size: inherit; padding: 0; }
 .devoir-consigne { margin: var(--s2) 0 0; }
 
 /* Sujet entier tapé dans la recherche d'œuvres */
