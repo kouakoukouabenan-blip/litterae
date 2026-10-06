@@ -6,7 +6,7 @@ import { Annonces, InvitationNotifs } from "../components/Annonces";
 import { useStored } from "../lib/storage";
 import { OEUVRES, SUJETS } from "../lib/data";
 import { ReponseAlerte } from "../components/ReponseAlerte";
-import { Suggestions } from "../components/Suggestions";
+import { ProchaineAction, Suggestions } from "../components/Suggestions";
 import { useState } from "preact/hooks";
 import { href } from "../lib/router";
 
@@ -29,6 +29,8 @@ export function AccueilScreen() {
         <h1 class="home-title">Que veux-tu faire ?</h1>
       </header>
 
+      <ProchaineAction />
+
       {/* La recherche d'exemples d'abord : c'est ce que cherche l'élève qui a une dissertation à rendre. */}
       <form class="accueil-recherche" role="search" onSubmit={e => { e.preventDefault(); (document.activeElement as HTMLElement | null)?.blur(); location.hash = href(["oeuvres"], q.trim() ? { q: q.trim() } : undefined); }}>
         <label class="field">
@@ -37,7 +39,11 @@ export function AccueilScreen() {
           <input type="search" value={q} placeholder="Titre, auteur, thème, pays…" enterkeyhint="search" autocomplete="off"
             onInput={e => setQ((e.target as HTMLInputElement).value)} />
         </label>
-        <button type="submit" class="btn btn-primary">Chercher le livre</button>
+        <span class="accueil-boutons">
+          <button type="submit" class="btn btn-primary">Chercher le livre</button>
+          {/* Le sujet d'un devoir à rendre : plan, œuvres et mots proposés à partir de l'énoncé. */}
+          <a class="btn btn-secondary" href="#/devoir"><Icon name="edit" size={18} />J'ai un devoir</a>
+        </span>
       </form>
       <p class="accueil-astuce">Cherche une illustration par thème, auteur, titre ou argument parmi {OEUVRES.length} fiches d'œuvres.</p>
 

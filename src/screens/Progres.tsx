@@ -2,7 +2,8 @@ import { Page } from "../components/Page";
 import { PageHeader } from "../components/PageHeader";
 import { Icon } from "../components/Icon";
 import { Flamme } from "../components/Flamme";
-import { OBJECTIF_DU_JOUR, useBilan } from "../lib/progres";
+import { OBJECTIF_DU_JOUR, PALIER_RECOMPENSE, useBilan } from "../lib/progres";
+import { useAccess } from "../lib/access";
 import { cartesDuJour, nbCartes, useSuivis } from "../lib/revisions";
 import { maitrise } from "../lib/maitrise";
 import { defiFaitAujourdhui, sujetDuJour } from "../lib/defi";
@@ -14,6 +15,7 @@ const JOURS = ["L", "M", "M", "J", "V", "S", "D"];
 /** Ma progression : série de jours, objectif du jour, semaine, révisions, défi et niveau par étape. */
 export function ProgresScreen() {
   const b = useBilan();
+  const { premium } = useAccess();
   const suivis = useSuivis();
   const aRevoir = cartesDuJour(suivis).length;
   const cartes = nbCartes(suivis);
@@ -33,7 +35,8 @@ export function ProgresScreen() {
           <Flamme taille={34} eteinte={!b.serie} />
           <span class="progres-chiffre">{b.serie}</span>
           <span class="progres-serie-texte"><strong>{b.serie > 1 ? "jours d'affilée" : "jour d'affilée"}</strong>
-            {b.record > b.serie && <span class="meta">Record : {plural(b.record, "jour")}</span>}</span>
+            {!premium && b.serie > 0 ? <span class="meta">Fiche offerte dans {plural(PALIER_RECOMPENSE - (b.serie % PALIER_RECOMPENSE), "jour")}</span>
+              : b.record > b.serie && <span class="meta">Record : {plural(b.record, "jour")}</span>}</span>
         </div>
         <div class="progres-objectif">
           <span class="objectif-points" aria-hidden="true">
@@ -63,10 +66,11 @@ export function ProgresScreen() {
           <h2 id="semaine-titre" class="section-title">Cette semaine</h2>
           <span class="meta">{plural(b.joursActifs, "jour actif", "jours actifs")} sur 7</span>
         </div>
+        <p class="small muted progres-protection">{b.protectionDispo ? "Un jour manqué par semaine ne casse pas ta série." : "Jour manqué pardonné cette semaine : ta série continue."}</p>
         <ol class="semaine" aria-label="Jours de la semaine">
           {b.semaine.map((n, i) => (
-            <li key={i} class={n === null ? "a-venir" : n >= OBJECTIF_DU_JOUR ? "objectif" : n ? "actif" : ""}>
-              <span class="semaine-rond" aria-hidden="true">{n !== null && n >= OBJECTIF_DU_JOUR ? <Icon name="check" size={16} /> : null}</span>
+            <li key={i} class={n === null ? "a-venir" : n >= OBJECTIF_DU_JOUR ? "objectif" : n ? "actif" : b.protegees.includes(b.jours[i]) ? "protege" : ""}>
+              <span class="semaine-rond" aria-hidden="true">{n !== null && n >= OBJECTIF_DU_JOUR ? <Icon name="check" size={16} /> : !n && b.protegees.includes(b.jours[i]) ? <Flamme taille={13} /> : null}</span>
               <span class="semaine-jour">{JOURS[i]}</span>
             </li>
           ))}

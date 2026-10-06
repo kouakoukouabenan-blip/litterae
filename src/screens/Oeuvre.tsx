@@ -18,7 +18,7 @@ import { LigneContact } from "../components/LigneContact";
 import { Highlight } from "../components/Highlight";
 import { queryTerms } from "../lib/search";
 import { normalize } from "../lib/text";
-import { FICHES_GRATUITES, ouvrirFiche, useFichesOuvertes, type EchecFiche } from "../lib/fiches";
+import { fichesGratuites, ouvrirFiche, useFichesOuvertes, type EchecFiche } from "../lib/fiches";
 import { AchatLien } from "../components/Achat";
 
 function Note({ id }: { id: string }) {
@@ -185,7 +185,7 @@ export function OeuvreScreen({ id, params }: { id: string; params: URLSearchPara
           <h1 class="page-title work-page-title">{w.titre}</h1>
           <p class="lede">{w.auteur}{w.paysTexte && ` · ${w.paysTexte}`}</p>
           {texte && (
-            <p class="small muted fiche-quota">Fiche gratuite {access.nbOuvertes} sur {FICHES_GRATUITES}. <AchatLien label="Tout débloquer" /></p>
+            <p class="small muted fiche-quota">Fiche gratuite {access.nbOuvertes} sur {fichesGratuites()}. <AchatLien label="Tout débloquer" /></p>
           )}
         </header>
 
@@ -193,7 +193,7 @@ export function OeuvreScreen({ id, params }: { id: string; params: URLSearchPara
           <OuvertureFiche echec={echec} reessayer={() => setEssai(essai + 1)} />
         ) : !lisible ? (
           <>
-            <LockPanel reason={`Tu as ouvert tes ${FICHES_GRATUITES} fiches gratuites.`} contenu={contenuFiche(w)} />
+            <LockPanel reason={`Tu as ouvert tes ${fichesGratuites()} fiches gratuites.`} contenu={contenuFiche(w)} />
             <ArgumentsListe w={w} ouvert={false} trouve={trouve} terms={terms} />
           </>
         ) : (

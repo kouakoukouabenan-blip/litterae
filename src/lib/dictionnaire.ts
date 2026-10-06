@@ -1,4 +1,6 @@
-import type { EntreeDico } from "../data/types";
+import type { Dictionnaire, EntreeDico, MotDico } from "../data/types";
+import dico from "../data/dictionnaire.json";
+import { contenuLibre } from "./libre";
 import { licence } from "./licence";
 import { read, useStored, write } from "./storage";
 import { SERVEUR_URL } from "./site";
@@ -48,4 +50,14 @@ export async function rafraichirMots() {
     } catch { /* hors connexion : on garde l'ancien sens */ }
   }));
   if (Object.keys(neufs).length) write(CLE, { ...read<Consultes>(CLE, {}), ...neufs });
+}
+
+/** Liste publique des mots, avec ceux ajoutés ou modifiés depuis le tableau de bord. */
+export function motsPublics(): MotDico[] {
+  const entrees = (dico as Dictionnaire).entrees;
+  const changes = contenuLibre()?.mots;
+  if (!changes?.length) return entrees;
+  const parMot = new Map(entrees.map(m => [m.mot, m]));
+  for (const m of changes) parMot.set(m.mot, m);
+  return [...parMot.values()].sort((a, b) => a.mot.localeCompare(b.mot, "fr"));
 }

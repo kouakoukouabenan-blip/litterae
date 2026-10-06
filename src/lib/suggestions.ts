@@ -3,14 +3,14 @@ import type { BaseName } from "../components/Icon";
 import { OEUVRES, SUJETS, oeuvre, sujetsCitant } from "./data";
 import { LECONS } from "./lecons";
 import { leconsOuvertes, LECONS_GRATUITES } from "./lecons-libres";
-import { fichesOuvertes, FICHES_GRATUITES } from "./fiches";
+import { fichesOuvertes, fichesGratuites } from "./fiches";
 import { FREE_SUBJECTS } from "./access";
 import { licence } from "./licence";
 import { avancement, lireBrouillon } from "./atelier";
 import { numero, sujetsEntrainement } from "./entrainement";
 import { historique, type Vue } from "./historique";
 import { cles, read } from "./storage";
-import { bilan } from "./progres";
+import { bilan, recompenseAVoir } from "./progres";
 import { cartesDuJour } from "./revisions";
 import { defiFaitAujourdhui, sujetDuJour } from "./defi";
 import { normalize } from "./text";
@@ -103,7 +103,7 @@ function poids(theme: string) {
 function oeuvreProche(h: Vue[], premium: boolean, aujourdhui: number): Suggestion | null {
   const ouvertes = fichesOuvertes();
   // Sans clé et sans fiche gratuite restante, une nouvelle fiche serait verrouillée : on n'en propose pas.
-  if (!premium && Object.keys(ouvertes).length >= FICHES_GRATUITES) return null;
+  if (!premium && Object.keys(ouvertes).length >= fichesGratuites()) return null;
   const lues = oeuvresVues(h).slice(0, 5);
   if (!lues.length) return null;
   const dejaVues = new Set(h.filter(v => v.t === "oeuvre").map(v => v.id));
@@ -202,4 +202,31 @@ export function texteRappel(): { titre: string; texte: string; lien: string } {
   if (!read<string[]>("lecons-lues", []).length)
     return { titre: "La méthode en 5 minutes", texte: "Une leçon courte pour savoir par où commencer ta dissertation.", lien: "#/cours" };
   return { titre: "Un sujet pour garder la main", texte: "Traite un sujet type bac pas à pas dans l'atelier.", lien: "#/entrainement" };
+}
+
+/**
+ * « Ta prochaine action » en tête de l'accueil : une seule chose à faire maintenant, la plus utile.
+ * Un élève qui découvre l'appli commence par la leçon 1 ; une récompense de série pas encore vue passe avant tout.
+ */
+export function prochaineAction(maintenant = Date.now()): Suggestion {
+  const premium = !!licence();
+  const r = recompenseAVoir();
+  if (r && !premium) return {
+    cle: "recompense", icone: "check", lien: "#/oeuvres",
+    titre: `${r.serie} jours d'affilée : une fiche offerte`, detail: "Choisis une nouvelle œuvre à lire",
+    notif: { titre: "", texte: "" }
+  };
+  const lues = read<string[]>("lecons-lues", []);
+  const debut = !lues.length && !historique().length && !cles("atelier:").length;
+  const premiere = LECONS[0];
+  if (debut && premiere) return {
+    cle: `lecon-${premiere.id}`, icone: "menu_book", lien: `#/cours/${premiere.id}`,
+    titre: "Commence par la leçon 1", detail: `${titreCourt(premiere.titre)}${premiere.duree ? `, ${premiere.duree}` : ""}`,
+    notif: { titre: "", texte: "" }
+  };
+  return suggestions(maintenant)[0] ?? {
+    cle: "entrainement", icone: "edit", lien: "#/entrainement",
+    titre: "Traite un sujet type bac", detail: "Pas à pas dans l'atelier",
+    notif: { titre: "", texte: "" }
+  };
 }

@@ -21,7 +21,8 @@ const numeroDuJour = (jour: string) => Math.floor(Date.parse(jour + "T00:00:00Z"
 
 /** Sujet du jour : on parcourt tous les sujets, un par jour, dans un ordre mélangé (pas 01, 02, 03…). */
 export function sujetDuJour(jour = jourLocal()): SujetEntrainement {
-  const sujets = sujetsEntrainement();
+  // Pas les sujets de devoir de l'élève : le défi est le même pour tous ce jour-là.
+  const sujets = sujetsEntrainement().filter(s => !s.perso);
   const n = numeroDuJour(jour);
   return sujets[(n * 7) % sujets.length];
 }
@@ -54,11 +55,16 @@ export const fonctionsDuSujet = (num: string): Fonction[] => {
 
 /** Œuvres qui peuvent illustrer un sujet : thèmes du sujet et fonction littéraire attendue. */
 export function oeuvresPourSujet(num: string, combien = 4): Oeuvre[] {
-  const themes = new Set((SUJETS.find(x => x.num === num)?.themes ?? contenuLibre()?.entrainement?.find(e => e.id === num)?.themes ?? []).map(normalize));
-  const fonctions = fonctionsDuSujet(num);
+  const themes = SUJETS.find(x => x.num === num)?.themes ?? contenuLibre()?.entrainement?.find(e => e.id === num)?.themes ?? [];
+  return oeuvresPour(themes, fonctionsDuSujet(num), combien);
+}
+
+/** Œuvres qui partagent des thèmes et la fonction littéraire attendue (fiches complètes seulement). */
+export function oeuvresPour(themesSujet: string[], fonctions: Fonction[], combien = 4, minimum = 3): Oeuvre[] {
+  const themes = new Set(themesSujet.map(normalize));
   return OEUVRES.filter(w => w.detaillee)
     .map(w => ({ w, score: w.themes.filter(t => themes.has(normalize(t))).length * 2 + w.fonctions.filter(f => fonctions.includes(f)).length + (w.niveaux?.length ? 0.5 : 0) }))
-    .filter(x => x.score >= 3)
+    .filter(x => x.score >= minimum)
     .sort((a, b) => b.score - a.score || a.w.titre.localeCompare(b.w.titre, "fr"))
     .slice(0, combien)
     .map(x => x.w);

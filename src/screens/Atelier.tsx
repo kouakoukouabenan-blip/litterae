@@ -132,7 +132,7 @@ export function AtelierScreen({ num, params }: { num: string; params: URLSearchP
   }
 
   return (
-    <Page title={`Sujet ${numero(num)}`} back="#/entrainement" partage={{
+    <Page title={`Sujet ${numero(num)}`} back="#/entrainement" partage={sujet.perso ? undefined : {
       type: "entrainement", cle: num, titre: `Sujet ${numero(num)}`, chemin: `#/entrainement/${num}`,
       texte: `Sujet d'entraînement ${numero(num)} :\n« ${sujet.citation} »\n${sujet.auteur}. ${sujet.consigne}\n\nÀ rédiger pas à pas dans l'atelier de Litterae :`
     }}>

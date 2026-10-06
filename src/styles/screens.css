@@ -493,3 +493,34 @@
   to { transform: scale(1.06, 1.08); opacity: 1; }
 }
 @media (prefers-reduced-motion: reduce) { .flamme-corps, .flamme-int { animation: none; } }
+
+/* « Ta prochaine action » : un seul bouton en tête de l'accueil. */
+.prochaine { display: flex; align-items: center; gap: var(--s3); margin: 0 0 var(--s4); padding: var(--s3) var(--s4); border-radius: 18px; background: var(--green); color: #fff; text-decoration: none; }
+.prochaine:hover { background: var(--green-press); }
+.prochaine > .icon:last-child { flex-shrink: 0; opacity: .85; }
+.prochaine-icone { flex-shrink: 0; width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center; background: rgb(255 255 255 / .14); color: var(--ochre); }
+.prochaine-texte { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.prochaine-etiquette { font-size: var(--text-xs); font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--ochre); }
+.prochaine-titre { font-weight: 700; font-size: 1.0625rem; line-height: 1.3; }
+.prochaine-detail { font-size: var(--text-xs); opacity: .85; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.prochaine-recompense { background: var(--ochre-pale); color: var(--ochre-text); }
+.prochaine-recompense:hover { background: var(--ochre-pale); }
+.prochaine-recompense .prochaine-etiquette { color: var(--orange-text); }
+.prochaine-recompense .prochaine-icone { background: #fff; }
+.progres-protection { margin: 0 0 var(--s2); }
+.semaine li.protege .semaine-rond { background: var(--ochre-pale); }
+
+/* « J'ai un devoir » */
+.accueil-boutons { display: flex; gap: var(--s2); }
+.accueil-boutons .btn { white-space: nowrap; }
+@media (max-width: 479px) {
+  .accueil-boutons .btn { flex: 1; min-height: 48px; padding-left: var(--s3); padding-right: var(--s3); }
+  /* Sur téléphone, « Ta prochaine action » répond déjà à « Que veux-tu faire ? » : le titre reste pour les lecteurs d'écran. */
+  .home-header { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+}
+.devoir-form { display: grid; gap: var(--s3); margin-bottom: var(--s5); }
+.devoir-resultat { display: flex; flex-direction: column; gap: var(--s5); }
+.devoir-resultat .section-title { margin-bottom: var(--s2); }
+.devoir-plan, .devoir-liste { margin: 0; padding-left: 1.2em; display: grid; gap: var(--s2); }
+.devoir-plan { list-style: none; padding: var(--s3) var(--s4); border-radius: 16px; background: var(--surface); box-shadow: 0 1px 2px rgb(0 0 0 / .06); }
+.devoir-champ { display: grid; gap: var(--s1); }

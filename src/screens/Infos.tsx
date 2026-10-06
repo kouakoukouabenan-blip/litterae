@@ -51,7 +51,7 @@ export function AProposScreen() {
           </dl>
 
           <h2 class="section-title">Accès gratuit et accès complet</h2>
-          <p>Gratuit : 5 leçons du cours au choix, la boîte à outils (avec 10 mots du dictionnaire au choix), les {FREE_SUBJECTS} premiers sujets corrigés et {FREE_WORKS} fiches d'œuvres au choix (la recherche dans toutes les œuvres reste libre).</p>
+          <p>Gratuit : 5 leçons du cours au choix, la boîte à outils (avec 10 mots du dictionnaire au choix), les {FREE_SUBJECTS} premiers sujets corrigés et {FREE_WORKS} fiches d'œuvres au choix, plus une à chaque série de 7 jours d'affilée (la recherche dans toutes les œuvres reste libre).</p>
           <p>Accès complet : tous les sujets et toutes les fiches, pour {PRICE} payés une seule fois par Mobile Money, et les réponses de l'auteur à tes questions directement dans l'application. Tu reçois une clé d'accès par e-mail, valable sur 2 appareils. <AchatLien label="Acheter une clé sur Chariow" /></p>
 
           {!installed && (

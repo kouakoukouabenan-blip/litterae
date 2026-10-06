@@ -1,14 +1,15 @@
 import { useMemo } from "preact/hooks";
-import { suggestions } from "../lib/suggestions";
+import { prochaineAction, suggestions } from "../lib/suggestions";
 import { Icon } from "./Icon";
 import { Flamme } from "./Flamme";
-import { OBJECTIF_DU_JOUR, useBilan } from "../lib/progres";
+import { OBJECTIF_DU_JOUR, recompenseVue, useBilan } from "../lib/progres";
 
 /** « Pour toi » sur l'accueil : trois suggestions au plus, tirées de ce que l'élève a fait sur ce téléphone. */
 export function Suggestions() {
-  const liste = useMemo(() => suggestions().filter(s => !s.horsAccueil).slice(0, 3), []);
+  // La première suggestion est déjà en tête de l'accueil (« Ta prochaine action ») : deux autres ici.
+  const liste = useMemo(() => { const p = prochaineAction().cle; return suggestions().filter(s => !s.horsAccueil && s.cle !== p).slice(0, 2); }, []);
   const b = useBilan();
-  if (!liste.length) return null;
+  if (!liste.length && !b.serie) return null;
   const faites = Math.min(b.faitesAujourdhui, OBJECTIF_DU_JOUR);
   return (
     <section class="pour-toi" aria-labelledby="pour-toi-titre">
@@ -24,7 +25,7 @@ export function Suggestions() {
           <Icon name="chevron_right" size={18} />
         </a>
       </div>
-      <ul class="pour-toi-liste">
+      {liste.length > 0 && <ul class="pour-toi-liste">
         {liste.map(s => (
           <li key={s.cle}>
             <a class="pour-toi-ligne" href={s.lien}>
@@ -37,7 +38,24 @@ export function Suggestions() {
             </a>
           </li>
         ))}
-      </ul>
+      </ul>}
     </section>
+  );
+}
+
+/** « Ta prochaine action » : un seul gros bouton en tête de l'accueil, la chose la plus utile à faire maintenant. */
+export function ProchaineAction() {
+  const a = useMemo(() => prochaineAction(), []);
+  const recompense = a.cle === "recompense";
+  return (
+    <a class={`prochaine${recompense ? " prochaine-recompense" : ""}`} href={a.lien} onClick={() => { if (recompense) recompenseVue(); }}>
+      <span class="prochaine-icone" aria-hidden="true">{recompense ? <Flamme taille={22} /> : <Icon name={a.icone} size={22} />}</span>
+      <span class="prochaine-texte">
+        <span class="prochaine-etiquette">Ta prochaine action</span>
+        <span class="prochaine-titre">{a.titre}</span>
+        <span class="prochaine-detail">{a.detail}</span>
+      </span>
+      <Icon name="arrow_forward" size={22} />
+    </a>
   );
 }

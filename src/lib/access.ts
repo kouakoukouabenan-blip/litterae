@@ -1,5 +1,5 @@
 import { licence } from "./licence";
-import { FICHES_GRATUITES, useFichesOuvertes } from "./fiches";
+import { FICHES_GRATUITES, fichesGratuites, useFichesOuvertes } from "./fiches";
 
 // Offre gratuite validée par l'auteur : cours et outils libres, 3 sujets corrigés,
 // 10 fiches d'œuvres au choix de l'élève (comptées sur l'appareil, comme les mots du dictionnaire).
@@ -13,7 +13,7 @@ export function useAccess() {
   const premium = !!licence();
   const ouvertes = useFichesOuvertes();
   const nbOuvertes = Object.keys(ouvertes).length;
-  const restantes = premium ? Infinity : Math.max(0, FICHES_GRATUITES - nbOuvertes);
+  const restantes = premium ? Infinity : Math.max(0, fichesGratuites() - nbOuvertes);
   return {
     premium,
     canOpenSubject: (index: number) => premium || index < FREE_SUBJECTS,

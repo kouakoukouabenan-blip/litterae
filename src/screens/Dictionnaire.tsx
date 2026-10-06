@@ -17,22 +17,13 @@ import { queryTerms } from "../lib/search";
 import { href } from "../lib/router";
 import { AchatLien } from "../components/Achat";
 import { useAccess } from "../lib/access";
-import { DICO_GRATUITS, consulter, dicoComplet, useConsultes, type EchecConsultation } from "../lib/dictionnaire";
+import { DICO_GRATUITS, consulter, dicoComplet, motsPublics, useConsultes, type EchecConsultation } from "../lib/dictionnaire";
 import { lienContact } from "../lib/contact";
 import { useVerrou } from "../components/LockPanel";
 import { noter, noterRecherche } from "../lib/stats";
-import { contenuLibre } from "../lib/libre";
 
 const D = dico as Dictionnaire;
 
-/** Liste publique des mots, avec ceux ajoutés ou modifiés depuis le tableau de bord. */
-function motsPublics(): MotDico[] {
-  const changes = contenuLibre()?.mots;
-  if (!changes?.length) return D.entrees;
-  const parMot = new Map(D.entrees.map(m => [m.mot, m]));
-  for (const m of changes) parMot.set(m.mot, m);
-  return [...parMot.values()].sort((a, b) => a.mot.localeCompare(b.mot, "fr"));
-}
 
 type Mot = MotDico | EntreeDico;
 const complete = (e: Mot): e is EntreeDico => "sens" in e;

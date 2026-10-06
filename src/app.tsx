@@ -24,6 +24,7 @@ import { CommentPayer } from "./components/CommentPayer";
 import { AccesScreen } from "./screens/Acces";
 import { ContactScreen } from "./screens/Contact";
 import { DefiScreen } from "./screens/Defi";
+import { DevoirScreen } from "./screens/Devoir";
 import { RevisionsScreen } from "./screens/Revisions";
 import { ProgresScreen } from "./screens/Progres";
 import { reverifier } from "./lib/licence";
@@ -99,6 +100,7 @@ export function App() {
     case "acces": screen = <AccesScreen params={params} />; break;
     case "contact": screen = <ContactScreen params={params} />; break;
     case "defi": screen = <DefiScreen />; break;
+    case "devoir": screen = <DevoirScreen />; break;
     case "revisions": screen = <RevisionsScreen />; break;
     case "progres": screen = <ProgresScreen />; break;
     default: screen = <NotFound />;

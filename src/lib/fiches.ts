@@ -3,6 +3,7 @@ import { licence } from "./licence";
 import { read, useStored, write } from "./storage";
 import { SERVEUR_URL } from "./site";
 import { noterGratuit } from "./stats";
+import { fichesBonus } from "./progres";
 
 /**
  * Fiches d'œuvres sans clé : le site public n'a que de quoi chercher et filtrer.
@@ -10,6 +11,8 @@ import { noterGratuit } from "./stats";
  * comme les 10 mots du dictionnaire ; avec une clé, toutes les fiches arrivent avec le contenu payant.
  */
 export const FICHES_GRATUITES = 10;
+/** Les 10 fiches de base, plus une par palier de 7 jours d'affilée (récompense de série). */
+export const fichesGratuites = () => FICHES_GRATUITES + fichesBonus();
 const CLE = "fiches-ouvertes";
 
 export type TexteFiche = { resume: string | null; idees: IdeeIllustration[]; exemple: string | null };
@@ -24,7 +27,7 @@ export type EchecFiche = "limite" | "hors-ligne" | "trop" | "erreur";
 export async function ouvrirFiche(id: string): Promise<TexteFiche | EchecFiche> {
   const vues = fichesOuvertes();
   if (vues[id]) return vues[id];
-  if (!licence() && Object.keys(vues).length >= FICHES_GRATUITES) return "limite";
+  if (!licence() && Object.keys(vues).length >= fichesGratuites()) return "limite";
   if (!navigator.onLine || !SERVEUR_URL) return "hors-ligne";
   try {
     const r = await fetch(`${SERVEUR_URL}/fiche?id=${encodeURIComponent(id)}`);
