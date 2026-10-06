@@ -11,6 +11,7 @@ import { AchatLien } from "../components/Achat";
 import { PRICE, useAccess } from "../lib/access";
 import { useQuestions } from "../lib/contact";
 import { OeuvresOnglets } from "../components/SujetsOnglets";
+import { useDevoirs } from "../lib/devoirs";
 
 /** Accès aux messages : questions à l'auteur et réponses (accès complet), ou page Contact. */
 function LigneMessages() {
@@ -26,6 +27,21 @@ function LigneMessages() {
       <span class="row-body">
         <span class="row-title">{premium ? "Mes questions à l'auteur" : "Écrire à l'auteur"}{nouvellesReponses > 0 && <span class="pastille">{nouvellesReponses}</span>}</span>
         <span class="meta">{detail}</span>
+      </span>
+      <Icon name="chevron_right" />
+    </a>
+  );
+}
+
+/** Les devoirs gardés depuis « J'ai un devoir ». */
+function LigneDevoirs() {
+  const [devoirs] = useDevoirs();
+  return (
+    <a class="row access-row" href="#/devoirs">
+      <Icon name="bookmarks" size={20} />
+      <span class="row-body">
+        <span class="row-title">Mes devoirs{devoirs.length > 0 && <span class="muted"> ({devoirs.length})</span>}</span>
+        <span class="meta">{devoirs.length ? "Rouvrir un sujet gardé" : "Garde ici les sujets de tes devoirs"}</span>
       </span>
       <Icon name="chevron_right" />
     </a>
@@ -54,6 +70,7 @@ export function CarnetScreen() {
         </span>
         <Icon name="chevron_right" />
       </a>
+      <LigneDevoirs />
       <LigneMessages />
     </Page>
   );

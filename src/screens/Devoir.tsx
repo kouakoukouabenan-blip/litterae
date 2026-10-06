@@ -9,6 +9,9 @@ import { ajouterSujetPerso, CONSIGNE } from "../lib/entrainement";
 import { brouillonVide, lireBrouillon } from "../lib/atelier";
 import { marquer } from "../lib/progres";
 import { noter } from "../lib/stats";
+import { estGarde, garderDevoir, retirerDevoir, useDevoirs, type DevoirGarde } from "../lib/devoirs";
+import { EmptyState } from "../components/EmptyState";
+import { toast } from "../components/Toast";
 
 /** J'ai un devoir : l'élève colle son sujet, l'appli propose un plan, des œuvres, des mots et des sujets corrigés proches. */
 export function DevoirScreen() {
@@ -29,6 +32,23 @@ export function DevoirScreen() {
     setLu(true);
     marquer("devoir");
     noter({ t: "progres", ref: "devoir" });
+  }
+
+  const [devoirs] = useDevoirs();
+  const garde = estGarde(devoirs, texte);
+
+  function garder() {
+    garderDevoir(texte, auteur || analyse?.auteur || "");
+    toast("Devoir gardé dans Mon espace.");
+  }
+
+  /** Page vide pour taper le sujet suivant (le devoir précédent reste dans Mon espace s'il a été gardé). */
+  function autreDevoir() {
+    setTexte("");
+    setAuteur("");
+    setLu(false);
+    window.scrollTo({ top: 0 });
+    setTimeout(() => (document.querySelector(".devoir-form textarea") as HTMLTextAreaElement | null)?.focus(), 50);
   }
 
   /** L'atelier reprend le sujet avec les thèmes, la fonction et le plan proposés (si l'élève ne l'a pas déjà commencé). */
@@ -118,6 +138,12 @@ export function DevoirScreen() {
           )}
 
           <button type="button" class="btn btn-primary btn-block" onClick={rediger}><Icon name="edit" size={20} />Rédiger ce sujet dans l'atelier</button>
+          <div class="devoir-actions">
+            <button type="button" class="btn btn-secondary" onClick={garder} disabled={garde} aria-pressed={garde}>
+              <Icon name="bookmark" filled={garde} size={20} />{garde ? "Gardé dans Mon espace" : "Garder dans Mon espace"}
+            </button>
+            <button type="button" class="btn btn-secondary" onClick={autreDevoir}><Icon name="add" size={20} />Saisir un autre devoir</button>
+          </div>
         </div>
       )}
     </Page>
@@ -127,4 +153,40 @@ export function DevoirScreen() {
 /** Les arguments conseillés pour une partie du plan, un par ligne. */
 function Arguments({ liste }: { liste: string[] }) {
   return liste.length ? <ul class="devoir-args">{liste.map(a => <li key={a}>{a}</li>)}</ul> : null;
+}
+
+/** Mon espace : les devoirs gardés, à rouvrir ou à retirer. */
+export function MesDevoirsScreen() {
+  const [devoirs] = useDevoirs();
+  function ouvrir(d: DevoirGarde) {
+    write("devoir-texte", d.texte);
+    write("devoir-auteur", d.auteur);
+    location.hash = "#/devoir";
+  }
+  function retirer(d: DevoirGarde) {
+    retirerDevoir(d.id);
+    toast("Devoir retiré.");
+  }
+  const date = (t: number) => new Date(t).toLocaleDateString("fr-FR", { day: "numeric", month: "long" });
+  return (
+    <Page title="Mes devoirs" back="#/carnet">
+      <PageHeader title="Mes devoirs" compact>Les sujets que tu as gardés depuis « J'ai un devoir ».</PageHeader>
+      {devoirs.length ? (
+        <ul class="devoirs-gardes">
+          {devoirs.map(d => (
+            <li key={d.id} class="devoir-garde">
+              <button type="button" class="devoir-garde-ouvrir" onClick={() => ouvrir(d)}>
+                <span class="devoir-garde-texte">{d.texte.length > 140 ? d.texte.slice(0, 138).trimEnd() + "…" : d.texte}</span>
+                <span class="meta">{[d.auteur, `gardé le ${date(d.garde)}`].filter(Boolean).join(" · ")}</span>
+              </button>
+              <button type="button" class="icon-btn" aria-label="Retirer ce devoir" onClick={() => retirer(d)}><Icon name="delete" size={20} /></button>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <EmptyState title="Aucun devoir gardé">Analyse un sujet dans « J'ai un devoir », puis touche « Garder dans Mon espace ».</EmptyState>
+      )}
+      <a class="btn btn-primary btn-block devoirs-nouveau" href="#/devoir" onClick={() => { write("devoir-texte", ""); write("devoir-auteur", ""); }}><Icon name="add" size={20} />Saisir un devoir</a>
+    </Page>
+  );
 }

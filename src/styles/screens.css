@@ -532,3 +532,14 @@
 .sujet-tape { display: grid; gap: var(--s2); margin-bottom: var(--s4); padding: var(--s3) var(--s4); border-radius: 16px; background: var(--ochre-pale); }
 .sujet-tape-titre { display: flex; align-items: center; gap: var(--s2); margin: 0; font-weight: 700; color: var(--ochre-text); }
 .sujet-tape .link-strong { justify-self: start; }
+
+/* J'ai un devoir : garder, saisir un autre devoir ; Mes devoirs */
+.devoir-actions { display: grid; gap: var(--s2); margin-top: var(--s2); }
+.devoir-actions .btn { width: 100%; }
+.devoir-actions .btn:disabled { opacity: 1; cursor: default; background: var(--green-tint); color: var(--green); border-color: var(--green); }
+@media (min-width: 600px) { .devoir-actions { grid-template-columns: 1fr 1fr; } }
+.devoirs-gardes { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--s2); }
+.devoir-garde { display: flex; align-items: center; gap: var(--s1); padding: var(--s1) var(--s1) var(--s1) 0; border-radius: 16px; background: var(--surface); box-shadow: 0 1px 2px rgb(0 0 0 / .06); }
+.devoir-garde-ouvrir { flex: 1; display: grid; gap: 4px; padding: var(--s3) var(--s2) var(--s3) var(--s4); text-align: left; background: none; border: 0; font: inherit; color: var(--ink); cursor: pointer; }
+.devoir-garde-texte { font-family: var(--font-title); }
+.devoirs-nouveau { margin-top: var(--s4); }
