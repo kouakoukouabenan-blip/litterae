@@ -6,21 +6,31 @@ import { normalize } from "./text";
  * puis on accepte encore une ou deux lettres de différence sur les mots longs.
  */
 
-/** Mot → clé : sans accents, doubles lettres simples, sons écrits d'une seule façon, fin muette retirée. */
+/**
+ * Mot → clé phonétique : le mot tel qu'il se prononce. Sans accents ni doubles lettres, chaque son écrit d'une seule façon
+ * (« k » pour c, qu, q ; « s » pour ç, ss, c devant e ; « an » pour en, em ; « in » pour ain, ein, un ; « sion » pour tion…),
+ * lettres muettes retirées. « Kel » vaut « quel », « santiman » vaut « sentiment », « fet » vaut « fait ».
+ */
 export function cle(mot: string, fin = true) {
   let s = mot.replace(/[^a-z]/g, "");
   s = s
-    .replace(/ph/g, "f").replace(/qu|q/g, "k").replace(/ch/g, "§").replace(/h/g, "").replace(/§/g, "ch")
+    .replace(/^femm/, "fam").replace(/ph/g, "f").replace(/qu|q/g, "k").replace(/ch/g, "§").replace(/h/g, "").replace(/§/g, "ch")
     .replace(/c(?=[eiy])/g, "s").replace(/c/g, "k")
     .replace(/gu(?=[eiy])/g, "G").replace(/ge(?=[aou])/g, "j").replace(/g(?=[eiy])/g, "j").replace(/G/g, "g")
     .replace(/y/g, "i").replace(/z/g, "s").replace(/w/g, "v")
     .replace(/eau|au/g, "o").replace(/oeu/g, "eu")
     .replace(/(ai|ei)n(?=[^aeiou]|$)/g, "in").replace(/im(?=[^aeiou]|$)/g, "in")
-    .replace(/[ea][nm](?=[^aeiou]|$)/g, "an")
+    .replace(/[ea][nm](?=[^aeiou]|$)/g, "an").replace(/[u]m(?=[^aeiou]|$)/g, "un").replace(/un(?=[^aeiou]|$)/g, "in").replace(/om(?=[^aeiou]|$)/g, "on")
+    .replace(/([^s])tion/g, "$1sion").replace(/([aeiou])il+(?=[aeiou]|$)/g, "$1y").replace(/ck/g, "k")
     .replace(/ai|ei/g, "e");
-  if (fin) s = s.replace(/(er|ez|et)$/, "e");
+  if (fin) s = s.replace(/(er|ez|et|ai)$/, "e");
   s = s.replace(/(.)\1+/g, "$1");
-  if (fin) s = s.replace(/[sx]$/, "").replace(/e$/, "");
+  // Fin muette : « sentiments », « faits », « grand » se lisent sans leurs dernières lettres.
+  if (fin) {
+    s = s.replace(/[sx]$/, "").replace(/e$/, "");
+    // Seulement si le mot finissait vraiment par t, d ou p : « bonté » garde son t, pas « faits ».
+    if (/[tdp]s?$/.test(mot)) s = s.replace(/(?<=[aeiou]n?)[tdp]$/, "");
+  }
   return s;
 }
 
@@ -101,4 +111,21 @@ export function jetons(texte: string): Jeton[] {
     if (colle) out.push({ brut: colle[1], cle: cle(colle[1]), colle: true });
   }
   return out;
+}
+
+/** Clés phonétiques des mots d'un texte, pour chercher « par le son ». */
+export const sonsDe = (texte: string) => [...new Set(normalize(texte.replace(/œ/gi, "oe")).split(/[^a-z]+/).filter(m => m.length >= 3).map(m => cle(m)))];
+
+const clesTermes = new Map<string, string>();
+/**
+ * Le terme tapé se prononce comme un de ces mots (ou comme leur début) : « sengor » trouve « Senghor »,
+ * « kourouma » trouve « Kourouma » écrit « couroma ». Seulement pour les termes d'au moins 4 lettres.
+ */
+export function sonProche(sons: string[], terme: string) {
+  if (terme.length < 4) return false;
+  let k = clesTermes.get(terme);
+  if (k === undefined) { k = cle(terme); clesTermes.set(terme, k); }
+  if (k.length < 3) return false;
+  // Le son fait déjà le gros du travail : une seule lettre de différence en plus, sur les mots longs.
+  return sons.some(s => s === k || (k!.length >= 4 && s.startsWith(k!)) || (k!.length >= 6 && s[0] === k![0] && distance(s, k!, 1) <= 1));
 }

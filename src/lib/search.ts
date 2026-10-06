@@ -1,6 +1,7 @@
 import type { Oeuvre } from "../data/types";
 import { FONCTIONS } from "../data/types";
 import { normalize } from "./text";
+import { sonProche, sonsDe } from "./flou";
 
 interface Indexed {
   w: Oeuvre;
@@ -9,6 +10,9 @@ interface Indexed {
   tags: string;
   idees: string;
   resume: string;
+  /** Mots du titre et de l'auteur, puis des thèmes, ramenés à leur son (fautes d'orthographe). */
+  sonsTitre: string[];
+  sonsTags: string[];
 }
 
 export interface Facet {
@@ -44,17 +48,21 @@ export function buildIndex(works: Oeuvre[]): Indexed[] {
     auteur: normalize(w.auteur),
     tags: normalize([w.genre, w.precision, w.paysTexte, ...w.aires, ...w.themes, ...w.fonctions, ...w.motsCles, ...w.idees.map(i => i.argument)].join(" ")),
     idees: normalize(w.idees.map(i => i.texte).join(" ")),
-    resume: normalize(w.resume)
+    resume: normalize(w.resume),
+    sonsTitre: sonsDe(`${w.titre} ${w.auteur}`),
+    sonsTags: sonsDe([w.genre, w.paysTexte, ...w.themes, ...w.fonctions, ...w.motsCles, ...w.idees.map(i => i.argument)].join(" "))
   }));
 }
 
 export const queryTerms = (q: string) => normalize(q).split(" ").filter(t => t.length > 1);
 
-/** Chaque terme doit apparaître quelque part ; le titre et l'auteur pèsent plus que le résumé. */
+/** Chaque terme doit apparaître quelque part (tel quel ou par le son) ; le titre et l'auteur pèsent plus que le résumé. */
 function score(x: Indexed, terms: string[]) {
   let total = 0;
   for (const t of terms) {
-    const s = x.titre.includes(t) ? 8 : x.auteur.includes(t) ? 6 : x.tags.includes(t) ? 3 : x.idees.includes(t) ? 2 : x.resume.includes(t) ? 1 : 0;
+    const s = x.titre.includes(t) ? 8 : x.auteur.includes(t) ? 6 : x.tags.includes(t) ? 3 : x.idees.includes(t) ? 2 : x.resume.includes(t) ? 1
+      // Mal écrit mais qui se prononce pareil : « sengor », « aventure ambigu », « colonisasion ».
+      : sonProche(x.sonsTitre, t) ? 5 : sonProche(x.sonsTags, t) ? 2 : 0;
     if (!s) return 0;
     total += s;
   }

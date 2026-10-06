@@ -14,6 +14,7 @@ import { OEUVRES } from "../lib/data";
 import { fnClass } from "../lib/fonctions";
 import { normalize, plural } from "../lib/text";
 import { queryTerms } from "../lib/search";
+import { sonProche, sonsDe } from "../lib/flou";
 import { href } from "../lib/router";
 import { AchatLien } from "../components/Achat";
 import { useAccess } from "../lib/access";
@@ -28,9 +29,9 @@ const D = dico as Dictionnaire;
 type Mot = MotDico | EntreeDico;
 const complete = (e: Mot): e is EntreeDico => "sens" in e;
 
-interface Indexe { e: Mot; mot: string; mots: string[]; texte: string; exemples: string }
+interface Indexe { e: Mot; mot: string; mots: string[]; sons: string[]; texte: string; exemples: string }
 
-function indexer(entrees: Mot[]): Indexe[] {
+export function indexer(entrees: Mot[]): Indexe[] {
   return entrees.map(e => {
     const mot = normalize(e.mot);
     const c = complete(e) ? e : null;
@@ -38,6 +39,7 @@ function indexer(entrees: Mot[]): Indexe[] {
       e,
       mot,
       mots: mot.split(/[^a-z-]+/).filter(Boolean),
+      sons: sonsDe(e.mot),
       texte: c ? normalize([c.sens, c.fonction, c.note, ...(c.oeuvres ?? [])].join(" ")) : e.cles ?? "",
       exemples: c ? normalize((c.exemples ?? []).join(" ")) : ""
     };
@@ -55,7 +57,9 @@ function score(x: Indexe, terms: string[]) {
       : x.mots.some(m => m.startsWith(r)) ? 60
       : x.mot.includes(r) ? 40
       : x.texte.includes(t) ? 8
-      : x.exemples.includes(t) ? 3 : 0;
+      : x.exemples.includes(t) ? 3
+      // Mot vedette mal écrit mais qui se prononce pareil (« métafore », « alitérassion »).
+      : sonProche(x.sons, t) ? 50 : 0;
     if (!s) return 0;
     total += s;
   }

@@ -183,13 +183,13 @@ function fonctionsDesThemes() {
 }
 
 /** Deux mots se valent : clé identique, à une ou deux fautes près ; les mots très courts doivent être écrits pareil. */
-const egal = (a: Jeton, b: Jeton) => (b.cle.length < 3 ? a.brut === b.brut || a.brut === b.brut + "s" : a.colle ? a.cle === b.cle : memeMot(a.cle, b.cle));
+const egal = (a: Jeton, b: Jeton) => (b.cle.length < 3 ? a.brut === b.brut || a.brut === b.brut + "s" || (a.cle === b.cle && a.brut.length >= 4 && b.brut.length >= 4) : a.colle ? a.cle === b.cle : memeMot(a.cle, b.cle));
 
 /** Qualité de la présence d'un mot dans le texte : 3 identique, 2 à quelques fautes près, 1 même famille, 0 absent. */
 function presence(mots: Jeton[], w: Jeton) {
   let q = 0;
   for (const m of mots) {
-    if (m.cle === w.cle && (w.cle.length >= 3 || m.brut === w.brut || m.brut === w.brut + "s")) return 3;
+    if (m.cle === w.cle && (w.cle.length >= 3 || m.brut === w.brut || m.brut === w.brut + "s" || (m.brut.length >= 4 && w.brut.length >= 4))) return 3;
     if (egal(m, w)) q = Math.max(q, 2);
     else if (w.cle.length >= 3 && !m.colle && memeFamille(m.cle, w.cle)) q = Math.max(q, 1);
   }
