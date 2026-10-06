@@ -25,13 +25,15 @@ try {
   const parId = new Map(oeuvres.map(w => [w.id, w]));
   const NOMS = { Social: "Sociale", Sociale: "Sociale", Engagement: "Engagement", Esthétique: "Esthétique", Évasion: "Évasion", Lyrique: "Lyrique" };
 
-  let premiere = 0, dansListe = 0, reconnus = 0, exemplesSurs = 0, exemplesTotal = 0, doublons = 0, vides = 0;
+  let premiere = 0, dansListe = 0, reconnus = 0, exemplesSurs = 0, exemplesTotal = 0, doublons = 0, vides = 0, horsGenre = 0;
   const problemes = [];
   const verifierPlan = (nom, a) => {
     const ex = [...a.plan.ex1, ...a.plan.ex2];
     const ids = ex.flat().map(e => e.id).filter(Boolean);
     if (new Set(ids).size !== ids.length) { doublons++; problemes.push(`${nom} : la même œuvre revient deux fois`); }
     for (const e of ex.flat()) if (e.id) { exemplesTotal++; if (parId.get(e.id)?.detaillee !== false) exemplesSurs++; else problemes.push(`${nom} : fiche incomplète en exemple (${e.titre})`); }
+    // Le sujet nomme un genre : aucune œuvre d'un autre genre (sauf dans le plan du corrigé, écrit par le professeur).
+    if (a.genres.length && !a.corrige?.ouvert) for (const w of [...ex.flat(), ...a.oeuvres]) if (w.id && !a.genres.includes(parId.get(w.id)?.genre)) { horsGenre++; problemes.push(`${nom} : ${w.titre} n'est pas du genre ${a.genres.join("/")}`); }
     // Les éléments repris d'une énumération (« … ») peuvent rester sans exemple : mieux vaut rien qu'une œuvre au hasard.
     const args = [...a.plan.args1, ...a.plan.args2];
     if (ex.some((l, i) => !l.length && !String(args[i] ?? "").startsWith("« "))) { vides++; problemes.push(`${nom} : un argument sans exemple`); }
@@ -63,6 +65,12 @@ try {
     ["« La poésie est avant tout un jeu avec les mots. » Discutez.", a => !a.corrige],
     // Un sujet qui énumère : chaque élément devient un argument.
     ["« Les livres sont les amis les plus tranquilles et les plus constants ; ils sont les conseillers les plus accessibles et les plus sages, et les professeurs les plus patients. » Expliquez.", a => a.plan.args1.length === 3 && a.plan.args1[2].includes("professeurs")],
+    // Un sujet qui nomme un genre : seulement des œuvres de ce genre ; sans genre nommé, tous les genres.
+    ["« Le poète est un guide pour son peuple. » Discutez.", a => a.genres.join() === "Poésie"],
+    ["« Le romancier est le témoin de son temps. » Expliquez et illustrez.", a => a.genres.join() === "Roman"],
+    ["« Le théâtre africain doit éduquer le peuple. » Discutez.", a => a.genres.join() === "Théâtre"],
+    ["« La littérature doit éveiller les consciences. » Vous illustrerez votre réflexion d'exemples tirés du roman africain.", a => a.genres.join() === "Roman"],
+    ["« La littérature doit nous conduire vers la liberté et rester sur la scène du monde. » Discutez.", a => a.genres.length === 0],
     // Un sujet corrigé tapé avec des fautes reste reconnu.
     ["faire de la literature cest sarmer pour se faire lecho de ceux qui nont pas de voix expliquer et discuter", a => a.corrige?.num === "01"]
   ];
@@ -88,7 +96,7 @@ try {
   for (const p of problemes) console.log("  · " + p);
   // Seuils : ce que l'appli fait déjà. On ne publie pas en dessous.
   const seuils = [[premiere >= 27, "fonction juste ≥ 27"], [dansListe >= 30, "fonction dans la liste ≥ 30"], [reconnus === n, "tous les corrigés reconnus"],
-    [exemplesSurs === exemplesTotal, "aucune fiche incomplète en exemple"], [doublons === 0, "pas d'œuvre en double"], [vides === 0, "un exemple par argument"], [piegesOk === pieges.length, "tous les pièges"],
+    [exemplesSurs === exemplesTotal, "aucune fiche incomplète en exemple"], [doublons === 0, "pas d'œuvre en double"], [vides === 0, "un exemple par argument"], [horsGenre === 0, "exemples du genre demandé"], [piegesOk === pieges.length, "tous les pièges"],
     [reelsJustes >= Math.floor(reels.length * 0.9), "vrais sujets justes ≥ 90 %"]];
   for (const [ok, nom] of seuils) if (!ok) { echec = true; console.error(`Seuil non atteint : ${nom}`); }
 } finally {

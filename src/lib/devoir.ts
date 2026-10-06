@@ -117,12 +117,23 @@ const SYNONYMES: Record<string, string[]> = {
 /** Thèmes trop vagues pour guider (« Monde », « Autre ») ou qui désignent juste la littérature. */
 const TROP_COURANTS = new Set(["litterature", "litteraire", "ecrire", "ecriture", "ecrivain", "auteur", "lecteur", "lecture", "livre", "oeuvre", "roman", "poesie", "theatre", "monde", "autre", "fin", "role", "message", "devoir", "temps", "vision", "union", "surprise", "retour", "attente", "parole", "esthetique", "quotidien", "valeurs"]);
 
-/** Le sujet parle d'un genre : on met d'abord en avant les œuvres de ce genre. */
-const GENRES: [string, string[]][] = [
-  ["Poésie", ["poete", "poetes", "poesie", "poeme", "poemes", "poetique", "vers", "rime", "recueil", "chant", "chants"]],
-  ["Roman", ["roman", "romans", "romancier", "romanciere", "romanciers", "recit", "personnage", "personnages", "narrateur"]],
-  ["Théâtre", ["theatre", "dramaturge", "scene", "spectacle", "comedie", "tragedie", "acteur", "acteurs", "spectateur", "spectateurs", "public", "piece"]]
+/** Mots qui nomment un genre, sous toutes leurs formes. Les mots à double sens (« vers », « scène », « public »,
+ *  « acteur », « nouvelle ») ne comptent que dans une tournure qui ne trompe pas. */
+const GENRES: [string[], RegExp][] = [
+  [["Poésie"], /\b(poet+(?:e|es|esse|esses)|poesies?|poemes?|poetiques?|poetiquement|versifi[a-z]*|sonnets?|strophes?|alexandrins?|(?:le|les|en|des|du|ses|mes|nos|vos|leurs|ces|ce|un|beaux) vers)\b/],
+  [["Roman"], /\b(romans?|romancie?re?s?|romanesques?|romancees?)\b/],
+  [["Roman", "Nouvelle", "Conte"], /\b(recits?|narrat[a-z]*)\b/],
+  [["Théâtre"], /\b(theatr[a-z]*|dramaturg[a-z]*|comedi[a-z]*|tragedi[a-z]*|spectateurs?|(?:oeuvres?|arts?|textes?|genres?|auteurs?|pieces?) dramatiques?|mise en scene|sur scene|pieces? de theatre)\b/],
+  [["Nouvelle"], /\b(nouvellistes?|recueils? de nouvelles|genre de la nouvelle)\b/],
+  [["Conte"], /\b(contes?|conteu(?:r|se)s?)\b/],
+  [["Essai"], /\b(essayistes?)\b/]
 ];
+
+/** Genres dont parle le sujet (consigne comprise : « des exemples tirés du roman africain »). Aucun : tous les genres. */
+export function genresDuSujet(texte: string): string[] {
+  const t = normalize(texte).replace(/[^a-z]+/g, " ");
+  return [...new Set(GENRES.filter(([, r]) => r.test(t)).flatMap(([g]) => g))];
+}
 
 /** Verbes de consigne. Les « forts » marquent la consigne sous toutes leurs formes, même mal écrits. */
 const CONSIGNE_FORTS = ["expliq", "explic", "comment", "discut", "analys", "illustr", "justifi", "apprec", "partag"].map(m => cle(m, false));
@@ -143,6 +154,8 @@ export interface Analyse {
   arguments: string[];
   /** `ex1`, `ex2` : pour chaque argument, les œuvres qui l'illustrent (une, ou deux si la consigne demande d'illustrer). */
   plan: { axe1: string; axe2: string; args1: string[]; args2: string[]; ex1: Exemple[][]; ex2: Exemple[][]; problematique: string };
+  /** Genres nommés par le sujet (« le poète » → Poésie) : les exemples n'en sortent pas. Vide : tous les genres. */
+  genres: string[];
   /** L'autre fonction possible quand l'appli hésite entre deux lectures du sujet. */
   doute: Fonction | null;
   /** Très peu d'indices dans le sujet : la fonction proposée est à vérifier. */
@@ -608,7 +621,10 @@ function planDuSujet({ citation, f: f0, f2: f20, consigne, discussion, themes, a
 
   // Œuvres du sujet d'abord, puis toutes celles qui partagent ses thèmes : quels arguments illustrent-elles ?
   const cles = new Set(themes.map(normalize));
-  const surLesThemes = [...oeuvres, ...OEUVRES.filter(w => !oeuvres.includes(w) && w.themes.some(t => cles.has(normalize(t))))];
+  const duGenre = (w: Oeuvre) => !genres.length || genres.includes(w.genre);
+  const surLesThemes = [...oeuvres, ...OEUVRES.filter(w => !oeuvres.includes(w) && w.themes.some(t => cles.has(normalize(t))))].filter(duGenre);
+  // Un argument qu'aucune œuvre sûre du genre demandé n'illustre ne sert à rien à l'élève.
+  const illustrable = (a: string, fn: Fonction) => !genres.length || OEUVRES.some(w => w.detaillee !== false && duGenre(w) && w.idees.some(i => i.argument === a && i.fonction === fn));
   const choisir = (fn: Fonction | undefined, exclus: string[]) => {
     if (!fn) return [] as string[];
     const compte = new Map<string, number>();
@@ -619,24 +635,19 @@ function planDuSujet({ citation, f: f0, f2: f20, consigne, discussion, themes, a
     // Un argument rangé ailleurs par une fiche (« éveil des consciences » pour la fonction sociale) reste à sa fonction.
     const parThemes = [...compte].sort((x, y) => y[1] - x[1]).map(([a]) => a).filter(a => INDICES_ARGUMENTS.find(x => x[0] === a)?.[1] === fn);
     return [...annonces.filter(a => INDICES_ARGUMENTS.find(x => x[0] === a)![1] === fn), ...parThemes, ...ARGUMENTS_TYPES[fn]]
-      .filter((a, i, t) => t.indexOf(a) === i && !exclus.includes(a)).slice(0, 2);
+      .filter((a, i, t) => t.indexOf(a) === i && !exclus.includes(a) && illustrable(a, fn)).slice(0, 2);
   };
   // Pour chaque argument, une œuvre qui l'illustre (deux si la consigne demande d'illustrer), différente d'un
   // argument à l'autre, du genre dont parle le sujet si possible, et jamais une fiche encore incomplète.
   const prises = new Set<string>();
   const sure = (w: Oeuvre) => w.detaillee !== false;
-  const duGenre = (w: Oeuvre) => !genres.length || genres.includes(w.genre);
   const illustre = (w: Oeuvre, a: string, fn: Fonction | undefined) => w.idees.some(i => i.argument === a && (!fn || i.fonction === fn));
-  const autres = (a: string, fn: Fonction | undefined, genre: boolean) => {
+  const uneOeuvre = (a: string, fn: Fonction | undefined) => {
+    const ok = (x: Oeuvre) => !prises.has(x.id) && sure(x) && duGenre(x) && illustre(x, a, fn);
     // Aucune œuvre du sujet ne l'illustre : on en prend une ailleurs dans la base, pas toujours la même.
-    const l = OEUVRES.filter(x => !prises.has(x.id) && sure(x) && (!genre || duGenre(x)) && illustre(x, a, fn));
-    return l.length ? l[graine(citation + a) % l.length] : undefined;
+    const l = OEUVRES.filter(ok);
+    return surLesThemes.find(ok) ?? (l.length ? l[graine(citation + a) % l.length] : undefined);
   };
-  const uneOeuvre = (a: string, fn: Fonction | undefined) =>
-    surLesThemes.find(x => !prises.has(x.id) && sure(x) && duGenre(x) && illustre(x, a, fn))
-    ?? autres(a, fn, true)
-    ?? surLesThemes.find(x => !prises.has(x.id) && sure(x) && illustre(x, a, fn))
-    ?? autres(a, fn, false);
   const exemples = (a: string, fn: Fonction | undefined): Exemple[] => {
     const out: Exemple[] = [];
     for (let k = 0; k < (consigne === "illustrer" ? 2 : 1); k++) {
@@ -802,7 +813,7 @@ export function analyserSujet(texteTape: string, combien = 6, imposee?: Fonction
   const argumentsTrouves = INDICES_ARGUMENTS.map(([a, fa, l]) => ({ a, fa, n: l.filter(i => indicePresent(ma, i, pa)).length }))
     .filter(x => x.n > 0 && fonctions.includes(x.fa)).sort((x, y) => y.n - x.n).map(x => x.a);
 
-  const genres = GENRES.filter(([, ms]) => ms.some(m => mots.some(x => x.brut === m || x.cle === cle(m)))).map(([g]) => g);
+  const genres = genresDuSujet(texte);
   // Sans thème reconnu : les œuvres au programme qui illustrent la fonction attendue.
   const avecThemes = oeuvresPour(themes, fonctions, combien, 2, genres, argumentsTrouves);
   // Trop peu d'œuvres sur ces thèmes : on complète avec celles qui illustrent la même fonction.
@@ -826,6 +837,6 @@ export function analyserSujet(texteTape: string, combien = 6, imposee?: Fonction
   return {
     themes, fonctions, mots: dico, discussion, arguments: argumentsTrouves, travail: TRAVAIL[type], auteur, plan, oeuvres,
     proches: corrige ? proches.filter(x => x.num !== corrige.num) : proches,
-    doute, faible, rejet, corrige, nature: natureDuSujet(texte, citation, !!auteur || !!auteurConnu(texteTape) || CITE_ENTRE_PARENTHESES.test(texteTape))
+    genres, doute, faible, rejet, corrige, nature: natureDuSujet(texte, citation, !!auteur || !!auteurConnu(texteTape) || CITE_ENTRE_PARENTHESES.test(texteTape))
   };
 }
