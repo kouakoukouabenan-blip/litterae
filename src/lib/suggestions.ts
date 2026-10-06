@@ -46,7 +46,8 @@ export interface Suggestion {
 }
 
 const JOUR = 864e5;
-const titreCourt = (t: string) => (t.length > 42 ? t.slice(0, 40).trimEnd() + "…" : t);
+// Les phrases s'affichent en entier (sur deux lignes si besoin) : seuls les titres très longs sont raccourcis.
+const titreCourt = (t: string) => (t.length > 70 ? t.slice(0, 68).trimEnd() + "…" : t);
 const de = (nom: string) => (/^[aeiouyàâéèêëîïôöùûüh]/i.test(nom) ? `d'${nom}` : `de ${nom}`);
 
 /** Sujet commencé dans l'atelier et pas encore terminé : le plus récemment modifié. */
