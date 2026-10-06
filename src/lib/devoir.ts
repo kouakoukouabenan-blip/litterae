@@ -403,7 +403,8 @@ function scoresAppris(citation: string): Map<Fonction, number> {
   return total;
 }
 
-export function analyserSujet(texteTape: string, combien = 6): Analyse {
+/** `imposee` : la fonction choisie par l'élève quand celle proposée ne lui convient pas ; le plan et les œuvres la suivent. */
+export function analyserSujet(texteTape: string, combien = 6, imposee?: Fonction): Analyse {
   // Écriture SMS et mots courts écrits au son (« ds », « ki », « doi », « na pa ») remis en toutes lettres.
   // Le découpage garde le texte tapé (majuscules et guillemets aident à trouver l'auteur et la consigne).
   const { citation: brute, consigne, auteur } = decouperSujet(texteTape);
@@ -455,7 +456,7 @@ export function analyserSujet(texteTape: string, combien = 6): Analyse {
   }
   const classes = [...scores].sort((a, b) => b[1] - a[1]);
   const meilleur = classes[0]?.[1] ?? 0;
-  const fonctions = classes.filter(([, n], i) => n >= 0.3 && (i === 0 || n >= meilleur * 0.45)).map(([f]) => f).slice(0, 2);
+  const fonctions = imposee ? [imposee] : classes.filter(([, n], i) => n >= 0.3 && (i === 0 || n >= meilleur * 0.45)).map(([f]) => f).slice(0, 2);
 
   // Mots du dictionnaire présents dans l'énoncé (« ENGAGEMENT (ENGAGÉ) » : chaque forme compte), sans faute ou presque.
   const dico = motsPublics().filter(e => {

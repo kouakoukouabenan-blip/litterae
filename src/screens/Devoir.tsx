@@ -3,6 +3,8 @@ import { Page } from "../components/Page";
 import { PageHeader } from "../components/PageHeader";
 import { Icon } from "../components/Icon";
 import { useStored, write } from "../lib/storage";
+import { normalize } from "../lib/text";
+import { FONCTIONS, type Fonction } from "../data/types";
 import { analyserSujet, decouperSujet } from "../lib/devoir";
 import { fnClass } from "../lib/fonctions";
 import { ajouterSujetPerso, CONSIGNE } from "../lib/entrainement";
@@ -18,7 +20,20 @@ export function DevoirScreen() {
   const [texte, setTexte] = useStored<string>("devoir-texte", "");
   const [auteur, setAuteur] = useStored<string>("devoir-auteur", "");
   const [lu, setLu] = useState(() => texte.trim().length >= 20);
-  const analyse = useMemo(() => (lu ? analyserSujet(texte) : null), [lu, texte]);
+  // Fonction corrigée par l'élève, gardée sur le téléphone pour ce sujet (rien n'est envoyé).
+  const [choisies, setChoisies] = useStored<Record<string, Fonction>>("devoir-fonctions", {});
+  const cleSujet = normalize(texte);
+  const choisie = choisies[cleSujet];
+  const [corriger, setCorriger] = useState(false);
+  const analyse = useMemo(() => (lu ? analyserSujet(texte, 6, choisie) : null), [lu, texte, choisie]);
+  function choisir(f: Fonction | null) {
+    const suite = { ...choisies };
+    delete suite[cleSujet];
+    if (f) suite[cleSujet] = f;
+    // Les 50 derniers sujets suffisent.
+    setChoisies(Object.fromEntries(Object.entries(suite).slice(-50)));
+    setCorriger(false);
+  }
   // Arrivée avec le sujet déjà tapé sur l'accueil : on montre directement les résultats.
   useEffect(() => { if (lu) setTimeout(() => {
     // Sous la barre du haut, qui reste affichée.
@@ -98,6 +113,23 @@ export function DevoirScreen() {
                 {analyse.themes.map(t => <span key={t} class="tag">{t}</span>)}
               </p>
             ) : <p class="small muted">Pas de thème reconnu : vérifie que tu as bien collé toute la citation.</p>}
+            {corriger ? (
+              <div class="devoir-corriger">
+                <p class="small">Quelle fonction de la littérature ton sujet évoque-t-il ?</p>
+                <p class="tags">
+                  {FONCTIONS.map(f => (
+                    <button key={f} type="button" class={`tag tag-link ${fnClass(f)}`} aria-pressed={analyse.fonctions[0] === f} onClick={() => choisir(f)}>{f}</button>
+                  ))}
+                </p>
+                <button type="button" class="link-btn devoir-changer" onClick={() => (choisie ? choisir(null) : setCorriger(false))}>
+                  {choisie ? "Revenir à la proposition de l'appli" : "Annuler"}
+                </button>
+              </div>
+            ) : (
+              <button type="button" class="link-btn devoir-changer" onClick={() => setCorriger(true)}>
+                {choisie ? "Fonction choisie par toi · Changer" : analyse.fonctions.length ? "Ce n'est pas la bonne fonction ?" : "Choisir la fonction"}
+              </button>
+            )}
             <p class="small muted devoir-consigne">Consigne : {analyse.travail.toLowerCase()}{!auteur.trim() && analyse.auteur ? ` · Auteur : ${analyse.auteur}` : ""}</p>
           </section>
 

@@ -22,6 +22,7 @@ import { DICO_GRATUITS, consulter, dicoComplet, motsPublics, useConsultes, type 
 import { lienContact } from "../lib/contact";
 import { useVerrou } from "../components/LockPanel";
 import { noter, noterRecherche } from "../lib/stats";
+import { renvoi } from "../lib/libre";
 
 const D = dico as Dictionnaire;
 
@@ -206,7 +207,8 @@ export function DicoResultats({ q, fonction, mot, onChange }: { q: string; fonct
   // Sans le dictionnaire complet : liste des mots, avec le sens de ceux déjà consultés.
   const entrees = useMemo<Mot[]>(() => complet ?? motsPublics().map(m => vus[m.mot] ?? m), [complet, vus]);
   const INDEX = useMemo(() => indexer(entrees), [entrees]);
-  const resultats = chercher(INDEX, q, fonction);
+  // Recherche reliée depuis le tableau de bord : on cherche le mot que l'éditeur a indiqué.
+  const resultats = chercher(INDEX, renvoi("dico", q), fonction);
   const restants = Math.max(0, DICO_GRATUITS - Object.keys(vus).length);
   const [guide, setGuide] = useState(false);
   const [tous, setTous] = useState(false);

@@ -22,6 +22,7 @@ import { noterRecherche } from "../lib/stats";
 import { OeuvresOnglets } from "../components/SujetsOnglets";
 import { useSaisieDifferee } from "../lib/saisie";
 import { analyserSujet } from "../lib/devoir";
+import { renvoi } from "../lib/libre";
 import { write } from "../lib/storage";
 
 const INDEX = buildIndex(OEUVRES);
@@ -29,9 +30,11 @@ const PAGE = 30;
 
 export function OeuvresScreen({ params }: { params: URLSearchParams }) {
   const q = params.get("q") ?? "";
+  // Recherche reliée depuis le tableau de bord : on cherche ce que l'éditeur a indiqué.
+  const qc = renvoi("oeuvres", q);
   const filters = filtersFromParams(params);
   const nbFiltres = countFilters(filters);
-  const terms = queryTerms(q);
+  const terms = queryTerms(qc);
   const access = useAccess();
   const { isSaved } = useSaved();
   const [limit, setLimit] = useState(PAGE);
@@ -40,8 +43,8 @@ export function OeuvresScreen({ params }: { params: URLSearchParams }) {
 
   // « Mes fiches ouvertes » : les fiches gratuites que l'élève a déjà choisies.
   const gratuites = params.get("gratuites") === "1" && !access.premium && access.nbOuvertes > 0;
-  const results = useMemo(() => search(INDEX, q, filters).filter(w => !gratuites || access.workOpened(w.id)), [key, access.premium, access.nbOuvertes]);
-  const counts = useMemo(() => new Map(FACETS.map(f => [f.key, facetCounts(INDEX, q, filters, f)])), [key]);
+  const results = useMemo(() => search(INDEX, qc, filters).filter(w => !gratuites || access.workOpened(w.id)), [key, access.premium, access.nbOuvertes]);
+  const counts = useMemo(() => new Map(FACETS.map(f => [f.key, facetCounts(INDEX, qc, filters, f)])), [key]);
   useEffect(() => setLimit(PAGE), [key]);
   // Un sujet entier tapé dans la recherche (4 mots ou plus) ne trouve rien mot à mot :
   // on le lit comme « J'ai un devoir » (thèmes, fonction) pour proposer les œuvres qui vont avec.
@@ -153,7 +156,7 @@ export function OeuvresScreen({ params }: { params: URLSearchParams }) {
 
           {listeVisible && (results.length > 0 || !parSujet.length) && (
           <h2 id="results-title" class="results-count" aria-live="polite">
-            {accueil ? `Toutes les œuvres (${OEUVRES.length})` : results.length ? plural(results.length, "œuvre trouvée", "œuvres trouvées") : "Aucune œuvre trouvée"}
+            {accueil ? `Toutes les œuvres (${OEUVRES.length})` : results.length ? plural(results.length, "œuvre trouvée", "œuvres trouvées") + (qc !== q ? ` pour « ${qc} »` : "") : "Aucune œuvre trouvée"}
           </h2>
           )}
 

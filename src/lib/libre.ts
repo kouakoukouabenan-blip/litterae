@@ -1,5 +1,6 @@
 import { SERVEUR_URL } from "./site";
 import { read, write } from "./storage";
+import { normalize } from "./text";
 import type { BlocLecon, Fonction, IdeeIllustration, MotDico, Oeuvre } from "../data/types";
 
 /**
@@ -25,6 +26,8 @@ export interface ContenuLibre {
   mots?: MotDico[];
   /** Sujets d'entraînement ajoutés depuis le tableau de bord (énoncé seul). */
   entrainement?: { id: string; citation: string; auteur: string; consigne: string; cree: number; themes?: string[]; fonctions?: Fonction[] }[];
+  /** Recherches sans résultat reliées par l'éditeur : recherche (normalisée) → ce qu'il faut chercher à la place. */
+  renvois?: { oeuvres: Record<string, string>; dico: Record<string, string> };
 }
 
 const CLE = "contenu-libre";
@@ -43,4 +46,9 @@ export async function actualiserContenuLibre() {
     // Hors connexion : la liste gardée sur l'appareil reste valable.
   }
   return false;
+}
+
+/** Ce qu'il faut chercher à la place d'une recherche que l'éditeur a reliée (« sengor » → « Senghor ») ; sinon la recherche telle quelle. */
+export function renvoi(ou: "oeuvres" | "dico", q: string) {
+  return contenuLibre()?.renvois?.[ou]?.[normalize(q)] ?? q;
 }
