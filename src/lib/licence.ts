@@ -50,7 +50,8 @@ export async function activer(cle: string): Promise<ErreurActivation | null> {
   }
   const data = await res.json().catch(() => null);
   if (!res.ok || !data?.contenu) return { message: data?.message ?? "La clé n'a pas pu être validée. Réessaie dans quelques minutes." };
-  write(KEY, { cle: cle.trim().toUpperCase(), contenu: data.contenu, verifieeLe: Date.now() } satisfies Licence);
+  // Le serveur renvoie la clé exacte (tiret invisible retiré, O remplacé par 0…) : c'est elle qu'on garde.
+  write(KEY, { cle: typeof data.cle === "string" ? data.cle : cle.trim().toUpperCase(), contenu: data.contenu, verifieeLe: Date.now() } satisfies Licence);
   return null;
 }
 
