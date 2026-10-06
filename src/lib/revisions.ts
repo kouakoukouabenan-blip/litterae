@@ -5,6 +5,7 @@ import { dicoComplet } from "./dictionnaire";
 import { read, useStored, write } from "./storage";
 import { jourLocal, marquer } from "./progres";
 import { noter } from "./stats";
+import { noterErreurQuiz } from "./interets";
 
 /**
  * Révisions espacées : chaque mot du dictionnaire ouvert et chaque question de quiz déjà vue
@@ -39,6 +40,7 @@ export function reviser(cle: string, reussie: boolean) {
   const s = suivis();
   const boite = reussie ? Math.min((s[cle]?.boite ?? 0) + 1, INTERVALLES.length - 1) : 0;
   write(CLE, { ...s, [cle]: { boite, prochaine: dans(reussie ? INTERVALLES[boite] : 1) } });
+  if (!reussie && cle.startsWith("quiz|")) noterErreurQuiz(cle.split("|")[1]);
   marquer(`revision:${cle}`);
 }
 

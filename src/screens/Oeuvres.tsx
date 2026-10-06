@@ -24,6 +24,9 @@ import { useSaisieDifferee } from "../lib/saisie";
 import { analyserSujet, genreDu } from "../lib/devoir";
 import { renvoi } from "../lib/libre";
 import { write } from "../lib/storage";
+import { noterInterets, themesTapes } from "../lib/interets";
+
+const THEMES = [...new Set(OEUVRES.flatMap(w => w.themes))];
 
 const INDEX = buildIndex(OEUVRES);
 const PAGE = 30;
@@ -55,6 +58,16 @@ export function OeuvresScreen({ params }: { params: URLSearchParams }) {
     return analyse.oeuvres.filter(w => !results.includes(w) && (!permises || permises.has(w.id)));
   }, [analyse]);
   useEffect(() => noterRecherche("oeuvres", q, results.length + parSujet.length), [q]);
+  // Ce que l'élève cherche compte pour les suggestions de l'accueil (gardé sur le téléphone seulement).
+  useEffect(() => {
+    const t = setTimeout(() => noterInterets([
+      ...themesTapes(qc, THEMES).map(v => ({ type: "theme" as const, v })),
+      ...filters.theme.map(v => ({ type: "theme" as const, v })),
+      ...filters.fonction.map(v => ({ type: "fonction" as const, v })),
+      ...filters.argument.map(v => ({ type: "argument" as const, v }))
+    ]), 1500);
+    return () => clearTimeout(t);
+  }, [key]);
 
   const go = (nq: string, nf: Filters, libres = gratuites) => {
     const p = paramsFrom(nq, nf);

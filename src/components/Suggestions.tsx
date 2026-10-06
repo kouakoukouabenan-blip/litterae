@@ -1,5 +1,6 @@
 import { Texte } from "./Texte";
-import { useMemo } from "preact/hooks";
+import { useEffect, useMemo } from "preact/hooks";
+import { suggestionOuverte, suggestionsVues } from "../lib/interets";
 import { decouvertes, prochaineAction, suggestions } from "../lib/suggestions";
 import { Icon } from "./Icon";
 import { Flamme } from "./Flamme";
@@ -13,6 +14,7 @@ export function Suggestions() {
     const p = prochaineAction().cle;
     return [...suggestions(), ...decouvertes()].filter(s => !s.horsAccueil && s.cle !== p).slice(0, 2);
   }, []);
+  useEffect(() => suggestionsVues(liste.map(s => s.cle)), []);
   const b = useBilan();
   if (!liste.length && !b.serie) return null;
   const faites = Math.min(b.faitesAujourdhui, OBJECTIF_DU_JOUR);
@@ -33,7 +35,7 @@ export function Suggestions() {
       {liste.length > 0 && <ul class="pour-toi-liste">
         {liste.map(s => (
           <li key={s.cle}>
-            <a class="pour-toi-ligne" href={s.lien}>
+            <a class="pour-toi-ligne" href={s.lien} onClick={() => suggestionOuverte(s.cle)}>
               <span class="pour-toi-icone" aria-hidden="true"><Icon name={s.icone} size={20} /></span>
               <span class="pour-toi-texte">
                 <span class="pour-toi-nom"><Texte text={s.titre} /></span>
@@ -52,8 +54,9 @@ export function Suggestions() {
 export function ProchaineAction() {
   const a = useMemo(() => prochaineAction(), []);
   const recompense = a.cle === "recompense";
+  useEffect(() => { if (!recompense) suggestionsVues([a.cle]); }, []);
   return (
-    <a class={`prochaine${recompense ? " prochaine-recompense" : ""}`} href={a.lien} onClick={() => { if (recompense) recompenseVue(); }}>
+    <a class={`prochaine${recompense ? " prochaine-recompense" : ""}`} href={a.lien} onClick={() => { if (recompense) recompenseVue(); else suggestionOuverte(a.cle); }}>
       <span class="prochaine-icone" aria-hidden="true">{recompense ? <Flamme taille={22} /> : <Icon name={a.icone} size={22} />}</span>
       <span class="prochaine-texte">
         <span class="prochaine-etiquette">Ta prochaine action</span>
