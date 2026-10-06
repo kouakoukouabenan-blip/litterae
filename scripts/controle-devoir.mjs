@@ -69,12 +69,23 @@ try {
     if (a.nature === "dissertation") verifierPlan(`Piège « ${t.slice(0, 40)}… »`, a);
   }
 
+  // Vrais sujets (BAC, devoirs, Facebook, envoyés par Atikan) : la fonction principale doit être trouvée en premier.
+  const reels = JSON.parse(readFileSync(new URL("./sujets-reels.json", import.meta.url), "utf8"));
+  let reelsJustes = 0;
+  for (const [i, x] of reels.entries()) {
+    const a = analyserSujet(x.texte, 6);
+    if (a.fonctions[0] === x.fonctions[0] || (a.rejet && a.fonctions.includes(x.fonctions[0]))) reelsJustes++;
+    if (a.nature !== "dissertation") problemes.push(`Vrai sujet ${i + 1} : pris pour « ${a.nature} »`);
+    else verifierPlan(`Vrai sujet ${i + 1}`, a);
+  }
+
   const n = sujets.length;
-  console.log(`J'ai un devoir — fonction juste ${premiere}/${n}, dans la liste ${dansListe}/${n}, corrigés reconnus ${reconnus}/${n}, exemples sûrs ${exemplesSurs}/${exemplesTotal}, pièges ${piegesOk}/${pieges.length}`);
+  console.log(`J'ai un devoir — fonction juste ${premiere}/${n}, dans la liste ${dansListe}/${n}, corrigés reconnus ${reconnus}/${n}, exemples sûrs ${exemplesSurs}/${exemplesTotal}, pièges ${piegesOk}/${pieges.length}, vrais sujets ${reelsJustes}/${reels.length}`);
   for (const p of problemes) console.log("  · " + p);
   // Seuils : ce que l'appli fait déjà. On ne publie pas en dessous.
   const seuils = [[premiere >= 27, "fonction juste ≥ 27"], [dansListe >= 30, "fonction dans la liste ≥ 30"], [reconnus === n, "tous les corrigés reconnus"],
-    [exemplesSurs === exemplesTotal, "aucune fiche incomplète en exemple"], [doublons === 0, "pas d'œuvre en double"], [vides === 0, "un exemple par argument"], [piegesOk === pieges.length, "tous les pièges"]];
+    [exemplesSurs === exemplesTotal, "aucune fiche incomplète en exemple"], [doublons === 0, "pas d'œuvre en double"], [vides === 0, "un exemple par argument"], [piegesOk === pieges.length, "tous les pièges"],
+    [reelsJustes >= Math.floor(reels.length * 0.9), "vrais sujets justes ≥ 90 %"]];
   for (const [ok, nom] of seuils) if (!ok) { echec = true; console.error(`Seuil non atteint : ${nom}`); }
 } finally {
   await vite.close();

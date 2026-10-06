@@ -271,8 +271,10 @@ export function decouperSujet(texte: string) {
     citation = g[1];
     // La consigne : la phrase qui suit la citation (pas la suite du message, ni une correction collée après).
     apres = net.slice(g.index! + g[0].length).replace(/^[\s.»”"]+/, "");
-    const fin = apres.search(/[.!?](\s|$)/);
-    if (fin > 0) apres = apres.slice(0, fin + 1);
+    // « …», affirme un critique. Commentez… » : la consigne est la première phrase qui en a la forme.
+    const phrases = apres.match(/[^.!?]+[.!?]*/g) ?? [];
+    // Rien qui ressemble à une consigne (« (Émile Zola, 1877) ») : pas de consigne.
+    apres = (phrases.find(p => estConsigne(p)) ?? "").trim();
   } else {
     // Sans guillemets : la consigne commence au premier verbe de consigne, ou à une phrase de consigne.
     const debut = debutConsigne(net);
@@ -303,7 +305,7 @@ export function decouperSujet(texte: string) {
  * (« Salut à tous svp aidez-moi », « BAC BLANC RÉGIONAL DALOA », « Sujet : »).
  */
 function nettoyer(texte: string) {
-  let t = texte.replace(/<<|«/g, " « ").replace(/>>|»/g, " » ").replace(/[“”]/g, "\"").replace(/æ/g, "œ");
+  let t = texte.replace(/<<|«/g, " « ").replace(/>>|»/g, " » ").replace(/''|’’/g, "\"").replace(/[“”]/g, "\"").replace(/æ/g, "œ");
   // Lignes qui ne sont pas le sujet.
   t = t.split(/\n+/).filter(l => !/^\s*(salut|bonjour|bonsoir|svp|s.il vous pla[iî]t|aide[zr]?[- ]moi|aidé moi|merci|bac blanc|examen blanc|devoir de|dissertation( litt[ée]raire)?\s*(:|$)|fran[cç]ais\s*$|correction)/i.test(l) || /[«"]/.test(l)).join(" ");
   return t
@@ -325,6 +327,12 @@ function debutConsigne(net: string) {
     return mots[avant === "vous" || avant === "puis" ? i - 1 : i].index!;
   }
   return 0;
+}
+
+/** Une phrase de consigne : elle commence comme une consigne ou contient un verbe de consigne. */
+function estConsigne(phrase: string) {
+  const net = normalize(phrase).replace(/[^a-z ]+/g, " ").trim();
+  return CONSIGNE_DEBUTS.test(net) || /\b(dans quelle mesure|pensez vous|partagez vous)\b/.test(net) || phrase.trim().split(/\s+/).some(estVerbeConsigne);
 }
 
 function estVerbeConsigne(mot: string) {
@@ -383,6 +391,8 @@ function typeDeConsigne(consigne: string, texte: string, tout: string): Consigne
   if (/\?/.test(texte) || /discut|diskut|nuanc|partag|apprec|pensez vous|penser vous|etes vous|d accord|daccord|dans quelle mesure|selon vous|limites/.test(tout)
     || jetons(consigne).some(m => commencePar(m.cle, cle("discut", false)))) return "discuter";
   if (/comment/.test(c)) return "commenter";
+  // Pas de consigne trouvée : au BAC, c'est presque toujours « Expliquez et discutez ».
+  if (!c.trim()) return "discuter";
   if (/illustr/.test(c)) return "illustrer";
   return "expliquer";
 }
@@ -433,7 +443,7 @@ function sujetCorrigeProche(citation: string): Sujet | SujetApercu | null {
 }
 
 /** Débuts de mots qui montrent qu'un sujet parle de littérature (larges exprès : au moindre doute, c'est une dissertation littéraire). */
-const MOTS_LITTERAIRES = /^(litt?er|lettre|ecri|ecrir|poe|poem|roman|oeuvr|livr|lect|lir|lis|lu$|auteur|artis|art$|arts$|theat|drama|scen|spectat|salle|acteur|conte|recit|raconte|personnag|narra|fiction|styl|langa|vers$|mot$|mots$|chant|critiq|comed|comiq|traged|humour|satir|ironi|rime|rythm|image|metaph|recueil|page|texte|verbe|parole|griot|dire$|forme$|fond$|nouvelle|genre|negritude|imagin|inspir|muse|plume|creat|beaute|esthet|exprim|style|journal|intime|autobio|memoires|fabl|hero|langue|lyri|ouvrage|cre|beau|merveill|invent|legende|epope|mythe|fantais|utopi|essai)/;
+const MOTS_LITTERAIRES = /^(litt?er|lettre|ecri|ecrir|poe|poem|roman|oeuvr|livr|lect|lir|lis|lu$|auteur|artis|art$|arts$|theat|drama|scen|spectat|salle|acteur|conte|recit|raconte|personnag|narra|fiction|styl|langa|vers$|mot$|mots$|chant|critiq|comed|comiq|traged|humour|satir|ironi|rime|rythm|image|metaph|recueil|page|texte|verbe|parole|griot|dire$|forme$|fond$|nouvelle|genre|negritude|imagin|inspir|muse|plume|creat|beaute|esthet|exprim|style|journal|intime|autobio|memoires|fabl|hero|langue|lyri|ouvrage|cre|beau|merveill|invent|legende|epope|mythe|fantais|utopi|essai|culture)/;
 
 /** Ce que demande vraiment l'énoncé : un commentaire, un résumé, un sujet de société, ou bien une dissertation littéraire. */
 function natureDuSujet(texte: string, citation: string, auteurCite: boolean): Analyse["nature"] {
@@ -766,6 +776,6 @@ export function analyserSujet(texteTape: string, combien = 6, imposee?: Fonction
   return {
     themes, fonctions, mots: dico, discussion, arguments: argumentsTrouves, travail: TRAVAIL[type], auteur, plan, oeuvres,
     proches: corrige ? proches.filter(x => x.num !== corrige.num) : proches,
-    doute, faible, rejet, corrige, nature: natureDuSujet(texte, citation, !!auteur)
+    doute, faible, rejet, corrige, nature: natureDuSujet(texte, citation, !!auteur || !!auteurConnu(texteTape))
   };
 }
