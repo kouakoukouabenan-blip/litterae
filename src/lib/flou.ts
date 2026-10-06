@@ -14,7 +14,7 @@ import { normalize } from "./text";
 export function cle(mot: string, fin = true) {
   let s = mot.replace(/[^a-z]/g, "");
   s = s
-    .replace(/^femm/, "fam").replace(/ph/g, "f").replace(/qu|q/g, "k").replace(/ch/g, "§").replace(/h/g, "").replace(/§/g, "ch")
+    .replace(/^femm/, "fam").replace(/sh|sch/g, "ch").replace(/ph/g, "f").replace(/qu|q/g, "k").replace(/ch/g, "§").replace(/h/g, "").replace(/§/g, "ch")
     .replace(/c(?=[eiy])/g, "s").replace(/c/g, "k")
     .replace(/gu(?=[eiy])/g, "G").replace(/ge(?=[aou])/g, "j").replace(/g(?=[eiy])/g, "j").replace(/G/g, "g")
     .replace(/y/g, "i").replace(/z/g, "s").replace(/w/g, "v")
@@ -24,7 +24,8 @@ export function cle(mot: string, fin = true) {
     .replace(/([^s])tion/g, "$1sion").replace(/([aeiou])il+(?=[aeiou]|$)/g, "$1y").replace(/ck/g, "k")
     .replace(/ai|ei/g, "e");
   if (fin) s = s.replace(/(er|ez|et|ai)$/, "e");
-  s = s.replace(/(.)\1+/g, "$1");
+  // « ge » et « je » se prononcent pareil : une seule lettre (« engager », « engagé », « engajement »).
+  s = s.replace(/j/g, "g").replace(/(.)\1+/g, "$1");
   // Fin muette : « sentiments », « faits », « grand » se lisent sans leurs dernières lettres.
   if (fin) {
     s = s.replace(/[sx]$/, "").replace(/e$/, "");
@@ -131,13 +132,15 @@ const clesTermes = new Map<string, string>();
  * Le terme tapé se prononce comme un de ces mots (ou comme leur début) : « sengor » trouve « Senghor »,
  * « kourouma » trouve « Kourouma » écrit « couroma ». Seulement pour les termes d'au moins 4 lettres.
  */
-export function sonProche(sons: string[], terme: string) {
+export function sonProche(sons: string[], terme: string, souple = false) {
   if (terme.length < 4) return false;
   let k = clesTermes.get(terme);
   if (k === undefined) { k = cle(terme); clesTermes.set(terme, k); }
   if (k.length < 3) return false;
   // Le son fait déjà le gros du travail : une seule lettre de différence en plus, sur les mots longs.
-  return sons.some(s => s === k || (k!.length >= 4 && s.startsWith(k!)) || (k!.length >= 6 && s[0] === k![0] && distance(s, k!, 1) <= 1));
+  // « souple » (titres et auteurs) : une lettre de différence dès 5 lettres (« tropées » → « Trophées »).
+  const min = souple ? 5 : 6;
+  return sons.some(s => s === k || (k!.length >= 4 && s.startsWith(k!)) || (k!.length >= min && s[0] === k![0] && distance(s, k!, 1) <= 1));
 }
 
 /** Écriture SMS et mots courts écrits au son, remis en toutes lettres avant la lecture du sujet. */

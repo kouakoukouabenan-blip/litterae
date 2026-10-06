@@ -5,6 +5,7 @@ import { motsPublics } from "./dictionnaire";
 import { fonctionsDuSujet, oeuvresPour } from "./defi";
 import { normalize } from "./text";
 import { ARGUMENTS } from "./arguments";
+import MODELE from "../data/modele-fonctions.json";
 import { redresser, cle, commencePar, jetons, memeFamille, memeMot, type Jeton } from "./flou";
 
 /**
@@ -18,11 +19,11 @@ import { redresser, cle, commencePar, jetons, memeFamille, memeMot, type Jeton }
  * début de mot (par défaut), mot entier (« $ ») ou expression (avec une espace, compte double).
  */
 const INDICES: [Fonction, string[]][] = [
-  ["Engagement", ["engage$", "engagement", "change$", "changement", "denon", "combat", "lutt", "arme$", "militant", "changer le monde", "changer la societe", "eveill", "conscien", "revolt", "revolution", "liber", "injust", "oppress", "opprim", "servir", "au service", "peuple", "responsab", "mission", "temoign", "bataille", "battre", "porte-parole", "sans voix", "defend", "critiqu", "transform", "agir", "action", "utile$", "guide$", "eclair", "flambeau", "vocation", "croisade", "resist", "dictat", "tyran", "colonis", "esclav", "racis", "fusil", "bombe", "prophet", "verite", "mensonge", "hypocris", "silenc", "devoir$", "accuse", "soumission", "bouche$", "malheur", "voix$", "echo$", "derang", "inquiet", "boulevers", "envahi", "secou", "choqu", "provoqu", "histoire$", "relecture", "relire", "memoire"]],
-  ["Sociale", ["societ", "social", "miroir", "realit", "reel$", "realis", "peindre", "peint", "tableau", "reflet", "refleter", "moeurs", "epoque", "vie quotidienne", "c est la vie", "de la vie", "observ", "decri", "description", "milieu", "photograph", "document", "imiter", "imitation", "faits$", "tels qu", "telle qu", "tel qu", "empreinte"]],
-  ["Esthétique", ["beau$", "beaute", "belle$", "art$", "l art pour l art", "artist", "forme$", "style", "langage", "poesie pure", "createur", "creation", "creat", "gratuit", "musique", "musical", "harmon", "rime", "rythme", "image$", "verbe$", "perfection", "esthet", "inutile", "elle meme", "symbole", "parole artistique", "orfevre", "sculpt", "spectacle"]],
-  ["Évasion", ["evasion", "evad", "reve$", "rever$", "reveur", "imagin", "divert", "distrai", "distrac", "fuir", "fuite", "ailleurs", "plaisir", "amus", "oubli", "fiction", "invent", "ennui", "ennuy", "loisir", "detente", "voyag", "aventur", "merveill", "fantast", "fantaisie", "magie", "echapp", "arracher", "consol", "chimere", "illusion", "raconter des histoires", "spectacle"]],
-  ["Lyrique", ["sentiment", "emotion", "coeur", "ame$", "moi$", "intime", "souffr", "douleur", "douloureu", "amour", "joie", "tristesse", "triste", "confid", "emouv", "emu$", "toucher", "touche le", "ressen", "sensib", "larme", "pleur", "chagrin", "melancol", "desesper", "nostalg", "passion", "solitude", "sanglot", "plainte", "lament", "gemi", "chant", "personnel"]]
+  ["Engagement", ["instrui", "accus", "pistolet", "tract$", "propagande", "militer", "jours meilleurs", "aveugle", "eduqu", "enseign", "former", "moral", "lecon", "verite", "conscientis", "engage$", "engagement", "change$", "changement", "denon", "combat", "lutt", "arme$", "militant", "changer le monde", "changer la societe", "eveill", "conscien", "revolt", "revolution", "liber", "injust", "oppress", "opprim", "servir", "au service", "peuple", "responsab", "mission", "temoign", "bataille", "battre", "porte-parole", "sans voix", "defend", "critiqu", "transform", "agir", "action", "utile$", "guide$", "eclair", "flambeau", "vocation", "croisade", "resist", "dictat", "tyran", "colonis", "esclav", "racis", "fusil", "bombe", "prophet", "verite", "mensonge", "hypocris", "silenc", "devoir$", "accuse", "soumission", "bouche$", "malheur", "voix$", "echo$", "derang", "inquiet", "boulevers", "envahi", "secou", "choqu", "provoqu", "histoire$", "relecture", "relire", "memoire"]],
+  ["Sociale", ["tradition", "coutume", "vie d un peuple", "type$", "types$", "condition", "decouvr", "temoin", "temoignage", "point d optique", "realisme", "reflet", "histoire$", "memoire", "connaitre", "classe", "sociaux", "societ", "social", "miroir", "realit", "reel$", "realis", "peindre", "peint", "tableau", "reflet", "refleter", "moeurs", "epoque", "vie quotidienne", "c est la vie", "de la vie", "observ", "decri", "description", "milieu", "photograph", "document", "imiter", "imitation", "faits$", "tels qu", "telle qu", "tel qu", "empreinte", "nous vivons", "ce que nous vivons", "vivent", "information", "barometre"]],
+  ["Esthétique", ["maniere", "langue$", "mots$", "technique", "enchant", "vocabulaire", "dictionnaire", "clairement", "partition", "danse", "grandeur", "peintre", "sonor", "vers$", "ecriture$", "travail", "ciseler", "beau$", "beaute", "belle$", "art$", "l art pour l art", "artist", "forme$", "style", "langage", "poesie pure", "createur", "creation", "creat", "gratuit", "musique", "musical", "harmon", "rime", "rythme", "image$", "verbe$", "perfection", "esthet", "inutile", "elle meme", "symbole", "parole artistique", "orfevre", "sculpt", "spectacle"]],
+  ["Évasion", ["refuge", "hors de ce monde", "n importe ou", "menteur", "emport", "loin", "rire$", "comique", "humour", "plaire", "suffit pas", "chambre", "voyager", "fable", "conte$", "contes$", "legende", "aventure", "evasion", "evad", "reve$", "rever$", "reveur", "imagin", "divert", "distrai", "distrac", "fuir", "fuite", "ailleurs", "plaisir", "amus", "oubli", "fiction", "invent", "ennui", "ennuy", "loisir", "detente", "voyag", "aventur", "merveill", "fantast", "fantaisie", "magie", "echapp", "arracher", "consol", "chimere", "illusion", "raconter des histoires", "spectacle", "partir$", "lointain", "endroits"]],
+  ["Lyrique", ["nu$", "lui meme", "soi meme", "moi meme", "se chercher", "autobiograph", "confession", "sincer", "temperament", "vecu", "experience", "coeur", "cri$", "souvenir", "nostalg", "aveu", "sentiment", "emotion", "coeur", "ame$", "moi$", "intime", "souffr", "douleur", "douloureu", "amour", "joie", "tristesse", "triste", "confid", "emouv", "emu$", "toucher le coeur", "touche le coeur", "tourment", "sourire", "souri$", "malheureu", "ressen", "sensib", "larme", "pleur", "chagrin", "melancol", "desesper", "nostalg", "passion", "solitude", "sanglot", "plainte", "lament", "gemi", "chant", "personnel$"]]
 ];
 
 /** Mots qui annoncent chaque argument de dissertation (les mêmes que ceux des fiches d'œuvres). */
@@ -40,7 +41,7 @@ const INDICES_ARGUMENTS: [string, Fonction, string[]][] = [
   ["Expression du vécu", "Lyrique", ["vecu", "experience", "intime", "moi$", "personnel", "autobiograph", "sa propre vie", "sa vie"]],
   ["Imagination", "Évasion", ["imagin", "invent", "fiction", "rever$", "reve$", "reveur", "merveill", "fantast", "fantaisie", "magie", "chimere"]],
   ["Voyage imaginaire", "Évasion", ["voyag", "ailleurs", "evasion", "evad", "fuir", "fuite", "echapp", "arracher", "exotis"]],
-  ["Divertissement", "Évasion", ["divert", "distrai", "distrac", "amus", "plaisir", "loisir", "ennui", "ennuy", "detente", "raconter des histoires", "spectacle"]],
+  ["Divertissement", "Évasion", ["divert", "distrai", "distrac", "amus", "plaisir", "loisir", "ennui", "ennuy", "detente", "raconter des histoires", "spectacle", "partir$", "lointain", "endroits"]],
   ["Rire", "Évasion", ["rire$", "comique", "comedie", "humour", "drole"]]
 ];
 
@@ -245,12 +246,20 @@ function affirmeEtNie(phrase: string) {
  * Marche avec ou sans guillemets, en minuscules, sans ponctuation.
  */
 export function decouperSujet(texte: string) {
-  const net = texte.replace(/\s+/g, " ").trim();
+  const net = nettoyer(texte);
   let avant = "", citation = net, apres = "";
 
-  const g = net.match(/^(.*?)[«“"„]\s*(.{8,}?)\s*[»”"“](.*)$/);
-  if (g) [avant, citation, apres] = [g[1], g[2], g[3]];
-  else {
+  // La citation est le plus long passage entre guillemets (un titre d'œuvre entre guillemets est plus court).
+  const passages = [...net.matchAll(/[«“"„]\s*([^«»“”"„]{8,}?)\s*[»”"“]/g)];
+  const g = passages.sort((a, b) => b[1].length - a[1].length)[0];
+  if (g && g[1].split(/\s+/).length >= 4) {
+    avant = net.slice(0, g.index!);
+    citation = g[1];
+    // La consigne : la phrase qui suit la citation (pas la suite du message, ni une correction collée après).
+    apres = net.slice(g.index! + g[0].length).replace(/^[\s.»”"]+/, "");
+    const fin = apres.search(/[.!?](\s|$)/);
+    if (fin > 0) apres = apres.slice(0, fin + 1);
+  } else {
     // Sans guillemets : la consigne commence au premier verbe de consigne, ou à une phrase de consigne.
     const debut = debutConsigne(net);
     if (debut > 0) [citation, apres] = [net.slice(0, debut), net.slice(debut)];
@@ -273,6 +282,21 @@ export function decouperSujet(texte: string) {
   citation = citation.replace(/^[«"“\s:,-]+|[»"”\s,]+$/g, "");
   const consigne = apres.replace(/^[\s.,;:»"”]+/, "").trim();
   return { citation, consigne, introduction: avant.trim(), auteur: trouverAuteur(avant, consigne) };
+}
+
+/**
+ * Le message tel que l'élève le colle : « << >> » remis en guillemets, salutations et en-têtes retirés
+ * (« Salut à tous svp aidez-moi », « BAC BLANC RÉGIONAL DALOA », « Sujet : »).
+ */
+function nettoyer(texte: string) {
+  let t = texte.replace(/<<|«/g, " « ").replace(/>>|»/g, " » ").replace(/[“”]/g, "\"").replace(/æ/g, "œ");
+  // Lignes qui ne sont pas le sujet.
+  t = t.split(/\n+/).filter(l => !/^\s*(salut|bonjour|bonsoir|svp|s.il vous pla[iî]t|aide[zr]?[- ]moi|aidé moi|merci|bac blanc|examen blanc|devoir de|dissertation( litt[ée]raire)?\s*(:|$)|fran[cç]ais\s*$|correction)/i.test(l) || /[«"]/.test(l)).join(" ");
+  return t
+    .replace(/\b(salut( à tous)?|bonjour( à tous)?|svp|s.il vous pla[iî]t|j.ai besoin de (votre|ton) aide|aid[eé]z?[- ]moi( avec [^.:«]*)?|merci( d.avance)?)[,.!:]*/gi, " ")
+    .replace(/(^|\s)(sujet( de dissertation( litt[ée]raire)?)?|dissertation( litt[ée]raire)?)\s*:/gi, " ")
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 /** Position où la consigne commence dans un énoncé sans guillemets (0 si on ne la trouve pas). */
@@ -348,6 +372,37 @@ function travailDemande(consigne: string, texte: string, discussion: boolean) {
   return "Expliquer";
 }
 
+/**
+ * Ce que le modèle appris regarde dans une citation : la clé (le son) de chaque mot important,
+ * précédée de « ! » quand le mot est nié (« n'est pas une arme » → « !arm »).
+ */
+export function traits(citation: string): string[] {
+  const out = new Set<string>();
+  for (const phrase of normalize(citation).replace(/,/g, " , ").replace(/[^a-z.;!?,]+/g, " ").split(/[.;!?]/)) {
+    const { affirme, nie } = affirmeEtNie(phrase);
+    for (const [bout, signe] of [[affirme, ""], [nie, "!"]] as const)
+      for (const j of jetons(bout)) if (!j.colle && j.cle.length >= 3 && !TROP_COURANTS.has(j.brut)) out.add(signe + j.cle);
+  }
+  return [...out];
+}
+
+/** Modèle appris sur des centaines de sujets corrigés à la main : poids de chaque mot pour chaque fonction. */
+const ORDRE: Fonction[] = ["Engagement", "Sociale", "Esthétique", "Évasion", "Lyrique"];
+const POIDS = (MODELE as { poids: Record<string, number[]> }).poids;
+const ECHELLE = (MODELE as { echelle?: number }).echelle ?? 0;
+let vocabulaire: string[] | null = null;
+function scoresAppris(citation: string): Map<Fonction, number> {
+  const total = new Map<Fonction, number>();
+  if (!ECHELLE) return total;
+  vocabulaire ??= Object.keys(POIDS).filter(k => k.length >= 6 && !k.startsWith("!"));
+  for (const t of traits(citation)) {
+    // Mot mal écrit absent du modèle : le mot connu le plus proche (une lettre près, mots longs).
+    const p = POIDS[t] ?? (t.length >= 6 && !t.startsWith("!") ? POIDS[vocabulaire.find(v => memeMot(v, t)) ?? ""] : undefined);
+    if (p) ORDRE.forEach((f, i) => total.set(f, (total.get(f) ?? 0) + p[i] / 10));
+  }
+  return total;
+}
+
 export function analyserSujet(texteTape: string, combien = 6): Analyse {
   // Écriture SMS et mots courts écrits au son (« ds », « ki », « doi », « na pa ») remis en toutes lettres.
   // Le découpage garde le texte tapé (majuscules et guillemets aident à trouver l'auteur et la consigne).
@@ -378,10 +433,13 @@ export function analyserSujet(texteTape: string, combien = 6): Analyse {
     const niees = indices(nie), duSujet = sujet ? indices(sujet) : [];
     const sujetNie = sujet && !niees.some(([, n]) => n) && duSujet.some(([, n]) => n);
     for (const [f, n] of indices(affirme)) if (n) plus(f, n);
-    for (const [f, n] of sujetNie ? duSujet : niees) if (n) plus(OPPOSE[f], n * (sujetNie ? 1.5 : 0.5));
+    // Un sentiment nié reste un sentiment (« des gens qui n'ont jamais souri ») : seul le reste est renversé.
+    for (const [f, n] of sujetNie ? duSujet : niees) if (n) plus(f === "Lyrique" ? f : OPPOSE[f], n * (sujetNie ? 1.5 : 0.5));
     // Ce qui était compté comme affirmé dans le sujet nié ne compte plus.
     if (sujetNie) for (const [f, n] of duSujet) if (n) plus(f, -n);
   }
+  // Ce que le modèle appris en pense (il connaît bien plus de mots que la liste d'indices).
+  for (const [f, n] of scoresAppris(citation)) plus(f, n * ECHELLE);
   // Les thèmes trouvés départagent (et suffisent quand aucun indice n'apparaît).
   for (const x of trouves.slice(0, 6)) {
     const m = fonctionsDesThemes().get(normalize(x.th.nom));

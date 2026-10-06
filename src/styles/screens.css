@@ -543,3 +543,5 @@
 .devoir-garde-ouvrir { flex: 1; display: grid; gap: 4px; padding: var(--s3) var(--s2) var(--s3) var(--s4); text-align: left; background: none; border: 0; font: inherit; color: var(--ink); cursor: pointer; }
 .devoir-garde-texte { font-family: var(--font-title); }
 .devoirs-nouveau { margin-top: var(--s4); }
+.devoir-avertissement { display: flex; gap: var(--s2); align-items: flex-start; margin: 0 0 var(--s3); padding: var(--s2) var(--s3); border-radius: 12px; background: var(--ochre-pale); color: var(--ochre-text); font-size: var(--text-sm); }
+.devoir-avertissement .icon { flex: none; margin-top: 2px; fill: currentColor; }

@@ -89,6 +89,7 @@ export function DevoirScreen() {
 
       {analyse && (
         <div class="devoir-resultat" aria-live="polite">
+          <p class="devoir-avertissement"><Icon name="info" size={18} />Ce sont des propositions faites par l'appli : elles peuvent contenir des erreurs. Vérifie-les avec ton cours et ton professeur.</p>
           <section>
             <h2 class="section-title">Ce que dit ton sujet</h2>
             {analyse.themes.length || analyse.fonctions.length ? (

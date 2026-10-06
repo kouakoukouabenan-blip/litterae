@@ -13,6 +13,9 @@ interface Indexed {
   /** Mots du titre et de l'auteur, puis des thèmes, ramenés à leur son (fautes d'orthographe). */
   sonsTitre: string[];
   sonsTags: string[];
+  /** Mots entiers du titre et de l'auteur : « bâ » trouve Mariama Bâ avant « Babo Naki ». */
+  motsTitre: Set<string>;
+  motsAuteur: Set<string>;
 }
 
 export interface Facet {
@@ -50,19 +53,21 @@ export function buildIndex(works: Oeuvre[]): Indexed[] {
     idees: normalize(w.idees.map(i => i.texte).join(" ")),
     resume: normalize(w.resume),
     sonsTitre: sonsDe(`${w.titre} ${w.auteur}`),
+    motsTitre: new Set(normalize(w.titre).split(/[^a-z0-9]+/)),
+    motsAuteur: new Set(normalize(w.auteur).split(/[^a-z0-9]+/)),
     sonsTags: sonsDe([w.genre, w.paysTexte, ...w.themes, ...w.fonctions, ...w.motsCles, ...w.idees.map(i => i.argument)].join(" "))
   }));
 }
 
-export const queryTerms = (q: string) => normalize(q).split(" ").filter(t => t.length > 1);
+export const queryTerms = (q: string) => normalize(q).split(/[\s-]+/).filter(t => t.length > 1);
 
 /** Chaque terme doit apparaître quelque part (tel quel ou par le son) ; le titre et l'auteur pèsent plus que le résumé. */
 function score(x: Indexed, terms: string[]) {
   let total = 0, manques = 0, dansTitre = 0;
   for (const t of terms) {
-    const s = x.titre.includes(t) ? 8 : x.auteur.includes(t) ? 6 : x.tags.includes(t) ? 3 : x.idees.includes(t) ? 2 : x.resume.includes(t) ? 1
+    const s = x.motsTitre.has(t) ? 10 : x.motsAuteur.has(t) ? 9 : x.titre.includes(t) ? 8 : x.auteur.includes(t) ? 6 : x.tags.includes(t) ? 3 : x.idees.includes(t) ? 2 : x.resume.includes(t) ? 1
       // Mal écrit mais qui se prononce pareil : « sengor », « aventure ambigu », « colonisasion ».
-      : sonProche(x.sonsTitre, t) ? 5 : sonProche(x.sonsTags, t) ? 2 : 0;
+      : sonProche(x.sonsTitre, t, true) ? 5 : sonProche(x.sonsTags, t) ? 2 : 0;
     // Un titre presque entier (« une si longe lettre ») : un seul mot raté est pardonné.
     if (!s) { manques++; continue; }
     if (s >= 5) dansTitre++;
