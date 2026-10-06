@@ -128,6 +128,12 @@ function OuvertureFiche({ echec, reessayer }: { echec: EchecFiche | null; reessa
   );
 }
 
+/** Bouton vers le livre, ajouté depuis le tableau de bord : seulement une vraie adresse web. */
+const LIBELLES_LIEN: Record<string, string> = { voir: "Voir le livre", telecharger: "Télécharger le livre", site: "Site officiel du livre" };
+function lienLivre(lien?: string | null) {
+  try { return lien && /^https?:$/.test(new URL(lien).protocol) ? lien : null; } catch { return null; }
+}
+
 export function OeuvreScreen({ id, params }: { id: string; params: URLSearchParams }) {
   const base = oeuvre(id);
   const access = useAccess();
@@ -184,6 +190,11 @@ export function OeuvreScreen({ id, params }: { id: string; params: URLSearchPara
           <p class="eyebrow">{w.genre}{w.precision ? ` · ${w.precision}` : ""}</p>
           <h1 class="page-title work-page-title">{w.titre}</h1>
           <p class="lede">{w.auteur}{w.paysTexte && ` · ${w.paysTexte}`}</p>
+          {lienLivre(w.lien) && (
+            <a class="btn btn-secondary lien-livre" href={lienLivre(w.lien)!} target="_blank" rel="noopener noreferrer">
+              {LIBELLES_LIEN[w.lienType ?? "voir"] ?? LIBELLES_LIEN.voir}<Icon name="arrow_forward" size={18} />
+            </a>
+          )}
           {texte && (
             <p class="small muted fiche-quota">Fiche gratuite {access.nbOuvertes} sur {fichesGratuites()}. <AchatLien label="Tout débloquer" /></p>
           )}

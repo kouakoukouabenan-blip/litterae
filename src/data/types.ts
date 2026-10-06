@@ -29,6 +29,10 @@ export interface Oeuvre {
   niveaux?: string[];
   /** Édition au programme. */
   editeur?: string | null;
+  /** Lien vers le livre (lecture, téléchargement ou site officiel), ajouté depuis le tableau de bord. */
+  lien?: string | null;
+  /** Texte du bouton : « Voir le livre », « Télécharger le livre » ou « Site officiel du livre ». */
+  lienType?: "voir" | "telecharger" | "site" | null;
   /** Fiche ouverte à tous (choisie par l'auteur). */
   libre?: boolean;
   /** Fiche ajoutée depuis le tableau de bord. */
