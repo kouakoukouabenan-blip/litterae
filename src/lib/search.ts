@@ -58,15 +58,17 @@ export const queryTerms = (q: string) => normalize(q).split(" ").filter(t => t.l
 
 /** Chaque terme doit apparaître quelque part (tel quel ou par le son) ; le titre et l'auteur pèsent plus que le résumé. */
 function score(x: Indexed, terms: string[]) {
-  let total = 0;
+  let total = 0, manques = 0, dansTitre = 0;
   for (const t of terms) {
     const s = x.titre.includes(t) ? 8 : x.auteur.includes(t) ? 6 : x.tags.includes(t) ? 3 : x.idees.includes(t) ? 2 : x.resume.includes(t) ? 1
       // Mal écrit mais qui se prononce pareil : « sengor », « aventure ambigu », « colonisasion ».
       : sonProche(x.sonsTitre, t) ? 5 : sonProche(x.sonsTags, t) ? 2 : 0;
-    if (!s) return 0;
+    // Un titre presque entier (« une si longe lettre ») : un seul mot raté est pardonné.
+    if (!s) { manques++; continue; }
+    if (s >= 5) dansTitre++;
     total += s;
   }
-  return total;
+  return !manques ? total : manques === 1 && terms.length >= 3 && dansTitre >= 2 ? total / 2 : 0;
 }
 
 function matches(w: Oeuvre, filters: Filters, except?: FacetKey) {

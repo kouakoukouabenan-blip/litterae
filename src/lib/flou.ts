@@ -104,12 +104,22 @@ export interface Jeton { brut: string; cle: string; colle?: boolean }
 export function jetons(texte: string): Jeton[] {
   const net = normalize(texte.replace(/œ/gi, "oe").replace(/æ/gi, "ae")).replace(/[^a-z]+/g, " ");
   const out: Jeton[] = [];
-  for (const brut of net.split(" ")) {
-    if (brut.length < 3 || VIDES.has(brut)) continue;
+  const bruts = net.split(" ").filter(Boolean);
+  bruts.forEach((brut, i) => {
+    // « litté rature », « dé noncer » : le mot coupé en deux est aussi lu en entier.
+    const suivant = bruts[i + 1];
+    if (suivant && brut.length >= 2 && suivant.length >= 3 && (brut.length <= 5 || suivant.length <= 4) && !VIDES.has(suivant)) {
+      const joint = brut + suivant;
+      out.push({ brut: joint, cle: cle(joint), colle: true });
+    }
+    if (brut.length < 3 || VIDES.has(brut)) return;
     out.push({ brut, cle: cle(brut) });
-    const colle = brut.match(/^(?:l|d|j|n|m|s|t|qu)([aeiouh].{2,})$/);
-    if (colle) out.push({ brut: colle[1], cle: cle(colle[1]), colle: true });
-  }
+    // « lalitterature », « desinjustices » : l'article collé est retiré.
+    for (const debut of ["la", "le", "les", "de", "du", "des", "une", "un", "sa", "son", "ses", "ce", "cette"])
+      if (brut.length - debut.length >= 4 && brut.startsWith(debut)) out.push({ brut: brut.slice(debut.length), cle: cle(brut.slice(debut.length)), colle: true });
+    const court = brut.match(/^(?:l|d|j|n|m|s|t|qu)([aeiouh].{2,})$/);
+    if (court) out.push({ brut: court[1], cle: cle(court[1]), colle: true });
+  });
   return out;
 }
 
@@ -128,4 +138,21 @@ export function sonProche(sons: string[], terme: string) {
   if (k.length < 3) return false;
   // Le son fait déjà le gros du travail : une seule lettre de différence en plus, sur les mots longs.
   return sons.some(s => s === k || (k!.length >= 4 && s.startsWith(k!)) || (k!.length >= 6 && s[0] === k![0] && distance(s, k!, 1) <= 1));
+}
+
+/** Écriture SMS et mots courts écrits au son, remis en toutes lettres avant la lecture du sujet. */
+const SMS: Record<string, string> = {
+  ds: "dans", dan: "dans", pr: "pour", pou: "pour", ki: "qui", ke: "que", k: "que", kel: "quel", kele: "quelle", kelle: "quelle",
+  bcp: "beaucoup", tjr: "toujours", tjrs: "toujours", qd: "quand", kan: "quand", kand: "quand", pk: "pourquoi", pq: "pourquoi",
+  mm: "meme", mem: "meme", tt: "tout", ts: "tous", ns: "nous", nou: "nous", vs: "vous", vou: "vous", doi: "doit", dwa: "doit", doivt: "doivent",
+  pe: "peut", o: "au", e: "et", nest: "n est", na: "n a", pa: "pas", otr: "autre", otre: "autre", kom: "comme", kome: "comme",
+  lit: "litterature", litt: "litterature", litte: "litterature", ecriv: "ecrivain", ecrivin: "ecrivain", lecrivin: "l ecrivain", c: "c est",
+  ya: "il y a", koi: "quoi", jms: "jamais", jamai: "jamais", ri1: "rien", bi1: "bien"
+};
+
+/** « la poézi na pa d otre but kel mème » → « la poezi n a pas d autre but qu elle meme ». */
+export function redresser(texte: string) {
+  return normalize(texte.replace(/œ/gi, "oe"))
+    .replace(/\bk(?:el|elle|ele)\s+m[e]?mes?\b/g, "qu elle meme")
+    .replace(/[a-z0-9]+/g, m => SMS[m] ?? m);
 }

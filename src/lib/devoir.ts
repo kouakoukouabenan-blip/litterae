@@ -5,7 +5,7 @@ import { motsPublics } from "./dictionnaire";
 import { fonctionsDuSujet, oeuvresPour } from "./defi";
 import { normalize } from "./text";
 import { ARGUMENTS } from "./arguments";
-import { cle, commencePar, jetons, memeFamille, memeMot, type Jeton } from "./flou";
+import { redresser, cle, commencePar, jetons, memeFamille, memeMot, type Jeton } from "./flou";
 
 /**
  * « J'ai un devoir » : l'élève colle l'énoncé de son sujet, l'appli le lit sur le téléphone
@@ -18,9 +18,9 @@ import { cle, commencePar, jetons, memeFamille, memeMot, type Jeton } from "./fl
  * début de mot (par défaut), mot entier (« $ ») ou expression (avec une espace, compte double).
  */
 const INDICES: [Fonction, string[]][] = [
-  ["Engagement", ["engage$", "engagement", "denon", "combat", "lutt", "arme$", "militant", "changer le monde", "changer la societe", "eveill", "conscien", "revolt", "revolution", "liber", "injust", "oppress", "opprim", "servir", "au service", "peuple", "responsab", "mission", "temoign", "bataille", "battre", "porte-parole", "sans voix", "defend", "critiqu", "transform", "agir", "action", "utile$", "guide$", "eclair", "flambeau", "vocation", "croisade", "resist", "dictat", "tyran", "colonis", "esclav", "racis", "fusil", "bombe", "prophet", "verite", "mensonge", "hypocris", "silenc", "devoir$", "accuse", "soumission", "bouche$", "malheur", "voix$", "echo$", "histoire$", "relecture", "relire", "memoire"]],
+  ["Engagement", ["engage$", "engagement", "change$", "changement", "denon", "combat", "lutt", "arme$", "militant", "changer le monde", "changer la societe", "eveill", "conscien", "revolt", "revolution", "liber", "injust", "oppress", "opprim", "servir", "au service", "peuple", "responsab", "mission", "temoign", "bataille", "battre", "porte-parole", "sans voix", "defend", "critiqu", "transform", "agir", "action", "utile$", "guide$", "eclair", "flambeau", "vocation", "croisade", "resist", "dictat", "tyran", "colonis", "esclav", "racis", "fusil", "bombe", "prophet", "verite", "mensonge", "hypocris", "silenc", "devoir$", "accuse", "soumission", "bouche$", "malheur", "voix$", "echo$", "derang", "inquiet", "boulevers", "envahi", "secou", "choqu", "provoqu", "histoire$", "relecture", "relire", "memoire"]],
   ["Sociale", ["societ", "social", "miroir", "realit", "reel$", "realis", "peindre", "peint", "tableau", "reflet", "refleter", "moeurs", "epoque", "vie quotidienne", "c est la vie", "de la vie", "observ", "decri", "description", "milieu", "photograph", "document", "imiter", "imitation", "faits$", "tels qu", "telle qu", "tel qu", "empreinte"]],
-  ["Esthétique", ["beau$", "beaute", "belle$", "art$", "l art pour l art", "artist", "forme$", "style", "langage", "poesie pure", "createur", "creation", "creat", "gratuit", "musique", "musical", "harmon", "rime", "rythme", "image$", "verbe$", "perfection", "esthet", "inutile", "elle meme", "symbole", "parole artistique", "orfevre", "sculpt"]],
+  ["Esthétique", ["beau$", "beaute", "belle$", "art$", "l art pour l art", "artist", "forme$", "style", "langage", "poesie pure", "createur", "creation", "creat", "gratuit", "musique", "musical", "harmon", "rime", "rythme", "image$", "verbe$", "perfection", "esthet", "inutile", "elle meme", "symbole", "parole artistique", "orfevre", "sculpt", "spectacle"]],
   ["Évasion", ["evasion", "evad", "reve$", "rever$", "reveur", "imagin", "divert", "distrai", "distrac", "fuir", "fuite", "ailleurs", "plaisir", "amus", "oubli", "fiction", "invent", "ennui", "ennuy", "loisir", "detente", "voyag", "aventur", "merveill", "fantast", "fantaisie", "magie", "echapp", "arracher", "consol", "chimere", "illusion", "raconter des histoires", "spectacle"]],
   ["Lyrique", ["sentiment", "emotion", "coeur", "ame$", "moi$", "intime", "souffr", "douleur", "douloureu", "amour", "joie", "tristesse", "triste", "confid", "emouv", "emu$", "toucher", "touche le", "ressen", "sensib", "larme", "pleur", "chagrin", "melancol", "desesper", "nostalg", "passion", "solitude", "sanglot", "plainte", "lament", "gemi", "chant", "personnel"]]
 ];
@@ -96,7 +96,7 @@ const SYNONYMES: Record<string, string[]> = {
   comedie: ["comique", "rire"],
   tragedie: ["tragique"],
   folie: ["fou", "folle", "fous"],
-  negritude: ["negre", "negres"],
+  negritude: ["negre", "negres", "peuple noir", "race noire", "homme noir", "hommes noirs", "monde noir"],
   trahison: ["trahir", "traitre"],
   mensonge: ["mentir", "menteur", "mensonges"],
   "tradition orale": ["griot", "conte", "contes", "oral", "orale"],
@@ -213,7 +213,7 @@ const clesDe = (texte: string) => normalize(texte).replace(/[^a-z]+/g, " ").trim
 /** Mots qui nient ce qui suit (« ce n'est pas faire du bien », « je ne crois pas à l'évasion »). */
 const NIENT = new Set(["pas", "jamais", "point", "guere", "nullement", "plus", "rien", "aucun", "aucune", "non"]);
 /** Mots qui arrêtent la négation : « n'a pas d'autre but qu'elle-même », « n'est pas un théorème mais un spectacle ». */
-const ARRETENT = new Set(["que", "qu", "mais", "plutot", "seulement", "sinon", ","]);
+const ARRETENT = new Set(["que", "qu", "mais", "plutot", "seulement", "sinon", "si", ","]);
 
 /**
  * Coupe une phrase en ce qui est affirmé et ce qui est nié : les cinq mots qui suivent une négation.
@@ -259,10 +259,14 @@ export function decouperSujet(texte: string) {
     if (intro && citation.length - intro[0].length > 15) [avant, citation] = [intro[1], citation.slice(intro[0].length)];
     else {
       // « selon mongo beti l'écrivain doit… » : sans virgule, on s'arrête au nom d'un auteur connu.
-      const a = citation.match(/^(?:selon|d'après|d’après|pour)\s+/i) && auteurConnu(citation.split(/\s+/).slice(1, 5).join(" "));
-      if (a) {
-        const mots = citation.split(/\s+/), n = a.cle.split(" ").length + 1;
-        [avant, citation] = [mots.slice(0, n).join(" "), mots.slice(n).join(" ")];
+      const tete = citation.match(/^(?:selon|d'après|d’après|d'apres|d apres|pour)\s+/i);
+      if (tete) {
+        const mots = citation.split(/\s+/), debut = tete[0].trim().split(/\s+/).length;
+        // Le plus court groupe de mots qui donne un auteur connu, même mal écrit (« selon sengor »).
+        for (let k = 1; k <= 4; k++) if (auteurConnu(mots.slice(debut, debut + k).join(" "))) {
+          [avant, citation] = [mots.slice(0, debut + k).join(" "), mots.slice(debut + k).join(" ")];
+          break;
+        }
       }
     }
   }
@@ -315,8 +319,24 @@ function auteurConnu(texte: string) {
     auteurs = [...vus].map(([cle, nom]) => ({ nom, cle })).sort((a, b) => b.cle.length - a.cle.length);
   }
   const t = ` ${normalize(texte).replace(/[^a-z ]+/g, " ").replace(/\s+/g, " ")} `;
-  return auteurs.find(a => t.includes(` ${a.cle} `)) ?? null;
+  const exact = auteurs.find(a => t.includes(` ${a.cle} `));
+  if (exact) return exact;
+  // Mal écrit (« sengor », « couroma », « mongo béti ») : par le son. Prénom et nom, ou un nom de famille
+  // long et sans ambiguïté qui n'est pas aussi un mot courant (« Racine »).
+  const sons = t.trim().split(" ").filter(m => m.length >= 3).map(m => cle(m));
+  const present = (k: string) => sons.some(x => x === k || (k.length >= 6 && memeMot(x, k)));
+  let meilleur: { a: { nom: string; cle: string }; n: number } | null = null;
+  for (const a of auteurs) {
+    const noms = a.cle.split(" ").filter(m => m.length >= 3).map(m => cle(m)).filter(k => k.length >= 3);
+    const n = noms.filter(present).length;
+    const nom = noms[noms.length - 1];
+    const seul = n === 1 && nom && nom.length >= 6 && present(nom) && !MOTS_COURANTS.has(nom) && auteurs.filter(b => b.cle.endsWith(a.cle.split(" ").pop()!)).length === 1;
+    if ((n >= 2 || seul) && (!meilleur || n > meilleur.n)) meilleur = { a, n };
+  }
+  return meilleur?.a ?? null;
 }
+/** Noms d'auteurs qui sont aussi des mots courants : jamais reconnus seuls. */
+const MOTS_COURANTS = new Set(["racine", "france", "laforgue", "lafontaine"].map(m => cle(m)));
 
 /** Ce que demande la consigne, en quelques mots. */
 function travailDemande(consigne: string, texte: string, discussion: boolean) {
@@ -328,8 +348,12 @@ function travailDemande(consigne: string, texte: string, discussion: boolean) {
   return "Expliquer";
 }
 
-export function analyserSujet(texte: string, combien = 6): Analyse {
-  const { citation: c0, consigne, auteur } = decouperSujet(texte);
+export function analyserSujet(texteTape: string, combien = 6): Analyse {
+  // Écriture SMS et mots courts écrits au son (« ds », « ki », « doi », « na pa ») remis en toutes lettres.
+  // Le découpage garde le texte tapé (majuscules et guillemets aident à trouver l'auteur et la consigne).
+  const { citation: brute, consigne, auteur } = decouperSujet(texteTape);
+  const texte = redresser(texteTape);
+  const c0 = redresser(brute);
   // Thèmes, fonction et mots difficiles : dans la citation seulement (pas dans « Expliquez et discutez »),
   // sauf si l'élève a tapé une question sans citation (« La littérature peut-elle changer le monde ? »).
   const citation = jetons(c0).length >= 3 ? c0 : texte;
@@ -408,8 +432,8 @@ export function analyserSujet(texte: string, combien = 6): Analyse {
   // Sans thème reconnu : les œuvres au programme qui illustrent la fonction attendue.
   const avecThemes = oeuvresPour(themes, fonctions, combien, 2, genres, argumentsTrouves);
   // Trop peu d'œuvres sur ces thèmes : on complète avec celles qui illustrent la même fonction.
-  const oeuvres = avecThemes.length >= Math.min(3, combien) ? avecThemes
-    : [...avecThemes, ...oeuvresPour([], fonctions, Math.min(combien, 6), 1.5, genres, argumentsTrouves).filter(w => !avecThemes.includes(w))].slice(0, Math.max(combien, avecThemes.length));
+  const oeuvres = avecThemes.length >= combien ? avecThemes
+    : [...avecThemes, ...oeuvresPour([], fonctions, combien, 1.5, genres, argumentsTrouves).filter(w => !avecThemes.includes(w))].slice(0, combien);
 
   const importants = mots.filter(m => m.brut.length >= 5 && !TROP_COURANTS.has(m.brut));
   const proches = SUJETS.map(s => {
