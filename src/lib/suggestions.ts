@@ -15,6 +15,10 @@ import { cartesDuJour } from "./revisions";
 import { defiFaitAujourdhui, sujetDuJour } from "./defi";
 import { normalize } from "./text";
 import { etapeFaible } from "./maitrise";
+import { FONCTIONS, type Fonction } from "../data/types";
+import { analyserSujet } from "./devoir";
+import type { DevoirGarde } from "./devoirs";
+import { erreursQuiz, estEcartee, interets } from "./interets";
 
 /**
  * Suggestions personnelles, calculées sur le téléphone à partir de ce que l'élève a ouvert
@@ -183,13 +187,112 @@ function etapeATravailler(premium: boolean): Suggestion | null {
   };
 }
 
+/** Fiche que l'élève peut ouvrir : accès complet, fiche déjà choisie, ou fiche gratuite restante. */
+function ficheOuvrable(id: string, premium: boolean) {
+  if (premium) return true;
+  const ouvertes = fichesOuvertes();
+  return !!ouvertes[id] || Object.keys(ouvertes).length < fichesGratuites();
+}
+
+const lienOeuvre = (w: Oeuvre) => `#/oeuvres/${encodeURIComponent(w.id)}`;
+
+/** Leçon dont une question de quiz a été ratée et qui n'a pas été relue depuis. */
+function leconARevoir(h: Vue[], premium: boolean, maintenant: number): Suggestion | null {
+  const ouvertes = leconsOuvertes();
+  for (const [id, quand] of Object.entries(erreursQuiz()).sort((a, b) => b[1] - a[1])) {
+    if (maintenant - quand > 21 * JOUR) continue;
+    if (h.some(v => v.t === "lecon" && v.id === id && v.d > quand)) continue;
+    const l = LECONS.find(x => x.id === id);
+    if (!l) continue;
+    if (!premium && !ouvertes[id] && Object.keys(ouvertes).length >= LECONS_GRATUITES) continue;
+    const rang = LECONS.indexOf(l) + 1;
+    return {
+      cle: `erreur-${id}`, icone: "menu_book", lien: `#/cours/${id}`,
+      titre: `Relis la leçon ${rang}`, detail: "Une réponse du quiz à revoir",
+      notif: { titre: `Relis la leçon ${rang}`, texte: `Une question du quiz t'a posé problème. Relis « ${titreCourt(l.titre)} » pour ne plus te tromper.` }
+    };
+  }
+  return null;
+}
+
+/** Devoir gardé dans Mon espace : une œuvre (ou un sujet corrigé) qui va avec, pas encore ouverte. */
+function pourMonDevoir(h: Vue[], premium: boolean, maintenant: number): Suggestion | null {
+  const d = read<DevoirGarde[]>("devoirs-gardes", [])[0];
+  if (!d || maintenant - d.garde > 30 * JOUR) return null;
+  const a = analyserSujet(d.auteur ? `${d.texte} (${d.auteur})` : d.texte, 8);
+  const vues = new Set(h.map(v => `${v.t}:${v.id}`));
+  // D'abord une œuvre dont la fonction principale est celle du sujet.
+  const libres = a.oeuvres.filter(w => w.detaillee && !vues.has(`oeuvre:${w.id}`) && ficheOuvrable(w.id, premium));
+  const w = libres.find(w => w.fonctions[0] === a.fonctions[0]) ?? libres[0];
+  if (w) return {
+    cle: `oeuvre-${w.id}`, icone: "content_paste", lien: lienOeuvre(w),
+    titre: `« ${titreCourt(w.titre)} »`, detail: "Pour le devoir que tu as gardé",
+    notif: { titre: "Un exemple pour ton devoir", texte: `« ${w.titre} » ${de(w.auteur)} peut illustrer le sujet que tu as gardé.` }
+  };
+  const s = a.proches.find(s => !vues.has(`sujet:${s.num}`) && (premium || SUJETS.findIndex(x => x.num === s.num) < FREE_SUBJECTS));
+  if (s) return {
+    cle: `sujet-${s.num}`, icone: "history_edu", lien: `#/sujets/${s.num}`,
+    titre: `Sujet corrigé ${s.num}`, detail: "Proche du devoir que tu as gardé",
+    notif: { titre: "Un sujet corrigé proche de ton devoir", texte: `Vois comment le sujet ${s.num} est traité, il ressemble au tien.` }
+  };
+  return null;
+}
+
+/** Dernière recherche dans Œuvres (thème, fonction, argument) : une fiche qui y répond, pas encore ouverte. */
+function pourTaRecherche(h: Vue[], premium: boolean, jour: number, maintenant: number): Suggestion | null {
+  const i = interets().find(i => maintenant - i.d < 14 * JOUR);
+  if (!i) return null;
+  const vues = new Set(h.filter(v => v.t === "oeuvre").map(v => v.id));
+  const n = normalize(i.v);
+  const va = (w: Oeuvre) => i.type === "theme" ? w.themes.some(t => normalize(t) === n)
+    : i.type === "fonction" ? w.fonctions.includes(i.v as Fonction)
+    : w.idees.some(x => normalize(x.argument) === n);
+  const candidates = OEUVRES.filter(w => w.detaillee && va(w) && !vues.has(w.id) && !fichesOuvertes()[w.id] && ficheOuvrable(w.id, premium));
+  if (!candidates.length) return null;
+  const w = candidates[jour % Math.min(3, candidates.length)];
+  const quoi = i.type === "theme" ? `« ${i.v.toLowerCase()} »` : i.type === "fonction" ? `les œuvres ${FONCTION_NOM[i.v as Fonction]}s` : "un argument";
+  return {
+    cle: `oeuvre-${w.id}`, icone: "search", lien: lienOeuvre(w),
+    titre: `« ${titreCourt(w.titre)} »`, detail: `Pour ta recherche sur ${quoi}`,
+    notif: { titre: "Une œuvre pour ta recherche", texte: `« ${w.titre} » ${de(w.auteur)} répond à ta recherche sur ${quoi}.` }
+  };
+}
+
+const FONCTION_NOM: Record<Fonction, string> = { Engagement: "engagée", Sociale: "sociale", Esthétique: "esthétique", Évasion: "d'évasion", Lyrique: "lyrique" };
+
+/** Carnet sans aucune œuvre pour une fonction littéraire : une œuvre pour combler le manque. */
+function carnetIncomplet(h: Vue[], premium: boolean, jour: number, exclues: Set<string>): Suggestion | null {
+  const gardees = read<string[]>("oeuvres-enregistrees", []);
+  const carnet = gardees.map(id => oeuvre(id)).filter((w): w is Oeuvre => !!w);
+  if (carnet.length < 2) return null;
+  const manque = FONCTIONS.filter(f => !carnet.some(w => w.fonctions.includes(f)));
+  if (!manque.length) return null;
+  const f = manque[jour % manque.length];
+  // D'abord une fiche déjà lue (il suffit de la garder), sinon une fiche au programme.
+  const lue = oeuvresVues(h).find(w => w.fonctions.includes(f) && !gardees.includes(w.id) && !exclues.has(`oeuvre-${w.id}`));
+  const autres = OEUVRES.filter(w => w.detaillee && w.fonctions[0] === f && !gardees.includes(w.id) && !exclues.has(`oeuvre-${w.id}`) && ficheOuvrable(w.id, premium))
+    .sort((a, b) => (b.niveaux?.length ? 1 : 0) - (a.niveaux?.length ? 1 : 0));
+  const w = lue ?? autres[jour % Math.max(1, Math.min(5, autres.length))];
+  if (!w) return null;
+  return {
+    cle: `oeuvre-${w.id}`, icone: "bookmark", lien: lienOeuvre(w),
+    titre: `« ${titreCourt(w.titre)} »`, detail: `Ton carnet n'a aucune œuvre ${FONCTION_NOM[f]}`,
+    notif: { titre: "Complète ton carnet", texte: `Ton carnet n'a aucune œuvre ${FONCTION_NOM[f]}. « ${w.titre} » peut t'en servir.` }
+  };
+}
+
 /** Toutes les suggestions du moment, la plus utile d'abord. */
 export function suggestions(maintenant = Date.now()): Suggestion[] {
   const premium = !!licence();
   const h = historique();
   const jour = Math.floor(maintenant / JOUR);
-  return [sujetCommence(), defi(), revisions(), sujetCitant(h, premium), etapeATravailler(premium), leconSuivante(premium), oeuvreProche(h, premium, jour), ficheDuCarnet(h, maintenant)]
-    .filter((s): s is Suggestion => !!s);
+  // Une suggestion vue trois jours sans être ouverte laisse sa place une semaine ; une même œuvre n'est proposée qu'une fois.
+  const avant = [sujetCommence(), pourMonDevoir(h, premium, maintenant), defi(), revisions(), leconARevoir(h, premium, maintenant), sujetCitant(h, premium),
+    etapeATravailler(premium), leconSuivante(premium), oeuvreProche(h, premium, jour), pourTaRecherche(h, premium, jour, maintenant)];
+  const prises = new Set(avant.map(s => s?.cle ?? ""));
+  const deja = new Set<string>();
+  return [...avant, carnetIncomplet(h, premium, jour, prises), ficheDuCarnet(h, maintenant)]
+    .filter((s): s is Suggestion => !!s && !estEcartee(s.cle, maintenant) && !deja.has(s.cle) && !!deja.add(s.cle));
 }
 
 /**
@@ -209,7 +312,7 @@ export function decouvertes(): Suggestion[] {
     out.push({ cle: "decouvrir-oeuvres", icone: "search", lien: "#/oeuvres", titre: "Trouve une œuvre pour tes exemples", detail: "Cherche par thème, auteur ou classe", notif: vide });
   if (!cles("atelier:").length)
     out.push({ cle: "decouvrir-atelier", icone: "edit", lien: "#/entrainement", titre: "Traite un sujet type bac", detail: "Pas à pas dans l'atelier", notif: vide });
-  return out;
+  return out.filter(s => !estEcartee(s.cle));
 }
 
 /** Texte du rappel envoyé si l'élève ne revient pas : la suggestion la plus utile, sinon une invitation simple. */

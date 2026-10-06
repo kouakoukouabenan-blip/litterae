@@ -10,6 +10,7 @@ import { plural } from "../lib/text";
 import { AchatLien } from "./Achat";
 import { Icon } from "./Icon";
 import { ajouterCarte, cleQuiz } from "../lib/revisions";
+import { noterErreurQuiz } from "../lib/interets";
 import { marquer } from "../lib/progres";
 import { useVerrou } from "./LockPanel";
 import { contenuLibre } from "../lib/libre";
@@ -82,6 +83,8 @@ function Questions({ id, questions }: { id: string; questions: QuestionQuiz[] })
     if (i === questions[n].bonne) setScore(score + 1);
     // La question reviendra dans les révisions (demain si l'élève s'est trompé).
     ajouterCarte(cleQuiz(id, n), i === questions[n].bonne);
+    // Une erreur fait revenir la leçon dans les suggestions de l'accueil, jusqu'à ce qu'elle soit relue.
+    if (i !== questions[n].bonne) noterErreurQuiz(id);
     marquer(`quiz:${id}`);
   }
   function suivante() {
