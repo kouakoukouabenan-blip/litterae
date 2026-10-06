@@ -35,13 +35,16 @@ export function DevoirScreen() {
   function rediger() {
     if (!analyse) return;
     const { citation, consigne } = decouperSujet(texte);
-    const num = ajouterSujetPerso(citation, auteur.trim() || "Sujet de mon devoir", consigne || CONSIGNE);
+    const num = ajouterSujetPerso(citation, auteur.trim() || analyse.auteur || "Sujet de mon devoir", consigne || CONSIGNE);
     if (!lireBrouillon(num)) {
       const b = brouillonVide();
       b.theme = analyse.themes.slice(0, 3).join(", ");
       b.orientations = analyse.fonctions.slice(0, 1);
       b.axe1.titre = analyse.plan.axe1;
       b.axe2.titre = analyse.plan.axe2;
+      // Les arguments proposés deviennent les arguments du plan (l'élève écrit l'explication et l'exemple).
+      analyse.plan.args1.forEach((a, i) => { if (b.axe1.args[i]) b.axe1.args[i].arg = a; });
+      analyse.plan.args2.forEach((a, i) => { if (b.axe2.args[i]) b.axe2.args[i].arg = a; });
       write(`atelier:${num}`, { ...b, modifie: Date.now() });
     }
     location.hash = `#/entrainement/${num}`;
@@ -74,13 +77,14 @@ export function DevoirScreen() {
                 {analyse.themes.map(t => <span key={t} class="tag">{t}</span>)}
               </p>
             ) : <p class="small muted">Pas de thème reconnu : vérifie que tu as bien collé toute la citation.</p>}
+            <p class="small muted devoir-consigne">Consigne : {analyse.travail.toLowerCase()}{!auteur.trim() && analyse.auteur ? ` · Auteur : ${analyse.auteur}` : ""}</p>
           </section>
 
           <section>
             <h2 class="section-title">Un plan pour démarrer</h2>
             <ol class="devoir-plan">
-              <li><strong>Partie 1.</strong> {analyse.plan.axe1}</li>
-              <li><strong>Partie 2.</strong> {analyse.plan.axe2}</li>
+              <li><strong>Partie 1.</strong> {analyse.plan.axe1}<Arguments liste={analyse.plan.args1} /></li>
+              <li><strong>Partie 2.</strong> {analyse.plan.axe2}<Arguments liste={analyse.plan.args2} /></li>
             </ol>
           </section>
 
@@ -118,4 +122,9 @@ export function DevoirScreen() {
       )}
     </Page>
   );
+}
+
+/** Les arguments conseillés pour une partie du plan, un par ligne. */
+function Arguments({ liste }: { liste: string[] }) {
+  return liste.length ? <ul class="devoir-args">{liste.map(a => <li key={a}>{a}</li>)}</ul> : null;
 }

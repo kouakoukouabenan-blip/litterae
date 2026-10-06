@@ -60,12 +60,15 @@ export function oeuvresPourSujet(num: string, combien = 4): Oeuvre[] {
 }
 
 /** Œuvres qui partagent des thèmes et la fonction littéraire attendue (fiches complètes seulement). */
-export function oeuvresPour(themesSujet: string[], fonctions: Fonction[], combien = 4, minimum = 3): Oeuvre[] {
+export function oeuvresPour(themesSujet: string[], fonctions: Fonction[], combien = 4, minimum = 3, genres: string[] = [], args: string[] = []): Oeuvre[] {
   const themes = new Set(themesSujet.map(normalize));
   return OEUVRES.filter(w => w.detaillee)
     .map(w => ({ w, score: w.themes.filter(t => themes.has(normalize(t))).length * 2 + w.fonctions.filter(f => fonctions.includes(f)).length + (w.niveaux?.length ? 0.5 : 0) }))
     .filter(x => x.score >= minimum)
-    .sort((a, b) => b.score - a.score || a.w.titre.localeCompare(b.w.titre, "fr"))
+    // Un sujet sur le poète met d'abord en avant les recueils de poèmes (même chose pour le roman et le théâtre).
+    // … et celles dont la fiche illustre les arguments que le sujet annonce.
+    .map(x => ({ ...x, rang: x.score + (genres.includes(x.w.genre) ? 1.5 : 0) + new Set(x.w.idees.filter(i => args.includes(i.argument)).map(i => i.argument)).size }))
+    .sort((a, b) => b.rang - a.rang || a.w.titre.localeCompare(b.w.titre, "fr"))
     .slice(0, combien)
     .map(x => x.w);
 }

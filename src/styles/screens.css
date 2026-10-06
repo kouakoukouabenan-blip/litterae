@@ -524,6 +524,9 @@
 .devoir-plan, .devoir-liste { margin: 0; padding-left: 1.2em; display: grid; gap: var(--s2); }
 .devoir-plan { list-style: none; padding: var(--s3) var(--s4); border-radius: 16px; background: var(--surface); box-shadow: 0 1px 2px rgb(0 0 0 / .06); }
 .devoir-champ { display: grid; gap: var(--s1); }
+.devoir-args { margin: var(--s1) 0 0; padding-left: 1.1em; display: grid; gap: 2px; font-size: .92em; color: var(--muted); }
+.devoir-args li::marker { color: var(--ochre); }
+.devoir-consigne { margin: var(--s2) 0 0; }
 
 /* Sujet entier tapé dans la recherche d'œuvres */
 .sujet-tape { display: grid; gap: var(--s2); margin-bottom: var(--s4); padding: var(--s3) var(--s4); border-radius: 16px; background: var(--ochre-pale); }
