@@ -129,6 +129,10 @@ const GENRES: [string[], RegExp][] = [
   [["Essai"], /\b(essayistes?)\b/]
 ];
 
+const GENRE_DU: Record<string, string> = { "Poésie": "de la poésie", Roman: "du roman", "Théâtre": "du théâtre", Nouvelle: "de la nouvelle", Conte: "du conte", Essai: "de l'essai" };
+/** « Ton sujet parle de la poésie », « … du roman, de la nouvelle et du conte ». */
+export const genreDu = (genres: string[]) => genres.map(g => GENRE_DU[g] ?? g).join(", ").replace(/, ([^,]*)$/, " et $1");
+
 /** Genres dont parle le sujet (consigne comprise : « des exemples tirés du roman africain »). Aucun : tous les genres. */
 export function genresDuSujet(texte: string): string[] {
   const t = normalize(texte).replace(/[^a-z]+/g, " ");

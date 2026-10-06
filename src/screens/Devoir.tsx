@@ -6,7 +6,7 @@ import { useStored, write } from "../lib/storage";
 import { normalize, sansEtoiles } from "../lib/text";
 import { Texte } from "../components/Texte";
 import { FONCTIONS, type Fonction } from "../data/types";
-import { analyserSujet, decouperSujet, type Exemple } from "../lib/devoir";
+import { analyserSujet, decouperSujet, genreDu, type Exemple } from "../lib/devoir";
 import { fnClass } from "../lib/fonctions";
 import { ajouterSujetPerso, CONSIGNE } from "../lib/entrainement";
 import { brouillonVide, lireBrouillon } from "../lib/atelier";
@@ -168,7 +168,7 @@ export function DevoirScreen() {
               <li><strong>Partie 1.</strong> {analyse.plan.axe1}<Arguments liste={analyse.plan.args1} exemples={analyse.plan.ex1} /></li>
               <li><strong>Partie 2.</strong> {analyse.plan.axe2}<Arguments liste={analyse.plan.args2} exemples={analyse.plan.ex2} /></li>
             </ol>
-            {analyse.genres.length > 0 && !analyse.corrige?.ouvert && <p class="small muted">Ton sujet parle {analyse.genres.map(g => GENRE_DU[g] ?? g).join(", ").replace(/, ([^,]*)$/, " et $1")} : les exemples sont choisis dans {analyse.genres.length > 1 ? "ces genres" : "ce genre"}.</p>}
+            {analyse.genres.length > 0 && !analyse.corrige?.ouvert && <p class="small muted">Ton sujet parle {genreDu(analyse.genres)} : les exemples sont choisis dans {analyse.genres.length > 1 ? "ces genres" : "ce genre"}.</p>}
             <p class="small muted devoir-base">Ce plan est une base : explique chaque argument avec tes mots et vérifie tes exemples dans ton cours.</p>
           </section>}
 
@@ -215,9 +215,6 @@ export function DevoirScreen() {
 }
 
 /** Nom de la fonction dans une phrase. */
-/** « Ton sujet parle de la poésie ». */
-const GENRE_DU: Record<string, string> = { "Poésie": "de la poésie", Roman: "du roman", "Théâtre": "du théâtre", Nouvelle: "de la nouvelle", Conte: "du conte", Essai: "de l'essai" };
-
 const NOM: Record<Fonction, string> = { Engagement: "d'engagement", Sociale: "sociale", Esthétique: "esthétique", Évasion: "d'évasion", Lyrique: "lyrique" };
 
 /** Quand l'énoncé n'est pas une dissertation littéraire. */

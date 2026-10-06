@@ -21,7 +21,7 @@ import { lienContact } from "../lib/contact";
 import { noterRecherche } from "../lib/stats";
 import { OeuvresOnglets } from "../components/SujetsOnglets";
 import { useSaisieDifferee } from "../lib/saisie";
-import { analyserSujet } from "../lib/devoir";
+import { analyserSujet, genreDu } from "../lib/devoir";
 import { renvoi } from "../lib/libre";
 import { write } from "../lib/storage";
 
@@ -150,6 +150,7 @@ export function OeuvresScreen({ params }: { params: URLSearchParams }) {
                 {analyse.fonctions.map(f => <span key={f} class={`tag ${fnClass(f)}`}>{f}</span>)}
                 {analyse.themes.map(t => <span key={t} class="tag">{t}</span>)}
               </p>
+              {analyse.genres.length > 0 && <p class="small muted">Ton sujet parle {genreDu(analyse.genres)} : seules les œuvres de {analyse.genres.length > 1 ? "ces genres" : "ce genre"} sont proposées.</p>}
               <a class="link-strong" href="#/devoir" onClick={() => write("devoir-texte", q)}>Voir un plan et les mots du sujet</a>
             </div>
           )}
