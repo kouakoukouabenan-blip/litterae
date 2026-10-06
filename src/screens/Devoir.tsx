@@ -12,7 +12,8 @@ import { ajouterSujetPerso, CONSIGNE } from "../lib/entrainement";
 import { brouillonVide, lireBrouillon } from "../lib/atelier";
 import { marquer } from "../lib/progres";
 import { noter } from "../lib/stats";
-import { estGarde, garderDevoir, retirerDevoir, useDevoirs, type DevoirGarde } from "../lib/devoirs";
+import { devoirDe, estGarde, garderDevoir, majDevoir, retirerDevoir, useDevoirs, type DevoirGarde } from "../lib/devoirs";
+import { jourLocal } from "../lib/progres";
 import { EmptyState } from "../components/EmptyState";
 import { toast } from "../components/Toast";
 import { SujetsOnglets } from "../components/SujetsOnglets";
@@ -56,6 +57,14 @@ export function DevoirScreen() {
 
   const [devoirs] = useDevoirs();
   const garde = estGarde(devoirs, texte);
+  const gardeLe = devoirDe(devoirs, texte);
+
+  /** Date du devoir : l'atelier est préparé tout de suite, et l'accueil découpe le travail jour par jour. */
+  function fixerDate(pour: string) {
+    if (!gardeLe) return;
+    majDevoir(gardeLe.id, { pour: pour || undefined, num: pour ? preparerAtelier() ?? gardeLe.num : gardeLe.num });
+    if (pour) toast("C'est noté : l'accueil te dira quoi faire chaque jour.");
+  }
 
   function garder() {
     garderDevoir(texte, auteur || analyse?.auteur || "");
@@ -74,7 +83,12 @@ export function DevoirScreen() {
 
   /** L'atelier reprend le sujet avec les thèmes, la fonction et le plan proposés (si l'élève ne l'a pas déjà commencé). */
   function rediger() {
-    if (!analyse) return;
+    const num = preparerAtelier();
+    if (num) location.hash = `#/entrainement/${num}`;
+  }
+
+  function preparerAtelier(): string | null {
+    if (!analyse) return null;
     const { citation, consigne } = decouperSujet(texte);
     const num = ajouterSujetPerso(citation, auteur.trim() || analyse.auteur || "Sujet de mon devoir", consigne || CONSIGNE);
     if (!lireBrouillon(num)) {
@@ -91,7 +105,7 @@ export function DevoirScreen() {
       analyse.plan.args2.forEach((a, i) => { if (b.axe2.args[i]) Object.assign(b.axe2.args[i], { arg: a, ex: enTexte(analyse.plan.ex2[i]) }); });
       write(`atelier:${num}`, { ...b, modifie: Date.now() });
     }
-    location.hash = `#/entrainement/${num}`;
+    return num;
   }
 
   return (
@@ -208,6 +222,12 @@ export function DevoirScreen() {
             </button>
             <button type="button" class="btn btn-secondary" onClick={autreDevoir}><Icon name="add" size={20} />Saisir un autre devoir</button>
           </div>
+          {gardeLe && (
+            <label class="devoir-date">
+              <span>À rendre le</span>
+              <input type="date" class="input" min={jourLocal()} value={gardeLe.pour ?? ""} onChange={e => fixerDate((e.target as HTMLInputElement).value)} />
+            </label>
+          )}
         </div>
       )}
     </Page>
@@ -260,7 +280,7 @@ export function MesDevoirsScreen() {
             <li key={d.id} class="devoir-garde">
               <button type="button" class="devoir-garde-ouvrir" onClick={() => ouvrir(d)}>
                 <span class="devoir-garde-texte">{d.texte.length > 140 ? d.texte.slice(0, 138).trimEnd() + "…" : d.texte}</span>
-                <span class="meta">{[d.auteur, `gardé le ${date(d.garde)}`].filter(Boolean).join(" · ")}</span>
+                <span class="meta">{[d.auteur, d.pour && d.pour >= jourLocal() ? `à rendre le ${date(Date.parse(d.pour + "T12:00:00"))}` : `gardé le ${date(d.garde)}`].filter(Boolean).join(" · ")}</span>
               </button>
               <button type="button" class="icon-btn" aria-label="Retirer ce devoir" onClick={() => retirer(d)}><Icon name="delete" size={20} /></button>
             </li>

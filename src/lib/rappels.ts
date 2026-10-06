@@ -1,9 +1,10 @@
+import { devoirARendre } from "./devoirs";
 import { sansEtoiles } from "./text";
 import { SERVEUR_URL } from "./site";
 import { read, write } from "./storage";
 import { etatNotif } from "./notifications";
 import { texteRappel } from "./suggestions";
-import { bilan, heureHabituelle } from "./progres";
+import { bilan, heureHabituelle, jourLocal } from "./progres";
 
 /**
  * Rappels personnels : si l'élève ne revient pas pendant 3 jours, une notification lui propose
@@ -62,7 +63,8 @@ export async function preparerRappel() {
   if (!SERVEUR_URL || etatNotif() !== "abonne" || !rappelsActifs()) return;
   try {
     await rangerTexte();
-    const jours = bilan().serie >= 2 ? 1 : JOURS_AVANT_RAPPEL;
+    // Série en cours ou devoir daté à rendre : le rappel part dès le lendemain.
+    const jours = bilan().serie >= 2 || devoirARendre(jourLocal()) ? 1 : JOURS_AVANT_RAPPEL;
     // Même calcul que le serveur : l'heure habituelle (UTC, heure d'Abidjan) le jour du rappel. On ne le redit que s'il change.
     const heure = heureHabituelle();
     const cible = heureDuRappel(Date.now(), jours, heure ?? 18);

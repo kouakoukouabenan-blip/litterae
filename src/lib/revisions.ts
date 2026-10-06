@@ -1,5 +1,6 @@
 import libres from "../data/quiz-libre.json";
-import type { EntreeDico, QuestionQuiz } from "../data/types";
+import { FONCTIONS, type EntreeDico, type Oeuvre, type QuestionQuiz } from "../data/types";
+import { OEUVRES, oeuvre } from "./data";
 import { licence } from "./licence";
 import { dicoComplet } from "./dictionnaire";
 import { read, useStored, write } from "./storage";
@@ -41,6 +42,8 @@ export function reviser(cle: string, reussie: boolean) {
   const boite = reussie ? Math.min((s[cle]?.boite ?? 0) + 1, INTERVALLES.length - 1) : 0;
   write(CLE, { ...s, [cle]: { boite, prochaine: dans(reussie ? INTERVALLES[boite] : 1) } });
   if (!reussie && cle.startsWith("quiz|")) noterErreurQuiz(cle.split("|")[1]);
+  // Une œuvre oubliée : sa fiche revient dans les suggestions de l'accueil.
+  if (!reussie && cle.startsWith("oeuvre|")) noterErreurQuiz(`oeuvre:${cle.split("|")[1]}`);
   marquer(`revision:${cle}`);
 }
 
@@ -49,11 +52,16 @@ export function seanceTerminee() {
 }
 
 /** Contenu d'une carte, s'il est sur l'appareil (accès complet, mot gratuit ouvert, quiz offert). */
-function contenu(cle: string): Carte | null {
+function contenu(cle: string, s = suivis): Carte | null {
   const [type, a, b] = cle.split("|");
   if (type === "mot") {
     const entree = dicoComplet()?.find(e => e.mot === a) ?? read<Record<string, EntreeDico>>("dico-consultes", {})[a];
     return entree?.sens ? { cle, type: "mot", entree } : null;
+  }
+  if (type === "oeuvre") {
+    const w = oeuvre(a);
+    const question = w && questionOeuvre(w, s()[cle]?.boite ?? 0);
+    return question ? { cle, type: "quiz", lecon: "oeuvres", question } : null;
   }
   if (type === "quiz") {
     const question = (licence()?.contenu.quiz?.[a] ?? (libres as Record<string, QuestionQuiz[]>)[a])?.[Number(b)];
@@ -63,6 +71,40 @@ function contenu(cle: string): Carte | null {
 }
 
 export const cleMot = (mot: string) => `mot|${mot}`;
+export const cleOeuvre = (id: string) => `oeuvre|${id}`;
+
+/** Petit nombre tiré du texte : le même ordre des réponses à chaque fois pour une même œuvre. */
+const graine = (t: string) => [...t].reduce((n, c) => (n * 31 + c.charCodeAt(0)) >>> 0, 7);
+function melanger<T>(liste: T[], g: number) {
+  const out = [...liste];
+  for (let i = out.length - 1; i > 0; i--) { g = (g * 1103515245 + 12345) >>> 0; const j = g % (i + 1); [out[i], out[j]] = [out[j], out[i]]; }
+  return out;
+}
+
+/**
+ * Question sur une fiche lue, pour avoir ses exemples en tête le jour du devoir :
+ * une fois l'auteur, une fois la fonction littéraire (quand une seule réponse est possible).
+ */
+function questionOeuvre(w: Oeuvre, boite: number): QuestionQuiz | null {
+  const g = graine(w.id);
+  const fausses = FONCTIONS.filter(f => !w.fonctions.includes(f));
+  if (boite % 2 === 1 && fausses.length && w.fonctions.length) {
+    const choix = melanger([w.fonctions[0], ...melanger(fausses, g).slice(0, 3)], g + boite);
+    const idee = w.idees.find(i => i.fonction === w.fonctions[0]) ?? w.idees[0];
+    return {
+      q: `Pour quelle fonction de la littérature « ${w.titre} » est-elle un bon exemple ?`,
+      choix, bonne: choix.indexOf(w.fonctions[0]),
+      pourquoi: `« ${w.titre} » illustre surtout la fonction ${w.fonctions[0].toLowerCase()}${idee ? ` : ${idee.argument.charAt(0).toLowerCase()}${idee.argument.slice(1).replace(/\.$/, "")}.` : "."}`
+    };
+  }
+  const autres = melanger([...new Set(OEUVRES.filter(x => x.auteur !== w.auteur && x.genre === w.genre).map(x => x.auteur))], g).slice(0, 3);
+  if (autres.length < 3) return null;
+  const choix = melanger([w.auteur, ...autres], g + boite);
+  return {
+    q: `Qui a écrit « ${w.titre} » ?`, choix, bonne: choix.indexOf(w.auteur),
+    pourquoi: `« ${w.titre} » est de ${w.auteur}${w.paysTexte || w.pays?.length ? ` (${w.paysTexte || w.pays.join(", ")})` : ""}.`
+  };
+}
 export const cleQuiz = (lecon: string, n: number) => `quiz|${lecon}|${n}`;
 
 /** Cartes à revoir aujourd'hui (les plus en retard d'abord). */
@@ -71,7 +113,7 @@ export function cartesDuJour(s: Suivis = suivis()): Carte[] {
   return Object.entries(s)
     .filter(([, v]) => v.prochaine <= auj)
     .sort((a, b) => a[1].prochaine.localeCompare(b[1].prochaine) || a[1].boite - b[1].boite)
-    .map(([k]) => contenu(k))
+    .map(([k]) => contenu(k, () => s))
     .filter((c): c is Carte => !!c);
 }
 

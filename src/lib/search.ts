@@ -3,7 +3,7 @@ import { FONCTIONS } from "../data/types";
 import { normalize } from "./text";
 import { sonProche, sonsDe } from "./flou";
 
-interface Indexed {
+export interface Indexed {
   w: Oeuvre;
   titre: string;
   auteur: string;

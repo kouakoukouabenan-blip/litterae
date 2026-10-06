@@ -14,7 +14,9 @@ import { bilan, recompenseAVoir } from "./progres";
 import { cartesDuJour } from "./revisions";
 import { defiFaitAujourdhui, sujetDuJour } from "./defi";
 import { normalize } from "./text";
-import { etapeFaible } from "./maitrise";
+import { etapeFaible, DEFS } from "./maitrise";
+import { devoirARendre } from "./devoirs";
+import { jourLocal } from "./progres";
 import { FONCTIONS, type Fonction } from "../data/types";
 import { analyserSujet } from "./devoir";
 import type { DevoirGarde } from "./devoirs";
@@ -37,6 +39,10 @@ export interface Suggestion {
   notif: { titre: string; texte: string };
   /** Déjà visible ailleurs sur l'accueil (la carte « Continuer la méthode ») : seulement pour les rappels. */
   horsAccueil?: boolean;
+  /** Famille de la suggestion, pour compter (sans rien savoir de l'élève) celles qui sont ouvertes. */
+  type?: string;
+  /** Demande du temps (atelier, leçon) : passe après les choses courtes le soir en semaine, avant le week-end. */
+  long?: boolean;
 }
 
 const JOUR = 864e5;
@@ -44,12 +50,12 @@ const titreCourt = (t: string) => (t.length > 42 ? t.slice(0, 40).trimEnd() + "�
 const de = (nom: string) => (/^[aeiouyàâéèêëîïôöùûüh]/i.test(nom) ? `d'${nom}` : `de ${nom}`);
 
 /** Sujet commencé dans l'atelier et pas encore terminé : le plus récemment modifié. */
-function sujetCommence(): Suggestion | null {
+function sujetCommence(exclu?: string): Suggestion | null {
   const brouillons = cles("atelier:")
     .map(k => ({ num: k.slice("atelier:".length), b: lireBrouillon(k.slice("atelier:".length)) }))
     .filter(x => x.b && !x.b.envoye)
     .map(x => ({ ...x, pct: avancement(x.b) }))
-    .filter(x => x.pct > 0 && x.pct < 100 && sujetsEntrainement().some(s => s.num === x.num))
+    .filter(x => x.pct > 0 && x.pct < 100 && x.num !== exclu && sujetsEntrainement().some(s => s.num === x.num))
     .sort((a, b) => (b.b!.modifie ?? 0) - (a.b!.modifie ?? 0));
   const d = brouillons[0];
   if (!d) return null;
@@ -168,7 +174,7 @@ function revisions(): Suggestion | null {
   if (!n) return null;
   return {
     cle: "revisions", icone: "history_edu", lien: "#/revisions",
-    titre: `Révise ${n > 1 ? `${n} cartes` : "une carte"}`, detail: "Mots et quiz à revoir aujourd'hui",
+    titre: `Révise ${n > 1 ? `${n} cartes` : "une carte"}`, detail: "Mots, quiz et œuvres à revoir aujourd'hui",
     notif: { titre: `${n > 1 ? `${n} cartes` : "Une carte"} à réviser`, texte: "Deux minutes pour ne pas oublier les mots et les règles vus ces derniers jours." }
   };
 }
@@ -281,18 +287,121 @@ function carnetIncomplet(h: Vue[], premium: boolean, jour: number, exclues: Set<
   };
 }
 
+const COURT: Record<string, string> = { comprendre: "analyse du sujet", plan: "plan", introduction: "introduction", exemples: "exemples", conclusion: "conclusion" };
+const JOURS = ["dimanche", "lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi"];
+const midi = (j: string) => Date.parse(j + "T12:00:00");
+
+/**
+ * Devoir gardé avec sa date : le travail qui reste (comprendre, plan, introduction, exemples, conclusion)
+ * est réparti sur les jours d'ici là, et l'accueil dit ce qu'il y a à faire aujourd'hui.
+ */
+function devoirDuJour(maintenant: number): Suggestion | null {
+  const auj = jourLocal(maintenant);
+  const d = devoirARendre(auj);
+  if (!d?.pour) return null;
+  const jours = Math.round((midi(d.pour) - midi(auj)) / JOUR);
+  if (jours > 14) return null;
+  const b = d.num ? lireBrouillon(d.num) : null;
+  const reste = DEFS.filter(e => !b || !e.fait(b));
+  const quand = jours === 0 ? "pour aujourd'hui" : jours === 1 ? "pour demain" : jours <= 6 ? `pour ${JOURS[new Date(midi(d.pour)).getDay()]}` : `pour le ${new Date(midi(d.pour)).toLocaleDateString("fr-FR", { day: "numeric", month: "long" })}`;
+  const lien = d.num ? `#/entrainement/${d.num}` : "#/devoirs";
+  if (!reste.length) return {
+    cle: `devoir-jour-${d.id}`, icone: "check", lien, titre: `Ton devoir ${quand}`, detail: "Tout est rédigé : relis ta copie",
+    notif: { titre: `Ton devoir ${quand}`, texte: "Tout est rédigé. Relis ta copie une dernière fois avant de la rendre." }
+  };
+  // Les étapes restantes, réparties sur les jours qui restent (le jour même : tout ce qui manque).
+  const parJour = Math.ceil(reste.length / Math.max(1, jours));
+  const etapes = reste.slice(0, parJour);
+  const liste = (q: string[]) => (q.length > 2 ? `${q.slice(0, -1).join(", ")} et ${q.at(-1)}` : q.join(" et "));
+  const texte = liste(etapes.map(e => e.nom.charAt(0).toLowerCase() + e.nom.slice(1)));
+  // Version courte pour l'accueil, qui tient sur une ligne de téléphone.
+  const court = liste(etapes.map(e => COURT[e.id] ?? e.nom));
+  return {
+    cle: `devoir-jour-${d.id}`, icone: "content_paste", lien: d.num ? `${lien}${etapes[0].atelier ? `?etape=${etapes[0].atelier}` : ""}` : lien,
+    titre: `Ton devoir ${quand}`, detail: `Aujourd'hui : ${court}`,
+    notif: { titre: `Ton devoir ${quand}`, texte: `Aujourd'hui : ${texte}. Quelques minutes suffisent.` }
+  };
+}
+
+/** Fiche oubliée en révision, ou œuvre qui allait mieux avec le défi : à relire tant qu'elle n'a pas été rouverte. */
+function ficheARevoir(h: Vue[], premium: boolean, maintenant: number): Suggestion | null {
+  for (const [k, quand] of Object.entries(erreursQuiz()).sort((a, b) => b[1] - a[1])) {
+    const m = k.match(/^(oeuvre|defi):(.+)$/);
+    if (!m || maintenant - quand > 21 * JOUR) continue;
+    const w = oeuvre(m[2]);
+    if (!w || h.some(v => v.t === "oeuvre" && v.id === w.id && v.d > quand) || !ficheOuvrable(w.id, premium)) continue;
+    const defi = m[1] === "defi";
+    return {
+      cle: `oeuvre-${w.id}`, icone: "local_library", lien: lienOeuvre(w),
+      titre: defi ? `« ${titreCourt(w.titre)} »` : `Relis « ${titreCourt(w.titre)} »`,
+      detail: defi ? "Elle allait bien avec le sujet du défi" : "Une question de révision à revoir",
+      notif: defi ? { titre: "Une œuvre pour ce genre de sujet", texte: `« ${w.titre} » ${de(w.auteur)} allait bien avec le sujet du défi. Lis sa fiche pour la prochaine fois.` }
+        : { titre: `Relis « ${titreCourt(w.titre)} »`, texte: "Tu l'avais oubliée en révision. Un coup d'œil à la fiche pour l'avoir en tête le jour du devoir." }
+    };
+  }
+  return null;
+}
+
+const africaine = (w: Oeuvre) => w.aires.some(a => /^Afrique|Maghreb/.test(a));
+const etrangere = (w: Oeuvre) => w.aires.some(a => /Europe|Amériques|Asie|Moyen-Orient/.test(a));
+
+/** Carnet d'œuvres toutes africaines (ou toutes étrangères) : une œuvre de l'autre côté, de la fonction la plus gardée. */
+function varierCarnet(premium: boolean, jour: number, exclues: Set<string>): Suggestion | null {
+  const gardees = read<string[]>("oeuvres-enregistrees", []);
+  const carnet = gardees.map(id => oeuvre(id)).filter((w): w is Oeuvre => !!w);
+  if (carnet.length < 3) return null;
+  const vers = carnet.every(africaine) ? etrangere : carnet.every(etrangere) ? africaine : null;
+  if (!vers) return null;
+  const compte = new Map<Fonction, number>();
+  for (const w of carnet) if (w.fonctions[0]) compte.set(w.fonctions[0], (compte.get(w.fonctions[0]) ?? 0) + 1);
+  const f = [...compte].sort((a, b) => b[1] - a[1])[0]?.[0];
+  const autres = OEUVRES.filter(w => w.detaillee && vers(w) && (!f || w.fonctions[0] === f) && !gardees.includes(w.id) && !exclues.has(`oeuvre-${w.id}`) && ficheOuvrable(w.id, premium))
+    .sort((a, b) => (b.niveaux?.length ? 1 : 0) - (a.niveaux?.length ? 1 : 0));
+  const w = autres[jour % Math.max(1, Math.min(5, autres.length))];
+  if (!w) return null;
+  const quoi = vers === africaine ? "une œuvre africaine" : "une œuvre étrangère";
+  return {
+    cle: `oeuvre-${w.id}`, icone: "local_library", lien: lienOeuvre(w),
+    titre: `« ${titreCourt(w.titre)} »`, detail: `Pour varier ton carnet : ${quoi}`,
+    notif: { titre: "Varie tes exemples", texte: `Le jour du devoir, un exemple africain et un exemple étranger font bonne impression. « ${w.titre} » ${de(w.auteur)} peut t'y aider.` }
+  };
+}
+
 /** Toutes les suggestions du moment, la plus utile d'abord. */
 export function suggestions(maintenant = Date.now()): Suggestion[] {
   const premium = !!licence();
   const h = historique();
   const jour = Math.floor(maintenant / JOUR);
-  // Une suggestion vue trois jours sans être ouverte laisse sa place une semaine ; une même œuvre n'est proposée qu'une fois.
-  const avant = [sujetCommence(), pourMonDevoir(h, premium, maintenant), defi(), revisions(), leconARevoir(h, premium, maintenant), sujetCitant(h, premium),
-    etapeATravailler(premium), leconSuivante(premium), oeuvreProche(h, premium, jour), pourTaRecherche(h, premium, jour, maintenant)];
+  const avec = (type: string, s: Suggestion | null, long = false): Suggestion | null => (s ? { ...s, type, long: long || undefined } : null);
+  const duJour = devoirDuJour(maintenant);
+  const numDevoir = duJour?.lien.match(/#\/entrainement\/([^?]+)/)?.[1];
+  const avant = [avec("devoir-jour", duJour), avec("atelier", sujetCommence(numDevoir), true), avec("devoir", pourMonDevoir(h, premium, maintenant)), avec("defi", defi()),
+    avec("revisions", revisions()), avec("erreur", leconARevoir(h, premium, maintenant)), avec("fiche-revoir", ficheARevoir(h, premium, maintenant)),
+    avec("sujet", sujetCitant(h, premium)), avec("etape", etapeATravailler(premium), true), avec("lecon", leconSuivante(premium), true),
+    avec("proche", oeuvreProche(h, premium, jour)), avec("recherche", pourTaRecherche(h, premium, jour, maintenant))];
   const prises = new Set(avant.map(s => s?.cle ?? ""));
+  const carnet = avec("carnet-fonction", carnetIncomplet(h, premium, jour, prises));
+  if (carnet) prises.add(carnet.cle);
+  // Une suggestion vue trois jours sans être ouverte laisse sa place une semaine ; une même œuvre n'est proposée qu'une fois.
   const deja = new Set<string>();
-  return [...avant, carnetIncomplet(h, premium, jour, prises), ficheDuCarnet(h, maintenant)]
+  const liste = [...avant, carnet, avec("varier", varierCarnet(premium, jour, prises)), avec("carnet", ficheDuCarnet(h, maintenant))]
     .filter((s): s is Suggestion => !!s && !estEcartee(s.cle, maintenant) && !deja.has(s.cle) && !!deja.add(s.cle));
+  return selonLeMoment(liste, maintenant);
+}
+
+/**
+ * Le soir en semaine, l'élève a peu de temps : les choses courtes (défi, révisions, une fiche) passent devant.
+ * Le week-end en journée, c'est le moment d'un vrai travail : l'atelier et les leçons passent devant.
+ * Le devoir à rendre reste toujours en tête.
+ */
+export function selonLeMoment(liste: Suggestion[], maintenant = Date.now()) {
+  const d = new Date(maintenant);
+  const h = d.getHours(), weekend = d.getDay() === 0 || d.getDay() === 6;
+  const soir = !weekend && (h >= 18 || h < 7);
+  const journeeWeekend = weekend && h >= 8 && h < 19;
+  if (!soir && !journeeWeekend) return liste;
+  const rang = (s: Suggestion, i: number) => (s.type === "devoir-jour" ? -1000 : 0) + (s.long ? (soir ? 100 : -100) : 0) + i;
+  return liste.map((s, i) => ({ s, r: rang(s, i) })).sort((a, b) => a.r - b.r).map(x => x.s);
 }
 
 /**
@@ -312,12 +421,16 @@ export function decouvertes(): Suggestion[] {
     out.push({ cle: "decouvrir-oeuvres", icone: "search", lien: "#/oeuvres", titre: "Trouve une œuvre pour tes exemples", detail: "Cherche par thème, auteur ou classe", notif: vide });
   if (!cles("atelier:").length)
     out.push({ cle: "decouvrir-atelier", icone: "edit", lien: "#/entrainement", titre: "Traite un sujet type bac", detail: "Pas à pas dans l'atelier", notif: vide });
-  return out.filter(s => !estEcartee(s.cle));
+  return out.filter(s => !estEcartee(s.cle)).map(s => ({ ...s, type: "decouverte" }));
 }
 
 /** Texte du rappel envoyé si l'élève ne revient pas : la suggestion la plus utile, sinon une invitation simple. */
 export function texteRappel(): { titre: string; texte: string; lien: string } {
   // Série en cours : le rappel part le lendemain soir, avant qu'elle ne s'arrête.
+  // Un devoir à rendre passe avant tout : le rappel dit ce qu'il y a à faire ce jour-là.
+  // Le rappel part le lendemain : on dit ce qu'il y aura à faire ce jour-là.
+  const devoir = devoirDuJour(Date.now() + JOUR);
+  if (devoir) return { ...devoir.notif, lien: devoir.lien };
   const serie = bilan().serie;
   if (serie >= 2) return { titre: `Garde ta série de ${serie} jours`, texte: "Relève le défi du jour en 5 minutes pour la continuer.", lien: "#/defi" };
   const s = suggestions()[0];
@@ -343,12 +456,12 @@ export function prochaineAction(maintenant = Date.now()): Suggestion {
   const debut = !lues.length && !historique().length && !cles("atelier:").length;
   const premiere = LECONS[0];
   if (debut && premiere) return {
-    cle: `lecon-${premiere.id}`, icone: "menu_book", lien: `#/cours/${premiere.id}`,
+    cle: `lecon-${premiere.id}`, type: "debut", icone: "menu_book", lien: `#/cours/${premiere.id}`,
     titre: "Commence par la leçon 1", detail: `${titreCourt(premiere.titre)}${premiere.duree ? `, ${premiere.duree}` : ""}`,
     notif: { titre: "", texte: "" }
   };
   return suggestions(maintenant)[0] ?? {
-    cle: "entrainement", icone: "edit", lien: "#/entrainement",
+    cle: "entrainement", type: "entrainement", icone: "edit", lien: "#/entrainement",
     titre: "Traite un sujet type bac", detail: "Pas à pas dans l'atelier",
     notif: { titre: "", texte: "" }
   };

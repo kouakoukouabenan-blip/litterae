@@ -8,8 +8,12 @@ import { numero } from "../lib/entrainement";
 import { lireBrouillon, brouillonVide } from "../lib/atelier";
 import { write } from "../lib/storage";
 import { jourLocal } from "../lib/progres";
-import { DUREE_DEFI, enregistrerDefi, oeuvresPourSujet, sujetDuJour, useDefis, type ReponseDefi } from "../lib/defi";
+import { DUREE_DEFI, enregistrerDefi, fonctionsDuSujet, oeuvresPourSujet, sujetDuJour, useDefis, verifierOeuvres, type ReponseDefi } from "../lib/defi";
+import { noterErreurQuiz } from "../lib/interets";
 import { OEUVRES } from "../lib/data";
+
+/** Nom de la fonction dans une phrase. */
+const NOM: Record<string, string> = { Engagement: "d'engagement", Sociale: "sociale", Esthétique: "esthétique", Évasion: "d'évasion", Lyrique: "lyrique" };
 
 const minutes = (s: number) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
 
@@ -76,6 +80,11 @@ function Comparaison({ r }: { r: ReponseDefi }) {
   const corrige = s && estComplet(s) && canOpenSubject(i) ? s : null;
   const citees = corrige ? oeuvresCitees(corrige) : [];
   const autres = oeuvresPourSujet(r.num).filter(w => !citees.some(c => c.id === w.id));
+  // Les œuvres tapées par l'élève vont-elles avec la fonction du sujet ? Une erreur fait revenir la bonne fiche sur l'accueil.
+  const verif = verifierOeuvres(r);
+  const attendue = NOM[fonctionsDuSujet(r.num)[0]] ?? "";
+  useEffect(() => { for (const v of verif) if (v.mieux) noterErreurQuiz(`defi:${v.mieux.id}`); }, []);
+  const lien = (id: string) => `#/oeuvres/${encodeURIComponent(id)}`;
 
   /** L'atelier reprend les arguments et les œuvres du défi si le brouillon de ce sujet est vide. */
   function rediger() {
@@ -99,6 +108,24 @@ function Comparaison({ r }: { r: ReponseDefi }) {
           ))}
         </ul>
       </section>
+
+      {verif.length > 0 && (
+        <section>
+          <h2 class="section-title">Tes œuvres pour ce sujet</h2>
+          <ul class="defi-verif">
+            {verif.map(v => (
+              <li key={v.oeuvre.id} class={v.va ? "defi-verif-ok" : "defi-verif-revoir"}>
+                <Icon name={v.va ? "check" : "info"} size={18} />
+                <span>
+                  <a href={lien(v.oeuvre.id)}><cite>{v.oeuvre.titre}</cite></a>
+                  {v.va ? ` va avec ce sujet (fonction ${attendue}).` : <> illustre surtout la fonction {NOM[v.oeuvre.fonctions[0]]}, alors que le sujet attend la fonction {attendue}.
+                    {v.mieux && <> Pense plutôt à <a href={lien(v.mieux.id)}><cite>{v.mieux.titre}</cite></a>.</>}</>}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
 
       {corrige ? (
         <section>

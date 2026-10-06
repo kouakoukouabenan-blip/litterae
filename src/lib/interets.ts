@@ -35,20 +35,22 @@ type Vues = Record<string, { jours: string[]; jusqua?: number }>;
 const VUES = "suggestions-vues";
 const JOUR = 864e5;
 
-export function suggestionsVues(cles: string[], maintenant = Date.now()) {
+export function suggestionsVues(cles: string[], maintenant = Date.now()): string[] {
   const v = read<Vues>(VUES, {});
   const auj = jourLocal(maintenant);
+  const nouvelles: string[] = [];
   for (const c of cles) {
     const s = v[c] ?? { jours: [] };
     if (s.jusqua && s.jusqua > maintenant) continue;
     delete s.jusqua;
-    if (!s.jours.includes(auj)) s.jours = [...s.jours, auj].slice(-3);
+    if (!s.jours.includes(auj)) { s.jours = [...s.jours, auj].slice(-3); nouvelles.push(c); }
     if (s.jours.length >= 3) { s.jours = []; s.jusqua = maintenant + 7 * JOUR; }
     v[c] = s;
   }
   // Vieilles entrées retirées pour que la liste reste petite.
   for (const [c, s] of Object.entries(v)) if (!(s.jusqua && s.jusqua > maintenant) && !s.jours.some(j => Date.parse(j) > maintenant - 30 * JOUR)) delete v[c];
   write(VUES, v);
+  return nouvelles;
 }
 
 export function suggestionOuverte(cle: string) {

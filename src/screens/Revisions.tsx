@@ -25,7 +25,7 @@ export function RevisionsScreen() {
       <div class="reading revisions">
         {!cartes.length ? (
           <EmptyState title="Rien à revoir aujourd'hui">
-            <p>Les mots du dictionnaire que tu ouvres et les questions de quiz reviennent ici le lendemain, puis quelques jours plus tard.</p>
+            <p>Les mots du dictionnaire, les questions de quiz et les œuvres que tu lis reviennent ici le lendemain, puis quelques jours plus tard.</p>
           </EmptyState>
         ) : fini ? (
           <div class="quiz-card quiz-fin" role="status">
@@ -75,7 +75,7 @@ function CarteRevision({ carte, suivante }: { carte: Carte; suivante: (reussie: 
   const lecon = LECONS.find(l => l.id === carte.lecon);
   return (
     <div class="quiz-card carte-revision">
-      <p class="eyebrow">Quiz{lecon ? ` · ${lecon.titre}` : ""}</p>
+      <p class="eyebrow">{carte.lecon === "oeuvres" ? "Œuvres lues" : `Quiz${lecon ? ` · ${lecon.titre}` : ""}`}</p>
       <p class="quiz-q">{q.q}</p>
       <ul class="quiz-choix">
         {q.choix.map((c, i) => {

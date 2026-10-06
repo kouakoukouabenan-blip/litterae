@@ -9,6 +9,7 @@ import { copyText, toast } from "../components/Toast";
 import { oeuvre, reference, sujetsCitant } from "../lib/data";
 import { useAccess } from "../lib/access";
 import { useNotes, useSaved } from "../lib/carnet";
+import { ajouterCarte, cleOeuvre } from "../lib/revisions";
 import { href } from "../lib/router";
 import { NotFound } from "./NotFound";
 import { fnClass } from "../lib/fonctions";
@@ -164,6 +165,8 @@ export function OeuvreScreen({ id, params }: { id: string; params: URLSearchPara
   useEffect(() => { if (w) { noter({ t: "oeuvre", ref: id }); noterFiche(id); noterVue("oeuvre", id); } }, [id]);
   const { isSaved, toggle } = useSaved();
   const lisible = libre && !aOuvrir && echec !== "limite";
+  // Fiche lue : elle reviendra en petite question dans les révisions (auteur, fonction).
+  useEffect(() => { if (w?.detaillee && lisible) ajouterCarte(cleOeuvre(id)); }, [id, lisible]);
   if (!w) return <NotFound what="Cette œuvre n'existe pas." back="#/oeuvres" />;
 
   const saved = isSaved(id);

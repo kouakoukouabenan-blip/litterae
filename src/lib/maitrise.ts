@@ -25,7 +25,7 @@ export interface Etape {
 }
 
 const rempli = (s: string | undefined) => (s ?? "").trim().length > 0;
-const DEFS: { id: string; nom: string; atelier: number; lecon: string; fait: (b: Brouillon) => boolean }[] = [
+export const DEFS: { id: string; nom: string; atelier: number; lecon: string; fait: (b: Brouillon) => boolean }[] = [
   { id: "comprendre", nom: "Comprendre le sujet", atelier: 0, lecon: "comprendre",
     fait: b => rempli(b.theme) && rempli(b.these) && rempli(b.reformulation) && rempli(b.problematique) },
   { id: "plan", nom: "Construire le plan", atelier: 1, lecon: "developpement",

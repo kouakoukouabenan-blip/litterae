@@ -6,6 +6,8 @@ import { normalize } from "./text";
 import { jourLocal, marquer } from "./progres";
 import { read, useStored, write } from "./storage";
 import { noter } from "./stats";
+import { buildIndex, search, EMPTY_FILTERS, type Indexed } from "./search";
+import { jetons, memeMot } from "./flou";
 
 /**
  * Défi du jour : un sujet type bac, le même pour tous les élèves ce jour-là,
@@ -71,4 +73,38 @@ export function oeuvresPour(themesSujet: string[], fonctions: Fonction[], combie
     .sort((a, b) => b.rang - a.rang || a.w.titre.localeCompare(b.w.titre, "fr"))
     .slice(0, combien)
     .map(x => x.w);
+}
+
+let INDEX: Indexed[] | null = null;
+/** Œuvre de la base que l'élève a tapée (« les soleil des independance » → Les Soleils des indépendances), si on la reconnaît sans doute. */
+export function oeuvreTapee(t: string): Oeuvre | null {
+  if (t.trim().length < 3) return null;
+  INDEX ??= buildIndex(OEUVRES);
+  const w = search(INDEX, t, EMPTY_FILTERS)[0];
+  if (!w) return null;
+  const mots = jetons(t).filter(j => !j.colle && j.cle.length >= 3).map(j => j.cle);
+  const ref = jetons(`${w.titre} ${w.auteur}`).map(j => j.cle);
+  const reconnus = mots.filter(m => ref.some(r => memeMot(m, r))).length;
+  return mots.length && reconnus / mots.length >= 0.5 ? w : null;
+}
+
+export interface Verification { tape: string; oeuvre: Oeuvre; va: boolean; mieux?: Oeuvre }
+
+/**
+ * Les œuvres citées dans le défi vont-elles avec la fonction du sujet ? Une œuvre dont aucune des deux
+ * fonctions principales n'est celle du sujet est signalée, avec une œuvre qui irait mieux.
+ */
+export function verifierOeuvres(r: ReponseDefi): Verification[] {
+  const fonctions = fonctionsDuSujet(r.num);
+  if (!fonctions.length) return [];
+  const conseillees = oeuvresPourSujet(r.num, 6);
+  const out: Verification[] = [];
+  for (const tape of r.oeuvres) {
+    const w = oeuvreTapee(tape);
+    if (!w || out.some(v => v.oeuvre.id === w.id)) continue;
+    const va = w.fonctions.slice(0, 2).some(f => fonctions.includes(f));
+    const mieux = va ? undefined : conseillees.find(c => c.id !== w.id && !out.some(v => v.mieux?.id === c.id));
+    out.push({ tape, oeuvre: w, va, mieux });
+  }
+  return out;
 }

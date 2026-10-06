@@ -570,3 +570,14 @@
 
 /* Liens du prof vers un contenu de l'appli, dans ses réponses */
 .lien-contenu { color: var(--green); font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
+
+/* Défi : les œuvres tapées par l'élève, vérifiées par rapport à la fonction du sujet. */
+.defi-verif { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.defi-verif li { display: flex; gap: 8px; align-items: flex-start; line-height: 1.45; }
+.defi-verif li > svg, .defi-verif li > .icon { flex: none; margin-top: 2px; }
+.defi-verif-ok > :first-child { color: var(--green); }
+.defi-verif-revoir > :first-child { color: var(--ochre-text); }
+
+/* J'ai un devoir : date à laquelle le devoir gardé est à rendre. */
+.devoir-date { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; font-weight: 600; }
+.devoir-date .input { width: auto; min-width: 11rem; }
