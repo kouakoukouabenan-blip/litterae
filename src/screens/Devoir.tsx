@@ -85,6 +85,8 @@ export function DevoirScreen() {
       b.axe1.titre = analyse.plan.axe1;
       b.axe2.titre = analyse.plan.axe2;
       // Les arguments proposés deviennent les arguments du plan (l'élève écrit l'explication et l'exemple).
+      // Un sujet qui énumère trois éléments donne trois arguments : l'atelier leur fait de la place.
+      while (b.axe1.args.length < analyse.plan.args1.length) b.axe1.args.push({ arg: "", expl: "", ex: "" });
       analyse.plan.args1.forEach((a, i) => { if (b.axe1.args[i]) Object.assign(b.axe1.args[i], { arg: a, ex: enTexte(analyse.plan.ex1[i]) }); });
       analyse.plan.args2.forEach((a, i) => { if (b.axe2.args[i]) Object.assign(b.axe2.args[i], { arg: a, ex: enTexte(analyse.plan.ex2[i]) }); });
       write(`atelier:${num}`, { ...b, modifie: Date.now() });

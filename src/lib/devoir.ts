@@ -407,6 +407,9 @@ const TRAVAIL: Record<Consigne, string> = {
 /** L'appli hésite quand la deuxième fonction a presque autant de points que la première. */
 const SEUIL_DOUTE = 0.8;
 
+/** « … » (Jean de La Fontaine) : une citation suivie de son auteur entre parenthèses. */
+const CITE_ENTRE_PARENTHESES = /[»"”>]\s*\(\s*[A-ZÀ-Ý][^)]{2,80}\)/u;
+
 /** Tournures par lesquelles un auteur écarte une idée. */
 const REJETTE = /\b(n est pas|ne sont pas|n est plus|ne crois pas|ne lis pas|n ecris pas|ne raconte pas|ne chante pas|ne doit pas|n a pas pour|pas pour|non pas|pas fait)\b/;
 /** En dessous, presque aucun indice : la fonction proposée est un simple pari. */
@@ -570,6 +573,8 @@ interface Contexte {
   oeuvres: Oeuvre[];
   genres: string[];
   rejet: Fonction | null;
+  /** Ce que le sujet énumère : chaque élément devient un argument de la partie 1. */
+  liste: string[];
 }
 
 /**
@@ -577,7 +582,7 @@ interface Contexte {
  * fiches des œuvres sur ces thèmes illustrent vraiment, une œuvre pour chaque argument, et une nuance liée au thème.
  * Quand l'auteur rejette une fonction (« Je ne crois pas à l'évasion »), la partie 1 défend ce qu'il pense vraiment.
  */
-function planDuSujet({ citation, f: f0, f2: f20, consigne, discussion, themes, annonces, oeuvres, genres, rejet }: Contexte): Analyse["plan"] {
+function planDuSujet({ citation, f: f0, f2: f20, consigne, discussion, themes, annonces, oeuvres, genres, rejet, liste }: Contexte): Analyse["plan"] {
   // L'auteur rejette la fonction que le sujet évoque le plus : sa thèse est l'autre.
   const f = rejet && f0 === rejet ? (f20 && f20 !== rejet ? f20 : OPPOSE[rejet]) : f0;
   const f2 = f20 === f ? f0 : f20;
@@ -585,6 +590,7 @@ function planDuSujet({ citation, f: f0, f2: f20, consigne, discussion, themes, a
   const these = theseDe(citation), courte = citationCourte(citation);
   const axe1 = !f ? "Explique la citation : ce que l'auteur veut dire, avec des exemples d'œuvres."
     : these ? `Montre que, selon l'auteur, ${these} : c'est ${NOM_FONCTION[f]}.`
+    : liste.length ? `Le sujet énumère ${liste.length} idées : explique-les l'une après l'autre et illustre chacune.`
     : rejet && rejet !== f ? `Montre pourquoi, pour l'auteur, la littérature n'est pas d'abord ${IDEE[rejet]} : elle est plutôt ${IDEE[f]}.`
     : courte ? `Explique ce que veut dire l'auteur par « ${courte} » : pour lui, la littérature est ${IDEE[f]}.`
     : `Explique la thèse : pour l'auteur, la littérature est ${IDEE[f]}${de ? `, surtout quand elle parle ${de}` : ""}.`;
@@ -644,12 +650,56 @@ function planDuSujet({ citation, f: f0, f2: f20, consigne, discussion, themes, a
     return out;
   };
   const f2b = discussion ? fN : f2 ?? f;
+  if (liste.length && f) {
+    // Le sujet énumère : chaque élément est un argument de la partie 1, illustré par l'argument qu'il évoque s'il en évoque un.
+    const a1 = liste.map(el => {
+      const m = jetons(el), ph = ` ${clesDe(el)} `;
+      // Un élément qui n'évoque aucun argument connu n'a pas d'exemple : mieux vaut rien qu'une œuvre au hasard.
+      return INDICES_ARGUMENTS.find(([, , l]) => l.some(x => indicePresent(m, x, ph)))?.[0] ?? null;
+    });
+    const a2 = choisir(f2b, a1.filter((a): a is string => !!a));
+    const titre = (el: string) => el.charAt(0).toUpperCase() + el.slice(1);
+    const cites = liste.map(el => `« ${el} »`);
+    return {
+      axe1, axe2,
+      problematique: `Pourquoi, selon l'auteur, la littérature est-elle à la fois ${cites.slice(0, -1).join(", ")} et ${cites[cites.length - 1]} ?`
+        + (discussion ? ` Ne peut-elle pas aussi être ${EN_BREF[fN!]} ?` : ""),
+      args1: liste.map(el => `« ${titre(el)} »`), args2: a2.map(a => ARGUMENTS[a] ?? a),
+      ex1: a1.map(a => (a ? exemples(a, undefined) : [])), ex2: a2.map(a => exemples(a, f2b))
+    };
+  }
   const a1 = choisir(f, []), a2 = choisir(f2b, a1);
   return {
     axe1, axe2, problematique,
     args1: a1.map(a => ARGUMENTS[a] ?? a), args2: a2.map(a => ARGUMENTS[a] ?? a),
     ex1: a1.map(a => exemples(a, f)), ex2: a2.map(a => exemples(a, f2b))
   };
+}
+
+/**
+ * Les éléments que le sujet énumère (« les amis…, les conseillers…, les professeurs… ») : chacun est déjà un argument.
+ * Il faut au moins trois groupes séparés par des virgules ou des points-virgules, qui commencent par le même article.
+ */
+export function enumeration(citation: string): string[] {
+  const ARTICLE = /^(les|le|la|un|une|des)\s/i;
+  // Chaque groupe s'arrête avant « dont », « qui », « que » ; il reste court.
+  const couper = (g: string) => g.split(/\s(?:dont|qui|que|qu'|qu’)\s/i)[0].trim();
+  const bouts = citation.replace(/[«»"“”.!?…]/g, " ").split(/\s*[;,]\s*/)
+    .map(b => b.trim().replace(/^(et|ou|mais)\s+/i, "").replace(/^(ils|elles|il|elle|ce|c'|c’)\s*(sont|est|seront|sera)\s+/i, ""));
+  for (let i = 1; i < bouts.length; i++) {
+    const art = bouts[i].match(ARTICLE)?.[1].toLowerCase();
+    if (!art) continue;
+    const suite: string[] = [];
+    for (let k = i; k < bouts.length && bouts[k].match(ARTICLE)?.[1].toLowerCase() === art; k++) suite.push(couper(bouts[k]));
+    if (suite.length < 2) continue;
+    // Le premier élément est dans le groupe d'avant, après le verbe (« Les livres sont les amis… »).
+    const avant = bouts[i - 1].match(new RegExp(`(?:^|\\s)(?:sont|est|été|seront|sera|restent|reste|devient|deviennent)\\s(?:.*?\\s)??(${art}\\s.*)$`, "i"))?.[1];
+    const tout = [...(avant ? [couper(avant)] : []), ...suite];
+    // « …, c'est la littérature » : le mot du sujet lui-même n'est pas un élément de la liste.
+    const sujetMeme = (g: string) => /^(la|le|les)\s(littérature|poésie|roman|théâtre|écrivain|poète|livres?)$/i.test(g);
+    if (tout.length >= 3 && tout.every(g => g.split(/\s+/).length <= 9 && !sujetMeme(g))) return tout.slice(0, 3);
+  }
+  return [];
 }
 
 /** Le plan d'un sujet corrigé que l'élève peut ouvrir : celui écrit par le professeur. */
@@ -762,7 +812,7 @@ export function analyserSujet(texteTape: string, combien = 6, imposee?: Fonction
   // Sujet presque identique à un sujet corrigé : le plan du professeur passe avant le plan automatique.
   const corrigeProche = sujetCorrigeProche(c0);
   const plan = corrigeProche && "axe1" in corrigeProche ? planDuCorrige(corrigeProche)
-    : planDuSujet({ citation: brute, f, f2: fonctions[1], consigne: type, discussion, themes, annonces: argumentsTrouves, oeuvres, genres, rejet });
+    : planDuSujet({ citation: brute, f, f2: fonctions[1], consigne: type, discussion, themes, annonces: argumentsTrouves, oeuvres, genres, rejet, liste: enumeration(brute) });
   const corrige = corrigeProche ? { num: corrigeProche.num, ouvert: "axe1" in corrigeProche } : null;
 
   const importants = mots.filter(m => m.brut.length >= 5 && !TROP_COURANTS.has(m.brut));
@@ -776,6 +826,6 @@ export function analyserSujet(texteTape: string, combien = 6, imposee?: Fonction
   return {
     themes, fonctions, mots: dico, discussion, arguments: argumentsTrouves, travail: TRAVAIL[type], auteur, plan, oeuvres,
     proches: corrige ? proches.filter(x => x.num !== corrige.num) : proches,
-    doute, faible, rejet, corrige, nature: natureDuSujet(texte, citation, !!auteur || !!auteurConnu(texteTape))
+    doute, faible, rejet, corrige, nature: natureDuSujet(texte, citation, !!auteur || !!auteurConnu(texteTape) || CITE_ENTRE_PARENTHESES.test(texteTape))
   };
 }

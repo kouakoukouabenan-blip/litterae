@@ -53,13 +53,6 @@
 ]
 },
 {
-"texte": "Sujet de dissertation littéraire\n\n«  Les livres sont les amis les plus tranquilles et les plus constants ; ils sont les conseillers les plus accessibles et les plus sages, et les professeurs les plus patients. »\n\n Expliquez  cette affirmation de Charles William Eliot.",
-"fonctions": [
-"Engagement",
-"Sociale"
-]
-},
-{
 "texte": "Dissertation littéraire. \nSujet de français du bac session 2019.\nSujet: Dans le Degré zéro de l'écriture, Roland BARTHES affirme :<< L'univers poétique est rempli de tourments qui fond des poètes des gens qui n'ont jamais souri. >> \nExpliquez et discutez cette opinion de Roland BARTHES dans un développement argumenté et illustré d'exemples tirés d'oeuvres poétiques lues ou étudiées.",
 "fonctions": [
 "Lyrique"
@@ -83,12 +76,6 @@
 "fonctions": [
 "Engagement",
 "Sociale"
-]
-},
-{
-"texte": "Sujet de dissertation littéraire :\nUn écrivain affirme :<<l'écrivain est comme un griot qui parle sans avoir l'assurance d'être ecouter.On ne l'écoute d'ailleurs pas>>\n\n1) Donne la reformulation de ce sujet \n2) Donne l'axe 1 & l'axe2\n3) fais l'introduction de ce sujet\n\nAIDER MOI SVP",
-"fonctions": [
-"Engagement"
 ]
 },
 {
@@ -170,6 +157,12 @@
 ]
 },
 {
+"texte": "« Ecrire, c'est mentir ». Expliquez et discutez cette allégation sur la fonction assignée à l'écrivain en vous appuyant sur vos lectures ou vos connaissances personnelles.",
+"fonctions": [
+"Évasion"
+]
+},
+{
 "texte": "« La littérature doit être mise exclusivement au service de la défense d'une cause sociale, culturelle ou politique. Par le biais de l'écrivain, elle doit donner au peuple une conscience révolutionnaire ». Expliquez et discutez cette assertion en vous référant à la littérature française et à la littérature africaine.",
 "fonctions": [
 "Engagement"
@@ -183,9 +176,46 @@
 ]
 },
 {
+"texte": "Un éditeur contemporain présente ainsi une collection d'ouvrages littéraires : « la modernité n'a rien à voir avec la date de parution. Des textes écrits, il ya plusieurs siècles sont résolument modernes. » Partagez-vous ses opinions ? Vous appuierez votre réponse sur des analyses tirées de vos lectures.",
+"fonctions": [
+"Sociale"
+]
+},
+{
+"texte": "« Un grand écrivain, un grand artiste est essentiellement anticonformiste. Il navigue à contre-courant » À l'aide d'exemple précis, vous expliquerez et discuterez ce propos d'André Gide.",
+"fonctions": [
+"Engagement"
+]
+},
+{
+"texte": "« La littérature n'a pas la vérité pour objet. Il faut laisser la vérité aux sciences car elle est leur objet. L'art du roman est de savoir mentir » Expliquez et discutez cette pensée.",
+"fonctions": [
+"Évasion"
+]
+},
+{
 "texte": "« Celui qui lit une œuvre littéraire joue avec l'imaginaire, joue à prendre pour réel ce qui est fiction » Expliquez et discutez ces propos en vous référant à vos connaissances personnelles.",
 "fonctions": [
 "Évasion"
+]
+},
+{
+"texte": "« la vraie lecture commence quand on ne lit plus seulement pour se distraire et se fuir, mais pour se trouver » (Jean Guéhenno). Expliquez et discutez cette allégation sur la fonction assignée à la lecture.",
+"fonctions": [
+"Lyrique",
+"Évasion"
+]
+},
+{
+"texte": "« Si l'écrivain des années 1600 veut que ses écrits soient toujours d'actualité, il doit se méfier de l'actualité comme source d'inspiration ». Partagez-vous son opinion ?",
+"fonctions": [
+"Sociale"
+]
+},
+{
+"texte": "Pensez-vous qu'il est indispensable de connaître la biographie d'un écrivain pour arriver à comprendre et aimer son œuvre ?",
+"fonctions": [
+"Lyrique"
 ]
 },
 {
@@ -197,6 +227,24 @@
 },
 {
 "texte": "« frappe-toi le cœur ! C'est là qu'est le génie » (Alfred de Musset). Comment le cœur peut-il constituer la source d'où provient l'inspiration dont un écrivain a besoin ?",
+"fonctions": [
+"Lyrique"
+]
+},
+{
+"texte": "« imposer la même technique d'écriture à tout le monde revient à demander à toute l'humanité de porter la même pointure de chaussures » (Victor Hugo). Passez en revue les courants littéraires différents pour étayer ces propos.",
+"fonctions": [
+"Engagement"
+]
+},
+{
+"texte": "« Longtemps j'ai pris ma plume pour épée, à présent je connais notre impuissance. Qu'importe : je fais, je ferai des livres » Malgré échecs et déboires, pensez-vous qu'écrire soit une nécessité ?",
+"fonctions": [
+"Engagement"
+]
+},
+{
+"texte": "« Malheur au livre qu'on peut lire sans s'interroger tout le temps sur l'auteur » (Émile Cioran)",
 "fonctions": [
 "Lyrique"
 ]
@@ -293,6 +341,32 @@
 ]
 },
 {
+"texte": "« Les personnages du roman ne ressemblent pas davantage à la réalité qu'à des habitants des songes. » (Albert Béghin)",
+"fonctions": [
+"Évasion",
+"Sociale"
+]
+},
+{
+"texte": "« Tout grand roman est un déicide, c'est-à-dire un assassinat symbolique de la réalité. »",
+"fonctions": [
+"Évasion"
+]
+},
+{
+"texte": "« Le but du roman n'est pas de nous raconter une histoire, de nous amuser et de nous attendrir mais de nous forcer à penser » (Maupassant, préface de Pierre et Jean)",
+"fonctions": [
+"Engagement",
+"Évasion"
+]
+},
+{
+"texte": "« Le roman et le théâtre, en nous présentant les personnages assez voisins de nous pour que nous les comprenions, assez loin de nous pour que nous n'ayons pas peur en les condamnant, de nous condamner nous-mêmes, nous rendent notre objectivité de spectateurs, nous rendent notre liberté » (Pierre Aimé Touchard). En vous appuyant sur des œuvres littéraires que vous connaissez, commentez ce jugement.",
+"fonctions": [
+"Sociale"
+]
+},
+{
 "texte": "« Un romancier doit être l'historien de son âge. Il ne peut prendre autre chose que ce qu'il a vu » (Jean B. Louvet). Expliquez puis discutez son point de vue.",
 "fonctions": [
 "Sociale"
@@ -325,6 +399,13 @@
 ]
 },
 {
+"texte": "« Le théâtre est d'abord un art du spectacle avant d'être un divertissement, une instruction morale et une prise directe sur les problèmes de nos sociétés »",
+"fonctions": [
+"Esthétique",
+"Évasion"
+]
+},
+{
 "texte": "« Le théâtre est un art illusionniste. Il éloigne le spectateur du vrai »",
 "fonctions": [
 "Évasion"
@@ -334,6 +415,12 @@
 "texte": "« Le but ultime de la vie de l'homme, c'est de créer des œuvres de beauté et c'est à travers ces créations qu'on participe à l'éternité de la vie ». Expliquez et discutez ces propos.",
 "fonctions": [
 "Esthétique"
+]
+},
+{
+"texte": "« une œuvre d'art devrait toujours nous apprendre que nous n'avions pas vu ce que nous avions vu » (Paul Valery)",
+"fonctions": [
+"Sociale"
 ]
 },
 {
@@ -364,6 +451,13 @@
 ]
 },
 {
+"texte": "« Je me sers d'animaux pour instruire les hommes » (Jean de La Fontaine)",
+"fonctions": [
+"Engagement",
+"Sociale"
+]
+},
+{
 "texte": "« j'ai pétri de la boue et j'en ai fait de l'or » (Charles Baudelaire)",
 "fonctions": [
 "Esthétique"
@@ -374,6 +468,12 @@
 "fonctions": [
 "Engagement",
 "Lyrique"
+]
+},
+{
+"texte": "« La poésie suscite le rêve, le roman lui raconte, décrit, fait… »",
+"fonctions": [
+"Évasion"
 ]
 },
 {
@@ -388,6 +488,12 @@
 "fonctions": [
 "Sociale",
 "Engagement"
+]
+},
+{
+"texte": "« Écrire une œuvre littéraire c'est refuser de regarder le monde tel qu'il est ».",
+"fonctions": [
+"Évasion"
 ]
 },
 {
@@ -410,6 +516,12 @@
 ]
 },
 {
+"texte": "« La littérature est un domaine de la pensée humaine qui, par les pouvoirs du verbe de l'écrivain, se veut une thérapie pour les âmes tourmentées ».",
+"fonctions": [
+"Lyrique"
+]
+},
+{
 "texte": "« Peu importe son siècle, sa distance, l'œuvre littéraire et quoique loin dans le temps et dans l'espace reflète toujours ce que nous vivons ».",
 "fonctions": [
 "Sociale"
@@ -419,6 +531,13 @@
 "texte": "« Tout écrivain vrai est celui qui puise la manière et l'inspiration dans le siècle auquel il appartient pour composer son œuvre ».",
 "fonctions": [
 "Sociale"
+]
+},
+{
+"texte": "« Seule l'imagination fait la valeur d'une œuvre littéraire ». Discutez cette opinion en s'efforçant, d'une part, d'expliquer comment l'imagination paraît essentielle.",
+"fonctions": [
+"Évasion",
+"Esthétique"
 ]
 },
 {
@@ -435,6 +554,13 @@
 ]
 },
 {
+"texte": "« Le dramaturge a des objectifs envers le spectateur : amuser la galerie et lui faire prendre conscience. » Expliquer et discuter les propos de ce critique contemporain à l'aide des œuvres théâtrales que vous avez lues ou étudiées.",
+"fonctions": [
+"Évasion",
+"Engagement"
+]
+},
+{
 "texte": "« Sans se soucier des autres, sans penser à l'atmosphère tendue, le poète est subjectif » Qu'en pensez-vous ?",
 "fonctions": [
 "Lyrique"
@@ -445,6 +571,12 @@
 "fonctions": [
 "Évasion",
 "Sociale"
+]
+},
+{
+"texte": "« Tout l'art du roman vise sans doute à nous tirer d'impatience et à nous proposer un plaisir d'entente qui ne s'use point. Par cette précaution, un vrai roman est toujours court. » (Alain, Propos de littérature, 1934). En vous appuyant sur des œuvres romanesques déjà lues ou étudiées, expliquer et discuter les propos de cet auteur.",
+"fonctions": [
+"Évasion"
 ]
 },
 {
@@ -479,6 +611,12 @@
 ]
 },
 {
+"texte": "« je ne trempe pas ma plume dans un encrier mais dans la vie » (Blaise Cendrars). Qu'en pensez-vous ?",
+"fonctions": [
+"Sociale"
+]
+},
+{
 "texte": "« l'Artiste est celui qui nous montre du doigt une parcelle du monde » (Le Clézio). Pensez-vous comme Le Clézion en affirmant cela ?",
 "fonctions": [
 "Sociale"
@@ -510,6 +648,12 @@
 ]
 },
 {
+"texte": "Pensez-vous comme André Malraux que la vie privée des grands écrivains n'est qu'un « misérable tas de petits secrets » dont le lecteur n'a guère besoin ou croyez-vous au contraire qu'une telle connaissance contribue précieusement à la bonne intelligence d'une oeuvre ?",
+"fonctions": [
+"Lyrique"
+]
+},
+{
 "texte": "« Le succès du roman repose sur notre éternel besoin qu'on nous raconte des histoires où nous nous reconnaissons tels… que nous voudrions être » (André Bellesort). Commentez et discutez cette opinion",
 "fonctions": [
 "Évasion"
@@ -535,9 +679,23 @@
 ]
 },
 {
+"texte": "« Je ne vais jamais au théâtre sans mon mouchoir » Quel effet selon lui, le théâtre produit-il sur le spectateur? Son acception du théâtre vous satisfait-elle?",
+"fonctions": [
+"Lyrique",
+"Évasion"
+]
+},
+{
 "texte": "« Le théâtre vit de morale… toute grande oeuvre dramatique suppose une question de morale et la suggère » La valeur d'une grande oeuvre dramatique est-elle à la lumière de vos expériences, sa capacité d'être le support d'une morale?",
 "fonctions": [
 "Sociale"
+]
+},
+{
+"texte": "« le mot comprendre n'existe pas au théâtre (…) Le vrai public ne comprend pas, il ressent (…) Ceux qui veulent comprendre au théâtre sont ceux qui ne comprennent pas le théâtre. Le théâtre n'est pas un théorème mais un spectacle » (Jean Giraudoux, L'Impromptu de Paris, 1937). Comment comprenez-vous ce propos ?",
+"fonctions": [
+"Évasion",
+"Esthétique"
 ]
 },
 {
@@ -567,6 +725,12 @@
 ]
 },
 {
+"texte": "« on ne lit jamais un livre. On se lit à travers les livres, soit pour se découvrir, soit pour se contrôler ». En vous appuyant sur votre expérience personnelle de lecteur d'œuvres littéraires, vous expliquerez ce propos. (Robert Rolland, Une nouvelle littérature)",
+"fonctions": [
+"Lyrique"
+]
+},
+{
 "texte": "« le succès du roman, la faveur dont il jouit auprès du public, l'intérêt qu'il suscite chez les lecteurs tiennent du fait qu'il nous livre à la fois les prestiges de l'imaginaire et les saveurs du réel ». En vous appuyant sur vos lectures d'œuvres romanesques, justifiez cette affirmation. (Michel Raimond)",
 "fonctions": [
 "Évasion",
@@ -575,6 +739,12 @@
 },
 {
 "texte": "« le rôle de l'écrivain (…) ne le sépare pas de devoirs difficiles. Il est au service de ceux qui subissent l'histoire ». Dans un développement argumenté et illustré d'exemples tirés d'œuvres littéraires étudiées ou lues, expliquez et discutez cette opinion d'Albert Camus.",
+"fonctions": [
+"Engagement"
+]
+},
+{
+"texte": "« Dans un monde qui souffre, à quoi sert-il d'écrire ? »",
 "fonctions": [
 "Engagement"
 ]
@@ -631,9 +801,23 @@
 ]
 },
 {
+"texte": "« On ne doit parler, on ne doit écrire que pour l'instruction. » (La Bruyère). Après vous être interrogé(e) sur le sens du mot « instruction », vous vous demanderez si c'est le seul but de la littérature.",
+"fonctions": [
+"Engagement",
+"Sociale"
+]
+},
+{
 "texte": "« J'écris pour agir » (Voltaire). Pensez-vous que le rôle d'un écrivain soit de défendre des valeurs auxquelles il tient ?",
 "fonctions": [
 "Engagement"
+]
+},
+{
+"texte": "« La poésie comme l'art, est inséparable de la merveille. Elle est domiciliée dans l'espace émotif et saurait vire ailleurs » André Pieyr de Mandiargues. Vous commenterez ce propos en vous appuyant sur des exemples précis.",
+"fonctions": [
+"Lyrique",
+"Évasion"
 ]
 },
 {
@@ -798,6 +982,13 @@
 "texte": "« La poésie est la seule manière pour moi de ressentir les vibrations intenses d'être intensément vivant » (Emile Lalsaga). Commentez cette affirmation en vous appuyant sur des exemples tirés de vos lectures et connaissances personnelles.",
 "fonctions": [
 "Lyrique"
+]
+},
+{
+"texte": "« Je ne conçois la littérature que comme l'énoncé de la vérité. Au prix de la vie. Sinon ce n'est pas la peine d'écrire. » (Catherine Cusset). Partagez-vous ce point de vue ?",
+"fonctions": [
+"Sociale",
+"Engagement"
 ]
 },
 {

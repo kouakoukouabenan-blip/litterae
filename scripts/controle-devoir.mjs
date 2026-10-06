@@ -32,7 +32,9 @@ try {
     const ids = ex.flat().map(e => e.id).filter(Boolean);
     if (new Set(ids).size !== ids.length) { doublons++; problemes.push(`${nom} : la même œuvre revient deux fois`); }
     for (const e of ex.flat()) if (e.id) { exemplesTotal++; if (parId.get(e.id)?.detaillee !== false) exemplesSurs++; else problemes.push(`${nom} : fiche incomplète en exemple (${e.titre})`); }
-    if (ex.some(l => !l.length)) { vides++; problemes.push(`${nom} : un argument sans exemple`); }
+    // Les éléments repris d'une énumération (« … ») peuvent rester sans exemple : mieux vaut rien qu'une œuvre au hasard.
+    const args = [...a.plan.args1, ...a.plan.args2];
+    if (ex.some((l, i) => !l.length && !String(args[i] ?? "").startsWith("« "))) { vides++; problemes.push(`${nom} : un argument sans exemple`); }
   };
   for (const s of sujets) {
     const a = analyserSujet(`« ${s.citation} » Expliquez et discutez.`, 6);
@@ -59,6 +61,8 @@ try {
     ["« La littérature doit être une arme au service du peuple opprimé. » Expliquez et discutez.", a => !!a.plan.problematique && a.plan.problematique.endsWith("?") && !a.corrige],
     ["« L'écrivain doit être la voix de ceux qui souffrent en silence. » Discutez.", a => !a.corrige],
     ["« La poésie est avant tout un jeu avec les mots. » Discutez.", a => !a.corrige],
+    // Un sujet qui énumère : chaque élément devient un argument.
+    ["« Les livres sont les amis les plus tranquilles et les plus constants ; ils sont les conseillers les plus accessibles et les plus sages, et les professeurs les plus patients. » Expliquez.", a => a.plan.args1.length === 3 && a.plan.args1[2].includes("professeurs")],
     // Un sujet corrigé tapé avec des fautes reste reconnu.
     ["faire de la literature cest sarmer pour se faire lecho de ceux qui nont pas de voix expliquer et discuter", a => a.corrige?.num === "01"]
   ];

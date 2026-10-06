@@ -30,7 +30,9 @@ try {
   const { redresser } = await vite.ssrLoadModule("/src/lib/flou.ts");
   // Les sujets réels (BAC, devoirs, Facebook, sujets corrigés) comptent plus que les sujets fabriqués pour l'entraînement (« corpus-… »).
   const sujets = readdirSync(dossier).filter(f => f.endsWith(".json"))
-    .flatMap(f => JSON.parse(readFileSync(`${dossier}/${f}`, "utf8")).map(x => ({ ...x, poids: f.startsWith("corpus-") ? 1 : REEL })))
+    .map(f => [f, JSON.parse(readFileSync(`${dossier}/${f}`, "utf8"))])
+    // Les autres fichiers du dossier (réponses en cours, notes) ne sont pas des listes de sujets.
+    .flatMap(([f, l]) => Array.isArray(l) ? l.map(x => ({ ...x, poids: f.startsWith("corpus-") ? 1 : REEL })) : [])
     .map(x => ({ ...x, fonctions: (x.fonctions ?? []).map(y => NOMS[y] ?? y).filter(y => ORDRE.includes(y)) }))
     // Un sujet dont la fonction est douteuse (« sur »: false) n'est pas appris.
     .filter(x => x.texte && x.fonctions.length && x.sur !== false);
