@@ -27,6 +27,8 @@ import { DefiScreen } from "./screens/Defi";
 import { DevoirScreen, MesDevoirsScreen } from "./screens/Devoir";
 import { RevisionsScreen } from "./screens/Revisions";
 import { ProgresScreen } from "./screens/Progres";
+import { CollectionScreen } from "./screens/Collection";
+import { DuelScreen } from "./screens/Duel";
 import { reverifier } from "./lib/licence";
 import { synchroniser } from "./lib/synchro";
 import { demarrerStats, noter } from "./lib/stats";
@@ -104,6 +106,8 @@ export function App() {
     case "devoirs": screen = <MesDevoirsScreen />; break;
     case "revisions": screen = <RevisionsScreen />; break;
     case "progres": screen = <ProgresScreen />; break;
+    case "collection": screen = <CollectionScreen />; break;
+    case "duel": screen = <DuelScreen params={params} />; break;
     default: screen = <NotFound />;
   }
 

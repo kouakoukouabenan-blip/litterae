@@ -74,8 +74,10 @@ export const cleMot = (mot: string) => `mot|${mot}`;
 export const cleOeuvre = (id: string) => `oeuvre|${id}`;
 
 /** Petit nombre tiré du texte : le même ordre des réponses à chaque fois pour une même œuvre. */
-const graine = (t: string) => [...t].reduce((n, c) => (n * 31 + c.charCodeAt(0)) >>> 0, 7);
-function melanger<T>(liste: T[], g: number) {
+const NOM_FONCTION: Record<string, string> = { Engagement: "d'engagement", Sociale: "sociale", Esthétique: "esthétique", Évasion: "d'évasion", Lyrique: "lyrique" };
+
+export const graine = (t: string) => [...t].reduce((n, c) => (n * 31 + c.charCodeAt(0)) >>> 0, 7);
+export function melanger<T>(liste: T[], g: number) {
   const out = [...liste];
   for (let i = out.length - 1; i > 0; i--) { g = (g * 1103515245 + 12345) >>> 0; const j = g % (i + 1); [out[i], out[j]] = [out[j], out[i]]; }
   return out;
@@ -85,7 +87,7 @@ function melanger<T>(liste: T[], g: number) {
  * Question sur une fiche lue, pour avoir ses exemples en tête le jour du devoir :
  * une fois l'auteur, une fois la fonction littéraire (quand une seule réponse est possible).
  */
-function questionOeuvre(w: Oeuvre, boite: number): QuestionQuiz | null {
+export function questionOeuvre(w: Oeuvre, boite: number): QuestionQuiz | null {
   const g = graine(w.id);
   const fausses = FONCTIONS.filter(f => !w.fonctions.includes(f));
   if (boite % 2 === 1 && fausses.length && w.fonctions.length) {
@@ -94,7 +96,7 @@ function questionOeuvre(w: Oeuvre, boite: number): QuestionQuiz | null {
     return {
       q: `Pour quelle fonction de la littérature « ${w.titre} » est-elle un bon exemple ?`,
       choix, bonne: choix.indexOf(w.fonctions[0]),
-      pourquoi: `« ${w.titre} » illustre surtout la fonction ${w.fonctions[0].toLowerCase()}${idee ? ` : ${idee.argument.charAt(0).toLowerCase()}${idee.argument.slice(1).replace(/\.$/, "")}.` : "."}`
+      pourquoi: `« ${w.titre} » illustre surtout la fonction ${NOM_FONCTION[w.fonctions[0]]}${idee ? ` : ${idee.argument.charAt(0).toLowerCase()}${idee.argument.slice(1).replace(/\.$/, "")}.` : "."}`
     };
   }
   const autres = melanger([...new Set(OEUVRES.filter(x => x.auteur !== w.auteur && x.genre === w.genre).map(x => x.auteur))], g).slice(0, 3);

@@ -11,6 +11,7 @@ import { AchatLien } from "../components/Achat";
 import { PRICE, useAccess } from "../lib/access";
 import { useQuestions } from "../lib/contact";
 import { OeuvresOnglets } from "../components/SujetsOnglets";
+import { auteursDebloques, badgeGagne, badges } from "../lib/collection";
 import { useDevoirs } from "../lib/devoirs";
 
 /** Accès aux messages : questions à l'auteur et réponses (accès complet), ou page Contact. */
@@ -48,6 +49,21 @@ function LigneDevoirs() {
   );
 }
 
+function LigneCollection() {
+  const n = Object.keys(auteursDebloques()).length;
+  const gagnes = badges().filter(badgeGagne).length;
+  return (
+    <a class="row access-row" href="#/collection">
+      <Icon name="style" size={20} />
+      <span class="row-body">
+        <span class="row-title">Ma collection</span>
+        <span class="meta">{n} auteur{n > 1 ? "s" : ""} · {gagnes} badge{gagnes > 1 ? "s" : ""}</span>
+      </span>
+      <Icon name="chevron_right" />
+    </a>
+  );
+}
+
 export function CarnetScreen() {
   return (
     <Page>
@@ -71,6 +87,7 @@ export function CarnetScreen() {
         <Icon name="chevron_right" />
       </a>
       <LigneDevoirs />
+      <LigneCollection />
       <LigneMessages />
     </Page>
   );

@@ -10,6 +10,7 @@ import { oeuvre, reference, sujetsCitant } from "../lib/data";
 import { useAccess } from "../lib/access";
 import { useNotes, useSaved } from "../lib/carnet";
 import { ajouterCarte, cleOeuvre } from "../lib/revisions";
+import { noterLecture } from "../lib/collection";
 import { href } from "../lib/router";
 import { NotFound } from "./NotFound";
 import { fnClass } from "../lib/fonctions";
@@ -166,7 +167,8 @@ export function OeuvreScreen({ id, params }: { id: string; params: URLSearchPara
   const { isSaved, toggle } = useSaved();
   const lisible = libre && !aOuvrir && echec !== "limite";
   // Fiche lue : elle reviendra en petite question dans les révisions (auteur, fonction).
-  useEffect(() => { if (w?.detaillee && lisible) ajouterCarte(cleOeuvre(id)); }, [id, lisible]);
+  // Elle compte aussi pour la collection : la carte de son auteur est débloquée.
+  useEffect(() => { if (w && lisible) { noterLecture(w); if (w.detaillee) ajouterCarte(cleOeuvre(id)); } }, [id, lisible]);
   if (!w) return <NotFound what="Cette œuvre n'existe pas." back="#/oeuvres" />;
 
   const saved = isSaved(id);

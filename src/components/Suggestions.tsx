@@ -13,22 +13,15 @@ function ouverte(s: Suggestion) {
   suggestionOuverte(s.cle);
   if (s.type) noter({ t: "suggestion", ref: `clic:${s.type}` });
 }
-import { decouvertes, prochaineAction, suggestions } from "../lib/suggestions";
+import { prochaineAction } from "../lib/suggestions";
+import { Fil } from "./Fil";
 import { Icon } from "./Icon";
 import { Flamme } from "./Flamme";
 import { OBJECTIF_DU_JOUR, recompenseVue, useBilan } from "../lib/progres";
 
-/** « Pour toi » sur l'accueil : trois suggestions au plus, tirées de ce que l'élève a fait sur ce téléphone. */
+/** « Pour toi » sur l'accueil : le fil du jour (suggestions personnelles et cartes à jouer), sous la série et l'objectif du jour. */
 export function Suggestions() {
-  // La première suggestion est déjà en tête de l'accueil (« Ta prochaine action ») : deux autres ici.
-  // Rien encore sur ce téléphone : des portes d'entrée à la place.
-  const liste = useMemo(() => {
-    const p = prochaineAction().cle;
-    return [...suggestions(), ...decouvertes()].filter(s => !s.horsAccueil && s.cle !== p).slice(0, 2);
-  }, []);
-  useEffect(() => montrees(liste), []);
   const b = useBilan();
-  if (!liste.length && !b.serie) return null;
   const faites = Math.min(b.faitesAujourdhui, OBJECTIF_DU_JOUR);
   return (
     <section class="pour-toi" aria-labelledby="pour-toi-titre">
@@ -44,20 +37,7 @@ export function Suggestions() {
           <Icon name="chevron_right" size={18} />
         </a>
       </div>
-      {liste.length > 0 && <ul class="pour-toi-liste">
-        {liste.map(s => (
-          <li key={s.cle}>
-            <a class="pour-toi-ligne" href={s.lien} onClick={() => ouverte(s)}>
-              <span class="pour-toi-icone" aria-hidden="true"><Icon name={s.icone} size={20} /></span>
-              <span class="pour-toi-texte">
-                <span class="pour-toi-nom"><Texte text={s.titre} /></span>
-                <span class="pour-toi-detail"><Texte text={s.detail} /></span>
-              </span>
-              <Icon name="chevron_right" size={20} />
-            </a>
-          </li>
-        ))}
-      </ul>}
+      <Fil />
     </section>
   );
 }
