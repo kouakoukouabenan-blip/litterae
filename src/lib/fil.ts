@@ -1,8 +1,10 @@
 import outils from "../data/outils.json";
-import dico from "../data/dictionnaire.json";
 import { FONCTIONS, type Fonction, type Oeuvre, type QuestionQuiz } from "../data/types";
 import { OEUVRES, oeuvre } from "./data";
 import { contenuLibre } from "./libre";
+import { motsPublics } from "./dictionnaire";
+import { historique } from "./historique";
+import { cles } from "./storage";
 import { sujetsEntrainement } from "./entrainement";
 import { fonctionsDuSujet } from "./defi";
 import { fichesGratuites, fichesOuvertes } from "./fiches";
@@ -72,15 +74,29 @@ function nouveautes(maintenant: number): CarteFil[] {
   let change = false;
   for (const x of tout) if (!(x.id in vues)) { vues[x.id] = maintenant; change = true; }
   if (change) write(VUES, vues);
-  return tout.filter(x => vues[x.id] && maintenant - vues[x.id] < 7 * JOUR)
+  // Dès que l'élève l'a ouvert (depuis le fil ou ailleurs), ce n'est plus une nouveauté pour lui.
+  const h = historique();
+  const ouvert = (id: string) => {
+    const [t, v] = [id.slice(0, 1), id.slice(2)];
+    return t === "o" ? h.some(x => x.t === "oeuvre" && x.id === v) : t === "l" ? h.some(x => x.t === "lecon" && x.id === v) : cles(`atelier:${v}`).length > 0;
+  };
+  return tout.filter(x => vues[x.id] > 0 && maintenant - vues[x.id] < 7 * JOUR && !ouvert(x.id))
     .map(x => ({ cle: `nouveau-${x.id}`, type: "nouveau", t: "nouveau", titre: x.titre, detail: x.detail, lien: x.lien }));
+}
+
+/** Nouveauté touchée dans le fil : elle n'y revient plus. */
+export function nouveauteOuverte(cle: string) {
+  const vues = read<Record<string, number>>(VUES, {});
+  vues[cle.replace(/^nouveau-/, "")] = -1;
+  write(VUES, vues);
 }
 
 /* ---------- Cartes du jour ---------- */
 
 function questions(g: number, n: number): CarteFil[] {
   const lues = oeuvresLues().map(id => oeuvre(id)).filter((w): w is Oeuvre => !!w?.detaillee);
-  const autres = melanger(OEUVRES.filter(w => w.detaillee && w.niveaux?.length), g);
+  // Fiches au programme d'abord, puis toutes les autres fiches complètes (y compris celles ajoutées depuis le tableau de bord).
+  const autres = [...melanger(OEUVRES.filter(w => w.detaillee && w.niveaux?.length), g), ...melanger(OEUVRES.filter(w => w.detaillee && !w.niveaux?.length), g)];
   const out: CarteFil[] = [];
   for (const [i, w] of [...melanger(lues, g), ...autres].entries()) {
     if (out.length >= n) break;
@@ -104,8 +120,8 @@ function citations(g: number, n: number): CarteFil[] {
 function oeuvres30(g: number, n: number): CarteFil[] {
   // D'abord les fiches que l'élève peut lire en entier, puis des fiches au programme qu'il peut ouvrir.
   const lisibles = OEUVRES.filter(w => w.detaillee && w.resume && (premium() || fichesOuvertes()[w.id]));
-  const autres = OEUVRES.filter(w => w.detaillee && w.niveaux?.length && !lisibles.includes(w) && ouvrable(w.id));
-  return [...melanger(lisibles, g), ...melanger(autres, g)].slice(0, n).map(w => ({
+  const autres = OEUVRES.filter(w => w.detaillee && !lisibles.includes(w) && ouvrable(w.id));
+  return [...melanger(lisibles, g), ...melanger(autres.filter(w => w.niveaux?.length), g), ...melanger(autres.filter(w => !w.niveaux?.length), g)].slice(0, n).map(w => ({
     cle: `oeuvre30-${w.id}`, type: "oeuvre30", t: "oeuvre", w, ouvrable: ouvrable(w.id),
     extrait: w.resume ? extraitDe(w.resume) : null
   }));
@@ -127,7 +143,8 @@ function formules(g: number, n: number): CarteFil[] {
 
 function mots(g: number, n: number): CarteFil[] {
   const out: CarteFil[] = [];
-  for (const e of melanger(dico.entrees as { mot: string; nature: string; fonctions: Fonction[] }[], g)) {
+  // Liste publique des mots, avec ceux ajoutés depuis le tableau de bord.
+  for (const e of melanger(motsPublics(), g)) {
     if (out.length >= n) break;
     const c = choixFonctions(e.fonctions ?? [], g + out.length);
     if (c) out.push({ cle: `mot-${e.mot}`, type: "mot", t: "mot", mot: e.mot, nature: e.nature, ...c });

@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "preact/hooks";
 import { Texte } from "./Texte";
 import { Icon, type BaseName } from "./Icon";
 import { copyText } from "./Toast";
-import { filDuJour, noterReponse, reponsesDuJour, type CarteFil } from "../lib/fil";
+import { filDuJour, nouveauteOuverte, noterReponse, reponsesDuJour, type CarteFil } from "../lib/fil";
 import { suggestionOuverte, suggestionsVues } from "../lib/interets";
 import { noter } from "../lib/stats";
 import { marquer } from "../lib/progres";
@@ -20,6 +20,7 @@ function montrees(liste: CarteFil[]) {
 }
 function ouverte(c: CarteFil) {
   suggestionOuverte(c.cle);
+  if (c.t === "nouveau") nouveauteOuverte(c.cle);
   noter({ t: "suggestion", ref: `clic:${c.type}` });
 }
 
