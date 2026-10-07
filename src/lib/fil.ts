@@ -361,3 +361,35 @@ export function reponsesDuJour(): Record<string, number> {
 export function noterReponse(cle: string, choix: number) {
   write(REPONSES, { jour: jourLocal(), r: { ...reponsesDuJour(), [cle]: choix } });
 }
+
+/* ---------- Carte envoyée en notification ---------- */
+
+const CARTES_NOTIF = "notif-cartes";
+type CartesNotif = Record<string, { jour: string; c: CarteFil }>;
+
+/**
+ * Carte à jouer annoncée par la notification d'un jour (vrai ou faux, devine l'œuvre, tour du monde).
+ * Elle est gardée sur le téléphone : en touchant la notification, l'élève la retrouve en tête de « Pour toi ».
+ */
+export function carteNotification(jour: string, sorte: "question" | "pays"): CarteFil | null {
+  const g = graine(`notif-${jour}`);
+  const c = (sorte === "pays" ? voyages(g, 1) : g % 2 ? devinettes(g, 1) : vraisFaux(g, 1))[0];
+  if (!c) return null;
+  const limite = jourLocal(Date.now() - 7 * JOUR);
+  const gardees = Object.entries(read<CartesNotif>(CARTES_NOTIF, {})).filter(([, v]) => v.jour >= limite);
+  write(CARTES_NOTIF, { ...Object.fromEntries(gardees), [c.cle]: { jour, c } });
+  return c;
+}
+
+/** Carte d'une notification touchée, avec ses œuvres relues dans le contenu actuel ; rien si elle est déjà jouée aujourd'hui. */
+export function carteDemandee(cle: string | null): CarteFil | null {
+  const c = cle ? read<CartesNotif>(CARTES_NOTIF, {})[cle]?.c : null;
+  if (!c || cle! in reponsesDuJour()) return null;
+  const w = "w" in c ? oeuvre(c.w.id) : null;
+  if (!w) return null;
+  if (c.t === "devine") {
+    const choix = c.choix.map(x => oeuvre(x.id)).filter((x): x is Oeuvre => !!x);
+    return choix.length === c.choix.length ? { ...c, w, choix } : null;
+  }
+  return { ...c, w } as CarteFil;
+}

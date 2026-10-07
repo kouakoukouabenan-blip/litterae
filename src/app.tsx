@@ -74,6 +74,9 @@ export function App() {
     const depuisNotif = new URLSearchParams(location.search).get("annonce");
     if (depuisNotif) {
       noter({ t: "notif", ref: depuisNotif });
+      // Notification du jour : on compte aussi sa sorte (question, défi, série…) pour savoir laquelle fait revenir.
+      const sorte = new URLSearchParams(location.search).get("type");
+      if (depuisNotif === "rappel" && sorte && /^[a-z]+$/.test(sorte)) noter({ t: "notif", ref: `rappel:${sorte}` });
       // Message sans bouton : on l'ouvre directement sous la cloche.
       if (/^\d+$/.test(depuisNotif)) { if (!location.hash || location.hash === "#/") ouvrirMessages(Number(depuisNotif)); else marquerLue(Number(depuisNotif)); }
       history.replaceState(null, "", location.pathname + location.hash);

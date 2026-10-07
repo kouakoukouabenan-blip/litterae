@@ -4,7 +4,7 @@ import { fermerMessages, marquerLue, ouvrirMessages, useAnnonces, type Annonce }
 import { useNotifs } from "../lib/notifications";
 import { aDecouvert, useInstall } from "../lib/install";
 import { Icon } from "./Icon";
-import { changerRappels, JOURS_AVANT_RAPPEL, preparerRappel, rappelsActifs } from "../lib/rappels";
+import { changerRappels, preparerRappel, rappelsActifs } from "../lib/rappels";
 
 const NOMS = { promo: "Promo", message: "Message", astuce: "Astuce" };
 const dateCourte = (t: number) => new Date(t).toLocaleDateString("fr-FR", { day: "numeric", month: "long" });
@@ -120,11 +120,11 @@ export function ReglageNotifs() {
           <p>Tu reçois les astuces et les promos de Litterae sur cet appareil.</p>
           <label class="check-ligne">
             <input type="checkbox" checked={rappels} onChange={e => { const v = (e.target as HTMLInputElement).checked; setRappels(v); changerRappels(v); }} />
-            <span>Me rappeler ce que je faisais si je ne reviens pas pendant {JOURS_AVANT_RAPPEL} jours</span>
+            <span>Une notification du jour (question, défi, série…) si je ne suis pas encore venu</span>
           </label>
           <details class="repli">
             <summary>Comment ça marche ?</summary>
-            <p class="small muted">Ton téléphone choisit le rappel (sujet commencé, leçon suivante, œuvre proche de tes lectures). Le serveur sait seulement quand l'envoyer, jamais ce que tu lis. Deux rappels au plus, puis plus rien tant que tu ne reviens pas.</p>
+            <p class="small muted">Une seule par jour au plus, à l'heure où tu viens d'habitude, et rien si tu es déjà venu. Ton téléphone la choisit : une question à jouer, le défi du jour, un badge presque gagné, ta série, le bilan du dimanche. Le serveur sait seulement quand l'envoyer, jamais ce que tu lis. Sans réponse de ta part, deux au plus, puis plus rien tant que tu ne reviens pas.</p>
           </details>
           <button type="button" class="btn btn-secondary align-start" onClick={desactiver}>Ne plus recevoir</button>
         </>

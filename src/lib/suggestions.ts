@@ -10,7 +10,7 @@ import { avancement, lireBrouillon } from "./atelier";
 import { numero, sujetsEntrainement } from "./entrainement";
 import { historique, type Vue } from "./historique";
 import { cles, read } from "./storage";
-import { bilan, recompenseAVoir } from "./progres";
+import { recompenseAVoir } from "./progres";
 import { cartesDuJour } from "./revisions";
 import { defiFaitAujourdhui, sujetDuJour } from "./defi";
 import { normalize } from "./text";
@@ -296,7 +296,7 @@ const midi = (j: string) => Date.parse(j + "T12:00:00");
  * Devoir gardé avec sa date : le travail qui reste (comprendre, plan, introduction, exemples, conclusion)
  * est réparti sur les jours d'ici là, et l'accueil dit ce qu'il y a à faire aujourd'hui.
  */
-function devoirDuJour(maintenant: number): Suggestion | null {
+export function devoirDuJour(maintenant: number): Suggestion | null {
   const auj = jourLocal(maintenant);
   const d = devoirARendre(auj);
   if (!d?.pour) return null;
@@ -425,15 +425,8 @@ export function decouvertes(): Suggestion[] {
   return out.filter(s => !estEcartee(s.cle)).map(s => ({ ...s, type: "decouverte" }));
 }
 
-/** Texte du rappel envoyé si l'élève ne revient pas : la suggestion la plus utile, sinon une invitation simple. */
-export function texteRappel(): { titre: string; texte: string; lien: string } {
-  // Série en cours : le rappel part le lendemain soir, avant qu'elle ne s'arrête.
-  // Un devoir à rendre passe avant tout : le rappel dit ce qu'il y a à faire ce jour-là.
-  // Le rappel part le lendemain : on dit ce qu'il y aura à faire ce jour-là.
-  const devoir = devoirDuJour(Date.now() + JOUR);
-  if (devoir) return { ...devoir.notif, lien: devoir.lien };
-  const serie = bilan().serie;
-  if (serie >= 2) return { titre: `Garde ta série de ${serie} jours`, texte: "Relève le défi du jour en 5 minutes pour la continuer.", lien: "#/defi" };
+/** La suite de ce que l'élève faisait : la suggestion la plus utile, sinon une invitation simple. */
+export function texteSuite(): { titre: string; texte: string; lien: string } {
   const s = suggestions()[0];
   if (s) return { ...s.notif, lien: s.lien };
   if (!read<string[]>("lecons-lues", []).length)

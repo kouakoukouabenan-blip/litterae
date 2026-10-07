@@ -4,9 +4,10 @@ import { useContext } from "preact/hooks";
 import { Texte } from "./Texte";
 import { Icon, type BaseName } from "./Icon";
 import { copyText } from "./Toast";
-import { TOUS_LES_PAYS, decouvrirPays, dePays, paysDecouverts, dejaGlisse, ecarterCarte, filDuJour, nouveauteOuverte, noterReponse, reponsesDuJour, type CarteFil } from "../lib/fil";
+import { TOUS_LES_PAYS, carteDemandee, decouvrirPays, dePays, paysDecouverts, dejaGlisse, ecarterCarte, filDuJour, nouveauteOuverte, noterReponse, reponsesDuJour, type CarteFil } from "../lib/fil";
 import { suggestionOuverte, suggestionsVues } from "../lib/interets";
 import { noter } from "../lib/stats";
+import { parseHash } from "../lib/router";
 import { marquer } from "../lib/progres";
 import { ajouterCarte, cleOeuvre } from "../lib/revisions";
 import { badgeVu, carteAuteur, ouvrirSurprise, repondreEclair, type Surprise } from "../lib/collection";
@@ -33,7 +34,12 @@ const Retirer = createContext<() => void>(() => {});
 
 /** Le fil « Pour toi » : trois cartes, puis cinq de plus à chaque « Voir plus », jusqu'à la fin du jour. */
 export function Fil() {
-  const fil = useMemo(() => filDuJour(), []);
+  const [fil, demandee] = useMemo(() => {
+    const tous = filDuJour();
+    // Ouvert depuis une notification qui posait une question : cette carte passe en tête.
+    const c = carteDemandee(parseHash().params.get("carte"));
+    return [c ? [c, ...tous.filter(x => x.cle !== c.cle)] : tous, c] as const;
+  }, []);
   const [n, setN] = useState(PREMIERES);
   const [partis, setPartis] = useState<string[]>([]);
   const [astuce] = useState(() => !dejaGlisse());
@@ -77,6 +83,10 @@ export function Fil() {
     addEventListener("resize", demander);
     return () => { removeEventListener("scroll", demander); removeEventListener("resize", demander); cancelAnimationFrame(attente); };
   }, [n, partis.length, fil.length]);
+  // L'élève arrive pour répondre à la question de la notification : on l'amène à la carte.
+  useEffect(() => {
+    if (demandee) setTimeout(() => liste.current?.firstElementChild?.scrollIntoView({ block: "center" }), 300);
+  }, []);
   if (!fil.length) return null;
   const retirer = (c: CarteFil) => { ecarterCarte(c.cle); noter({ t: "suggestion", ref: `passe:${c.type}` }); setPartis(p => [...p, c.cle]); };
   return (
