@@ -194,9 +194,25 @@ export function filDuJour(maintenant = Date.now()): CarteFil[] {
     if (jeux.length) fil.push(jeux.shift()!);
     if (jeux.length && fil.length > 6) fil.push(jeux.shift()!);
   }
-  const vus = new Set<string>();
+  // Les cartes déjà jouées ou passées aujourd'hui ne reviennent pas.
+  const vus = new Set<string>([...Object.keys(reponsesDuJour()), ...ecarteesDuJour()]);
   return fil.filter(c => !vus.has(c.cle) && !!vus.add(c.cle));
 }
+
+/* ---------- Cartes passées d'un geste ---------- */
+
+const ECARTEES = "fil-ecartees";
+export function ecarteesDuJour(): string[] {
+  const e = read<{ jour: string; cles: string[] } | null>(ECARTEES, null);
+  return e?.jour === jourLocal() ? e.cles : [];
+}
+/** Carte glissée sur le côté : elle quitte le fil pour aujourd'hui (une nouveauté, pour de bon). */
+export function ecarterCarte(cle: string) {
+  write(ECARTEES, { jour: jourLocal(), cles: [...ecarteesDuJour(), cle] });
+  if (cle.startsWith("nouveau-")) nouveauteOuverte(cle);
+  write("fil-glisse", true);
+}
+export const dejaGlisse = () => read<boolean>("fil-glisse", false);
 
 /* ---------- Réponses du jour ---------- */
 

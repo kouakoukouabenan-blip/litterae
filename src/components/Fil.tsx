@@ -1,8 +1,10 @@
-import { useEffect, useMemo, useState } from "preact/hooks";
+import { useEffect, useMemo, useRef, useState } from "preact/hooks";
+import { createContext } from "preact";
+import { useContext } from "preact/hooks";
 import { Texte } from "./Texte";
 import { Icon, type BaseName } from "./Icon";
 import { copyText } from "./Toast";
-import { filDuJour, nouveauteOuverte, noterReponse, reponsesDuJour, type CarteFil } from "../lib/fil";
+import { dejaGlisse, ecarterCarte, filDuJour, nouveauteOuverte, noterReponse, reponsesDuJour, type CarteFil } from "../lib/fil";
 import { suggestionOuverte, suggestionsVues } from "../lib/interets";
 import { noter } from "../lib/stats";
 import { marquer } from "../lib/progres";
@@ -24,22 +26,79 @@ function ouverte(c: CarteFil) {
   noter({ t: "suggestion", ref: `clic:${c.type}` });
 }
 
+/** Retire la carte du fil (glissée, ou « Suivante » après une réponse). */
+const Retirer = createContext<() => void>(() => {});
+
 /** Le fil « Pour toi » : trois cartes, puis cinq de plus à chaque « Voir plus », jusqu'à la fin du jour. */
 export function Fil() {
   const fil = useMemo(() => filDuJour(), []);
   const [n, setN] = useState(PREMIERES);
-  const visibles = fil.slice(0, n);
-  useEffect(() => montrees(visibles), [n]);
+  const [partis, setPartis] = useState<string[]>([]);
+  const [astuce] = useState(() => !dejaGlisse());
+  const restants = fil.filter(c => !partis.includes(c.cle));
+  const visibles = restants.slice(0, n);
+  useEffect(() => montrees(visibles), [n, partis.length]);
   if (!fil.length) return null;
+  const retirer = (c: CarteFil) => { ecarterCarte(c.cle); noter({ t: "suggestion", ref: `passe:${c.type}` }); setPartis(p => [...p, c.cle]); };
   return (
     <>
       <ul class="pour-toi-liste fil">
-        {visibles.map(c => <li key={c.cle}><Carte c={c} /></li>)}
+        {visibles.map(c => <Glissable key={c.cle} onPart={() => retirer(c)}><Carte c={c} /></Glissable>)}
       </ul>
-      {n < fil.length
+      {astuce && visibles.length > 0 && !partis.length && <p class="fil-astuce"><Icon name="swipe" size={16} />Glisse une carte sur le côté pour la passer.</p>}
+      {n < restants.length
         ? <button type="button" class="btn btn-secondary btn-block fil-plus" onClick={() => setN(n + PAR_PAGE)}><Icon name="expand_more" size={20} />Voir plus</button>
-        : fil.length > PREMIERES && <p class="fil-fin">Tu as tout vu pour aujourd'hui. Reviens demain pour de nouvelles cartes.</p>}
+        : <p class="fil-fin">Tu as tout vu pour aujourd'hui. Reviens demain pour de nouvelles cartes.</p>}
     </>
+  );
+}
+
+/**
+ * Carte qu'on fait passer en la glissant vers la gauche ou la droite, comme sur les réseaux.
+ * Le défilement vertical reste libre ; un simple toucher garde son effet (lien, bouton).
+ */
+function Glissable({ onPart, children }: { onPart: () => void; children: preact.ComponentChildren }) {
+  const li = useRef<HTMLLIElement>(null);
+  const geste = useRef<{ x: number; y: number; dx: number; sens: "?" | "h" | "v"; id: number } | null>(null);
+  const bouge = useRef(false);
+  const [sortie, setSortie] = useState<0 | 1 | -1>(0);
+  const poser = (dx: number, anime: boolean) => {
+    const el = li.current; if (!el) return;
+    el.style.transition = anime ? "transform .22s ease, opacity .22s ease" : "none";
+    el.style.transform = dx ? `translateX(${dx}px) rotate(${dx / 40}deg)` : "";
+    el.style.opacity = dx ? String(Math.max(0.2, 1 - Math.abs(dx) / (el.offsetWidth * 1.2))) : "";
+  };
+  const partir = (sens: 1 | -1) => {
+    setSortie(sens);
+    poser(sens * ((li.current?.offsetWidth ?? 400) + 60), true);
+    setTimeout(onPart, 220);
+  };
+  return (
+    <li ref={li} class={`fil-glissable${sortie ? " part" : ""}`}
+      onPointerDown={e => { if (e.pointerType === "mouse" && e.button !== 0) return; geste.current = { x: e.clientX, y: e.clientY, dx: 0, sens: "?", id: e.pointerId }; bouge.current = false; }}
+      onPointerMove={e => {
+        const g = geste.current; if (!g || g.id !== e.pointerId) return;
+        const dx = e.clientX - g.x, dy = e.clientY - g.y;
+        if (g.sens === "?") {
+          if (Math.abs(dx) < 8 && Math.abs(dy) < 8) return;
+          g.sens = Math.abs(dx) > Math.abs(dy) ? "h" : "v";
+          if (g.sens === "h") { bouge.current = true; (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId); }
+        }
+        if (g.sens !== "h") return;
+        g.dx = dx; poser(dx, false);
+      }}
+      onPointerUp={e => {
+        const g = geste.current; geste.current = null;
+        if (!g || g.sens !== "h") return;
+        const seuil = Math.min(110, (e.currentTarget as HTMLElement).offsetWidth * 0.3);
+        if (Math.abs(g.dx) > seuil) partir(g.dx > 0 ? 1 : -1); else poser(0, true);
+      }}
+      onDragStart={e => e.preventDefault()}
+      onPointerCancel={() => { const g = geste.current; geste.current = null; if (g?.sens === "h") poser(0, true); }}
+      // Après un glissé, le relâchement ne doit pas ouvrir le lien ni choisir une réponse.
+      onClickCapture={e => { if (bouge.current) { e.preventDefault(); e.stopPropagation(); bouge.current = false; } }}>
+      <Retirer.Provider value={() => partir(-1)}>{children}</Retirer.Provider>
+    </li>
   );
 }
 
@@ -106,6 +165,7 @@ function Choix({ c, etiquette, icone, question, citation, auteur, choix, bonne, 
     if (repondu) setSerie(repondu(i === bonne));
   }
   const juste = r === bonne;
+  const suivante = useContext(Retirer);
   return (
     <div class="fil-carte">
       <p class="fil-etiquette"><Icon name={icone} size={16} />{etiquette}</p>
@@ -124,6 +184,7 @@ function Choix({ c, etiquette, icone, question, citation, auteur, choix, bonne, 
           <strong>{juste ? (serie > 1 ? `Bonne réponse, ${serie} d'affilée !` : "Bonne réponse.") : "Pas tout à fait."}</strong> {apres(juste)}
         </p>
       )}
+      {r !== null && <button type="button" class="btn btn-secondary fil-suivante" onClick={suivante}>Carte suivante<Icon name="arrow_forward" size={18} /></button>}
     </div>
   );
 }

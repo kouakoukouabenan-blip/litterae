@@ -623,3 +623,9 @@
 
 /* Prix normal barré pendant une promo réglée dans le tableau de bord. */
 .prix-avant { color: var(--muted, #6b6b6b); font-weight: 400; }
+
+/* Fil : cartes à faire passer d'un glissé. */
+.fil-glissable { touch-action: pan-y; user-select: none; -webkit-user-select: none; }
+.fil-glissable.part { pointer-events: none; }
+.fil-suivante { align-self: flex-end; }
+.fil-astuce { display: flex; align-items: center; justify-content: center; gap: 6px; margin: var(--s2) 0 0; font-size: var(--text-xs); color: var(--muted); }
