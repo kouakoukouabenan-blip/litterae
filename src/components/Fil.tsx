@@ -50,11 +50,38 @@ export function Fil() {
     o.observe(el);
     return () => o.disconnect();
   }, [fil.length]);
+  // Voile du fil : il couvre les cartes sous la première, puis s'efface à mesure que l'élève descend, et revient s'il remonte.
+  const liste = useRef<HTMLUListElement>(null);
+  const voile = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    let attente = 0;
+    const placer = () => {
+      attente = 0;
+      const ul = liste.current, v = voile.current;
+      if (!ul || !v) return;
+      const nav = document.querySelector<HTMLElement>(".bottom-nav");
+      const bas = nav ? nav.getBoundingClientRect().top : innerHeight;
+      const r = ul.getBoundingClientRect();
+      const premiere = ul.firstElementChild?.getBoundingClientRect();
+      const haut = Math.max(premiere ? premiere.bottom - 24 : r.top, 0);
+      // 0 quand le fil arrive en bas de l'écran, 1 quand il est remonté de presque tout l'écran.
+      const p = Math.min(1, Math.max(0, (bas - r.top) / (innerHeight * 0.9)));
+      const visible = haut < bas - 40 && p < 1;
+      v.style.top = `${haut}px`;
+      v.style.bottom = `${innerHeight - bas}px`;
+      v.style.opacity = visible ? String(1 - p * p * (3 - 2 * p)) : "0";
+    };
+    const demander = () => { if (!attente) attente = requestAnimationFrame(placer); };
+    placer();
+    addEventListener("scroll", demander, { passive: true });
+    addEventListener("resize", demander);
+    return () => { removeEventListener("scroll", demander); removeEventListener("resize", demander); cancelAnimationFrame(attente); };
+  }, [n, partis.length, fil.length]);
   if (!fil.length) return null;
   const retirer = (c: CarteFil) => { ecarterCarte(c.cle); noter({ t: "suggestion", ref: `passe:${c.type}` }); setPartis(p => [...p, c.cle]); };
   return (
     <>
-      <ul class="pour-toi-liste fil">
+      <ul ref={liste} class="pour-toi-liste fil">
         {visibles.map(c => <Glissable key={c.cle} onPart={() => retirer(c)}><Carte c={c} /></Glissable>)}
       </ul>
       {astuce && visibles.length > 0 && !partis.length && <p class="fil-astuce"><Icon name="swipe" size={16} />Glisse une carte sur le côté pour la passer.</p>}
@@ -62,6 +89,7 @@ export function Fil() {
         ? <button type="button" class="btn btn-secondary btn-block fil-plus" onClick={() => setN(n + PAR_PAGE)}><Icon name="expand_more" size={20} />Voir plus</button>
         : <p class="fil-fin">Tu as tout vu pour aujourd'hui. Reviens demain pour de nouvelles cartes.</p>}
       <div ref={fin} aria-hidden="true" />
+      <div ref={voile} class="fil-voile" aria-hidden="true" />
       {n > PREMIERES && !finVisible && <div class="fil-fondu" aria-hidden="true" />}
     </>
   );

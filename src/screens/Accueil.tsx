@@ -7,6 +7,7 @@ import { useStored, write } from "../lib/storage";
 import { OEUVRES, SUJETS } from "../lib/data";
 import { ReponseAlerte } from "../components/ReponseAlerte";
 import { ProchaineAction, Suggestions } from "../components/Suggestions";
+import { sujetsEntrainement } from "../lib/entrainement";
 import { useState } from "preact/hooks";
 import { href } from "../lib/router";
 
@@ -64,7 +65,7 @@ export function AccueilScreen() {
         <a class="choix-carte choix-entrainer" href="#/entrainement">
           <Icon name="edit" size={24} />
           <span class="choix-titre">M'entraîner</span>
-          <Detail long={`${SUJETS.length} sujets type bac`} court={`${SUJETS.length} sujets bac`} />
+          <Detail long={`${sujetsEntrainement().length} sujets type bac`} court={`${sujetsEntrainement().length} sujets bac`} />
         </a>
         <a class="choix-carte choix-outils" href="#/outils">
           <Icon name="inventory_2" size={24} />

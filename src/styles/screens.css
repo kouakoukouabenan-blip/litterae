@@ -646,3 +646,9 @@
 .fil-choix-deux { grid-template-columns: 1fr 1fr; }
 .pays-liste { list-style: none; margin: var(--s2) 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
 .pays-liste li { padding: 4px 10px; border-radius: 999px; font-size: var(--text-xs); font-weight: 600; background: var(--green-tint); color: var(--green); }
+/* Voile du fil : couvre les cartes sous la première ; son opacité suit le défilement (réglée en script). */
+.fil-voile {
+  position: fixed; left: 0; right: 0; top: 100%; z-index: 15; pointer-events: none; opacity: 0;
+  background: linear-gradient(to bottom, transparent, color-mix(in srgb, var(--paper) 80%, transparent) 45%, var(--paper));
+}
+@media (prefers-reduced-motion: reduce) { .fil-voile { display: none; } }
