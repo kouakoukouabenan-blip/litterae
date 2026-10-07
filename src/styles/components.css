@@ -421,3 +421,22 @@
 .annonce-ligne.annonce-urgente { border-left-color: var(--error); animation: none; }
 .annonce-ligne .annonce-type { flex-shrink: 0; }
 .annonce-ligne-titre { flex: 1; min-width: 0; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* Invitation aux notifications, en haut de l'accueil */
+.invitation-notifs {
+  display: grid; grid-template-columns: auto 1fr; gap: var(--s3); align-items: center;
+  padding: var(--s4); margin: var(--s4) 0; border-radius: 24px; background: var(--ochre-pale); color: var(--ink-strong);
+}
+.invitation-notifs-icone { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: var(--surface); color: var(--orange); }
+.invitation-notifs-icone .icon { animation: sonner 2.4s ease-in-out 1s 2; transform-origin: 50% 10%; }
+@keyframes sonner { 0%, 30%, 100% { transform: rotate(0); } 6% { transform: rotate(14deg); } 12% { transform: rotate(-12deg); } 18% { transform: rotate(8deg); } 24% { transform: rotate(-4deg); } }
+@media (prefers-reduced-motion: reduce) { .invitation-notifs-icone .icon { animation: none; } }
+.invitation-notifs-titre { font-weight: 700; line-height: 1.3; }
+.invitation-notifs-texte p + p { margin-top: 2px; }
+.invitation-notifs-actions { grid-column: 1 / -1; display: flex; align-items: center; gap: var(--s3); }
+.invitation-notifs-actions .btn { flex: 1; }
+.invitation-notifs-plus-tard { background: none; border: 0; padding: var(--s2); color: var(--muted); font: inherit; font-size: var(--text-xs); cursor: pointer; }
+
+/* Demande de notifications après un bon moment */
+.demande-notifs .sheet-body { text-align: center; display: flex; flex-direction: column; align-items: center; gap: var(--s2); padding-top: var(--s5); }
+.demande-notifs-icone { display: grid; place-items: center; width: 60px; height: 60px; border-radius: 50%; background: var(--ochre-pale); color: var(--orange); }

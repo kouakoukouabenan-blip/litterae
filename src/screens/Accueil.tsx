@@ -74,11 +74,11 @@ export function AccueilScreen() {
         </a>
       </nav>
 
+      <InvitationNotifs />
       <Suggestions />
       <ReponseAlerte />
       <Annonces />
       <InstallBanner />
-      <InvitationNotifs />
     </Page>
   );
 }

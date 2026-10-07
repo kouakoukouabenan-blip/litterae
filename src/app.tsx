@@ -20,6 +20,7 @@ import { CarnetScreen, MesFichesScreen } from "./screens/Carnet";
 import { NotFound } from "./screens/NotFound";
 import { AProposScreen, CguScreen, ConfidentialiteScreen } from "./screens/Infos";
 import { InstallGate, InstallGuide } from "./components/Install";
+import { DemandeNotifs } from "./components/DemandeNotifs";
 import { CommentPayer } from "./components/CommentPayer";
 import { AccesScreen } from "./screens/Acces";
 import { ContactScreen } from "./screens/Contact";
@@ -122,6 +123,7 @@ export function App() {
       <BottomNav />
       <ToastHost />
       <InstallGuide />
+      <DemandeNotifs />
       <PanneauMessages />
       <CommentPayer />
       <InstallGate />

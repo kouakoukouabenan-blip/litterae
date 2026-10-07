@@ -74,8 +74,22 @@ export function useNotifs() {
   return {
     etat,
     plusTard,
-    reporter: () => { write("notif-plus-tard", Date.now() + 14 * 864e5); setPlusTard(true); },
+    reporter: () => { reporterNotifs(); setPlusTard(true); },
     activer: async () => { const e = await activerNotifs(); setEtat(etatNotif()); return e; },
     desactiver: async () => { await desactiverNotifs(); setEtat(etatNotif()); }
   };
 }
+
+/**
+ * « Plus tard » : on redemande de plus en plus tard (2 jours, puis 4, 7, 14), jamais pour de bon.
+ * Le refus du navigateur, lui, est définitif : on ne lance donc sa fenêtre qu'après un « Activer » de l'élève.
+ */
+const DELAIS = [2, 4, 7, 14];
+export function reporterNotifs() {
+  const n = read<number>("notif-refus", 0);
+  write("notif-refus", n + 1);
+  write("notif-plus-tard", Date.now() + DELAIS[Math.min(n, DELAIS.length - 1)] * 864e5);
+}
+
+/** Les notifications peuvent être proposées maintenant (pas déjà actives, pas reportées). */
+export const peutProposerNotifs = () => etatNotif() === "possible" && read<number>("notif-plus-tard", 0) <= Date.now();

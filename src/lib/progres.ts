@@ -41,7 +41,11 @@ export function marquer(action: string) {
   const limite = decaler(j, -JOURS_GARDES);
   for (const k of Object.keys(nouvelle)) if (k < limite) delete nouvelle[k];
   write(CLE, nouvelle);
-  if (faites.length + 1 === OBJECTIF_DU_JOUR) noter({ t: "progres", ref: "objectif" });
+  if (faites.length + 1 === OBJECTIF_DU_JOUR) {
+    noter({ t: "progres", ref: "objectif" });
+    // Objectif atteint avec une série en cours : bon moment pour proposer les notifications (DemandeNotifs).
+    if (bilan(nouvelle).serie >= 2) dispatchEvent(new CustomEvent("litterae-moment", { detail: "serie" }));
+  }
   if (!faites.length) noterHeure();
   // Série qui franchit un palier : seulement le total pour le tableau de bord.
   if (!faites.length) {

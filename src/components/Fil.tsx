@@ -8,6 +8,7 @@ import { TOUS_LES_PAYS, carteDemandee, decouvrirPays, dePays, paysDecouverts, de
 import { suggestionOuverte, suggestionsVues } from "../lib/interets";
 import { noter } from "../lib/stats";
 import { parseHash } from "../lib/router";
+import { proposerNotifs } from "./DemandeNotifs";
 import { marquer } from "../lib/progres";
 import { ajouterCarte, cleOeuvre } from "../lib/revisions";
 import { badgeVu, carteAuteur, ouvrirSurprise, repondreEclair, type Surprise } from "../lib/collection";
@@ -236,6 +237,8 @@ function Choix({ c, etiquette, icone, question, citation, auteur, avant, choix, 
     ouverte(c);
     marquer(`fil:${c.cle}`);
     if (repondu) setSerie(repondu(i === bonne));
+    // Deuxième question jouée aujourd'hui : l'élève aime ça, on lui propose d'en recevoir une par jour.
+    if (Object.keys(reponsesDuJour()).length >= 2) proposerNotifs("fil");
   }
   const juste = r === bonne;
   const suivante = useContext(Retirer);

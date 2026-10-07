@@ -8,6 +8,7 @@ import { numero } from "../lib/entrainement";
 import { lireBrouillon, brouillonVide } from "../lib/atelier";
 import { write } from "../lib/storage";
 import { jourLocal } from "../lib/progres";
+import { proposerNotifs } from "../components/DemandeNotifs";
 import { DUREE_DEFI, enregistrerDefi, fonctionsDuSujet, oeuvresPourSujet, sujetDuJour, useDefis, verifierOeuvres, type ReponseDefi } from "../lib/defi";
 import { noterErreurQuiz } from "../lib/interets";
 import { OEUVRES } from "../lib/data";
@@ -62,7 +63,7 @@ export function DefiScreen() {
                 </fieldset>
               ))}
             </div>
-            <button type="button" class="btn btn-primary btn-block" disabled={!pret} onClick={() => maj({ fini: true })}>J'ai fini, comparer</button>
+            <button type="button" class="btn btn-primary btn-block" disabled={!pret} onClick={() => { maj({ fini: true }); proposerNotifs("defi"); }}>J'ai fini, comparer</button>
             {!pret && <p class="small muted">Écris au moins un argument et une œuvre.</p>}
           </>
         ) : (

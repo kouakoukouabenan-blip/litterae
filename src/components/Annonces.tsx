@@ -2,7 +2,9 @@ import { Texte } from "./Texte";
 import { useEffect, useRef, useState } from "preact/hooks";
 import { fermerMessages, marquerLue, ouvrirMessages, useAnnonces, type Annonce } from "../lib/annonces";
 import { useNotifs } from "../lib/notifications";
-import { aDecouvert, useInstall } from "../lib/install";
+import { aDecouvert } from "../lib/install";
+import { useBilan } from "../lib/progres";
+import { noter } from "../lib/stats";
 import { Icon } from "./Icon";
 import { changerRappels, preparerRappel, rappelsActifs } from "../lib/rappels";
 
@@ -90,19 +92,24 @@ export function Annonces() {
   );
 }
 
-/** Invitation discrète à recevoir les notifications, quand le bandeau d'installation n'est pas affiché. */
+/** Invitation à recevoir les notifications, en haut de l'accueil, dès que l'élève a découvert l'appli. */
 export function InvitationNotifs() {
   const { etat, plusTard, reporter, activer } = useNotifs();
-  const { showBanner } = useInstall();
   const [erreur, setErreur] = useState<string | null>(null);
+  const serie = useBilan().serie;
   // Pas à la première visite : on attend que l'élève ait ouvert une leçon, une fiche ou un sujet.
-  if (etat !== "possible" || plusTard || showBanner || !aDecouvert()) return null;
+  if (etat !== "possible" || plusTard || !aDecouvert()) return null;
   return (
-    <aside class="install-banner" aria-label="Notifications">
-      <Icon name="notifications" size={22} />
-      <p class="install-banner-title">{erreur ?? "Rappels, astuces et promos en notification"}</p>
-      <button type="button" class="btn btn-primary" onClick={async () => { const e = await activer(); setErreur(e); if (!e) preparerRappel(); }}>Activer</button>
-      <button type="button" class="icon-btn" onClick={reporter} aria-label="Plus tard"><Icon name="close" size={20} /></button>
+    <aside class="invitation-notifs" aria-label="Notifications">
+      <span class="invitation-notifs-icone"><Icon name="notifications" size={24} /></span>
+      <div class="invitation-notifs-texte">
+        <p class="invitation-notifs-titre">{serie >= 2 ? `Garde ta série de ${serie} jours` : "Une question du bac chaque jour"}</p>
+        <p class="small muted">{erreur ?? (serie >= 2 ? "On te prévient le soir si tu n'es pas encore venu." : "En notification, à jouer en 10 secondes. Une par jour au plus.")}</p>
+      </div>
+      <div class="invitation-notifs-actions">
+        <button type="button" class="btn btn-primary" onClick={async () => { const e = await activer(); setErreur(e); if (!e) { noter({ t: "progres", ref: "notif-oui:accueil" }); preparerRappel(); } }}>Activer</button>
+        <button type="button" class="invitation-notifs-plus-tard" onClick={reporter}>Plus tard</button>
+      </div>
     </aside>
   );
 }
