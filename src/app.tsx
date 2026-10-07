@@ -21,6 +21,7 @@ import { NotFound } from "./screens/NotFound";
 import { AProposScreen, CguScreen, ConfidentialiteScreen } from "./screens/Infos";
 import { InstallGate, InstallGuide } from "./components/Install";
 import { DemandeNotifs } from "./components/DemandeNotifs";
+import { DemandeAchat } from "./components/DemandeAchat";
 import { CommentPayer } from "./components/CommentPayer";
 import { AccesScreen } from "./screens/Acces";
 import { ContactScreen } from "./screens/Contact";
@@ -124,6 +125,7 @@ export function App() {
       <ToastHost />
       <InstallGuide />
       <DemandeNotifs />
+      <DemandeAchat />
       <PanneauMessages />
       <CommentPayer />
       <InstallGate />

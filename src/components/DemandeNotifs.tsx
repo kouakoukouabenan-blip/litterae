@@ -22,9 +22,11 @@ let ouvrir: (m: Moment) => void = () => {};
  * Une fois par jour au plus, jamais avant que l'élève ait découvert l'appli, et « Plus tard » repousse de plus en plus loin.
  */
 export function proposerNotifs(m: Moment) {
-  if (!aDecouvert() || !peutProposerNotifs() || read<string>("notif-proposee", "") === jourLocal()) return;
+  // Pas le jour où la fenêtre d'achat est déjà apparue : une seule fenêtre par jour.
+  if (!aDecouvert() || !peutProposerNotifs() || [read<string>("notif-proposee", ""), read<string>("achat-propose", "")].includes(jourLocal())) return false;
   write("notif-proposee", jourLocal());
   setTimeout(() => ouvrir(m), 900);
+  return true;
 }
 
 /** Fenêtre de demande, montée une seule fois dans l'application. */

@@ -37,7 +37,11 @@ export async function ouvrirFiche(id: string): Promise<TexteFiche | EchecFiche> 
     // Relu juste avant d'écrire : une autre fiche a pu être ouverte entre-temps.
     const avant = fichesOuvertes();
     write(CLE, { ...avant, [id]: d.fiche });
-    if (!licence() && !avant[id]) noterGratuit("fiche", Object.keys(avant).length + 1);
+    if (!licence() && !avant[id]) {
+      noterGratuit("fiche", Object.keys(avant).length + 1);
+      // 7e fiche gratuite : bon moment pour proposer l'accès complet (DemandeAchat).
+      if (Object.keys(avant).length + 1 === 7) dispatchEvent(new CustomEvent("litterae-moment", { detail: "fiches" }));
+    }
     return d.fiche as TexteFiche;
   } catch {
     return "erreur";
