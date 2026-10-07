@@ -3,7 +3,7 @@ import { Page } from "../components/Page";
 import { PageHeader } from "../components/PageHeader";
 import { Icon } from "../components/Icon";
 import { activer, licence, retirer } from "../lib/licence";
-import { PRICE } from "../lib/access";
+import { PRICE, PRIX_AVANT } from "../lib/access";
 import { ACHAT_URL, lienAide, WHATSAPP } from "../lib/site";
 import { AchatLien } from "../components/Achat";
 import { CommentPayerBouton } from "../components/CommentPayer";
@@ -97,7 +97,7 @@ export function AccesScreen({ params }: { params: URLSearchParams }) {
 
         <section class="acces-achat">
           <h2 class="section-title">Pas encore de clé ?</h2>
-          <p>{PRICE}, payés une seule fois par Mobile Money.</p>
+          <p>{PRIX_AVANT && <><s class="prix-avant">{PRIX_AVANT}</s> </>}<strong>{PRICE}</strong>, payés une seule fois par Mobile Money.</p>
           {ACHAT_URL ? (
             <>
               <AchatLien class="btn btn-primary align-start" label={`Acheter une clé, ${PRICE}`} />

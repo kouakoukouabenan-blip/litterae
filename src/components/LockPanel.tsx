@@ -1,4 +1,4 @@
-import { FREE_SUBJECTS, FREE_WORKS, PRICE } from "../lib/access";
+import { FREE_SUBJECTS, FREE_WORKS, PRICE, PRIX_AVANT } from "../lib/access";
 import { ACHAT_URL } from "../lib/site";
 import { Icon } from "./Icon";
 import { CommentPayerBouton } from "./CommentPayer";
@@ -17,7 +17,7 @@ export function LockPanel({ reason, contenu }: { reason: string; contenu?: strin
     <section class="lock" aria-labelledby="lock-title">
       <p class="eyebrow eyebrow-icon"><Icon name="lock" size={16} />Accès complet</p>
       <h2 id="lock-title" class="lock-title">{reason}</h2>
-      <p class="lock-prix"><strong>{PRICE}</strong>, payés une seule fois.</p>
+      <p class="lock-prix">{PRIX_AVANT && <><s class="prix-avant">{PRIX_AVANT}</s> </>}<strong>{PRICE}</strong>, payés une seule fois.</p>
       {/* Un seul bouton principal ; le reste est replié pour ne pas faire hésiter. */}
       <div class="lock-actions">
         {ACHAT_URL ? (
