@@ -1,0 +1,1509 @@
+[
+ {
+  "num": "t1",
+  "citation": "Toute littérature est inséparable de l’histoire",
+  "auteur": "Auteur non précisé",
+  "consigne": "Expliquez et discutez cette affirmation.",
+  "fonctions": [
+   "Sociale",
+   "Engagement"
+  ],
+  "themes": [
+   "Histoire"
+  ]
+ },
+ {
+  "num": "t2",
+  "citation": "Pour rêver, il ne faut pas fermer les yeux, il faut lire",
+  "auteur": "Auteur non précisé",
+  "consigne": "Expliquez et discutez cette assertion.",
+  "fonctions": [
+   "Évasion"
+  ],
+  "themes": [
+   "Rêve"
+  ]
+ },
+ {
+  "num": "t3",
+  "citation": "Écrire est pour moi désir d'écouter les gens, un désir d'ouvrir à chacun une fenêtre sur le monde",
+  "auteur": "Auteur non précisé",
+  "consigne": "Expliquez et discutez.",
+  "fonctions": [
+   "Sociale",
+   "Évasion"
+  ],
+  "themes": [
+   "Désir"
+  ]
+ },
+ {
+  "num": "t4",
+  "citation": "Je ne conçois la littérature que comme l’énoncé de la vérité. Sinon ce n’est pas la peine d’écrire.",
+  "auteur": "Catherine Cusset, Indigo (2013)",
+  "consigne": "Commentez et discutez cette affirmation à la lumière des œuvres lues ou étudiées.",
+  "fonctions": [
+   "Sociale",
+   "Engagement"
+  ],
+  "themes": [
+   "Vérité"
+  ]
+ },
+ {
+  "num": "t5",
+  "citation": "Écrire est exclusivement un acte collectif",
+  "auteur": "Alex Kipré",
+  "consigne": "Expliquez et discutez.",
+  "fonctions": [
+   "Sociale",
+   "Engagement"
+  ],
+  "themes": []
+ },
+ {
+  "num": "t6",
+  "citation": "Certains écrivains s'engagent, parfois au péril de leur liberté, pour défendre une cause qui leur tient à cœur. Soit ils deviennent les porte-parole des opprimés, soit ils réveillent les consciences en invitant les hommes à lutter.",
+  "auteur": "Auteur non précisé",
+  "consigne": "En vous appuyant sur des œuvres de la littérature africaine de la période coloniale et postcoloniale, justifiez cette opinion.",
+  "fonctions": [
+   "Engagement"
+  ],
+  "themes": [
+   "Liberté",
+   "Oppression",
+   "Lutte",
+   "Conscience"
+  ]
+ },
+ {
+  "num": "t7",
+  "citation": "Quand il s’est avéré que, dans mon Afrique, il y avait des injustices flagrantes et que mon père ne pouvait pas s’exprimer, j’ai alors tenu à le remplacer de cette façon, c’est-à-dire par le biais de l’écriture",
+  "auteur": "Un auteur africain contemporain",
+  "consigne": "En vous appuyant sur vos connaissances littéraires, expliquez et discutez ce point de vue de cet Auteur.",
+  "fonctions": [
+   "Engagement"
+  ],
+  "themes": [
+   "Afrique",
+   "Injustice"
+  ]
+ },
+ {
+  "num": "t8",
+  "citation": "La littérature Négro-africaine n’est pas faite pour l’évasion comme le souhaite l’occident",
+  "auteur": "Un critique",
+  "consigne": "Expliquez et discutez cette affirmation.",
+  "fonctions": [
+   "Engagement",
+   "Sociale"
+  ],
+  "themes": [
+   "Afrique"
+  ]
+ },
+ {
+  "num": "t9",
+  "citation": "L'œuvre littéraire se crée comme toute chose en ce monde, à partir des matériaux empruntés à la vie.",
+  "auteur": "Henri Queffélec",
+  "consigne": "Expliquez et discutez cette affirmation.",
+  "fonctions": [
+   "Sociale",
+   "Lyrique"
+  ],
+  "themes": []
+ },
+ {
+  "num": "t10",
+  "citation": "C'est toujours quelqu'un qui parle à quelqu'un. C'est quelqu'un qui parle de lui-même à un autre",
+  "auteur": "François Mauriac",
+  "consigne": "Expliquez et discutez cette affirmation.",
+  "fonctions": [
+   "Lyrique"
+  ],
+  "themes": []
+ },
+ {
+  "num": "t11",
+  "citation": "La littérature doit servir au peuple. Une œuvre littéraire dépourvue de toute fonction sociale est inutile",
+  "auteur": "Un critique",
+  "consigne": "Commentez cette affirmation en vous basant sur des œuvres lues ou étudiées.",
+  "fonctions": [
+   "Engagement",
+   "Sociale"
+  ],
+  "themes": [
+   "Société",
+   "Peuple"
+  ]
+ },
+ {
+  "num": "t12",
+  "citation": "La littérature doit dépasser le bout de la rue, montrer ce qu'une caméra ne voit pas, illuminer les coins obscurs de la vie, insinuer des doutes dans la tête des gens",
+  "auteur": "Auteur non précisé",
+  "consigne": "Expliquez et discutez cette affirmation.",
+  "fonctions": [
+   "Engagement",
+   "Sociale"
+  ],
+  "themes": []
+ },
+ {
+  "num": "t13",
+  "citation": "Une œuvre d'art n'a rien à voir avec les doctrines.",
+  "auteur": "Un auteur contemporain",
+  "consigne": "Commentez puis discutez ces propos en les appliquant à la littérature.",
+  "fonctions": [
+   "Esthétique",
+   "Engagement"
+  ],
+  "themes": [
+   "Art"
+  ]
+ },
+ {
+  "num": "t14",
+  "citation": "Le roman négro-africain demeure et pour longtemps encore, un puissant moyen d'information des peuples nègres et un outil efficace de conscientisation.",
+  "auteur": "Jean-Pierre Makouta-Mboukou, Introduction à l'étude du roman négro-africain",
+  "consigne": "À la lumière des œuvres romanesques lues ou étudiées, expliquez et discutez cette affirmation.",
+  "fonctions": [
+   "Engagement",
+   "Sociale"
+  ],
+  "themes": [
+   "Négritude",
+   "Peuple",
+   "Afrique"
+  ]
+ },
+ {
+  "num": "t15",
+  "citation": "L'univers poétique est rempli de tourments qui font des poètes des gens qui n'ont jamais souri.",
+  "auteur": "Roland Barthes (sujet du bac 2019)",
+  "consigne": "Expliquez et discutez cette opinion.",
+  "fonctions": [
+   "Lyrique"
+  ],
+  "themes": []
+ },
+ {
+  "num": "t16",
+  "citation": "Lire c'est comme partir en voyage. Vous pouvez partir vers le Nord, le Sud, l'Est ou l'ouest et faire la connaissance de personnes et d'endroits nouveaux",
+  "auteur": "Daisaku Ikeda",
+  "consigne": "Expliquez et discutez cette réflexion.",
+  "fonctions": [
+   "Évasion"
+  ],
+  "themes": [
+   "Voyage"
+  ]
+ },
+ {
+  "num": "t17",
+  "citation": "Un théâtre où on ne rit pas est un théâtre dont on doit rire.",
+  "auteur": "Bertolt Brecht",
+  "consigne": "Expliquez et discutez cette assertion.",
+  "fonctions": [
+   "Évasion",
+   "Esthétique"
+  ],
+  "themes": [
+   "Comédie"
+  ]
+ },
+ {
+  "num": "t18",
+  "citation": "Le roman est le reflet de la société",
+  "auteur": "Auteur non précisé",
+  "consigne": "Expliquez et discutez cette affirmation.",
+  "fonctions": [
+   "Sociale"
+  ],
+  "themes": [
+   "Société"
+  ]
+ },
+ {
+  "num": "t19",
+  "citation": "Je n'écris pas pour distraire les autres. J'écris pour toujours raconter ce que nous vivons (...).Un bon livre est un livre atemporel qui peut toucher tout le monde.",
+  "auteur": "Un critique contemporain",
+  "consigne": "Expliquez et discutez cette assertion en vous appuyant sur les œuvres lues et/ou étudiées.",
+  "fonctions": [
+   "Sociale",
+   "Engagement"
+  ],
+  "themes": []
+ },
+ {
+  "num": "t20",
+  "citation": "Bien qu'on la croie peu utile dans l'enseignement, la littérature reste le baromètre de l'écrivain. Il permet de sentir le moral ou immoral qui soufflera, les orages de l'histoire",
+  "auteur": "R.-M. Albérès",
+  "consigne": "Expliquez et discutez cette opinion.",
+  "fonctions": [
+   "Sociale",
+   "Engagement"
+  ],
+  "themes": [
+   "Éducation"
+  ]
+ },
+ {
+  "num": "t21",
+  "citation": "La littérature vous jette dans la bataille, écrire c'est une autre façon de vouloir la liberté",
+  "auteur": "Jean-Paul Sartre",
+  "consigne": "Dans quelle mesure peut-on comprendre cette conception de la littérature et du rôle de l'écrivain ? Celle-ci ne comporte-t-elle pas des insuffisances ?",
+  "fonctions": [
+   "Engagement"
+  ],
+  "themes": [
+   "Liberté"
+  ]
+ },
+ {
+  "num": "t22",
+  "citation": "Toute littérature porte les marques de son époque, de son milieu social",
+  "auteur": "Auteur non précisé",
+  "consigne": "Expliquez et discutez au besoin cette pensée sur la littérature en vous appuyant sur les œuvres que vous avez étudiées.",
+  "fonctions": [
+   "Sociale"
+  ],
+  "themes": [
+   "Société"
+  ]
+ },
+ {
+  "num": "t23",
+  "citation": "Écrire, c'est se livrer (…), c'est précisément l'écrivain lui-même que les lecteurs cherchent dans son œuvre",
+  "auteur": "François Mauriac, Dieu et Mammon",
+  "consigne": "Vous apprécierez ces propos en fondant votre argumentation sur des exemples tirés de vos lectures.",
+  "fonctions": [
+   "Lyrique"
+  ],
+  "themes": []
+ },
+ {
+  "num": "t24",
+  "citation": "Le but de la littérature est de faire oublier les soucis de la vie, de faire rêver",
+  "auteur": "Auteur non précisé",
+  "consigne": "Commentez et discutez cette opinion en vous appuyant sur des exemples littéraires précis.",
+  "fonctions": [
+   "Évasion"
+  ],
+  "themes": [
+   "Rêve"
+  ]
+ },
+ {
+  "num": "t25",
+  "citation": "L'aventure des écrivains nègres n'a pas été une entreprise littéraire. Ce fut une passion (politique) !",
+  "auteur": "Léopold Sédar Senghor",
+  "consigne": "Commentez cette affirmation en vous référant aux thèmes majeurs de la littérature négro-africaine.",
+  "fonctions": [
+   "Engagement"
+  ],
+  "themes": [
+   "Politique",
+   "Aventure",
+   "Passion",
+   "Négritude"
+  ]
+ },
+ {
+  "num": "t26",
+  "citation": "La politique nous concerne nous tous, et nous serons des lâches si nous cédons à cette facilité : celle du détachement",
+  "auteur": "François Mauriac",
+  "consigne": "Expliquez et discutez cette opinion à partir de vos connaissances littéraires.",
+  "fonctions": [
+   "Engagement"
+  ],
+  "themes": [
+   "Politique"
+  ]
+ },
+ {
+  "num": "t27",
+  "citation": "L'écrivain doit être engagé, cela signifie, pour lui, être inséré dans son contexte social, être la chair du peuple, vivre les problèmes de son pays avec intensité, et en rendre témoignage",
+  "auteur": "Aimé Césaire",
+  "consigne": "Partagez-vous son opinion ?",
+  "fonctions": [
+   "Engagement",
+   "Sociale"
+  ],
+  "themes": [
+   "Société",
+   "Peuple",
+   "Engagement"
+  ]
+ },
+ {
+  "num": "t28",
+  "citation": "Je suis écrivain, un rêveur, et plus je m'engagerai, plus je m'éloignerai de ma vraie nature",
+  "auteur": "Henry Troyat",
+  "consigne": "Expliquez et discutez la position de cet auteur sur la fonction à assigner à l'écrivain.",
+  "fonctions": [
+   "Évasion",
+   "Engagement"
+  ],
+  "themes": [
+   "Rêve",
+   "Engagement"
+  ]
+ },
+ {
+  "num": "t29",
+  "citation": "Écrire, c'est mentir",
+  "auteur": "Auteur non précisé",
+  "consigne": "Expliquez et discutez cette allégation sur la fonction assignée à l'écrivain en vous appuyant sur vos lectures ou vos connaissances personnelles.",
+  "fonctions": [
+   "Évasion"
+  ],
+  "themes": [
+   "Mensonge"
+  ]
+ },
+ {
+  "num": "t30",
+  "citation": "La littérature doit être mise exclusivement au service de la défense d'une cause sociale, culturelle ou politique. Par le biais de l'écrivain, elle doit donner au peuple une conscience révolutionnaire",
+  "auteur": "Auteur non précisé",
+  "consigne": "Expliquez et discutez cette assertion en vous référant à la littérature française et à la littérature africaine.",
+  "fonctions": [
+   "Engagement"
+  ],
+  "themes": [
+   "Société",
+   "Politique",
+   "Peuple",
+   "Conscience",
+   "Révolution"
+  ]
+ },
+ {
+  "num": "t31",
+  "citation": "La littérature n'a de sens que si elle est invitation à l'évasion, au loisir, au rêve et surtout à la jouissance esthétique",
+  "auteur": "Auteur non précisé",
+  "consigne": "Commentez et discutez cette pensée sur la fonction assignée à la littérature.",
+  "fonctions": [
+   "Évasion",
+   "Esthétique"
+  ],
+  "themes": [
+   "Rêve"
+  ]
+ },
+ {
+  "num": "t32",
+  "citation": "La modernité n'a rien à voir avec la date de parution. Des textes écrits il y a plusieurs siècles sont résolument modernes.",
+  "auteur": "Un éditeur contemporain",
+  "consigne": "Partagez-vous ses opinions ? Vous appuierez votre réponse sur des analyses tirées de vos lectures.",
+  "fonctions": [
+   "Sociale"
+  ],
+  "themes": [
+   "Modernité"
+  ]
+ },
+ {
+  "num": "t33",
+  "citation": "Un grand écrivain, un grand artiste est essentiellement anticonformiste. Il navigue à contre-courant",
+  "auteur": "André Gide",
+  "consigne": "À l'aide d'exemples précis, vous expliquerez et discuterez ce propos.",
+  "fonctions": [
+   "Engagement"
+  ],
+  "themes": [
+   "Courage"
+  ]
+ },
+ {
+  "num": "t34",
+  "citation": "La littérature n'a pas la vérité pour objet. Il faut laisser la vérité aux sciences car elle est leur objet. L'art du roman est de savoir mentir",
+  "auteur": "Auteur non précisé",
+  "consigne": "Expliquez et discutez cette pensée.",
+  "fonctions": [
+   "Évasion"
+  ],
+  "themes": [
+   "Art",
+   "Science",
+   "Vérité",
+   "Mensonge",
+   "Savoir"
+  ]
+ },
+ {
+  "num": "t35",
+  "citation": "Celui qui lit une œuvre littéraire joue avec l'imaginaire, joue à prendre pour réel ce qui est fiction",
+  "auteur": "Auteur non précisé",
+  "consigne": "Expliquez et discutez ces propos en vous référant à vos connaissances personnelles.",
+  "fonctions": [
+   "Évasion"
+  ],
+  "themes": [
+   "Imaginaire"
+  ]
+ },
+ {
+  "num": "t36",
+  "citation": "La vraie lecture commence quand on ne lit plus seulement pour se distraire et se fuir, mais pour se trouver",
+  "auteur": "Jean Guéhenno",
+  "consigne": "Expliquez et discutez cette allégation sur la fonction assignée à la lecture.",
+  "fonctions": [
+   "Lyrique",
+   "Évasion"
+  ],
+  "themes": []
+ },
+ {
+  "num": "t37",
+  "citation": "Si l'écrivain des années 1600 veut que ses écrits soient toujours d'actualité, il doit se méfier de l'actualité comme source d'inspiration",
+  "auteur": "Auteur non précisé",
+  "consigne": "Partagez-vous son opinion ?",
+  "fonctions": [
+   "Sociale"
+  ],
+  "themes": []
+ },
+ {
+  "num": "t38",
+  "citation": "J'aurais voulu aplatir le monde, d'un coup de ma plume, en forgeant des fictions utiles",
+  "auteur": "Émile Zola",
+  "consigne": "Croyez-vous que ce projet de départ de l'auteur de Germinal soit une urgence pour l'humanité décadente ?",
+  "fonctions": [
+   "Engagement",
+   "Sociale"
+  ],
+  "themes": []
+ },
+ {
+  "num": "t39",
+  "citation": "Frappe-toi le cœur ! C'est là qu'est le génie",
+  "auteur": "Alfred de Musset",
+  "consigne": "Comment le cœur peut-il constituer la source d'où provient l'inspiration dont un écrivain a besoin ?",
+  "fonctions": [
+   "Lyrique"
+  ],
+  "themes": []
+ },
+ {
+  "num": "t40",
+  "citation": "Imposer la même technique d'écriture à tout le monde revient à demander à toute l'humanité de porter la même pointure de chaussures",
+  "auteur": "Victor Hugo",
+  "consigne": "Passez en revue les courants littéraires différents pour étayer ces propos.",
+  "fonctions": [
+   "Engagement"
+  ],
+  "themes": [
+   "Humanité"
+  ]
+ },
+ {
+  "num": "t41",
+  "citation": "Longtemps j'ai pris ma plume pour épée, à présent je connais notre impuissance. Qu'importe : je fais, je ferai des livres",
+  "auteur": "Jean-Paul Sartre, Les Mots",
+  "consigne": "Malgré échecs et déboires, pensez-vous qu'écrire soit une nécessité ?",
+  "fonctions": [
+   "Engagement"
+  ],
+  "themes": [
+   "Impuissance"
+  ]
+ },
+ {
+  "num": "t42",
+  "citation": "Malheur au livre qu'on peut lire sans s'interroger tout le temps sur l'auteur",
+  "auteur": "Emil Cioran",
+  "consigne": "Expliquez et discutez cette affirmation.",
+  "fonctions": [
+   "Lyrique"
+  ],
+  "themes": []
+ },
+ {
+  "num": "t43",
+  "citation": "La poésie ne doit nullement être assujettie à des convictions politiques ou religieuses. Elle est avant tout l'exaltation des pouvoirs du Verbe.",
+  "auteur": "Auteur non précisé",
+  "consigne": "Vous analyserez ces propos en vous fondant sur ce que vous savez de la poésie.",
+  "fonctions": [
+   "Esthétique",
+   "Engagement"
+  ],
+  "themes": [
+   "Politique",
+   "Religion"
+  ]
+ },
+ {
+  "num": "t44",
+  "citation": "La poésie, c'est beaucoup plus qu'une forme littéraire, c'est la traduction anoblie de nos émotions, de nos rêves, de nos peines, de nos désirs.",
+  "auteur": "Jeanne Bourin",
+  "consigne": "Commentez et discutez cette réflexion en vous appuyant de façon précise sur des œuvres que vous connaissez.",
+  "fonctions": [
+   "Lyrique"
+  ],
+  "themes": [
+   "Rêve",
+   "Émotion",
+   "Désir"
+  ]
+ },
+ {
+  "num": "t45",
+  "citation": "La poésie n'est pas un ornement, elle est un instrument.",
+  "auteur": "Victor Hugo",
+  "consigne": "Expliquez et discutez cette opinion de Victor Hugo.",
+  "fonctions": [
+   "Engagement",
+   "Esthétique"
+  ],
+  "themes": []
+ },
+ {
+  "num": "t46",
+  "citation": "La poésie est une insurrection",
+  "auteur": "Pablo Neruda",
+  "consigne": "Expliquez et discutez ce point de vue sur la mission assignée au genre poétique en vous référant à vos lectures ou à vos connaissances personnelles.",
+  "fonctions": [
+   "Engagement"
+  ],
+  "themes": []
+ },
+ {
+  "num": "t47",
+  "citation": "La poésie est l'art du rêve, de l'évasion",
+  "auteur": "Charles Baudelaire",
+  "consigne": "Expliquez et discutez cette opinion en vous appuyant sur les œuvres que vous connaissez.",
+  "fonctions": [
+   "Évasion"
+  ],
+  "themes": [
+   "Art",
+   "Rêve"
+  ]
+ },
+ {
+  "num": "t48",
+  "citation": "La poésie est moins un objet de musée qu'un puissant instrument de libération",
+  "auteur": "Léopold Sédar Senghor",
+  "consigne": "Montrez d'une part le rôle de la poésie dans les consciences affaiblies par des forces supérieures dominatrices. D'autre part, prouvez l'existence d'œuvres poétiques complètement détournées d'inspiration engagée.",
+  "fonctions": [
+   "Engagement",
+   "Esthétique"
+  ],
+  "themes": []
+ },
+ {
+  "num": "t49",
+  "citation": "J'aurais été soldat si je n'étais poète",
+  "auteur": "Victor Hugo, Les Rayons et les Ombres (1840)",
+  "consigne": "Expliquez et discutez cette affirmation.",
+  "fonctions": [
+   "Engagement"
+  ],
+  "themes": []
+ },
+ {
+  "num": "t50",
+  "citation": "Le poète doit mettre dans ses vers les problèmes de son cœur et ceux de tous",
+  "auteur": "Auteur non précisé",
+  "consigne": "Expliquez et discutez cette affirmation en vous fondant sur les œuvres et textes étudiés.",
+  "fonctions": [
+   "Lyrique",
+   "Engagement"
+  ],
+  "themes": []
+ },
+ {
+  "num": "t51",
+  "citation": "Le roman n'est pas seulement pour moi témoignage, description, mais action, une action au service de l'homme",
+  "auteur": "Sembène Ousmane",
+  "consigne": "Expliquez et discutez cette affirmation.",
+  "fonctions": [
+   "Engagement",
+   "Sociale"
+  ],
+  "themes": []
+ },
+ {
+  "num": "t52",
+  "citation": "Le roman est un miroir que l'on promène le long du chemin.",
+  "auteur": "Stendhal",
+  "consigne": "Expliquez et discutez cette affirmation.",
+  "fonctions": [
+   "Sociale"
+  ],
+  "themes": []
+ },
+ {
+  "num": "t53",
+  "citation": "Tant qu'il y aura sur cette terre misère et ignorance, des livres de la nature de celui-ci pourront ne pas être inutiles.",
+  "auteur": "Victor Hugo, préface des Misérables",
+  "consigne": "Expliquez et discutez cette affirmation.",
+  "fonctions": [
+   "Engagement",
+   "Sociale"
+  ],
+  "themes": [
+   "Misère"
+  ]
+ },
+ {
+  "num": "t54",
+  "citation": "Les personnages du roman ne ressemblent pas davantage à la réalité qu'à des habitants des songes.",
+  "auteur": "Albert Béghin",
+  "consigne": "Expliquez et discutez cette affirmation.",
+  "fonctions": [
+   "Évasion",
+   "Sociale"
+  ],
+  "themes": [
+   "Rêve",
+   "Réalité"
+  ]
+ },
+ {
+  "num": "t55",
+  "citation": "Tout grand roman est un déicide, c'est-à-dire un assassinat symbolique de la réalité.",
+  "auteur": "Mario Vargas Llosa",
+  "consigne": "Expliquez et discutez cette affirmation.",
+  "fonctions": [
+   "Évasion"
+  ],
+  "themes": [
+   "Réalité"
+  ]
+ },
+ {
+  "num": "t56",
+  "citation": "Le but du roman n'est pas de nous raconter une histoire, de nous amuser et de nous attendrir mais de nous forcer à penser",
+  "auteur": "Maupassant, préface de Pierre et Jean",
+  "consigne": "Expliquez et discutez cette affirmation.",
+  "fonctions": [
+   "Engagement",
+   "Évasion"
+  ],
+  "themes": []
+ },
+ {
+  "num": "t57",
+  "citation": "Le roman et le théâtre, en nous présentant les personnages assez voisins de nous pour que nous les comprenions, assez loin de nous pour que nous n'ayons pas peur en les condamnant, de nous condamner nous-mêmes, nous rendent notre objectivité de spectateurs, nous rendent notre liberté",
+  "auteur": "Pierre Aimé Touchard",
+  "consigne": "En vous appuyant sur des œuvres littéraires que vous connaissez, commentez ce jugement.",
+  "fonctions": [
+   "Sociale"
+  ],
+  "themes": [
+   "Liberté"
+  ]
+ },
+ {
+  "num": "t58",
+  "citation": "Un romancier doit être l'historien de son âge. Il ne peut prendre autre chose que ce qu'il a vu",
+  "auteur": "Jean B. Louvet",
+  "consigne": "Expliquez puis discutez son point de vue.",
+  "fonctions": [
+   "Sociale"
+  ],
+  "themes": [
+   "Histoire"
+  ]
+ },
+ {
+  "num": "t59",
+  "citation": "Un roman qui sente l'odeur du peuple",
+  "auteur": "Émile Zola, préface de L'Assommoir, 1877",
+  "consigne": "Expliquez et discutez cette affirmation.",
+  "fonctions": [
+   "Sociale"
+  ],
+  "themes": [
+   "Peuple"
+  ]
+ },
+ {
+  "num": "t60",
+  "citation": "Une œuvre littéraire doit être un procès-verbal, rien de plus : elle n'a que le mérite de l'observation exacte",
+  "auteur": "Émile Zola",
+  "consigne": "Ce jugement s'accorde-t-il avec votre lecture de Thérèse Desqueyroux et de L'Étranger ?",
+  "fonctions": [
+   "Sociale"
+  ],
+  "themes": []
+ },
+ {
+  "num": "t61",
+  "citation": "Le théâtre est d'abord un art du spectacle avant d'être un divertissement, une instruction morale et une prise directe sur les problèmes de nos sociétés",
+  "auteur": "Auteur non précisé",
+  "consigne": "Expliquez et discutez cette affirmation.",
+  "fonctions": [
+   "Esthétique",
+   "Évasion"
+  ],
+  "themes": [
+   "Société",
+   "Éducation",
+   "Art",
+   "Morale"
+  ]
+ },
+ {
+  "num": "t62",
+  "citation": "Le théâtre est un art illusionniste. Il éloigne le spectateur du vrai",
+  "auteur": "Auteur non précisé",
+  "consigne": "Expliquez et discutez cette affirmation.",
+  "fonctions": [
+   "Évasion"
+  ],
+  "themes": [
+   "Art",
+   "Illusion"
+  ]
+ },
+ {
+  "num": "t63",
+  "citation": "Le but ultime de la vie de l'homme, c'est de créer des œuvres de beauté et c'est à travers ces créations qu'on participe à l'éternité de la vie",
+  "auteur": "Auteur non précisé",
+  "consigne": "Expliquez et discutez ces propos.",
+  "fonctions": [
+   "Esthétique"
+  ],
+  "themes": [
+   "Beauté"
+  ]
+ },
+ {
+  "num": "t64",
+  "citation": "Une œuvre d'art devrait toujours nous apprendre que nous n'avions pas vu ce que nous avions vu",
+  "auteur": "Paul Valéry",
+  "consigne": "Expliquez et discutez cette affirmation.",
+  "fonctions": [
+   "Sociale"
+  ],
+  "themes": [
+   "Art"
+  ]
+ },
+ {
+  "num": "t65",
+  "citation": "L'art pour le progrès est plus beau encore",
+  "auteur": "Victor Hugo",
+  "consigne": "Expliquez et discutez cette affirmation.",
+  "fonctions": [
+   "Engagement",
+   "Esthétique"
+  ],
+  "themes": [
+   "Art",
+   "Beauté",
+   "Progrès"
+  ]
+ },
+ {
+  "num": "t66",
+  "citation": "La politique dans une œuvre d'art, c'est comme un coup de pistolet au milieu d'un concert",
+  "auteur": "Théophile Gautier",
+  "consigne": "Expliquez et discutez cette affirmation.",
+  "fonctions": [
+   "Esthétique",
+   "Engagement"
+  ],
+  "themes": [
+   "Politique",
+   "Art"
+  ]
+ },
+ {
+  "num": "t67",
+  "citation": "L'artiste doit être dans son œuvre comme Dieu dans la création ; présent partout et visible nulle part",
+  "auteur": "Gustave Flaubert, Correspondance",
+  "consigne": "Expliquez et discutez cette affirmation.",
+  "fonctions": [
+   "Esthétique",
+   "Lyrique"
+  ],
+  "themes": [
+   "Religion"
+  ]
+ },
+ {
+  "num": "t68",
+  "citation": "La censure d'une œuvre d'art est la seule preuve selon laquelle un écrivain dit vrai",
+  "auteur": "Auteur non précisé",
+  "consigne": "Expliquez et discutez cette affirmation.",
+  "fonctions": [
+   "Engagement"
+  ],
+  "themes": [
+   "Art",
+   "Censure"
+  ]
+ },
+ {
+  "num": "t69",
+  "citation": "Je me sers d'animaux pour instruire les hommes",
+  "auteur": "Jean de La Fontaine",
+  "consigne": "Expliquez et discutez cette affirmation.",
+  "fonctions": [
+   "Engagement",
+   "Sociale"
+  ],
+  "themes": [
+   "Éducation"
+  ]
+ },
+ {
+  "num": "t70",
+  "citation": "J'ai pétri de la boue et j'en ai fait de l'or",
+  "auteur": "Charles Baudelaire",
+  "consigne": "Expliquez et discutez cette affirmation.",
+  "fonctions": [
+   "Esthétique"
+  ],
+  "themes": []
+ },
+ {
+  "num": "t71",
+  "citation": "L'écrivain est comme un médecin sans frontières ; mais il lui arrive aussi d'être son propre médecin",
+  "auteur": "Auteur non précisé",
+  "consigne": "Expliquez et discutez cette affirmation.",
+  "fonctions": [
+   "Engagement",
+   "Lyrique"
+  ],
+  "themes": []
+ },
+ {
+  "num": "t72",
+  "citation": "La poésie suscite le rêve, le roman lui raconte, décrit, fait…",
+  "auteur": "Auteur non précisé",
+  "consigne": "Expliquez et discutez cette affirmation.",
+  "fonctions": [
+   "Évasion"
+  ],
+  "themes": [
+   "Rêve"
+  ]
+ },
+ {
+  "num": "t73",
+  "citation": "Écrire une œuvre littéraire c'est refuser de regarder le monde tel qu'il est",
+  "auteur": "Auteur non précisé",
+  "consigne": "Expliquez et discutez cette affirmation.",
+  "fonctions": [
+   "Évasion"
+  ],
+  "themes": []
+ },
+ {
+  "num": "t74",
+  "citation": "La littérature, cet art du langage, est au service d'elle-même",
+  "auteur": "Auteur non précisé",
+  "consigne": "Vous analysez cette assertion en démontrant d'une part que la littérature se veut culte du Beau, d'autre part, en prouvant qu'elle est un canon.",
+  "fonctions": [
+   "Esthétique"
+  ],
+  "themes": [
+   "Art",
+   "Langage"
+  ]
+ },
+ {
+  "num": "t75",
+  "citation": "La littérature est un domaine de la pensée humaine qui, par les pouvoirs du verbe de l'écrivain, se veut une thérapie pour les âmes tourmentées",
+  "auteur": "Auteur non précisé",
+  "consigne": "Expliquez et discutez cette affirmation.",
+  "fonctions": [
+   "Lyrique"
+  ],
+  "themes": [
+   "Humanité"
+  ]
+ },
+ {
+  "num": "t76",
+  "citation": "Peu importe son siècle, sa distance, l'œuvre littéraire et quoique loin dans le temps et dans l'espace reflète toujours ce que nous vivons",
+  "auteur": "Auteur non précisé",
+  "consigne": "Expliquez et discutez cette affirmation.",
+  "fonctions": [
+   "Sociale"
+  ],
+  "themes": []
+ },
+ {
+  "num": "t77",
+  "citation": "Tout écrivain vrai est celui qui puise la manière et l'inspiration dans le siècle auquel il appartient pour composer son œuvre",
+  "auteur": "Auteur non précisé",
+  "consigne": "Expliquez et discutez cette affirmation.",
+  "fonctions": [
+   "Sociale"
+  ],
+  "themes": []
+ },
+ {
+  "num": "t78",
+  "citation": "Seule l'imagination fait la valeur d'une œuvre littéraire",
+  "auteur": "Auteur non précisé",
+  "consigne": "Discutez cette opinion en s'efforçant, d'une part, d'expliquer comment l'imagination paraît essentielle.",
+  "fonctions": [
+   "Évasion",
+   "Esthétique"
+  ],
+  "themes": []
+ },
+ {
+  "num": "t79",
+  "citation": "La littérature est une arme efficace de combat dans une société remplie d'amertume.",
+  "auteur": "Auteur non précisé",
+  "consigne": "À l'aide des œuvres littéraires déjà lues ou étudiées, expliquez et discutez cette affirmation.",
+  "fonctions": [
+   "Engagement"
+  ],
+  "themes": [
+   "Société"
+  ]
+ },
+ {
+  "num": "t80",
+  "citation": "Le dramaturge a des objectifs envers le spectateur : amuser la galerie et lui faire prendre conscience.",
+  "auteur": "Auteur non précisé",
+  "consigne": "Expliquez et discutez les propos de ce critique contemporain à l'aide des œuvres théâtrales que vous avez lues ou étudiées.",
+  "fonctions": [
+   "Évasion",
+   "Engagement"
+  ],
+  "themes": [
+   "Conscience"
+  ]
+ },
+ {
+  "num": "t81",
+  "citation": "Sans se soucier des autres, sans penser à l'atmosphère tendue, le poète est subjectif",
+  "auteur": "Auteur non précisé",
+  "consigne": "Qu'en pensez-vous ?",
+  "fonctions": [
+   "Lyrique"
+  ],
+  "themes": []
+ },
+ {
+  "num": "t82",
+  "citation": "Il y a deux sortes de roman : Le Roman qui nous fait oublier notre vie et le roman qui nous explique notre vie",
+  "auteur": "Auteur non précisé",
+  "consigne": "Justifiez cette affirmation à la lumière des œuvres littéraires déjà lues ou étudiées.",
+  "fonctions": [
+   "Évasion",
+   "Sociale"
+  ],
+  "themes": []
+ },
+ {
+  "num": "t83",
+  "citation": "Tout l'art du roman vise sans doute à nous tirer d'impatience et à nous proposer un plaisir d'entente qui ne s'use point. Par cette précaution, un vrai roman est toujours court.",
+  "auteur": "Alain, Propos de littérature, 1934",
+  "consigne": "En vous appuyant sur des œuvres romanesques déjà lues ou étudiées, expliquez et discutez les propos de cet auteur.",
+  "fonctions": [
+   "Évasion"
+  ],
+  "themes": [
+   "Art"
+  ]
+ },
+ {
+  "num": "t84",
+  "citation": "Ma plume permet de me défendre et défendre mon peuple",
+  "auteur": "Auteur non précisé",
+  "consigne": "À l'aide des œuvres déjà lues ou étudiées, expliquez et discutez cette affirmation.",
+  "fonctions": [
+   "Engagement"
+  ],
+  "themes": [
+   "Peuple"
+  ]
+ },
+ {
+  "num": "t85",
+  "citation": "Le plaisir est le seul profit que l'on retire de la lecture des œuvres littéraires.",
+  "auteur": "Auteur non précisé",
+  "consigne": "Expliquez et discutez cette affirmation.",
+  "fonctions": [
+   "Évasion"
+  ],
+  "themes": []
+ },
+ {
+  "num": "t86",
+  "citation": "Regarder, sentir, exprimer. Voilà la vie du poète.",
+  "auteur": "Alfred de Musset",
+  "consigne": "Expliquez et discutez cette affirmation à l'aide des arguments solides et des exemples tirés des œuvres poétiques.",
+  "fonctions": [
+   "Lyrique"
+  ],
+  "themes": []
+ },
+ {
+  "num": "t87",
+  "citation": "L'écrivain doit mener une lutte ou cesser d'exister.",
+  "auteur": "Auteur non précisé",
+  "consigne": "Partagez-vous l'affirmation de cet écrivain ?",
+  "fonctions": [
+   "Engagement"
+  ],
+  "themes": [
+   "Lutte"
+  ]
+ },
+ {
+  "num": "t88",
+  "citation": "Le théâtre n'a qu'une seule vision : faire la satire des mœurs.",
+  "auteur": "Auteur non précisé",
+  "consigne": "Expliquez et discutez cette affirmation à l'aide des œuvres théâtrales déjà lues ou étudiées.",
+  "fonctions": [
+   "Sociale",
+   "Engagement"
+  ],
+  "themes": [
+   "Satire"
+  ]
+ },
+ {
+  "num": "t89",
+  "citation": "Je ne trempe pas ma plume dans un encrier mais dans la vie",
+  "auteur": "Blaise Cendrars",
+  "consigne": "Qu'en pensez-vous ?",
+  "fonctions": [
+   "Sociale"
+  ],
+  "themes": []
+ },
+ {
+  "num": "t90",
+  "citation": "L'Artiste est celui qui nous montre du doigt une parcelle du monde",
+  "auteur": "J.-M. G. Le Clézio",
+  "consigne": "Partagez-vous ce point de vue ?",
+  "fonctions": [
+   "Sociale"
+  ],
+  "themes": []
+ },
+ {
+  "num": "t91",
+  "citation": "Le poète est une fabrique d'images.",
+  "auteur": "Pierre Reverdy",
+  "consigne": "Expliquez et discutez cette affirmation à l'aide des œuvres poétiques déjà lues ou étudiées.",
+  "fonctions": [
+   "Esthétique"
+  ],
+  "themes": []
+ },
+ {
+  "num": "t92",
+  "citation": "La poésie est l'ambition d'un discours qui soit chargé de plus de sens, et mêlé de plus de musique, que le langage ordinaire n'en porte et n'en peut porter.",
+  "auteur": "Paul Valéry, Variété",
+  "consigne": "Qu'en pensez-vous ?",
+  "fonctions": [
+   "Esthétique"
+  ],
+  "themes": [
+   "Langage",
+   "Musique"
+  ]
+ },
+ {
+  "num": "t93",
+  "citation": "Quand un écrivain crée un bon livre, il touche le cœur avec des mots. A sa volonté, le cœur gémit, se lamente, se remplit de colère ou au contraire de sérénité et de joie",
+  "auteur": "Maxime Gorki",
+  "consigne": "Après avoir expliqué la pensée de l'auteur, vous vous demanderez si l'émotion est la seule raison d'être de la littérature.",
+  "fonctions": [
+   "Lyrique"
+  ],
+  "themes": []
+ },
+ {
+  "num": "t94",
+  "citation": "Le succès du roman repose sur notre éternel besoin qu'on nous raconte des histoires où nous nous reconnaissons tels… que nous voudrions être",
+  "auteur": "André Bellesort",
+  "consigne": "Commentez et discutez cette opinion.",
+  "fonctions": [
+   "Évasion"
+  ],
+  "themes": []
+ },
+ {
+  "num": "t95",
+  "citation": "C'est toujours contre le réel que l'écrivain travaille et de façon à l'oublier",
+  "auteur": "Yves Berger",
+  "consigne": "En prenant appui sur des œuvres romanesques, vous direz ce que vous pensez de cette opinion.",
+  "fonctions": [
+   "Évasion",
+   "Sociale"
+  ],
+  "themes": []
+ },
+ {
+  "num": "t96",
+  "citation": "La poésie n'a pas d'écho plus sonore et plus prolongé que le cœur de la jeunesse où l'amour va naître",
+  "auteur": "Alphonse de Lamartine, Graziella",
+  "consigne": "Jeunes que vous êtes, en quoi consiste pour vous le plaisir de lire de la poésie ? Justifiez votre analyse par des exemples précis tirés des poèmes que vous connaissez et aimez.",
+  "fonctions": [
+   "Lyrique"
+  ],
+  "themes": [
+   "Amour",
+   "Jeunesse"
+  ]
+ },
+ {
+  "num": "t97",
+  "citation": "Le poète est un adulte aux larmes faciles",
+  "auteur": "Alfred de Musset",
+  "consigne": "Commentez et discutez.",
+  "fonctions": [
+   "Lyrique"
+  ],
+  "themes": []
+ },
+ {
+  "num": "t98",
+  "citation": "Je ne vais jamais au théâtre sans mon mouchoir",
+  "auteur": "Auteur non précisé",
+  "consigne": "Quel effet selon lui, le théâtre produit-il sur le spectateur ? Son acception du théâtre vous satisfait-elle ?",
+  "fonctions": [
+   "Lyrique",
+   "Évasion"
+  ],
+  "themes": []
+ },
+ {
+  "num": "t99",
+  "citation": "Le théâtre vit de morale… toute grande œuvre dramatique suppose une question de morale et la suggère",
+  "auteur": "Auteur non précisé",
+  "consigne": "La valeur d'une grande œuvre dramatique est-elle à la lumière de vos expériences, sa capacité d'être le support d'une morale ?",
+  "fonctions": [
+   "Sociale"
+  ],
+  "themes": [
+   "Morale"
+  ]
+ },
+ {
+  "num": "t100",
+  "citation": "La littérature africaine peut ruiner des tyrans, sauver les enfants des massacres, arracher une race à un esclavage millénaire, en un mot servir",
+  "auteur": "Mongo Beti",
+  "consigne": "Vous expliquerez et discuterez cette assertion de l'auteur en vous appuyant sur des exemples d'œuvres lues et étudiées.",
+  "fonctions": [
+   "Engagement"
+  ],
+  "themes": [
+   "Enfance",
+   "Esclavage",
+   "Afrique",
+   "Tyrannie"
+  ]
+ },
+ {
+  "num": "t101",
+  "citation": "Les poètes de la négritude (…) étaient nécessairement les seuls grands poètes révolutionnaires.",
+  "auteur": "Jean-Paul Sartre, Orphée noir",
+  "consigne": "Expliquez et discutez cette affirmation à travers des œuvres poétique lues ou étudiées.",
+  "fonctions": [
+   "Engagement"
+  ],
+  "themes": [
+   "Négritude",
+   "Révolution"
+  ]
+ },
+ {
+  "num": "t102",
+  "citation": "L'écrivain a abandonné le rêve, impossible de faire une peinture impartiale de la société.",
+  "auteur": "Sujet du bac 2023 (Côte d'Ivoire)",
+  "consigne": "Expliquez et discutez cette affirmation à l'aide des œuvres lues ou étudiées.",
+  "fonctions": [
+   "Engagement",
+   "Sociale"
+  ],
+  "themes": [
+   "Société",
+   "Rêve"
+  ]
+ },
+ {
+  "num": "t103",
+  "citation": "On ne lit jamais un livre. On se lit à travers les livres, soit pour se découvrir, soit pour se contrôler",
+  "auteur": "Auteur non précisé",
+  "consigne": "En vous appuyant sur votre expérience personnelle de lecteur d'œuvres littéraires, vous expliquerez ce propos. (Robert Rolland, Une nouvelle littérature).",
+  "fonctions": [
+   "Lyrique"
+  ],
+  "themes": []
+ },
+ {
+  "num": "t104",
+  "citation": "Le succès du roman, la faveur dont il jouit auprès du public, l'intérêt qu'il suscite chez les lecteurs tiennent du fait qu'il nous livre à la fois les prestiges de l'imaginaire et les saveurs du réel",
+  "auteur": "Michel Raimond",
+  "consigne": "En vous appuyant sur vos lectures d'œuvres romanesques, justifiez cette affirmation.",
+  "fonctions": [
+   "Évasion",
+   "Sociale"
+  ],
+  "themes": [
+   "Imaginaire"
+  ]
+ },
+ {
+  "num": "t105",
+  "citation": "Le rôle de l'écrivain (…) ne le sépare pas de devoirs difficiles. Il est au service de ceux qui subissent l'histoire",
+  "auteur": "Albert Camus",
+  "consigne": "Dans un développement argumenté et illustré d'exemples tirés d'œuvres littéraires étudiées ou lues, expliquez et discutez cette opinion.",
+  "fonctions": [
+   "Engagement"
+  ],
+  "themes": [
+   "Histoire"
+  ]
+ },
+ {
+  "num": "t106",
+  "citation": "Dans un monde qui souffre, à quoi sert-il d'écrire ?",
+  "auteur": "Auteur non précisé",
+  "consigne": "Expliquez et discutez cette question.",
+  "fonctions": [
+   "Engagement"
+  ],
+  "themes": []
+ },
+ {
+  "num": "t107",
+  "citation": "J'écris pour essayer d'entendre la langue française ; c'est une tâche sans fin...",
+  "auteur": "Richard Millet",
+  "consigne": "Expliquez et discutez cette affirmation.",
+  "fonctions": [
+   "Esthétique"
+  ],
+  "themes": []
+ },
+ {
+  "num": "t108",
+  "citation": "Cette poésie qui paraît d'abord raciale est finalement un chant de tous et pour tous",
+  "auteur": "Jean-Paul Sartre, Orphée noir",
+  "consigne": "En vous appuyant sur les textes poétiques des écrivains noirs que vous connaissez, expliquez et au besoin discutez cette assertion.",
+  "fonctions": [
+   "Engagement",
+   "Lyrique"
+  ],
+  "themes": []
+ },
+ {
+  "num": "t109",
+  "citation": "Le poète s'est retiré d'un seul coup du langage instrument ; il a choisi une fois pour toute l'attitude poétique qui considère les mots comme des choses et non comme des signes.",
+  "auteur": "Jean-Paul Sartre",
+  "consigne": "Commentez ces observations à l'aide d'arguments appuyés par des exemples.",
+  "fonctions": [
+   "Esthétique"
+  ],
+  "themes": [
+   "Langage",
+   "Conscience"
+  ]
+ },
+ {
+  "num": "t110",
+  "citation": "Un livre de poème n'est rien d'autre qu'un cœur ouvert",
+  "auteur": "Jeanne Bourin",
+  "consigne": "Expliquez et discutez cette affirmation.",
+  "fonctions": [
+   "Lyrique",
+   "Sociale"
+  ],
+  "themes": []
+ },
+ {
+  "num": "t111",
+  "citation": "Lire les romans, c'est apprendre à se donner du plaisir.",
+  "auteur": "George Sand",
+  "consigne": "Dans un développement organisé, expliquez et discutez cette affirmation.",
+  "fonctions": [
+   "Évasion"
+  ],
+  "themes": []
+ },
+ {
+  "num": "t112",
+  "citation": "Le théâtre africain est un art social qui éveille la conscience des hommes, les informe et les forme.",
+  "auteur": "Auteur non précisé",
+  "consigne": "Commentez et discutez ce point de vue d'un observateur averti du monde du théâtre.",
+  "fonctions": [
+   "Engagement",
+   "Sociale"
+  ],
+  "themes": [
+   "Société",
+   "Art",
+   "Conscience",
+   "Afrique"
+  ]
+ },
+ {
+  "num": "t113",
+  "citation": "On ne doit parler, on ne doit écrire que pour l'instruction.",
+  "auteur": "La Bruyère",
+  "consigne": "Après vous être interrogé(e) sur le sens du mot « instruction », vous vous demanderez si c'est le seul but de la littérature.",
+  "fonctions": [
+   "Engagement",
+   "Sociale"
+  ],
+  "themes": [
+   "Éducation"
+  ]
+ },
+ {
+  "num": "t114",
+  "citation": "J'écris pour agir",
+  "auteur": "Voltaire",
+  "consigne": "Pensez-vous que le rôle d'un écrivain soit de défendre des valeurs auxquelles il tient ?",
+  "fonctions": [
+   "Engagement"
+  ],
+  "themes": []
+ },
+ {
+  "num": "t115",
+  "citation": "La poésie, comme l'art, est inséparable de la merveille. Elle est domiciliée dans l'espace émotif et ne saurait vivre ailleurs",
+  "auteur": "André Pieyre de Mandiargues",
+  "consigne": "Vous commenterez ce propos en vous appuyant sur des exemples précis.",
+  "fonctions": [
+   "Lyrique",
+   "Évasion"
+  ],
+  "themes": [
+   "Art"
+  ]
+ },
+ {
+  "num": "t116",
+  "citation": "La poésie ne se trouve pas que dans les vers",
+  "auteur": "Charles Dantzig, Dictionnaire égoïste de la littérature française",
+  "consigne": "Partagez-vous son point de vue ?",
+  "fonctions": [
+   "Esthétique"
+  ],
+  "themes": []
+ },
+ {
+  "num": "t117",
+  "citation": "L'objet du théâtre ne réside pas seulement dans la correction des mœurs, mais aussi il permet au spectateur d'oublier un tant soit peu les vicissitudes de la vie.",
+  "auteur": "Auteur non précisé",
+  "consigne": "Expliquez cette affirmation.",
+  "fonctions": [
+   "Sociale",
+   "Évasion"
+  ],
+  "themes": []
+ },
+ {
+  "num": "t118",
+  "citation": "Les œuvres publiées après 1960 se montrent en général très critiques vis-à-vis des régimes issus des indépendances",
+  "auteur": "Auteur non précisé",
+  "consigne": "Expliquez et discutez cette affirmation.",
+  "fonctions": [
+   "Engagement",
+   "Sociale"
+  ],
+  "themes": [
+   "Indépendance"
+  ]
+ },
+ {
+  "num": "t119",
+  "citation": "Depuis les indépendances, la littérature negro africaine s'est engagée sur une voie résolument autocritique",
+  "auteur": "Auteur non précisé",
+  "consigne": "Expliquez et discutez cette affirmation.",
+  "fonctions": [
+   "Engagement"
+  ],
+  "themes": [
+   "Indépendance",
+   "Afrique",
+   "Engagement"
+  ]
+ },
+ {
+  "num": "t120",
+  "citation": "Plus que le canon, la culture est une arme de combat",
+  "auteur": "Frantz Fanon",
+  "consigne": "Expliquez et discutez cette affirmation.",
+  "fonctions": [
+   "Engagement"
+  ],
+  "themes": [
+   "Culture"
+  ]
+ },
+ {
+  "num": "t121",
+  "citation": "Lire des romans, c'est peut-être aussi apprendre en se donnant du plaisir, à mieux ouvrir les yeux pour agir demain.",
+  "auteur": "Georges Jean, Le roman",
+  "consigne": "Expliquez et discutez cette affirmation.",
+  "fonctions": [
+   "Évasion",
+   "Sociale"
+  ],
+  "themes": []
+ },
+ {
+  "num": "t122",
+  "citation": "La première fonction de l'artiste, c'est de distraire les gens, de les sortir de leur quotidien.",
+  "auteur": "Julien Clerc, cité par Lucien Rioux",
+  "consigne": "Discutez cette conception du rôle de l'artiste en vous appuyant sur des exemples précis.",
+  "fonctions": [
+   "Évasion"
+  ],
+  "themes": []
+ },
+ {
+  "num": "t123",
+  "citation": "Dans nos pays en développement, le théâtre apparait comme une alternative crédible de communication interactive au profit de l'éveil des consciences.",
+  "auteur": "Prosper Kompaoré",
+  "consigne": "En vous appuyant sur vos connaissances des œuvres théâtrales et votre expérience personnelle du théâtre, commentez ces propos.",
+  "fonctions": [
+   "Engagement"
+  ],
+  "themes": [
+   "Conscience",
+   "Développement"
+  ]
+ },
+ {
+  "num": "t124",
+  "citation": "La poésie est la seule manière pour moi de ressentir les vibrations intenses d'être intensément vivant",
+  "auteur": "Emile Lalsaga",
+  "consigne": "Commentez cette affirmation en vous appuyant sur des exemples tirés de vos lectures et connaissances personnelles.",
+  "fonctions": [
+   "Lyrique"
+  ],
+  "themes": []
+ },
+ {
+  "num": "t125",
+  "citation": "Le roman doit transcrire objectivement la réalité",
+  "auteur": "Auteur non précisé",
+  "consigne": "Qu'en pensez-vous ?",
+  "fonctions": [
+   "Sociale"
+  ],
+  "themes": [
+   "Réalité"
+  ]
+ },
+ {
+  "num": "t126",
+  "citation": "La fonction du personnage de roman est de refléter la société dans laquelle il vit",
+  "auteur": "Auteur non précisé",
+  "consigne": "Expliquez puis discutez ce point de vue.",
+  "fonctions": [
+   "Sociale"
+  ],
+  "themes": [
+   "Société"
+  ]
+ }
+]

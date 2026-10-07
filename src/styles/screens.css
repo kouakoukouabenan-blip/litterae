@@ -71,7 +71,7 @@
 
 /* Sujet corrigé */
 .part-num { color: var(--orange); }
-.sujet-num { flex-shrink: 0; width: 2.2rem; font: 900 1.5rem/1.1 var(--font-title); color: var(--orange); }
+.sujet-num { flex-shrink: 0; min-width: 2.2rem; font: 900 1.5rem/1.1 var(--font-title); color: var(--orange); }
 .row-top .tags { margin-top: var(--s1); }
 .args { list-style: none; padding: 0; display: flex; flex-direction: column; gap: var(--s4); }
 .args li { padding: var(--s4); background: var(--surface); border: var(--border) solid var(--line); border-radius: var(--radius); display: flex; flex-direction: column; gap: var(--s2); }
@@ -637,3 +637,5 @@
   animation: fil-fondu .3s ease both;
 }
 @keyframes fil-fondu { from { opacity: 0; } }
+/* Sujets d'entraînement : numéros de 01 à T126, alignés sur une même colonne. */
+.entrainement-liste .sujet-num { width: 3.2rem; font-size: 1.3rem; }

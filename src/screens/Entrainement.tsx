@@ -8,6 +8,10 @@ import { numero, sujetsEntrainement } from "../lib/entrainement";
 import { avancement, lireBrouillon } from "../lib/atelier";
 import { read, write } from "../lib/storage";
 import { SujetsOnglets } from "../components/SujetsOnglets";
+import { EmptyState } from "../components/EmptyState";
+import { fonctionsDuSujet } from "../lib/defi";
+import { href, replaceRoute } from "../lib/router";
+import { FONCTIONS } from "../data/types";
 
 const GUIDE_VU = "atelier-guide-vu";
 
@@ -49,8 +53,10 @@ function Guide({ dialogue, cible }: { dialogue: RefObject<HTMLDialogElement>; ci
 }
 
 /** Tous les sujets, sans corrigé ni orientation : l'élève les rédige seul dans l'atelier, comme le jour de l'examen. */
-export function EntrainementScreen() {
-  const sujets = sujetsEntrainement();
+export function EntrainementScreen({ params }: { params: URLSearchParams }) {
+  const tous = sujetsEntrainement();
+  const choix = params.get("fonction") ?? "";
+  const sujets = choix ? tous.filter(s => fonctionsDuSujet(s.num).includes(choix as never)) : tous;
   const dialogue = useRef<HTMLDialogElement>(null);
   const [cible, setCible] = useState<string | null>(null);
   const ouvrirGuide = (num: string | null) => {
@@ -63,10 +69,20 @@ export function EntrainementScreen() {
     <Page title="Sujets d'entraînement">
       <SujetsOnglets actif="entrainement" />
       <PageHeader title="Sujets d'entraînement" compact>
-        {sujets.length} sujets à rédiger seul, pas à pas.{" "}
+        {tous.length} sujets à rédiger seul, pas à pas.{" "}
         <button type="button" class="link-btn guide-lien" onClick={() => ouvrirGuide(null)}>Comment ça marche ?</button>
       </PageHeader>
-      <ol class="list" aria-label="Sujets d'entraînement">
+      <div class="sticky-bar">
+        <div class="chips" role="group" aria-label="Filtrer par fonction">
+          <button type="button" class="chip" aria-pressed={!choix} onClick={() => replaceRoute(href(["entrainement"]))}>Tous</button>
+          {FONCTIONS.map(f => (
+            <button key={f} type="button" class="chip" aria-pressed={choix === f}
+              onClick={() => replaceRoute(href(["entrainement"], choix === f ? undefined : { fonction: f }))}>{f}</button>
+          ))}
+        </div>
+      </div>
+      {!sujets.length && <EmptyState title="Aucun sujet pour cette fonction">Choisis une autre fonction ou « Tous ».</EmptyState>}
+      <ol class="list entrainement-liste" aria-label="Sujets d'entraînement">
         {sujets.map(s => {
           const b = lireBrouillon(s.num);
           const pct = avancement(b);

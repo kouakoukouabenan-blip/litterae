@@ -95,7 +95,7 @@ export function App() {
     case "outils": screen = <OutilsScreen />; break;
     case "carnet": screen = <CarnetScreen />; break;
     case "mes-fiches": screen = <MesFichesScreen />; break;
-    case "entrainement": screen = id ? <AtelierScreen num={id} params={params} /> : <EntrainementScreen />; break;
+    case "entrainement": screen = id ? <AtelierScreen num={id} params={params} /> : <EntrainementScreen params={params} />; break;
     case "a-propos": screen = <AProposScreen />; break;
     case "cgu": screen = <CguScreen />; break;
     case "confidentialite": screen = <ConfidentialiteScreen />; break;

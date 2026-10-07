@@ -1,6 +1,6 @@
 import type { Fonction, Oeuvre } from "../data/types";
 import { OEUVRES, SUJETS } from "./data";
-import { sujetsEntrainement, type SujetEntrainement } from "./entrainement";
+import { sujetBanque, sujetsEntrainement, type SujetEntrainement } from "./entrainement";
 import { contenuLibre } from "./libre";
 import { normalize } from "./text";
 import { jourLocal, marquer } from "./progres";
@@ -51,13 +51,15 @@ export const fonctionsDuSujet = (num: string): Fonction[] => {
   // Sujet ajouté depuis le tableau de bord : fonctions cochées par l'éditeur.
   const ajoute = contenuLibre()?.entrainement?.find(e => e.id === num);
   if (ajoute) return ajoute.fonctions ?? [];
+  const b = sujetBanque(num);
+  if (b) return b.fonctions;
   const o = SUJETS.find(s => s.num === num)?.orientation ?? "";
   return [...new Set(o.split(/[\/,]/).map(x => FONCTION[sansAccent(x.trim())]).filter(Boolean))];
 };
 
 /** Œuvres qui peuvent illustrer un sujet : thèmes du sujet et fonction littéraire attendue. */
 export function oeuvresPourSujet(num: string, combien = 4): Oeuvre[] {
-  const themes = SUJETS.find(x => x.num === num)?.themes ?? contenuLibre()?.entrainement?.find(e => e.id === num)?.themes ?? [];
+  const themes = SUJETS.find(x => x.num === num)?.themes ?? contenuLibre()?.entrainement?.find(e => e.id === num)?.themes ?? sujetBanque(num)?.themes ?? [];
   return oeuvresPour(themes, fonctionsDuSujet(num), combien);
 }
 
