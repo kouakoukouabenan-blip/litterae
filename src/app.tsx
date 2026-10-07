@@ -28,6 +28,7 @@ import { DevoirScreen, MesDevoirsScreen } from "./screens/Devoir";
 import { RevisionsScreen } from "./screens/Revisions";
 import { ProgresScreen } from "./screens/Progres";
 import { CollectionScreen } from "./screens/Collection";
+import { PourToiScreen } from "./screens/PourToi";
 import { DuelScreen } from "./screens/Duel";
 import { reverifier } from "./lib/licence";
 import { synchroniser } from "./lib/synchro";
@@ -107,6 +108,7 @@ export function App() {
     case "revisions": screen = <RevisionsScreen />; break;
     case "progres": screen = <ProgresScreen />; break;
     case "collection": screen = <CollectionScreen />; break;
+    case "pour-toi": screen = <PourToiScreen />; break;
     case "duel": screen = <DuelScreen params={params} />; break;
     default: screen = <NotFound />;
   }

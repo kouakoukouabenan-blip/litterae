@@ -20,7 +20,7 @@ import { Flamme } from "./Flamme";
 import { OBJECTIF_DU_JOUR, recompenseVue, useBilan } from "../lib/progres";
 
 /** « Pour toi » sur l'accueil : le fil du jour (suggestions personnelles et cartes à jouer), sous la série et l'objectif du jour. */
-export function Suggestions() {
+export function Suggestions({ apercu }: { apercu?: number } = {}) {
   const b = useBilan();
   const faites = Math.min(b.faitesAujourdhui, OBJECTIF_DU_JOUR);
   return (
@@ -37,7 +37,7 @@ export function Suggestions() {
           <Icon name="chevron_right" size={18} />
         </a>
       </div>
-      <Fil />
+      <Fil apercu={apercu} />
     </section>
   );
 }

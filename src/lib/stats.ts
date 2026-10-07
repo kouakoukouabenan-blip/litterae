@@ -75,7 +75,7 @@ export function noterAtelier(num: string, pct: number, envoye: boolean) {
 /** Partie de l'appli où se trouve l'élève, pour savoir d'où viennent les achats (entonnoir du tableau de bord). */
 export function endroit(): string {
   const [section = "accueil", id] = parseHash().path;
-  const noms: Record<string, string> = { oeuvres: id ? "oeuvre" : "oeuvres", sujets: "sujet", cours: id ? "lecon" : "accueil", outils: "dico", acces: "acces", carnet: "espace", devoirs: "espace", collection: "espace", duel: "accueil", "a-propos": "a-propos", cgu: "a-propos" };
+  const noms: Record<string, string> = { oeuvres: id ? "oeuvre" : "oeuvres", sujets: "sujet", cours: id ? "lecon" : "accueil", outils: "dico", acces: "acces", carnet: "espace", devoirs: "espace", collection: "espace", duel: "accueil", "pour-toi": "accueil", "a-propos": "a-propos", cgu: "a-propos" };
   return noms[section] ?? "autre";
 }
 

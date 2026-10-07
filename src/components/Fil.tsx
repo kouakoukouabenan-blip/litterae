@@ -32,9 +32,9 @@ function ouverte(c: CarteFil) {
 const Retirer = createContext<() => void>(() => {});
 
 /** Le fil « Pour toi » : trois cartes, puis cinq de plus à chaque « Voir plus », jusqu'à la fin du jour. */
-export function Fil() {
+export function Fil({ apercu }: { apercu?: number } = {}) {
   const fil = useMemo(() => filDuJour(), []);
-  const [n, setN] = useState(PREMIERES);
+  const [n, setN] = useState(apercu ?? PREMIERES);
   const [partis, setPartis] = useState<string[]>([]);
   const [astuce] = useState(() => !dejaGlisse());
   const restants = fil.filter(c => !partis.includes(c.cle));
@@ -57,12 +57,14 @@ export function Fil() {
       <ul class="pour-toi-liste fil">
         {visibles.map(c => <Glissable key={c.cle} onPart={() => retirer(c)}><Carte c={c} /></Glissable>)}
       </ul>
-      {astuce && visibles.length > 0 && !partis.length && <p class="fil-astuce"><Icon name="swipe" size={16} />Glisse une carte sur le côté pour la passer.</p>}
-      {n < restants.length
+      {astuce && !apercu && visibles.length > 0 && !partis.length && <p class="fil-astuce"><Icon name="swipe" size={16} />Glisse une carte sur le côté pour la passer.</p>}
+      {apercu
+        ? restants.length > visibles.length && <a class="btn btn-secondary btn-block fil-plus" href="#/pour-toi">Voir tout mon fil · {restants.length} cartes<Icon name="arrow_forward" size={18} /></a>
+        : n < restants.length
         ? <button type="button" class="btn btn-secondary btn-block fil-plus" onClick={() => setN(n + PAR_PAGE)}><Icon name="expand_more" size={20} />Voir plus</button>
         : <p class="fil-fin">Tu as tout vu pour aujourd'hui. Reviens demain pour de nouvelles cartes.</p>}
       <div ref={fin} aria-hidden="true" />
-      {n > PREMIERES && !finVisible && <div class="fil-fondu" aria-hidden="true" />}
+      {!apercu && n > PREMIERES && !finVisible && <div class="fil-fondu" aria-hidden="true" />}
     </>
   );
 }
