@@ -38,6 +38,16 @@ export function Fil() {
   const restants = fil.filter(c => !partis.includes(c.cle));
   const visibles = restants.slice(0, n);
   useEffect(() => montrees(visibles), [n, partis.length]);
+  // Après « Voir plus », un léger fondu en bas de l'écran laisse deviner les cartes suivantes, jusqu'à la fin du fil.
+  const fin = useRef<HTMLDivElement>(null);
+  const [finVisible, setFinVisible] = useState(true);
+  useEffect(() => {
+    const el = fin.current;
+    if (!el || typeof IntersectionObserver === "undefined") return;
+    const o = new IntersectionObserver(([e]) => setFinVisible(e.isIntersecting), { rootMargin: "0px 0px -40px 0px" });
+    o.observe(el);
+    return () => o.disconnect();
+  }, [fil.length]);
   if (!fil.length) return null;
   const retirer = (c: CarteFil) => { ecarterCarte(c.cle); noter({ t: "suggestion", ref: `passe:${c.type}` }); setPartis(p => [...p, c.cle]); };
   return (
@@ -49,6 +59,8 @@ export function Fil() {
       {n < restants.length
         ? <button type="button" class="btn btn-secondary btn-block fil-plus" onClick={() => setN(n + PAR_PAGE)}><Icon name="expand_more" size={20} />Voir plus</button>
         : <p class="fil-fin">Tu as tout vu pour aujourd'hui. Reviens demain pour de nouvelles cartes.</p>}
+      <div ref={fin} aria-hidden="true" />
+      {n > PREMIERES && !finVisible && <div class="fil-fondu" aria-hidden="true" />}
     </>
   );
 }

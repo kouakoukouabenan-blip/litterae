@@ -629,3 +629,11 @@
 .fil-glissable.part { pointer-events: none; }
 .fil-suivante { align-self: flex-end; }
 .fil-astuce { display: flex; align-items: center; justify-content: center; gap: 6px; margin: var(--s2) 0 0; font-size: var(--text-xs); color: var(--muted); }
+/* Fondu discret au-dessus de la barre du bas : donne envie de descendre voir la suite du fil. */
+.fil-fondu {
+  position: fixed; left: 0; right: 0; z-index: 15; pointer-events: none;
+  bottom: calc(var(--bottom-nav-h) + env(safe-area-inset-bottom)); height: 72px;
+  background: linear-gradient(to top, color-mix(in srgb, var(--paper) 88%, transparent), transparent);
+  animation: fil-fondu .3s ease both;
+}
+@keyframes fil-fondu { from { opacity: 0; } }
