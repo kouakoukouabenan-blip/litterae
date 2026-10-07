@@ -24,7 +24,7 @@ export const ARGUMENTS: Record<string, string> = {
 };
 
 /** Argument général de chaque fonction, quand aucune idée de la fiche ne le précise. */
-const PAR_FONCTION: Record<Fonction, string> = {
+export const PAR_FONCTION: Record<Fonction, string> = {
   Engagement: "La littérature est une arme de combat au service d'une cause.",
   Esthétique: "La littérature est avant tout la recherche du beau.",
   Évasion: "La littérature permet au lecteur de s'évader du réel.",

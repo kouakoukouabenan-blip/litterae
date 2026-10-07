@@ -13,6 +13,7 @@ import { jourLocal } from "./progres";
 import { graine, melanger, questionOeuvre } from "./revisions";
 import { read, write } from "./storage";
 import { sansEtoiles } from "./text";
+import { ARGUMENTS, PAR_FONCTION } from "./arguments";
 import { decouvertes, prochaineAction, suggestions, type Suggestion } from "./suggestions";
 import {
   auteursDebloques, badgeProche, initialiserCollection, nouveauxBadges, oeuvresLues, surpriseDispo, TOUS_LES_AUTEURS, type Badge
@@ -37,6 +38,11 @@ export type CarteFil = { cle: string; type: string } & (
   | { t: "surprise" }
   | { t: "duel" }
   | { t: "nouveau"; titre: string; detail: string; lien: string }
+  | { t: "devine"; w: Oeuvre; indices: string[]; choix: Oeuvre[] }
+  | { t: "these"; num: string; citation: string; auteur: string; fonction: Fonction; argument: string; argFonction: Fonction; partie: 1 | 2 }
+  | { t: "vraifaux"; w: Oeuvre; phrase: string; vrai: boolean; correction: string }
+  | { t: "plan"; num: string; citation: string; auteur: string; fonction: Fonction; plans: [string, string][]; bon: number; opposee: Fonction }
+  | { t: "pays"; w: Oeuvre; pays: string; choix: string[] }
 );
 
 const JOUR = 864e5;
@@ -152,6 +158,133 @@ function mots(g: number, n: number): CarteFil[] {
   return out;
 }
 
+
+/* ---------- Devine l'œuvre, thèse ou antithèse, vrai ou faux, le bon plan, tour du monde ---------- */
+
+const NOM_F: Record<Fonction, string> = { Engagement: "d'engagement", Sociale: "sociale", Esthétique: "esthétique", Évasion: "d'évasion", Lyrique: "lyrique" };
+/** Fonctions qui montrent les limites d'une autre : de quoi nourrir l'antithèse. */
+const OPPOSEES: Record<Fonction, Fonction[]> = {
+  Engagement: ["Évasion", "Esthétique"], Sociale: ["Évasion", "Lyrique"], Évasion: ["Engagement", "Sociale"],
+  Lyrique: ["Sociale", "Engagement"], Esthétique: ["Engagement", "Sociale"]
+};
+/** Arguments qui relèvent sans ambiguïté d'une seule fonction. */
+const ARGS_F: Record<Fonction, string[]> = {
+  Engagement: ["Dénonciation", "Éveil des consciences", "Défense des opprimés"].map(k => ARGUMENTS[k]),
+  Sociale: [ARGUMENTS["Peinture de la réalité sociale"], PAR_FONCTION.Sociale],
+  Esthétique: ["Culte de la forme", "Célébration de la beauté"].map(k => ARGUMENTS[k]),
+  Lyrique: ["Expression des sentiments", "Expression du vécu"].map(k => ARGUMENTS[k]),
+  Évasion: ["Voyage imaginaire", "Imagination", "Divertissement"].map(k => ARGUMENTS[k])
+};
+const unArg = (f: Fonction, g: number) => ARGS_F[f][g % ARGS_F[f].length];
+const GENRE_NOM: Record<string, string> = { Roman: "un roman", Théâtre: "une pièce de théâtre", Poésie: "un recueil de poèmes", Nouvelle: "un recueil de nouvelles", Essai: "un essai", Conte: "un recueil de contes" };
+const fiches = () => OEUVRES.filter(w => w.detaillee);
+const DU = new Set(["Sénégal", "Cameroun", "Congo", "Mali", "Nigeria", "Burkina Faso", "Maroc", "Chili", "Kenya", "Royaume-Uni", "Niger", "Bénin", "Togo", "Gabon", "Tchad", "Canada", "Portugal", "Mexique", "Japon", "Liban"]);
+/** « de France », « du Sénégal », « des États-Unis », « d'Algérie ». */
+export function dePays(p: string) {
+  if (p === "États-Unis") return "des États-Unis";
+  if (DU.has(p)) return `du ${p}`;
+  return /^[AEÉIOUY]/i.test(p) ? `d'${p}` : `de ${p}`;
+}
+
+function devinettes(g: number, n: number): CarteFil[] {
+  const out: CarteFil[] = [];
+  for (const w of melanger(fiches().filter(w => w.paysTexte && w.themes.length >= 2), g)) {
+    if (out.length >= n) break;
+    const mots = new Set(w.titre.toLowerCase().split(/\W+/).filter(m => m.length > 3));
+    const themes = w.themes.filter(t => !t.toLowerCase().split(/\W+/).some(m => mots.has(m))).slice(0, 3);
+    if (themes.length < 2) continue;
+    const autres = melanger(fiches().filter(x => x.genre === w.genre && x.id !== w.id && x.auteur !== w.auteur), g + out.length).slice(0, 2);
+    if (autres.length < 2) continue;
+    out.push({ cle: `devine-${w.id}`, type: "devine", t: "devine", w, choix: melanger([w, ...autres], g + 1),
+      indices: [GENRE_NOM[w.genre] ?? w.genre, `une œuvre ${w.pays?.length === 1 ? dePays(w.pays[0]) : `de ${w.paysTexte}`}`, `thèmes : ${themes.join(", ").toLowerCase()}`] });
+  }
+  return out;
+}
+
+/** Sujets dont on connaît la fonction défendue par l'auteur (corrigés, banque, ajoutés). */
+function sujetsAvecFonction(g: number) {
+  return melanger(sujetsEntrainement().filter(s => !s.perso), g)
+    .map(s => ({ s, f: fonctionsDuSujet(s.num) })).filter(x => x.f.length > 0 && x.s.citation.length <= 220);
+}
+
+function theses(g: number, n: number): CarteFil[] {
+  return sujetsAvecFonction(g).slice(0, n).map(({ s, f }, i) => {
+    const partie: 1 | 2 = (g + i) % 2 ? 1 : 2;
+    const argFonction = partie === 1 ? f[0] : OPPOSEES[f[0]].find(o => !f.includes(o)) ?? OPPOSEES[f[0]][0];
+    return { cle: `these-${s.num}`, type: "these", t: "these" as const, num: s.num, citation: s.citation, auteur: s.auteur, fonction: f[0], argument: unArg(argFonction, g + i), argFonction, partie };
+  });
+}
+
+function plans(g: number, n: number): CarteFil[] {
+  return sujetsAvecFonction(g + 13).slice(0, n).map(({ s, f }, i) => {
+    const [o1, o2] = OPPOSEES[f[0]].filter(o => !f.includes(o)).concat(OPPOSEES[f[0]]);
+    const bon: [string, string] = [unArg(f[0], g + i), unArg(o1, g + i + 1)];
+    const faux: [string, string] = [unArg(o1, g + i + 2), unArg(o2 ?? o1, g + i + 3)];
+    const b = (g + i) % 2;
+    return { cle: `plan-${s.num}`, type: "plan", t: "plan" as const, num: s.num, citation: s.citation, auteur: s.auteur, fonction: f[0], opposee: o1, plans: b ? [faux, bon] : [bon, faux], bon: b };
+  });
+}
+
+function vraisFaux(g: number, n: number): CarteFil[] {
+  const out: CarteFil[] = [];
+  const liste = fiches();
+  for (const [i, w] of melanger(liste, g).entries()) {
+    if (out.length >= n) break;
+    const vrai = (g + i) % 2 === 0;
+    const sorte = (g + i * 3) % 4;
+    const titre = `« ${w.titre} »`;
+    let phrase = "", correction = "";
+    if (sorte === 0) {
+      const autre = melanger(liste.filter(x => x.genre === w.genre && x.auteur !== w.auteur), g + i)[0];
+      if (!autre) continue;
+      phrase = `${titre} a été écrit par ${vrai ? w.auteur : autre.auteur}.`;
+      correction = `${titre} est de ${w.auteur}.`;
+    } else if (sorte === 1) {
+      const faux = Object.keys(GENRE_NOM).filter(x => x !== w.genre && x !== "Conte" && x !== "Essai")[(g + i) % 3];
+      if (!GENRE_NOM[w.genre]) continue;
+      phrase = `${titre} est ${GENRE_NOM[vrai ? w.genre : faux]}.`;
+      correction = `${titre} est ${GENRE_NOM[w.genre]}.`;
+    } else if (sorte === 2) {
+      if (w.pays?.length !== 1) continue;
+      const autre = melanger([...new Set(liste.flatMap(x => x.pays ?? []))].filter(p => p !== w.pays[0]), g + i)[0];
+      phrase = `${titre} est une œuvre ${dePays(vrai ? w.pays[0] : autre)}.`;
+      correction = `${titre} est une œuvre ${dePays(w.pays[0])}.`;
+    } else {
+      const f = w.fonctions[0];
+      const faux = FONCTIONS.filter(x => !w.fonctions.includes(x))[(g + i) % 3];
+      if (!f || !faux) continue;
+      phrase = `${titre} illustre surtout la fonction ${NOM_F[vrai ? f : faux]}.`;
+      correction = `${titre} illustre surtout la fonction ${NOM_F[f]}.`;
+    }
+    out.push({ cle: `vraifaux-${w.id}`, type: "vraifaux", t: "vraifaux", w, phrase, vrai, correction });
+  }
+  return out;
+}
+
+function voyages(g: number, n: number): CarteFil[] {
+  const tous = [...new Set(fiches().flatMap(w => w.pays ?? []))];
+  const vus = new Set(paysDecouverts());
+  // D'abord les pays pas encore découverts : la carte du monde de l'élève s'agrandit.
+  const liste = fiches().filter(w => w.pays?.length === 1);
+  return [...melanger(liste.filter(w => !vus.has(w.pays[0])), g), ...melanger(liste.filter(w => vus.has(w.pays[0])), g)].slice(0, n).map((w, i) => ({
+    cle: `pays-${w.id}`, type: "pays", t: "pays" as const, w, pays: w.pays[0],
+    choix: melanger([w.pays[0], ...melanger(tous.filter(p => p !== w.pays[0]), g + i).slice(0, 2)], g + i + 1)
+  }));
+}
+
+/* ---------- Tour du monde littéraire ---------- */
+
+const PAYS = "pays-decouverts";
+export const paysDecouverts = () => read<string[]>(PAYS, []);
+export const TOUS_LES_PAYS = [...new Set(OEUVRES.filter(w => w.detaillee).flatMap(w => w.pays ?? []))].sort((a, b) => a.localeCompare(b, "fr"));
+/** Pays ajouté au tour du monde ; vrai s'il est nouveau. */
+export function decouvrirPays(p: string) {
+  const l = paysDecouverts();
+  if (l.includes(p)) return false;
+  write(PAYS, [...l, p]);
+  return true;
+}
+
 /** Auteurs débloqués depuis hier : la nouvelle carte de la collection. */
 function auteursRecents(maintenant: number): CarteFil[] {
   return Object.entries(auteursDebloques()).filter(([, v]) => maintenant - v.d < JOUR).slice(0, 2)
@@ -181,7 +314,10 @@ export function filDuJour(maintenant = Date.now()): CarteFil[] {
     ...(nAuteurs ? [{ cle: "collection", type: "collection", t: "collection" as const, n: nAuteurs, total: TOUS_LES_AUTEURS.length }] : [])
   ];
   // Les cartes à jouer et à lire s'intercalent entre les suggestions, sans deux du même genre à la suite.
-  const files = [questions(g, 5), citations(g + 3, 4), oeuvres30(g + 5, 4), mots(g + 7, 4), formules(g + 11, 3), extras];
+  const files = [
+    questions(g, 4), theses(g + 17, 3), citations(g + 3, 3), devinettes(g + 19, 3), oeuvres30(g + 5, 3), vraisFaux(g + 23, 4),
+    mots(g + 7, 3), plans(g + 29, 2), voyages(g + 31, 3), formules(g + 11, 2), extras
+  ];
   const jeux: CarteFil[] = [];
   for (let i = 0; files.some(f => f.length); i++) {
     const f = files[i % files.length];

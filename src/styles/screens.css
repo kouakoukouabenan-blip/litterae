@@ -639,3 +639,10 @@
 @keyframes fil-fondu { from { opacity: 0; } }
 /* Sujets d'entraînement : numéros de 01 à T126, alignés sur une même colonne. */
 .entrainement-liste .sujet-num { width: 3.2rem; font-size: 1.3rem; }
+/* Nouvelles cartes du fil : indices, argument à ranger, plans sur deux lignes, vrai ou faux côte à côte. */
+.fil-indices { margin: 0; padding-left: 1.1em; display: grid; gap: 2px; font-size: var(--text-sm); }
+.fil-argument { margin: 0; padding: 8px 12px; border-radius: 10px; background: var(--ochre-pale); font-size: var(--text-sm); line-height: 1.45; }
+.fil-choix .quiz-option span { white-space: pre-line; text-align: left; }
+.fil-choix-deux { grid-template-columns: 1fr 1fr; }
+.pays-liste { list-style: none; margin: var(--s2) 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.pays-liste li { padding: 4px 10px; border-radius: 999px; font-size: var(--text-xs); font-weight: 600; background: var(--green-tint); color: var(--green); }

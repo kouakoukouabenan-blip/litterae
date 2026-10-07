@@ -3,6 +3,7 @@ import { Page } from "../components/Page";
 import { PageHeader } from "../components/PageHeader";
 import { Icon } from "../components/Icon";
 import { EmptyState } from "../components/EmptyState";
+import { TOUS_LES_PAYS, paysDecouverts } from "../lib/fil";
 import { TOUS_LES_AUTEURS, auteursDebloques, badgeGagne, badges, carteAuteur, initialiserCollection } from "../lib/collection";
 
 /** Ma collection : les badges et les cartes d'auteurs débloquées en lisant les fiches. */
@@ -16,6 +17,7 @@ export function CollectionScreen() {
     };
   }, []);
   const gagnes = liste.filter(badgeGagne);
+  const pays = new Set(paysDecouverts());
   return (
     <Page title="Ma collection" back="#/carnet">
       <PageHeader title="Ma collection" compact>{cartes.length} auteur{cartes.length > 1 ? "s" : ""} sur {TOUS_LES_AUTEURS.length} · {gagnes.length} badge{gagnes.length > 1 ? "s" : ""} sur {liste.length}</PageHeader>
@@ -35,6 +37,12 @@ export function CollectionScreen() {
             );
           })}
         </ul>
+      </section>
+
+      <section>
+        <h2 class="section-title">Tour du monde littéraire</h2>
+        <p class="small muted">{pays.size} pays découvert{pays.size > 1 ? "s" : ""} sur {TOUS_LES_PAYS.length}. Réponds aux cartes « Tour du monde » pour en découvrir d'autres.</p>
+        {pays.size > 0 && <ul class="pays-liste">{TOUS_LES_PAYS.filter(p => pays.has(p)).map(p => <li key={p}>{p}</li>)}</ul>}
       </section>
 
       <section>

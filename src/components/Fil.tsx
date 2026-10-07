@@ -4,7 +4,7 @@ import { useContext } from "preact/hooks";
 import { Texte } from "./Texte";
 import { Icon, type BaseName } from "./Icon";
 import { copyText } from "./Toast";
-import { dejaGlisse, ecarterCarte, filDuJour, nouveauteOuverte, noterReponse, reponsesDuJour, type CarteFil } from "../lib/fil";
+import { TOUS_LES_PAYS, decouvrirPays, dePays, paysDecouverts, dejaGlisse, ecarterCarte, filDuJour, nouveauteOuverte, noterReponse, reponsesDuJour, type CarteFil } from "../lib/fil";
 import { suggestionOuverte, suggestionsVues } from "../lib/interets";
 import { noter } from "../lib/stats";
 import { marquer } from "../lib/progres";
@@ -13,6 +13,8 @@ import { badgeVu, carteAuteur, ouvrirSurprise, repondreEclair, type Surprise } f
 
 const PREMIERES = 3;
 const PAR_PAGE = 5;
+/** « de Molière », « d'Amadou Koné ». */
+const de = (nom: string) => /^[AEÉÈIOUY]/i.test(nom) ? `d'${nom}` : `de ${nom}`;
 const NOM: Record<string, string> = { Engagement: "d'engagement", Sociale: "sociale", Esthétique: "esthétique", Évasion: "d'évasion", Lyrique: "lyrique" };
 
 /** Compte, sans rien savoir de l'élève, les cartes montrées (une fois par jour) et celles qui sont ouvertes ou jouées. */
@@ -157,13 +159,34 @@ function Carte({ c }: { c: CarteFil }) {
         <button type="button" class="btn btn-secondary fil-copier" onClick={() => { ouverte(c); copyText(c.texte, "Formule copiée."); }}><Icon name="content_copy" size={18} />Copier</button>
       </div>
     );
+    case "devine": return <Choix c={c} etiquette="Devine l'œuvre" icone="quiz"
+      avant={<ul class="fil-indices">{c.indices.map(x => <li key={x}>{x.charAt(0).toUpperCase() + x.slice(1)}</li>)}</ul>}
+      question="Quelle est cette œuvre ?" choix={c.choix.map(w => `« ${w.titre} »`)} bonne={c.choix.indexOf(c.w)}
+      apres={() => <>C'était <cite>{c.w.titre}</cite> {de(c.w.auteur)}. <a href={`#/oeuvres/${encodeURIComponent(c.w.id)}`} onClick={() => ouverte(c)}>Voir la fiche</a></>}
+      repondu={juste => repondreEclair(juste)} />;
+    case "these": return <Choix c={c} etiquette="Thèse ou antithèse ?" icone="call_split" citation={`« ${c.citation} »`} auteur={c.auteur}
+      avant={<p class="fil-argument">Argument : {c.argument}</p>}
+      question="Dans ta dissertation, où ranges-tu cet argument ?" choix={["Première partie (thèse)", "Deuxième partie (antithèse)"]} bonne={c.partie - 1}
+      apres={() => <>{c.partie === 1
+        ? `Le sujet défend la fonction ${NOM[c.fonction]} : cet argument l'explique, il va dans la première partie.`
+        : `Cet argument relève de la fonction ${NOM[c.argFonction]} : il montre les limites du sujet, il va dans la deuxième partie.`}{" "}
+        <a href={`#/entrainement/${c.num}`} onClick={() => ouverte(c)}>Traiter ce sujet</a></>} />;
+    case "vraifaux": return <Choix c={c} etiquette="Vrai ou faux ?" icone="fact_check" question={c.phrase} choix={["Vrai", "Faux"]} bonne={c.vrai ? 0 : 1} deux
+      apres={() => <>{c.vrai ? "" : `${c.correction} `}<a href={`#/oeuvres/${encodeURIComponent(c.w.id)}`} onClick={() => ouverte(c)}>Voir la fiche</a></>}
+      repondu={juste => repondreEclair(juste)} />;
+    case "plan": return <Choix c={c} etiquette="Le bon plan" icone="account_tree" citation={`« ${c.citation} »`} auteur={c.auteur}
+      question="Quel plan répond vraiment à ce sujet ?" choix={c.plans.map(([a, b], i) => `Plan ${i ? "B" : "A"}\nI. ${a}\nII. ${b}`)} bonne={c.bon}
+      apres={() => <>Le sujet défend la fonction {NOM[c.fonction]} : la première partie l'explique, la seconde en montre les limites. <a href={`#/entrainement/${c.num}`} onClick={() => ouverte(c)}>Traiter ce sujet</a></>} />;
+    case "pays": return <Choix c={c} etiquette="Tour du monde littéraire" icone="public" question={`De quel pays vient « ${c.w.titre} » ${de(c.w.auteur)} ?`} choix={c.choix} bonne={c.choix.indexOf(c.pays)}
+      apres={juste => <>{juste ? `Pays ajouté à ton tour du monde : ${paysDecouverts().length} sur ${TOUS_LES_PAYS.length}.` : `C'est une œuvre ${dePays(c.pays)}.`} <a href="#/collection" onClick={() => ouverte(c)}>Voir mon tour du monde</a></>}
+      repondu={juste => { if (juste) decouvrirPays(c.pays); return 0; }} />;
     case "surprise": return <SurpriseCarte c={c} />;
   }
 }
 
 /** Carte à jouer d'un geste : le choix se colore, l'explication s'affiche, le fil continue. */
-function Choix({ c, etiquette, icone, question, citation, auteur, choix, bonne, apres, repondu }: {
-  c: CarteFil; etiquette: string; icone: BaseName; question: string; citation?: string; auteur?: string; choix: string[]; bonne: number;
+function Choix({ c, etiquette, icone, question, citation, auteur, avant, choix, bonne, apres, repondu, deux }: {
+  c: CarteFil; etiquette: string; icone: BaseName; question: string; citation?: string; auteur?: string; avant?: preact.ComponentChildren; choix: string[]; bonne: number; deux?: boolean;
   apres: (juste: boolean) => preact.ComponentChildren; repondu?: (juste: boolean) => number;
 }) {
   const [r, setR] = useState<number | null>(() => reponsesDuJour()[c.cle] ?? null);
@@ -182,8 +205,9 @@ function Choix({ c, etiquette, icone, question, citation, auteur, choix, bonne, 
     <div class="fil-carte">
       <p class="fil-etiquette"><Icon name={icone} size={16} />{etiquette}</p>
       {citation && <p class="fil-citation">{citation}<span class="fil-auteur">{auteur}</span></p>}
+      {avant}
       <p class="fil-question">{question}</p>
-      <ul class="fil-choix">
+      <ul class={`fil-choix${deux ? " fil-choix-deux" : ""}`}>
         {choix.map((x, i) => {
           const etat = r === null ? "" : i === bonne ? "ok" : i === r ? "faux" : "";
           return <li key={x}><button type="button" class={`quiz-option ${etat}`} disabled={r !== null} onClick={() => choisir(i)}>
