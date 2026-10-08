@@ -564,6 +564,9 @@
 .devoir-corriger .tag { border: 0; cursor: pointer; font-family: inherit; min-height: 36px; padding: 0 var(--s3); }
 .devoir-corriger .tag[aria-pressed="true"] { outline: 2px solid currentColor; outline-offset: 1px; }
 .devoir-corriger .devoir-changer { justify-self: start; margin: 0; }
+/* « Le sujet parle de l'écrivain · Changer » : la problématique et le plan reprennent ce mot */
+.devoir-objet { margin: var(--s2) 0 0; }
+.devoir-objet .link-btn { font-size: inherit; padding: 0; vertical-align: baseline; }
 
 /* Fiche d'œuvre : lien vers le livre (lecture, téléchargement, site officiel) */
 .lien-livre { margin-top: var(--s3); display: inline-flex; gap: var(--s1); }

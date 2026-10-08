@@ -71,6 +71,11 @@ try {
     ["« Le théâtre africain doit éduquer le peuple. » Discutez.", a => a.genres.join() === "Théâtre"],
     ["« La littérature doit éveiller les consciences. » Vous illustrerez votre réflexion d'exemples tirés du roman africain.", a => a.genres.join() === "Roman"],
     ["« La littérature doit nous conduire vers la liberté et rester sur la scène du monde. » Discutez.", a => a.genres.length === 0],
+    // Le sujet parle de l'écrivain (ou du roman…) : la problématique reprend ce mot, pas « la littérature ».
+    ["« L'écrivain ne peut se mettre aujourd'hui au service de ceux qui font l'histoire ; il est au service de ceux qui la subissent. » (Camus) Expliquez et discutez cette assertion en vous appuyant sur vos expériences de lecture.",
+      a => a.objet === "ecrivain" && /l'écrivain/i.test(a.plan.problematique) && !/littérature/.test(a.plan.problematique)],
+    ["« Le roman est le reflet de la société. » Expliquez et discutez.", a => a.objet === "roman" && !/littérature/.test(a.plan.problematique + a.plan.axe2)],
+    ["Je ne crois pas à l'évasion par les livres. Je crois que la littérature doit réveiller les consciences. Discutez.", a => a.objet === "litterature"],
     // Un sujet corrigé tapé avec des fautes reste reconnu.
     ["faire de la literature cest sarmer pour se faire lecho de ceux qui nont pas de voix expliquer et discuter", a => a.corrige?.num === "01"]
   ];

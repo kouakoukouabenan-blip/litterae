@@ -168,6 +168,9 @@ export interface Analyse {
   rejet: Fonction | null;
   /** Le sujet est presque un sujet corrigé : son numéro, et si l'élève peut ouvrir le corrigé (le plan vient alors du corrigé). */
   corrige: { num: string; ouvert: boolean } | null;
+  /** Ce dont parle la citation (l'écrivain, la poésie…), et si l'appli l'a lu dans le sujet (sinon : la littérature par défaut). */
+  objet: Objet;
+  objetSur: boolean;
   /** Ce que demande vraiment l'énoncé : une dissertation littéraire, ou autre chose. */
   nature: "dissertation" | "commentaire" | "resume" | "generale";
   oeuvres: Oeuvre[];
@@ -530,23 +533,127 @@ const NOM_FONCTION: Record<Fonction, string> = { Engagement: "la fonction d'enga
 
 /** Nuance de la partie 2, liée au thème du sujet (« {de} » : « de la colonisation »). */
 const NUANCE: Record<Fonction, (de: string) => string> = {
-  Engagement: de => `Nuance : pour toucher le lecteur quand elle parle ${de}, la littérature doit aussi être belle ; elle reste un art avant d'être une arme.`,
+  Engagement: de => `Nuance : pour toucher le lecteur quand elle parle ${de}, la littérature doit aussi soigner sa forme ; elle reste un art avant d'être une arme.`,
   Sociale: de => `Nuance : la littérature ne se contente pas de montrer la réalité ${de} ; elle fait aussi rêver le lecteur et l'emmène ailleurs.`,
   Esthétique: de => `Nuance : même quand elle parle ${de}, la littérature ne cherche pas que la beauté ; sa forme sert aussi à dénoncer et à faire réfléchir.`,
   Évasion: de => `Nuance : même quand elle fait rêver, la littérature parle ${de} et du monde réel ; le rêve cache souvent une critique.`,
   Lyrique: de => `Nuance : en parlant ${de}, l'écrivain ne parle pas que de lui ; son émotion rejoint celle de tous et peut défendre une cause.`
 };
 
+// ---- De qui ou de quoi parle le sujet : la problématique et le plan reprennent ce mot ----
+
+/** Ce dont parle la citation : l'écrivain, le poète, la poésie, le roman, la lecture… (la littérature par défaut). */
+export type Objet = "litterature" | "ecrivain" | "poete" | "romancier" | "dramaturge" | "poesie" | "roman" | "theatre" | "ecriture" | "lecture" | "oeuvre";
+interface InfoObjet { nom: string; choix: string; personne: boolean; il: "il" | "elle"; motif: RegExp }
+/** Dans l'ordre où l'élève les voit quand il corrige ; `motif` cherche dans la citation sans accents ni majuscules. */
+export const OBJETS: Record<Objet, InfoObjet> = {
+  litterature: { nom: "la littérature", choix: "La littérature", personne: false, il: "elle", motif: /\blitteratures?\b/ },
+  ecrivain: { nom: "l'écrivain", choix: "L'écrivain", personne: true, il: "il", motif: /\b(ecrivains?|auteurs?|artistes?|hommes? de lettres|createurs?)\b/ },
+  poete: { nom: "le poète", choix: "Le poète", personne: true, il: "il", motif: /\bpoetes?\b/ },
+  romancier: { nom: "le romancier", choix: "Le romancier", personne: true, il: "il", motif: /\bromancier(e|s|es)?\b/ },
+  dramaturge: { nom: "le dramaturge", choix: "Le dramaturge", personne: true, il: "il", motif: /\bdramaturges?\b/ },
+  poesie: { nom: "la poésie", choix: "La poésie", personne: false, il: "elle", motif: /\b(poesie|poemes?)\b/ },
+  roman: { nom: "le roman", choix: "Le roman", personne: false, il: "il", motif: /\bromans?\b/ },
+  theatre: { nom: "le théâtre", choix: "Le théâtre", personne: false, il: "il", motif: /\btheatres?\b/ },
+  ecriture: { nom: "l'écriture", choix: "L'écriture", personne: false, il: "elle", motif: /\b(ecriture|ecrire)\b/ },
+  lecture: { nom: "la lecture", choix: "La lecture, le lecteur", personne: false, il: "elle", motif: /\b(lecture|lire|lecteurs?|lectrices?)\b/ },
+  oeuvre: { nom: "l'œuvre littéraire", choix: "L'œuvre, le livre", personne: false, il: "elle", motif: /\b(oeuvres?|livres?)\b/ }
+};
+
+/**
+ * Ce dont parle la citation : le premier de ces mots qu'elle emploie (« L'écrivain ne peut se mettre… » → l'écrivain).
+ * « œuvre » et « livre » ne comptent que si rien d'autre n'est nommé (« l'évasion par les livres… la littérature »).
+ * `sur` est faux quand la citation n'en nomme aucun : on garde la littérature, l'élève peut corriger.
+ */
+export function objetDuSujet(citation: string): { objet: Objet; sur: boolean } {
+  const t = ` ${normalize(citation).replace(/[^a-z]+/g, " ")} `;
+  const trouves = (Object.keys(OBJETS) as Objet[]).map(o => ({ o, i: t.search(OBJETS[o].motif) })).filter(x => x.i >= 0);
+  const forts = trouves.filter(x => x.o !== "oeuvre").sort((a, b) => a.i - b.i);
+  const objet = forts[0]?.o ?? trouves[0]?.o;
+  // L'écrivain qui parle de lui (« J'écris pour agir », « ma plume », « Je me sers d'animaux… ») : c'est de l'écrivain qu'il s'agit.
+  if (parleDeLui(citation) && (!objet || objet === "oeuvre" || objet === "ecriture")) return { objet: "ecrivain", sur: true };
+  return objet ? { objet, sur: true } : { objet: "litterature", sur: false };
+}
+
+/** La citation est dite à la première personne (« je », « j' », « ma plume », « mes livres »). */
+function parleDeLui(citation: string) {
+  return /\b(je|j|moi|ma|mes|mon)\b/.test(` ${normalize(citation).replace(/[^a-z]+/g, " ")} `);
+}
+
+/** Ce qu'est l'écrivain (ou le poète…) selon chaque fonction : une personne n'est pas « une arme ». */
+const IDEE_PERSONNE: Record<Fonction, string> = {
+  Engagement: "un combattant qui dénonce l'injustice et veut changer la société",
+  Sociale: "un témoin qui montre la société telle qu'elle est",
+  Esthétique: "un artiste qui cherche d'abord la beauté de la forme",
+  Évasion: "un conteur qui fait rêver et voyager son lecteur",
+  Lyrique: "une voix qui exprime ses sentiments et son âme"
+};
+const EN_BREF_PERSONNE: Record<Fonction, string> = {
+  Engagement: "un combattant au service d'une cause", Sociale: "un témoin de sa société", Esthétique: "un artiste de la forme",
+  Évasion: "un faiseur de rêves", Lyrique: "la voix de ses propres sentiments"
+};
+const NUANCE_PERSONNE: Record<Fonction, (de: string, n: string) => string> = {
+  Engagement: (de, n) => `Nuance : pour toucher le lecteur quand il parle ${de}, ${n} doit aussi soigner son style ; il reste un artiste avant d'être un combattant.`,
+  Sociale: (de, n) => `Nuance : ${n} ne se contente pas de montrer la réalité ${de} ; il fait aussi rêver son lecteur et l'emmène ailleurs.`,
+  Esthétique: (de, n) => `Nuance : même quand il parle ${de}, ${n} ne cherche pas que la beauté ; son style sert aussi à dénoncer et à faire réfléchir.`,
+  Évasion: (de, n) => `Nuance : même quand il fait rêver, ${n} parle ${de} et du monde réel ; le rêve cache souvent une critique.`,
+  Lyrique: (de, n) => `Nuance : en parlant ${de}, ${n} ne parle pas que de lui ; son émotion rejoint celle de tous et peut défendre une cause.`
+};
+
+/** Les arguments écrits pour l'écrivain (ou le poète…) : « L'écrivain dénonce les injustices… ». */
+const ARG_PERSONNE: Record<string, string> = {
+  "Dénonciation": "dénonce les injustices et les abus de la société.",
+  "Éveil des consciences": "éveille les consciences et pousse le lecteur à réagir.",
+  "Défense des opprimés": "prend la défense des faibles et des opprimés.",
+  "Satire": "critique les travers des hommes et des puissants en les tournant en ridicule.",
+  "Mémoire collective": "conserve la mémoire de son peuple et de son histoire.",
+  "Valorisation de la culture": "valorise la culture et les traditions de son peuple.",
+  "Peinture de la réalité sociale": "est le témoin de sa société : il en peint la réalité.",
+  "Culte de la forme": "est d'abord un artiste : il recherche la beauté de la forme.",
+  "Célébration de la beauté": "célèbre la beauté du monde, de la nature et des êtres.",
+  "Expression des sentiments": "exprime ses sentiments intimes.",
+  "Expression du vécu": "raconte sa propre expérience vécue.",
+  "Imagination": "crée des mondes imaginaires qui font rêver le lecteur.",
+  "Voyage imaginaire": "fait voyager le lecteur loin de son quotidien.",
+  "Rire": "divertit et fait rire.",
+  "Divertissement": "procure au lecteur le plaisir d'une belle histoire."
+};
+/** Un argument dit avec le mot du sujet : « Le roman dénonce… », « L'écrivain éveille… » (la lecture garde « la littérature »). */
+function argumentDe(a: string, o: Objet) {
+  const base = ARGUMENTS[a] ?? a, x = OBJETS[o], N = x.nom.charAt(0).toUpperCase() + x.nom.slice(1);
+  if (x.personne) return ARG_PERSONNE[a] ? `${N} ${ARG_PERSONNE[a]}` : base;
+  if (o === "litterature" || o === "lecture" || !base.startsWith("La littérature ")) return base;
+  return N + base.slice("La littérature".length).replace(/: elle /, `: ${x.il} `);
+}
+
+/** Les mots d'une phrase sur ce dont parle le sujet : son nom, son pronom, ce qu'il est selon une fonction. */
+function motsDe(o: Objet) {
+  const x = OBJETS[o], N = x.nom.charAt(0).toUpperCase() + x.nom.slice(1);
+  return {
+    n: x.nom, N, il: x.il,
+    idee: (f: Fonction) => (x.personne ? IDEE_PERSONNE : IDEE)[f],
+    bref: (f: Fonction) => (x.personne ? EN_BREF_PERSONNE : EN_BREF)[f],
+    // La nuance écrite pour la littérature, reprise avec le bon nom et le bon pronom (« le roman… il »).
+    nuance: (f: Fonction, de: string) => x.personne ? NUANCE_PERSONNE[f](de, x.nom)
+      : NUANCE[f](de).replace(/la littérature/g, x.nom).replace(/\belle\b/g, x.il).replace(/\bElle\b/g, x.il === "il" ? "Il" : "Elle")
+  };
+}
+
 /**
  * La thèse de la citation, reprise telle quelle quand elle s'y prête (« la littérature doit être une arme au service du peuple ») :
  * une seule phrase, assez courte, qui parle de la littérature ou de l'écrivain, sans « je » ni « nous ».
  */
 function theseDe(citation: string): string | null {
-  const c = citation.replace(/[«»"“”]/g, "").replace(/\s+/g, " ").trim().replace(/[.!…]+$/, "");
+  const c = sansAuteur(citation).replace(/[.!…]+$/, "");
   if (c.length < 15 || c.length > 150 || /[.;?!]\s/.test(c)) return null;
   if (/\b(je|j'|j’|me|m'|m’|moi|mon|ma|mes|nous|notre|nos|vous|votre|vos|tu|ton|ta|tes)\b/i.test(c)) return null;
   if (!/^(la littérature|l[’']écrivain|le poète|la poésie|l[’']art|le roman|le romancier|le théâtre|l[’']œuvre|l[’']oeuvre|un écrivain|un poète|une œuvre|un livre|le livre|l[’']artiste|écrire|lire|la lecture|l[’']écriture|le dramaturge|un roman)\b/i.test(c)) return null;
   return c.charAt(0).toLowerCase() + c.slice(1);
+}
+
+/** La citation sans guillemets ni « (Auteur non précisé) » à la fin, espaces remis en ordre. */
+function sansAuteur(citation: string) {
+  return citation.replace(/[«»"“”]/g, "").replace(/[\s.!…]+$/, "").replace(/\s*\([^()]*\)\s*$/, "").replace(/\s+([.!?,;:])/g, " $1").replace(/\s+/g, " ").trim();
 }
 
 /** La citation entière, entre guillemets, quand elle est assez courte pour être reprise dans un titre. */
@@ -592,6 +699,9 @@ interface Contexte {
   rejet: Fonction | null;
   /** Ce que le sujet énumère : chaque élément devient un argument de la partie 1. */
   liste: string[];
+  /** Ce dont parle la citation (l'écrivain, la poésie…) : la problématique et le plan reprennent ce mot. */
+  objet: Objet;
+  sur: boolean;
 }
 
 /**
@@ -599,29 +709,43 @@ interface Contexte {
  * fiches des œuvres sur ces thèmes illustrent vraiment, une œuvre pour chaque argument, et une nuance liée au thème.
  * Quand l'auteur rejette une fonction (« Je ne crois pas à l'évasion »), la partie 1 défend ce qu'il pense vraiment.
  */
-function planDuSujet({ citation, f: f0, f2: f20, consigne, discussion, themes, annonces, oeuvres, genres, rejet, liste }: Contexte): Analyse["plan"] {
+function planDuSujet({ citation, f: f0, f2: f20, consigne, discussion, themes, annonces, oeuvres, genres, rejet, liste, objet, sur }: Contexte): Analyse["plan"] {
   // L'auteur rejette la fonction que le sujet évoque le plus : sa thèse est l'autre.
   const f = rejet && f0 === rejet ? (f20 && f20 !== rejet ? f20 : OPPOSE[rejet]) : f0;
   const f2 = f20 === f ? f0 : f20;
   const de = themes.map(deTheme).find((x): x is string => !!x) ?? null;
   const these = theseDe(citation), courte = citationCourte(citation);
+  const m = motsDe(objet);
   const axe1 = !f ? "Explique la citation : ce que l'auteur veut dire, avec des exemples d'œuvres."
     : these ? `Montre que, selon l'auteur, ${these} : c'est ${NOM_FONCTION[f]}.`
     : liste.length ? `Le sujet énumère ${liste.length} idées : explique-les l'une après l'autre et illustre chacune.`
-    : rejet && rejet !== f ? `Montre pourquoi, pour l'auteur, la littérature n'est pas d'abord ${IDEE[rejet]} : elle est plutôt ${IDEE[f]}.`
-    : courte ? `Explique ce que veut dire l'auteur par « ${courte} » : pour lui, la littérature est ${IDEE[f]}.`
-    : `Explique la thèse : pour l'auteur, la littérature est ${IDEE[f]}${de ? `, surtout quand elle parle ${de}` : ""}.`;
+    : rejet && rejet !== f ? `Montre pourquoi, pour l'auteur, ${m.n} n'est pas d'abord ${m.idee(rejet)} : ${m.il} est plutôt ${m.idee(f)}.`
+    : courte ? `Explique ce que veut dire l'auteur par « ${courte} » : pour lui, ${m.n} est ${m.idee(f)}.`
+    : `Explique la thèse : pour l'auteur, ${m.n} est ${m.idee(f)}${de ? `, surtout quand ${m.il} parle ${de}` : ""}.`;
+  // L'écrivain « au service » de quelqu'un : la nuance naturelle, c'est qu'il a aussi servi les puissants, ou l'art seul.
+  const auService = f === "Engagement" && OBJETS[objet].personne && /\b(servir|sert|service|serviteur)\b/.test(normalize(citation));
   // Partie 2 : la fonction rejetée par l'auteur est la nuance toute trouvée.
   const fN = f && (rejet && rejet !== f ? rejet : OPPOSE[f]);
   const axe2 = discussion
-    ? (f ? (rejet && rejet !== f ? `Nuance : la littérature peut tout de même être ${IDEE[rejet]}.` : de ? NUANCE[f](de) : `Nuance : la littérature peut aussi être ${IDEE[fN!]}.`) : "Discute : montre les limites de cette idée, avec d'autres exemples.")
-    : `Approfondis : montre, avec d'autres œuvres${de ? ` qui parlent ${de}` : ""}, d'autres façons dont la littérature le prouve.`;
+    ? (f ? (auService && !rejet ? `Nuance : ${m.n} n'a pas toujours servi ceux qui souffrent ; certains ont servi les puissants, d'autres seulement leur art.`
+      : rejet && rejet !== f ? `Nuance : ${m.n} peut tout de même être ${m.idee(rejet)}.` : de ? m.nuance(f, de) : `Nuance : ${m.n} peut aussi être ${m.idee(fN!)}.`) : "Discute : montre les limites de cette idée, avec d'autres exemples.")
+    : `Approfondis : montre, avec d'autres œuvres${de ? ` qui parlent ${de}` : ""}, d'autres façons dont ${m.n} le prouve.`;
 
+  // La citation reprise mot pour mot quand elle nomme ce dont elle parle : la problématique colle au sujet.
+  const net = sansAuteur(citation).replace(/[.!…]+$/, "");
+  const reprise = sur && net.length >= 15 && net.length <= 170 ? net : null;
+  // Une question se reprend telle quelle ; un « je » se cite ; sinon « Peut-on dire, avec l'auteur, que… ».
+  const reprendre = (c: string) => /\?$/.test(c) ? `L'auteur demande : « ${c} » Que peut-on lui répondre ?`
+    : parleDeLui(c) || /[.:!?]\s/.test(c) ? `L'auteur affirme : « ${c} ». A-t-il raison ?`
+    : `Peut-on dire, avec l'auteur, ${/^[aeiouyhéèêàâîô]/i.test(c) ? "qu'" : "que "}${c.charAt(0).toLowerCase() + c.slice(1)} ?`;
   const problematique = !f ? "Que veut dire l'auteur, et a-t-il raison ?"
-    : [rejet && rejet !== f ? `Pourquoi, selon l'auteur, la littérature est-elle ${EN_BREF[f]} plutôt ${/^[aeiouyhé]/.test(EN_BREF[rejet]) ? "qu'" : "que "}${EN_BREF[rejet]} ?`
-      : these ? `En quoi peut-on dire que ${these} ?`
-      : `En quoi la littérature est-elle ${IDEE[f]}${de ? ` quand elle parle ${de}` : ""} ?`,
-    discussion ? `La littérature ne peut-elle pas aussi être ${EN_BREF[fN!]} ?` : "Comment les œuvres le montrent-elles ?"].join(" ");
+    : [rejet && rejet !== f ? `Pourquoi, selon l'auteur, ${m.n} est-${m.il} ${m.bref(f)} plutôt ${/^[aeiouyhé]/.test(m.bref(rejet)) ? "qu'" : "que "}${m.bref(rejet)} ?`
+      : these ? `En quoi peut-on dire ${/^[aeiouyhéèêà]/i.test(these) ? "qu'" : "que "}${these} ?`
+      : reprise ? reprendre(reprise)
+      : `En quoi ${m.n} est-${m.il} ${m.idee(f)}${de ? ` quand ${m.il} parle ${de}` : ""} ?`,
+    !discussion ? "Comment les œuvres le montrent-elles ?"
+      : auService ? `${m.N} n'a-t-${m.il} pas aussi servi les puissants, ou seulement son art ?`
+      : `${m.N} ne peut-${m.il} pas aussi être ${m.bref(fN!)} ?`].join(" ");
 
   // Œuvres du sujet d'abord, puis toutes celles qui partagent ses thèmes : quels arguments illustrent-elles ?
   const cles = new Set(themes.map(normalize));
@@ -677,16 +801,16 @@ function planDuSujet({ citation, f: f0, f2: f20, consigne, discussion, themes, a
     const cites = liste.map(el => `« ${el} »`);
     return {
       axe1, axe2,
-      problematique: `Pourquoi, selon l'auteur, la littérature est-elle à la fois ${cites.slice(0, -1).join(", ")} et ${cites[cites.length - 1]} ?`
-        + (discussion ? ` Ne peut-elle pas aussi être ${EN_BREF[fN!]} ?` : ""),
-      args1: liste.map(el => `« ${titre(el)} »`), args2: a2.map(a => ARGUMENTS[a] ?? a),
+      problematique: `Pourquoi, selon l'auteur, ${m.n} est-${m.il} à la fois ${cites.slice(0, -1).join(", ")} et ${cites[cites.length - 1]} ?`
+        + (discussion ? ` Ne peut-${m.il} pas aussi être ${m.bref(fN!)} ?` : ""),
+      args1: liste.map(el => `« ${titre(el)} »`), args2: a2.map(a => argumentDe(a, objet)),
       ex1: a1.map(a => (a ? exemples(a, undefined) : [])), ex2: a2.map(a => exemples(a, f2b))
     };
   }
   const a1 = choisir(f, []), a2 = choisir(f2b, a1);
   return {
     axe1, axe2, problematique,
-    args1: a1.map(a => ARGUMENTS[a] ?? a), args2: a2.map(a => ARGUMENTS[a] ?? a),
+    args1: a1.map(a => argumentDe(a, objet)), args2: a2.map(a => argumentDe(a, objet)),
     ex1: a1.map(a => exemples(a, f)), ex2: a2.map(a => exemples(a, f2b))
   };
 }
@@ -731,7 +855,7 @@ function planDuCorrige(s: Sujet): Analyse["plan"] {
 }
 
 /** `imposee` : la fonction choisie par l'élève quand celle proposée ne lui convient pas ; le plan et les œuvres la suivent. */
-export function analyserSujet(texteTape: string, combien = 6, imposee?: Fonction): Analyse {
+export function analyserSujet(texteTape: string, combien = 6, imposee?: Fonction, objetChoisi?: Objet): Analyse {
   // Écriture SMS et mots courts écrits au son (« ds », « ki », « doi », « na pa ») remis en toutes lettres.
   // Le découpage garde le texte tapé (majuscules et guillemets aident à trouver l'auteur et la consigne).
   const { citation: brute, consigne, auteur } = decouperSujet(texteTape);
@@ -818,6 +942,9 @@ export function analyserSujet(texteTape: string, combien = 6, imposee?: Fonction
     .filter(x => x.n > 0 && fonctions.includes(x.fa)).sort((x, y) => y.n - x.n).map(x => x.a);
 
   const genres = genresDuSujet(texte);
+  // De qui ou de quoi parle la citation (« L'écrivain… ») ; l'élève peut le corriger.
+  const lu = objetDuSujet(citation);
+  const objet = objetChoisi ?? lu.objet, objetSur = lu.sur;
   // Sans thème reconnu : les œuvres au programme qui illustrent la fonction attendue.
   const avecThemes = oeuvresPour(themes, fonctions, combien, 2, genres, argumentsTrouves);
   // Trop peu d'œuvres sur ces thèmes : on complète avec celles qui illustrent la même fonction.
@@ -827,7 +954,7 @@ export function analyserSujet(texteTape: string, combien = 6, imposee?: Fonction
   // Sujet presque identique à un sujet corrigé : le plan du professeur passe avant le plan automatique.
   const corrigeProche = sujetCorrigeProche(c0);
   const plan = corrigeProche && "axe1" in corrigeProche ? planDuCorrige(corrigeProche)
-    : planDuSujet({ citation: brute, f, f2: fonctions[1], consigne: type, discussion, themes, annonces: argumentsTrouves, oeuvres, genres, rejet, liste: enumeration(brute) });
+    : planDuSujet({ citation: brute, f, f2: fonctions[1], consigne: type, discussion, themes, annonces: argumentsTrouves, oeuvres, genres, rejet, liste: enumeration(brute), objet, sur: !!objetChoisi || objetSur });
   const corrige = corrigeProche ? { num: corrigeProche.num, ouvert: "axe1" in corrigeProche } : null;
 
   const importants = mots.filter(m => m.brut.length >= 5 && !TROP_COURANTS.has(m.brut));
@@ -841,6 +968,6 @@ export function analyserSujet(texteTape: string, combien = 6, imposee?: Fonction
   return {
     themes, fonctions, mots: dico, discussion, arguments: argumentsTrouves, travail: TRAVAIL[type], auteur, plan, oeuvres,
     proches: corrige ? proches.filter(x => x.num !== corrige.num) : proches,
-    genres, doute, faible, rejet, corrige, nature: natureDuSujet(texte, citation, !!auteur || !!auteurConnu(texteTape) || CITE_ENTRE_PARENTHESES.test(texteTape))
+    genres, doute, faible, rejet, corrige, objet, objetSur, nature: natureDuSujet(texte, citation, !!auteur || !!auteurConnu(texteTape) || CITE_ENTRE_PARENTHESES.test(texteTape))
   };
 }

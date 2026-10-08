@@ -6,7 +6,7 @@ import { useStored, write } from "../lib/storage";
 import { normalize, sansEtoiles } from "../lib/text";
 import { Texte } from "../components/Texte";
 import { FONCTIONS, type Fonction } from "../data/types";
-import { analyserSujet, decouperSujet, genreDu, type Exemple } from "../lib/devoir";
+import { analyserSujet, decouperSujet, genreDu, OBJETS, type Exemple, type Objet } from "../lib/devoir";
 import { fnClass } from "../lib/fonctions";
 import { ajouterSujetPerso, CONSIGNE } from "../lib/entrainement";
 import { brouillonVide, lireBrouillon } from "../lib/atelier";
@@ -28,9 +28,13 @@ export function DevoirScreen() {
   const cleSujet = normalize(texte);
   const choisie = choisies[cleSujet];
   const [corriger, setCorriger] = useState(false);
+  // De qui parle le sujet (l'écrivain, la poésie…), corrigé par l'élève : gardé sur le téléphone, rien n'est envoyé.
+  const [objetsChoisis, setObjetsChoisis] = useStored<Record<string, Objet>>("devoir-objets", {});
+  const objetChoisi = objetsChoisis[cleSujet];
+  const [corrigerObjet, setCorrigerObjet] = useState(false);
   // L'élève confirme que c'est bien une dissertation littéraire, quand l'appli pense le contraire.
   const [quandMeme, setQuandMeme] = useState(false);
-  const analyse = useMemo(() => (lu ? analyserSujet(texte, 6, choisie) : null), [lu, texte, choisie]);
+  const analyse = useMemo(() => (lu ? analyserSujet(texte, 6, choisie, objetChoisi) : null), [lu, texte, choisie, objetChoisi]);
   const autreExercice = !!analyse && analyse.nature !== "dissertation" && !quandMeme && !choisie;
   function choisir(f: Fonction | null) {
     const suite = { ...choisies };
@@ -39,6 +43,13 @@ export function DevoirScreen() {
     // Les 50 derniers sujets suffisent.
     setChoisies(Object.fromEntries(Object.entries(suite).slice(-50)));
     setCorriger(false);
+  }
+  function choisirObjet(o: Objet | null) {
+    const suite = { ...objetsChoisis };
+    delete suite[cleSujet];
+    if (o) suite[cleSujet] = o;
+    setObjetsChoisis(Object.fromEntries(Object.entries(suite).slice(-50)));
+    setCorrigerObjet(false);
   }
   // Arrivée avec le sujet déjà tapé sur l'accueil : on montre directement les résultats.
   useEffect(() => { if (lu) setTimeout(() => {
@@ -149,6 +160,22 @@ export function DevoirScreen() {
                 {analyse.themes.map(t => <span key={t} class="tag">{t}</span>)}
               </p>
             ) : <p class="small muted">Pas de thème reconnu : vérifie que tu as bien collé toute la citation.</p>}
+            {corrigerObjet ? (
+              <div class="devoir-corriger">
+                <p class="small">De qui ou de quoi parle ton sujet ?</p>
+                <p class="tags">
+                  {(Object.keys(OBJETS) as Objet[]).map(o => (
+                    <button key={o} type="button" class="tag tag-link" aria-pressed={analyse.objet === o} onClick={() => choisirObjet(o)}>{OBJETS[o].choix}</button>
+                  ))}
+                </p>
+                <button type="button" class="link-btn devoir-changer" onClick={() => (objetChoisi ? choisirObjet(null) : setCorrigerObjet(false))}>
+                  {objetChoisi ? "Revenir à la proposition de l'appli" : "Annuler"}
+                </button>
+              </div>
+            ) : (
+              <p class="small devoir-objet">Le sujet parle {analyse.objetSur || objetChoisi ? "" : "sans doute "}{deNom(OBJETS[analyse.objet].nom)}{" "}
+                <button type="button" class="link-btn" onClick={() => setCorrigerObjet(true)}>Changer</button></p>
+            )}
             {corriger ? (
               <div class="devoir-corriger">
                 <p class="small">Quelle fonction de la littérature ton sujet évoque-t-il ?</p>
@@ -232,6 +259,11 @@ export function DevoirScreen() {
       )}
     </Page>
   );
+}
+
+/** « de l'écrivain », « du poète », « de la poésie », en gras. */
+function deNom(nom: string) {
+  return nom.startsWith("le ") ? <>du <strong>{nom.slice(3)}</strong>.</> : <>de <strong>{nom}</strong>.</>;
 }
 
 /** Nom de la fonction dans une phrase. */
