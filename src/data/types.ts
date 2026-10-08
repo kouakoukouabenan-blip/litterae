@@ -93,7 +93,6 @@ export interface Lecon {
 }
 
 export interface Outils {
-  formules: { title: string; desc: string; items: { label: string; text: string }[] }[];
   connecteurs: { titre: string; mots: string[] }[];
   orientations: { titre: string; mots: string[]; oppose: string }[];
 }

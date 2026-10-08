@@ -225,7 +225,7 @@ export function AtelierScreen({ num, params }: { num: string; params: URLSearchP
         {etape === 3 && (
           <div class="atelier-etape">
             <Champ id="phrase-intro" label="Phrase introductive" rows={2} value={b.phraseIntro} onInput={v => maj({ phraseIntro: v })}
-              aide={<Aide court="Elle rappelle la thèse." detail="Par exemple : « Dire que… se justifie aisément » ou « Il n'est pas erroné de dire que… »."><a class="atelier-outil" href="#/outils?vue=formules&groupe=introduction">Formules</a></Aide>} />
+              aide={<Aide court="Elle rappelle la thèse." detail="Par exemple : « Dire que… se justifie aisément » ou « Il n'est pas erroné de dire que… »."><a class="atelier-outil" href="#/outils?vue=formules&groupe=entree">Formules</a></Aide>} />
             <h2 class="section-title"><span class="part-num">I.</span> {b.axe1.titre.trim() || "Thèse"}</h2>
             {b.axe1.args.map((a, i) => (
               <div key={i} class="atelier-paragraphe">
@@ -254,7 +254,7 @@ export function AtelierScreen({ num, params }: { num: string; params: URLSearchP
           <div class="atelier-etape">
             <Rappel lignes={[["Problématique", b.problematique], ["Partie I", b.axe1.titre], ...plan(b.axe1), ["Partie II", b.axe2.titre], ...plan(b.axe2)]} />
             <Champ id="conclusion" label="Conclusion" rows={7} value={b.conclusion} onInput={v => maj({ conclusion: v })}
-              aide={<Aide court="Bilan, avis personnel, ouverture." detail="Le bilan (« Au terme de notre analyse, retenons que… Cependant… »), ton jugement personnel, qui répond clairement à la problématique, puis une ouverture si tu le souhaites."><a class="atelier-outil" href="#/outils?vue=formules&groupe=conclusion">Formules</a></Aide>} />
+              aide={<Aide court="Bilan, avis personnel, ouverture." detail="Le bilan (« Au terme de notre analyse, retenons que… Cependant… »), ton jugement personnel, qui répond clairement à la problématique, puis une ouverture si tu le souhaites."><a class="atelier-outil" href="#/outils?vue=formules&groupe=bilan">Formules</a></Aide>} />
           </div>
         )}
 

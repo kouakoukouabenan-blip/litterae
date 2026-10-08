@@ -1,0 +1,419 @@
+{
+ "sujet": "« Écrire, ce n'est pas faire du bien, c'est faire de l'art. »",
+ "categories": [
+  {
+   "id": "generalite",
+   "nom": "Généralité",
+   "partie": "introduction",
+   "place": "1re phrase de l'introduction",
+   "role": "Amener le thème avec une idée générale, avant de citer l'auteur."
+  },
+  {
+   "id": "insertion",
+   "nom": "Insertion du sujet",
+   "partie": "introduction",
+   "place": "Introduction, juste après la généralité",
+   "role": "Citer la phrase de l'auteur, puis la redire avec tes mots."
+  },
+  {
+   "id": "problematique",
+   "nom": "Problématique",
+   "partie": "introduction",
+   "place": "Introduction, après l'insertion du sujet",
+   "role": "Poser les questions du devoir : l'une sur la thèse, l'autre sur l'antithèse."
+  },
+  {
+   "id": "annonce",
+   "nom": "Annonce du plan",
+   "partie": "introduction",
+   "place": "Dernière phrase de l'introduction",
+   "role": "Dire que ta copie va répondre à ces questions."
+  },
+  {
+   "id": "entree",
+   "nom": "Phrase introductive",
+   "partie": "developpement",
+   "place": "Début du développement, avant le 1er argument",
+   "role": "Ouvrir la 1re partie en montrant que tu vas défendre la thèse."
+  },
+  {
+   "id": "argument",
+   "nom": "Argument et exemple",
+   "partie": "developpement",
+   "place": "Dans chaque paragraphe du développement",
+   "role": "Annoncer un argument, l'expliquer, puis citer l'œuvre qui le prouve."
+  },
+  {
+   "id": "transition",
+   "nom": "Transition",
+   "partie": "developpement",
+   "place": "Entre la 1re et la 2e partie",
+   "role": "Rappeler la thèse en une phrase et annoncer l'antithèse."
+  },
+  {
+   "id": "bilan",
+   "nom": "Bilan",
+   "partie": "conclusion",
+   "place": "1re phrase de la conclusion",
+   "role": "Résumer ce que chaque partie a montré."
+  },
+  {
+   "id": "jugement",
+   "nom": "Jugement personnel",
+   "partie": "conclusion",
+   "place": "Conclusion, après le bilan",
+   "role": "Donner ta réponse claire à la problématique."
+  },
+  {
+   "id": "ouverture",
+   "nom": "Ouverture",
+   "partie": "conclusion",
+   "place": "Dernière phrase de la conclusion (facultative)",
+   "role": "Élargir le débat : un fait actuel, un autre genre, une autre œuvre ou une grande question."
+  },
+  {
+   "id": "style",
+   "nom": "Belle phrase",
+   "partie": "partout",
+   "place": "Dans le développement, à la fin d'une explication",
+   "role": "Donner du style à ta copie. Une ou deux par copie, pas plus."
+  }
+ ],
+ "formules": [
+  {
+   "id": "gen-definition",
+   "cat": "generalite",
+   "nom": "Avec une définition",
+   "texte": "[Le thème], [définition simple], a toujours suscité des débats sur sa véritable fonction.",
+   "exemple": "L'écriture, art de traduire la pensée en mots, a toujours suscité des débats sur sa véritable fonction."
+  },
+  {
+   "id": "gen-constat",
+   "cat": "generalite",
+   "nom": "Avec un constat",
+   "texte": "Le débat sur la fonction de [thème] ne cesse d'alimenter les cercles littéraires : les uns la veulent engagée, les autres la veulent d'abord belle.",
+   "exemple": "Le débat sur la fonction de l'écriture ne cesse d'alimenter les cercles littéraires : les uns la veulent engagée, les autres la veulent d'abord belle."
+  },
+  {
+   "id": "gen-citation",
+   "cat": "generalite",
+   "nom": "Avec une citation célèbre",
+   "texte": "[Écrivain célèbre] écrivait : « [citation connue] ». Cette image amène à s'interroger sur le rôle de [thème] dans la société.",
+   "exemple": "Stendhal écrivait : « Un roman : c'est un miroir qu'on promène le long d'un chemin. » Cette image amène à s'interroger sur le rôle de l'écriture dans la société.",
+   "conseil": "Ne prends pas la citation du sujet : elle vient juste après."
+  },
+  {
+   "id": "gen-histoire",
+   "cat": "generalite",
+   "nom": "Avec l'histoire littéraire",
+   "texte": "Des romantiques aux écrivains de la Négritude, chaque époque a donné sa réponse à la question de savoir si [thème] doit être belle ou utile.",
+   "exemple": "Des romantiques aux écrivains de la Négritude, chaque époque a donné sa réponse à la question de savoir si l'écriture doit être belle ou utile."
+  },
+  {
+   "id": "gen-afrique",
+   "cat": "generalite",
+   "nom": "Avec le contexte africain",
+   "texte": "En Afrique, [thème] a longtemps accompagné les luttes des peuples, de la colonisation aux indépendances ; pourtant, sa fonction continue de diviser les critiques.",
+   "exemple": "En Afrique, l'écriture a longtemps accompagné les luttes des peuples, de la colonisation aux indépendances ; pourtant, sa fonction continue de diviser les critiques."
+  },
+  {
+   "id": "gen-opposition",
+   "cat": "generalite",
+   "nom": "Avec deux visions opposées",
+   "texte": "Arme de combat pour les uns, pur travail du beau pour les autres, [thème] n'a jamais cessé de susciter des interrogations.",
+   "exemple": "Arme de combat pour les uns, pur travail du beau pour les autres, l'écriture n'a jamais cessé de susciter des interrogations."
+  },
+  {
+   "id": "ins-prenant",
+   "cat": "insertion",
+   "nom": "La formule du cours",
+   "texte": "Prenant part à ce débat, [auteur] affirme : « [citation du sujet] » ; autrement dit, [reformulation].",
+   "exemple": "Prenant part à ce débat, un penseur affirme : « Écrire, ce n'est pas faire du bien, c'est faire de l'art » ; autrement dit, l'écriture s'intéresse avant tout à la beauté formelle."
+  },
+  {
+   "id": "ins-sens",
+   "cat": "insertion",
+   "nom": "Avec « C'est dans ce sens »",
+   "texte": "C'est dans ce sens que [auteur] déclare : « [citation du sujet] », ce qui revient à dire que [reformulation].",
+   "exemple": "C'est dans ce sens qu'un penseur déclare : « Écrire, ce n'est pas faire du bien, c'est faire de l'art », ce qui revient à dire que l'écrivain doit d'abord créer de la beauté."
+  },
+  {
+   "id": "ins-ainsi",
+   "cat": "insertion",
+   "nom": "Avec « Ainsi »",
+   "texte": "Ainsi, pour [auteur], « [citation du sujet] » ; en d'autres termes, [reformulation].",
+   "exemple": "Ainsi, pour un penseur, « Écrire, ce n'est pas faire du bien, c'est faire de l'art » ; en d'autres termes, la littérature vaut d'abord par sa beauté."
+  },
+  {
+   "id": "ins-longue",
+   "cat": "insertion",
+   "nom": "Quand la citation est longue",
+   "texte": "S'inscrivant dans cette réflexion, [auteur] soutient que [reformulation].",
+   "exemple": "S'inscrivant dans cette réflexion, un penseur soutient que l'écrivain doit avant tout produire une œuvre belle.",
+   "conseil": "Si la citation fait plusieurs lignes, ne la recopie pas : donne seulement ta reformulation."
+  },
+  {
+   "id": "pb-deux",
+   "cat": "problematique",
+   "nom": "Deux questions (la plus sûre)",
+   "texte": "Une telle affirmation pose les questions suivantes : en quoi [question sur la thèse] ? [Question sur l'antithèse] ?",
+   "exemple": "Une telle affirmation pose les questions suivantes : en quoi l'écriture doit-elle faire du beau ? N'admet-elle pas aussi une fonction militante ?"
+  },
+  {
+   "id": "pb-mesure",
+   "cat": "problematique",
+   "nom": "Avec « dans quelle mesure »",
+   "texte": "Dès lors, dans quelle mesure peut-on affirmer que [reformulation de la thèse] ? [Question sur l'antithèse] ?",
+   "exemple": "Dès lors, dans quelle mesure peut-on affirmer que l'écriture doit seulement faire du beau ? Ne peut-elle pas aussi servir à défendre une cause ?"
+  },
+  {
+   "id": "pb-trois",
+   "cat": "problematique",
+   "nom": "Trois questions",
+   "texte": "Qu'est-ce que [thème] ? En quoi [question sur la thèse] ? [Question sur l'antithèse] ?",
+   "exemple": "Qu'est-ce que l'écriture ? En quoi doit-elle faire de l'art ? Ne peut-elle pas aussi faire du bien en défendant les opprimés ?",
+   "conseil": "Avec trois questions, l'annonce du plan n'est plus nécessaire."
+  },
+  {
+   "id": "an-cours",
+   "cat": "annonce",
+   "nom": "La formule du cours",
+   "texte": "Nous répondrons à ces interrogations dans notre analyse.",
+   "exemple": "Nous répondrons à ces interrogations dans notre analyse."
+  },
+  {
+   "id": "an-parties",
+   "cat": "annonce",
+   "nom": "Avec les deux parties",
+   "texte": "Nous montrerons d'abord que [thèse], avant de voir que [antithèse].",
+   "exemple": "Nous montrerons d'abord que l'écriture fait du beau, avant de voir qu'elle peut aussi être une arme au service des peuples."
+  },
+  {
+   "id": "an-tenter",
+   "cat": "annonce",
+   "nom": "Variante",
+   "texte": "C'est à ces questions que nous tenterons de répondre tout au long de notre réflexion.",
+   "exemple": "C'est à ces questions que nous tenterons de répondre tout au long de notre réflexion."
+  },
+  {
+   "id": "en-dire",
+   "cat": "entree",
+   "nom": "« Se justifie aisément »",
+   "texte": "Dire que [reformulation de la thèse] se justifie aisément à travers plusieurs arguments.",
+   "exemple": "Dire que l'écriture s'intéresse avant tout à la beauté formelle se justifie aisément à travers plusieurs arguments."
+  },
+  {
+   "id": "en-errone",
+   "cat": "entree",
+   "nom": "« Il n'est pas erroné »",
+   "texte": "Il n'est pas erroné de dire que [reformulation de la thèse].",
+   "exemple": "Il n'est pas erroné de dire que l'écriture vise d'abord à faire du beau."
+  },
+  {
+   "id": "en-these",
+   "cat": "entree",
+   "nom": "« La thèse selon laquelle »",
+   "texte": "La thèse selon laquelle [reformulation de la thèse] peut se défendre à travers plusieurs arguments solides.",
+   "exemple": "La thèse selon laquelle l'écrivain doit d'abord créer de la beauté peut se défendre à travers plusieurs arguments solides."
+  },
+  {
+   "id": "en-fondement",
+   "cat": "entree",
+   "nom": "« Loin d'être sans fondement »",
+   "texte": "L'affirmation de [auteur] est loin d'être sans fondement, et plusieurs arguments permettent d'en saisir la pertinence.",
+   "exemple": "L'affirmation de ce penseur est loin d'être sans fondement, et plusieurs arguments permettent d'en saisir la pertinence."
+  },
+  {
+   "id": "arg-annoncer",
+   "cat": "argument",
+   "nom": "Annoncer l'argument",
+   "texte": "Premièrement, [thème] [argument en une phrase].",
+   "exemple": "Premièrement, l'écriture fait du beau parce qu'elle travaille la langue.",
+   "conseil": "Puis « Deuxièmement », « Troisièmement » pour les arguments suivants."
+  },
+  {
+   "id": "arg-expliquer",
+   "cat": "argument",
+   "nom": "Expliquer l'argument",
+   "texte": "En effet, [explication]. Autrement dit, [ce que cela implique].",
+   "exemple": "En effet, l'écrivain choisit ses mots, ses images et ses rythmes avec soin. Autrement dit, son texte procure un plaisir avant même de transmettre un message."
+  },
+  {
+   "id": "arg-preuve",
+   "cat": "argument",
+   "nom": "Citer l'œuvre",
+   "texte": "Nous en voulons pour preuve [titre de l'œuvre] de [auteur], où [ce qui, dans l'œuvre, prouve l'argument].",
+   "exemple": "Nous en voulons pour preuve Les Fleurs du mal de Charles Baudelaire, où le poète transforme la laideur du quotidien en beauté par le travail des images et des rimes.",
+   "conseil": "Souligne le titre de l'œuvre dans ta copie."
+  },
+  {
+   "id": "arg-cas",
+   "cat": "argument",
+   "nom": "Avec un personnage",
+   "texte": "C'est le cas de [personnage] dans [titre de l'œuvre] de [auteur], qui [ce qu'il vit et qui prouve l'argument].",
+   "exemple": "C'est le cas de Toundi dans Une vie de boy de Ferdinand Oyono, qui révèle dans son journal la cruauté des colons.",
+   "conseil": "Souligne le titre de l'œuvre dans ta copie."
+  },
+  {
+   "id": "arg-ensuite",
+   "cat": "argument",
+   "nom": "Passer à l'argument suivant",
+   "texte": "Outre [argument précédent], [thème] [nouvel argument].",
+   "exemple": "Outre le travail de la langue, l'écriture fait du beau en créant des images qui font rêver."
+  },
+  {
+   "id": "tr-certes",
+   "cat": "transition",
+   "nom": "Avec « certes »",
+   "texte": "[Rappel de la thèse], certes ; toutefois, il convient de reconnaître que [annonce de l'antithèse].",
+   "exemple": "L'écriture fait du beau, certes ; toutefois, il convient de reconnaître qu'elle admet aussi une fonction militante."
+  },
+  {
+   "id": "tr-si",
+   "cat": "transition",
+   "nom": "Avec « Si… cependant »",
+   "texte": "Si [rappel de la thèse], [thème] admet cependant [annonce de l'antithèse].",
+   "exemple": "Si l'écriture s'intéresse à la beauté formelle, elle admet cependant une fonction militante."
+  },
+  {
+   "id": "tr-limites",
+   "cat": "transition",
+   "nom": "« Des limites »",
+   "texte": "Si les arguments précédents valident la thèse de [auteur], force est de constater que cette vision comporte des limites non négligeables.",
+   "exemple": "Si les arguments précédents valident la thèse de ce penseur, force est de constater que cette vision comporte des limites non négligeables."
+  },
+  {
+   "id": "tr-reducteur",
+   "cat": "transition",
+   "nom": "« Il serait réducteur »",
+   "texte": "Sans nier la pertinence de ce premier constat, il serait réducteur d'ignorer que [annonce de l'antithèse].",
+   "exemple": "Sans nier la pertinence de ce premier constat, il serait réducteur d'ignorer que l'écriture sert aussi à dénoncer les injustices."
+  },
+  {
+   "id": "tr-tableau",
+   "cat": "transition",
+   "nom": "« Ce tableau reste incomplet »",
+   "texte": "Ce tableau, pour juste qu'il soit, reste incomplet si l'on ne considère pas que [annonce de l'antithèse].",
+   "exemple": "Ce tableau, pour juste qu'il soit, reste incomplet si l'on ne considère pas que l'écriture peut aussi être une arme."
+  },
+  {
+   "id": "bi-cours",
+   "cat": "bilan",
+   "nom": "La formule du cours",
+   "texte": "Au terme de notre analyse, retenons que [ce que montre la 1re partie]. Cependant, [ce que montre la 2e partie].",
+   "exemple": "Au terme de notre analyse, retenons que l'écriture a pour fonction de faire du beau. Cependant, au-delà de cette fonction esthétique, elle admet une fonction militante qui fait d'elle un instrument au service de la société."
+  },
+  {
+   "id": "bi-ressort",
+   "cat": "bilan",
+   "nom": "« Il ressort »",
+   "texte": "Il ressort de notre réflexion que [1re partie], même si [2e partie].",
+   "exemple": "Il ressort de notre réflexion que l'écriture vise le beau, même si elle se met aussi au service des luttes des peuples."
+  },
+  {
+   "id": "bi-somme",
+   "cat": "bilan",
+   "nom": "« En somme »",
+   "texte": "En somme, si [1re partie], il est aussi vrai que [2e partie].",
+   "exemple": "En somme, si l'écriture est d'abord un art, il est aussi vrai qu'elle peut défendre une cause."
+  },
+  {
+   "id": "ju-partie",
+   "cat": "jugement",
+   "nom": "Prendre parti",
+   "texte": "Pour notre part, nous pensons que [ta réponse claire], car [ta raison].",
+   "exemple": "Pour notre part, nous pensons que l'écriture ne vaut pleinement que lorsqu'elle met sa beauté au service des hommes, car un beau texte touche plus sûrement qu'un discours."
+  },
+  {
+   "id": "ju-complementarite",
+   "cat": "jugement",
+   "nom": "Les deux se complètent",
+   "texte": "En définitive, c'est la complémentarité de ces deux fonctions, [thèse] et [antithèse], qui fait de [thème] un art indispensable.",
+   "exemple": "En définitive, c'est la complémentarité de ces deux fonctions, faire du beau et défendre une cause, qui fait de l'écriture un art indispensable."
+  },
+  {
+   "id": "ju-nourrissent",
+   "cat": "jugement",
+   "nom": "« Loin d'être contradictoires »",
+   "texte": "Loin d'être contradictoires, ces deux fonctions se nourrissent l'une de l'autre : c'est parce que [thème] est [thèse] qu'elle peut être [antithèse].",
+   "exemple": "Loin d'être contradictoires, ces deux fonctions se nourrissent l'une de l'autre : c'est parce que l'écriture est belle qu'elle peut être une arme efficace."
+  },
+  {
+   "id": "ju-paradoxe",
+   "cat": "jugement",
+   "nom": "« Le paradoxe n'est qu'apparent »",
+   "texte": "Le paradoxe n'est qu'apparent : la vraie grandeur de [thème] est d'être à la fois [thèse] et [antithèse], sans que l'une diminue l'autre.",
+   "exemple": "Le paradoxe n'est qu'apparent : la vraie grandeur de l'écriture est d'être à la fois belle et engagée, sans que l'une diminue l'autre."
+  },
+  {
+   "id": "ju-nuance",
+   "cat": "jugement",
+   "nom": "Jugement nuancé",
+   "texte": "Peut-être est-ce là la richesse de [thème] : échapper à toute définition unique et se nourrir de ses propres contradictions.",
+   "exemple": "Peut-être est-ce là la richesse de l'écriture : échapper à toute définition unique et se nourrir de ses propres contradictions."
+  },
+  {
+   "id": "ou-actuel",
+   "cat": "ouverture",
+   "nom": "Vers un fait actuel",
+   "texte": "L'on se demanderait toutefois si, à l'ère des réseaux sociaux, [thème] ne doit pas repenser sa place et sa forme.",
+   "exemple": "L'on se demanderait toutefois si, à l'ère des réseaux sociaux, l'écriture ne doit pas repenser sa place et sa forme pour toucher les jeunes."
+  },
+  {
+   "id": "ou-genre",
+   "cat": "ouverture",
+   "nom": "Vers un autre genre",
+   "texte": "Cette interrogation sur [thème] invite à se demander si [autre genre] ne répond pas avec plus d'efficacité encore à cette même question.",
+   "exemple": "Cette interrogation sur l'écriture invite à se demander si le théâtre, joué devant le peuple, ne répond pas avec plus d'efficacité encore à cette même question."
+  },
+  {
+   "id": "ou-art",
+   "cat": "ouverture",
+   "nom": "Vers un autre art",
+   "texte": "Au-delà de la littérature, [autre art] ne pose-t-il pas le même débat : faut-il [thèse] ou [antithèse] ?",
+   "exemple": "Au-delà de la littérature, la musique ne pose-t-elle pas le même débat : faut-il chanter pour plaire ou pour dénoncer ?"
+  },
+  {
+   "id": "ou-question",
+   "cat": "ouverture",
+   "nom": "Vers une grande question",
+   "texte": "Ce débat nous ramène à l'une des questions les plus profondes de l'art : peut-on séparer la beauté de l'utilité ?",
+   "exemple": "Ce débat nous ramène à l'une des questions les plus profondes de l'art : peut-on séparer la beauté de l'utilité ?"
+  },
+  {
+   "id": "st-denonciation",
+   "cat": "style",
+   "nom": "Pour la dénonciation",
+   "texte": "L'écrivain tient la plume là où d'autres tiendraient le bâton : là où la réalité fait mal.",
+   "exemple": "En effet, Mongo Beti dénonce sans relâche les abus de la colonisation. L'écrivain tient la plume là où d'autres tiendraient le bâton : là où la réalité fait mal."
+  },
+  {
+   "id": "st-beaute",
+   "cat": "style",
+   "nom": "Pour la beauté de la langue",
+   "texte": "La langue, entre ses mains, cesse d'être un simple outil de communication pour devenir un objet de contemplation.",
+   "exemple": "Senghor choisit chaque image et chaque rythme avec soin. La langue, entre ses mains, cesse d'être un simple outil de communication pour devenir un objet de contemplation."
+  },
+  {
+   "id": "st-evasion",
+   "cat": "style",
+   "nom": "Pour l'évasion",
+   "texte": "Le roman est cette porte dérobée que la vie a oublié de fermer à clé.",
+   "exemple": "Le lecteur quitte son quotidien pour un monde imaginaire. Le roman est cette porte dérobée que la vie a oublié de fermer à clé."
+  },
+  {
+   "id": "st-engagement",
+   "cat": "style",
+   "nom": "Pour l'engagement",
+   "texte": "Écrire sans regarder son temps en face, c'est dessiner des fleurs sur un mur qui s'effondre.",
+   "exemple": "L'écrivain africain ne peut ignorer les souffrances de son peuple. Écrire sans regarder son temps en face, c'est dessiner des fleurs sur un mur qui s'effondre."
+  },
+  {
+   "id": "st-universel",
+   "cat": "style",
+   "nom": "Pour l'universalité",
+   "texte": "Les plus grands textes parlent à tous les hommes de tous les temps, parce qu'ils ont eu le courage de ne parler que d'un seul.",
+   "exemple": "Les malheurs de Ramatoulaye touchent des lecteurs du monde entier. Les plus grands textes parlent à tous les hommes de tous les temps, parce qu'ils ont eu le courage de ne parler que d'un seul."
+  }
+ ]
+}

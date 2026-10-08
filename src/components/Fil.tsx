@@ -11,12 +11,16 @@ import { parseHash } from "../lib/router";
 import { proposerNotifs } from "./DemandeNotifs";
 import { marquer } from "../lib/progres";
 import { ajouterCarte, cleOeuvre } from "../lib/revisions";
+import { categorie } from "../lib/formules";
+import { Etapes, FormuleExemple, FormuleTexte } from "./Formule";
 import { badgeVu, carteAuteur, ouvrirSurprise, repondreEclair, type Surprise } from "../lib/collection";
 
 const PREMIERES = 3;
 const PAR_PAGE = 5;
 /** « de Molière », « d'Amadou Koné ». */
 const de = (nom: string) => /^[AEÉÈIOUY]/i.test(nom) ? `d'${nom}` : `de ${nom}`;
+/** « une généralité », « un bilan », « une insertion du sujet ». */
+const un = (nom: string) => `${/^(Généralité|Insertion|Problématique|Annonce|Phrase|Transition|Ouverture|Belle)/.test(nom) ? "une" : "un"} ${nom.charAt(0).toLowerCase()}${nom.slice(1)}`;
 const NOM: Record<string, string> = { Engagement: "d'engagement", Sociale: "sociale", Esthétique: "esthétique", Évasion: "d'évasion", Lyrique: "lyrique" };
 
 /** Compte, sans rien savoir de l'élève, les cartes montrées (une fois par jour) et celles qui sont ouvertes ou jouées. */
@@ -191,13 +195,29 @@ function Carte({ c }: { c: CarteFil }) {
         {c.ouvrable && <a class="link-strong" href={`#/oeuvres/${encodeURIComponent(c.w.id)}`} onClick={() => ouverte(c)}>{c.extrait ? "Lire la suite" : "Ouvrir la fiche"}</a>}
       </div>
     );
-    case "formule": return (
-      <div class="fil-carte">
-        <p class="fil-etiquette"><Icon name="edit" size={16} />Formule pour ta copie · {c.label}</p>
-        <p class="fil-texte">{c.texte}</p>
-        <button type="button" class="btn btn-secondary fil-copier" onClick={() => { ouverte(c); copyText(c.texte, "Formule copiée."); }}><Icon name="content_copy" size={18} />Copier</button>
-      </div>
-    );
+    case "formule": {
+      const cat = categorie(c.f.cat)!;
+      return (
+        <div class="fil-carte">
+          <p class="fil-etiquette"><Icon name="edit" size={16} />Pour ta copie · {cat.nom}</p>
+          <Etapes cat={cat.id} />
+          <p class="fil-texte fil-formule"><FormuleTexte texte={c.f.texte} /></p>
+          <p class="fil-place">{cat.place}. {cat.role}</p>
+          <FormuleExemple f={c.f} />
+          <div class="fil-actions">
+            <button type="button" class="btn btn-secondary fil-copier" onClick={() => { ouverte(c); copyText(c.f.texte, "Formule copiée."); }}><Icon name="content_copy" size={18} />Copier</button>
+            <a class="link-strong" href={`#/outils?vue=formules&groupe=${cat.id}`} onClick={() => ouverte(c)}>Autres formules</a>
+          </div>
+        </div>
+      );
+    }
+    case "placer": {
+      const cat = categorie(c.f.cat)!;
+      return <Choix c={c} etiquette="Où va cette phrase ?" icone="edit" avant={<p class="fil-phrase"><Texte text={c.f.exemple} /></p>} question="Dans une copie, cette phrase est…"
+        choix={c.choix.map(id => categorie(id)?.nom ?? id)} bonne={c.bonne}
+        apres={() => <>C'est {un(cat.nom)} : {cat.place.charAt(0).toLowerCase() + cat.place.slice(1)}. <a href={`#/outils?vue=formules&groupe=${cat.id}`} onClick={() => ouverte(c)}>Voir les formules</a></>}
+        repondu={juste => repondreEclair(juste)} />;
+    }
     case "devine": return <Choix c={c} etiquette="Devine l'œuvre" icone="quiz"
       avant={<ul class="fil-indices">{c.indices.map(x => <li key={x}>{x.charAt(0).toUpperCase() + x.slice(1)}</li>)}</ul>}
       question="Quelle est cette œuvre ?" choix={c.choix.map(w => `« ${w.titre} »`)} bonne={c.choix.indexOf(c.w)}

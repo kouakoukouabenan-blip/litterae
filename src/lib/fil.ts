@@ -1,4 +1,3 @@
-import outils from "../data/outils.json";
 import { FONCTIONS, type Fonction, type Oeuvre, type QuestionQuiz } from "../data/types";
 import { OEUVRES, oeuvre } from "./data";
 import { contenuLibre } from "./libre";
@@ -13,6 +12,7 @@ import { jourLocal } from "./progres";
 import { graine, melanger, questionOeuvre } from "./revisions";
 import { read, write } from "./storage";
 import { sansEtoiles } from "./text";
+import { CATEGORIES, categorie, formules as toutesLesFormules, type Formule } from "./formules";
 import { ARGUMENTS, PAR_FONCTION } from "./arguments";
 import { decouvertes, prochaineAction, suggestions, type Suggestion } from "./suggestions";
 import {
@@ -21,7 +21,7 @@ import {
 
 /**
  * Fil « Pour toi » : les suggestions personnelles, mêlées à des cartes à jouer tout de suite
- * (question éclair, citation à classer, mot de sujet), à lire (œuvre en 30 secondes, formule)
+ * (question éclair, citation à classer, mot de sujet, où va cette phrase), à lire (œuvre en 30 secondes, formule)
  * et à collectionner (auteurs, badges, surprises). Calculé sur le téléphone, différent chaque jour,
  * et fini : une fois tout vu, l'élève revient le lendemain.
  */
@@ -30,7 +30,8 @@ export type CarteFil = { cle: string; type: string } & (
   | { t: "question"; w: Oeuvre; q: QuestionQuiz }
   | { t: "citation"; num: string; citation: string; auteur: string; bonne: Fonction; choix: Fonction[] }
   | { t: "oeuvre"; w: Oeuvre; extrait: string | null; ouvrable: boolean }
-  | { t: "formule"; groupe: string; label: string; texte: string }
+  | { t: "formule"; f: Formule }
+  | { t: "placer"; f: Formule; choix: string[]; bonne: number }
   | { t: "mot"; mot: string; nature: string; bonne: Fonction; choix: Fonction[] }
   | { t: "badge"; badge: Badge; gagne: boolean }
   | { t: "auteur"; nom: string }
@@ -141,10 +142,30 @@ function extraitDe(resume: string) {
   return fin > 120 ? t.slice(0, fin + 1) : t.slice(0, 250).trimEnd() + "…";
 }
 
-type Groupe = { title: string; items: { label: string; text: string }[] };
 function formules(g: number, n: number): CarteFil[] {
-  const toutes = (outils.formules as Groupe[]).flatMap(gr => gr.items.map(it => ({ groupe: gr.title, label: it.label, texte: it.text.replace(/<[^>]+>/g, "") })));
-  return melanger(toutes, g).slice(0, n).map(f => ({ cle: `formule-${graine(f.texte)}`, type: "formule", t: "formule", ...f }));
+  // Une formule de chaque moment du devoir avant d'en revoir un : généralité, transition, ouverture…
+  const parCat = CATEGORIES.map((c, i) => melanger(toutesLesFormules().filter(f => f.cat === c.id), g + i));
+  const tour = melanger(parCat.filter(l => l.length), g).map(l => l[0]);
+  return tour.slice(0, n).map(f => ({ cle: `formule-${f.id}`, type: "formule", t: "formule", f }));
+}
+
+/** « Où va cette phrase ? » : un exemple rédigé, et trois moments du devoir au choix. */
+function placer(g: number, n: number): CarteFil[] {
+  const liste = melanger(toutesLesFormules().filter(f => categorie(f.cat)?.partie !== "partout"), g + 41);
+  const out: CarteFil[] = [];
+  for (const [i, f] of liste.entries()) {
+    if (out.length >= n) break;
+    if (out.some(c => c.t === "placer" && c.f.cat === f.cat)) continue;
+    const c = categorie(f.cat)!;
+    // Un leurre de la même partie et un d'une autre : généralité ou ouverture ? transition ou bilan ?
+    const autres = CATEGORIES.filter(x => x.id !== c.id && x.partie !== "partout");
+    const meme = melanger(autres.filter(x => x.partie === c.partie), g + i)[0];
+    const loin = melanger(autres.filter(x => x.partie !== c.partie), g + i + 1)[0];
+    const leurres = [meme, loin].filter(Boolean).map(x => x!.id);
+    const choix = melanger([c.id, ...leurres], g + i + 2);
+    out.push({ cle: `placer-${f.id}`, type: "placer", t: "placer", f, choix, bonne: choix.indexOf(c.id) });
+  }
+  return out;
 }
 
 function mots(g: number, n: number): CarteFil[] {
@@ -316,7 +337,7 @@ export function filDuJour(maintenant = Date.now()): CarteFil[] {
   // Les cartes à jouer et à lire s'intercalent entre les suggestions, sans deux du même genre à la suite.
   const files = [
     questions(g, 4), theses(g + 17, 3), citations(g + 3, 3), devinettes(g + 19, 3), oeuvres30(g + 5, 3), vraisFaux(g + 23, 4),
-    mots(g + 7, 3), plans(g + 29, 2), voyages(g + 31, 3), formules(g + 11, 2), extras
+    mots(g + 7, 3), plans(g + 29, 2), voyages(g + 31, 3), formules(g + 11, 2), placer(g + 37, 2), extras
   ];
   const jeux: CarteFil[] = [];
   for (let i = 0; files.some(f => f.length); i++) {

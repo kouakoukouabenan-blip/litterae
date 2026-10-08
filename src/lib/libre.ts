@@ -33,6 +33,8 @@ export interface ContenuLibre {
   entrainement?: { id: string; citation: string; auteur: string; consigne: string; cree: number; themes?: string[]; fonctions?: Fonction[] }[];
   /** Recherches sans résultat reliées par l'éditeur : recherche (normalisée) → ce qu'il faut chercher à la place. */
   renvois?: { oeuvres: Record<string, string>; dico: Record<string, string> };
+  /** Formules pour la copie modifiées, ajoutées (ids « ajout-… ») ou retirées (null) depuis le tableau de bord. */
+  formules?: Record<string, { id: string; cat: string; nom: string; texte: string; exemple: string; conseil?: string } | null>;
 }
 
 const CLE = "contenu-libre";

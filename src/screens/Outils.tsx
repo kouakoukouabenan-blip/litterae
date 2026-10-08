@@ -8,6 +8,8 @@ import { href, replaceRoute, useRoute } from "../lib/router";
 import { CoursOnglets } from "../components/SujetsOnglets";
 import { DicoRecherche, DicoResultats } from "./Dictionnaire";
 import { useGlisser } from "../lib/glisser";
+import { CATEGORIES, PARTIES, categorie, formulesDe } from "../lib/formules";
+import { Etapes, FormuleExemple, FormuleTexte } from "../components/Formule";
 
 const O = outils as Outils;
 /** Trois rubriques seulement, toutes visibles sur un téléphone sans défiler de côté. */
@@ -16,26 +18,19 @@ const RUBRIQUES = [
   { id: "formules", label: "Formules" },
   { id: "vocabulaire", label: "Vocabulaire" }
 ];
-/** Les groupes de formules, choisis dans une liste déroulante sous les onglets. */
-const COURTS = ["Généralité", "Introduction", "Transition", "Jugement", "Conclusion", "Expressions"];
-const slug = (t: string) => t.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
-const GROUPES = O.formules.map((g, i) => ({ id: slug(COURTS[i] ?? g.title), label: COURTS[i] ?? g.title, g }));
-
-/** Les modèles contiennent des passages à adapter, balisés <em>[thème]</em> dans les données. */
-function Modele({ text }: { text: string }) {
-  const parts = text.split(/<em>(.*?)<\/em>/);
-  return <>{parts.map((p, i) => (i % 2 ? <span key={i} class="slot">{p}</span> : <Fragment key={i}>{p}</Fragment>))}</>;
-}
-const plain = (text: string) => text.replace(/<\/?em>/g, "");
+/** Anciennes adresses des groupes de formules (liens des leçons, de l'atelier, des messages déjà publiés). */
+const ANCIENS: Record<string, string> = { introduction: "entree", conclusion: "bilan", expressions: "style" };
+const idGroupe = (id: string | null) => id ? (ANCIENS[id] ?? id) : null;
 
 export function OutilsScreen() {
   const { params } = useRoute();
   // Anciennes adresses (?vue=introduction, ?vue=connecteurs…) : on retombe sur la bonne rubrique.
   const brut = params.get("vue") ?? "dictionnaire";
-  const ancienGroupe = GROUPES.find(g => g.id === brut);
+  const ancienGroupe = categorie(idGroupe(brut) ?? "");
   const vue = ancienGroupe ? "formules" : brut === "connecteurs" || brut === "orientations" ? "vocabulaire"
     : RUBRIQUES.some(r => r.id === brut) ? brut : "dictionnaire";
-  const groupe = GROUPES.find(g => g.id === (params.get("groupe") ?? ancienGroupe?.id)) ?? GROUPES[0];
+  const groupe = categorie(idGroupe(params.get("groupe")) ?? ancienGroupe?.id ?? "") ?? CATEGORIES[0];
+  const allerGroupe = (id: string) => { aller({ vue: "formules", groupe: id }); scrollTo(0, 0); };
   const q = params.get("q") ?? "";
   const fonction = params.get("fonction");
 
@@ -69,9 +64,12 @@ export function OutilsScreen() {
         {vue === "formules" && (
           <label class="outils-choix">
             <span class="sr-only">Moment du devoir</span>
-            <select class="select outils-select" value={groupe.id}
-              onChange={e => { aller({ vue: "formules", groupe: (e.target as HTMLSelectElement).value }); scrollTo(0, 0); }}>
-              {GROUPES.map(g => <option key={g.id} value={g.id}>{g.label}</option>)}
+            <select class="select outils-select" value={groupe.id} onChange={e => allerGroupe((e.target as HTMLSelectElement).value)}>
+              {PARTIES.map(p => (
+                <optgroup key={p.id} label={p.nom}>
+                  {CATEGORIES.filter(c => c.partie === p.id).map(c => <option key={c.id} value={c.id}>{c.nom}</option>)}
+                </optgroup>
+              ))}
             </select>
           </label>
         )}
@@ -81,17 +79,19 @@ export function OutilsScreen() {
 
       {vue === "formules" && (
         <div class="reading reading-left" role="tabpanel">
-          <p class="small muted outils-intro">{groupe.g.desc}</p>
+          <Etapes cat={groupe.id} aller={allerGroupe} />
+          <p class="small outils-intro"><strong>{groupe.place}.</strong> <span class="muted">{groupe.role}</span></p>
           <ul class="formulas">
-            {groupe.g.items.map(it => (
-              <li key={it.label} class="formula">
+            {formulesDe(groupe.id).map(f => (
+              <li key={f.id} class="formula">
                 <div class="formula-head">
-                  <h3 class="formula-label">{it.label}</h3>
-                  <button type="button" class="icon-btn" onClick={() => copyText(plain(it.text), "Formule copiée.")} aria-label={`Copier : ${it.label}`}>
+                  <h3 class="formula-label">{f.nom}</h3>
+                  <button type="button" class="icon-btn" onClick={() => copyText(f.texte, "Formule copiée.")} aria-label={`Copier : ${f.nom}`}>
                     <Icon name="content_copy" size={20} />
                   </button>
                 </div>
-                <p><Modele text={it.text} /></p>
+                <p><FormuleTexte texte={f.texte} /></p>
+                <FormuleExemple f={f} />
               </li>
             ))}
           </ul>
