@@ -654,18 +654,10 @@
 @media (prefers-reduced-motion: reduce) { .fil-voile { display: none; } }
 
 /* Formules pour la copie : le moment du devoir et sa place, dans la boîte à outils et le fil */
-.formule-etapes { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; font-size: var(--text-xs); color: var(--muted); }
-.formule-partie { color: var(--ink-strong); }
-.formule-etapes ol { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 4px 2px; align-items: center; }
-.formule-etapes li { display: flex; align-items: center; }
-.formule-etapes li + li::before { content: "›"; margin: 0 4px; color: var(--line-strong); }
-.formule-etapes span, .formule-etapes button { display: inline-block; padding: 2px 8px; border-radius: 999px; font: inherit; color: inherit; background: none; border: 0; }
-.formule-etapes button { cursor: pointer; text-decoration: underline; text-decoration-color: var(--line-strong); text-underline-offset: 3px; min-height: 32px; }
-.formule-etapes [aria-current] span { font-weight: 700; }
-.partie-introduction [aria-current] span { background: var(--green-tint); color: var(--green); }
-.partie-developpement [aria-current] span { background: var(--orange-pale); color: var(--orange-text); }
-.partie-conclusion [aria-current] span { background: var(--ochre-pale); color: var(--ochre-text); }
-.partie-partout [aria-current] span { background: var(--soft); color: var(--ink-strong); }
+.formule-partie { align-self: flex-start; width: fit-content; margin: 0 0 var(--s2); padding: 2px 10px; border-radius: 999px; font-size: var(--text-xs); font-weight: 700; }
+.partie-introduction { background: var(--green-tint); color: var(--green); }
+.partie-developpement { background: var(--orange-pale); color: var(--orange-text); }
+.partie-conclusion { background: var(--ochre-pale); color: var(--ochre-text); }
 .formule-detail { margin-top: var(--s2); font-size: var(--text-sm); }
 .formule-detail summary { cursor: pointer; color: var(--green); font-weight: 600; min-height: 32px; display: flex; align-items: center; }
 .formule-detail p { margin: var(--s2) 0 0; line-height: 1.5; }

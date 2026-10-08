@@ -9,7 +9,7 @@ import { CoursOnglets } from "../components/SujetsOnglets";
 import { DicoRecherche, DicoResultats } from "./Dictionnaire";
 import { useGlisser } from "../lib/glisser";
 import { CATEGORIES, PARTIES, categorie, formulesDe } from "../lib/formules";
-import { Etapes, FormuleExemple, FormuleTexte } from "../components/Formule";
+import { Partie, FormuleExemple, FormuleTexte } from "../components/Formule";
 
 const O = outils as Outils;
 /** Trois rubriques seulement, toutes visibles sur un téléphone sans défiler de côté. */
@@ -79,7 +79,7 @@ export function OutilsScreen() {
 
       {vue === "formules" && (
         <div class="reading reading-left" role="tabpanel">
-          <Etapes cat={groupe.id} aller={allerGroupe} />
+          <Partie cat={groupe.id} />
           <p class="small outils-intro"><strong>{groupe.place}.</strong> <span class="muted">{groupe.role}</span></p>
           <ul class="formulas">
             {formulesDe(groupe.id).map(f => (

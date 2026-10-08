@@ -22,8 +22,6 @@ export const SUJET_EXEMPLES = base.sujet;
 
 export const categorie = (id: string) => CATEGORIES.find(c => c.id === id);
 export const nomPartie = (p: Partie) => PARTIES.find(x => x.id === p)?.nom ?? "";
-/** Les moments d'une même partie, dans l'ordre de la copie. */
-export const etapesDe = (p: Partie) => CATEGORIES.filter(c => c.partie === p);
 
 /** Formules du livre, avec les changements de l'éditeur (null : formule retirée). */
 export function formules(): Formule[] {

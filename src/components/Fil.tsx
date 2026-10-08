@@ -12,7 +12,7 @@ import { proposerNotifs } from "./DemandeNotifs";
 import { marquer } from "../lib/progres";
 import { ajouterCarte, cleOeuvre } from "../lib/revisions";
 import { categorie } from "../lib/formules";
-import { Etapes, FormuleExemple, FormuleTexte } from "./Formule";
+import { Partie, FormuleExemple, FormuleTexte } from "./Formule";
 import { badgeVu, carteAuteur, ouvrirSurprise, repondreEclair, type Surprise } from "../lib/collection";
 
 const PREMIERES = 3;
@@ -200,7 +200,7 @@ function Carte({ c }: { c: CarteFil }) {
       return (
         <div class="fil-carte">
           <p class="fil-etiquette"><Icon name="edit" size={16} />Pour ta copie · {cat.nom}</p>
-          <Etapes cat={cat.id} />
+          <Partie cat={cat.id} />
           <p class="fil-texte fil-formule"><FormuleTexte texte={c.f.texte} /></p>
           <p class="fil-place">{cat.place}. {cat.role}</p>
           <FormuleExemple f={c.f} />
