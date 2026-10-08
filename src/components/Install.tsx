@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "preact/hooks";
-import { aDecouvert, dejaInstallee, navigateurIos, platform, useInstall } from "../lib/install";
-import { useRoute } from "../lib/router";
+import { dejaInstallee, navigateurIos, platform, useInstall } from "../lib/install";
+import { write } from "../lib/storage";
 import { Icon } from "./Icon";
 
 let openGuide = () => {};
@@ -134,8 +134,9 @@ export function InstallButton() {
 const PASSE = "litterae.navigateur";
 
 /**
- * Écran d'installation plein écran sur téléphone, à chaque visite dans le navigateur.
- * Un lien discret permet de continuer quand même (iPhone hors Safari, visite rapide).
+ * Écran d'installation plein écran sur téléphone, dès la première ouverture dans le navigateur.
+ * Si l'app est déjà installée, il invite à l'ouvrir depuis l'écran d'accueil.
+ * Un lien discret permet de continuer quand même (une fois par visite).
  */
 export function InstallGate() {
   const { installed, canPrompt, prompt } = useInstall();
@@ -143,10 +144,8 @@ export function InstallGate() {
   const [etapes, setEtapes] = useState(false);
   const [dejaLa, setDejaLa] = useState(false);
   useEffect(() => { if (!installed && platform() !== "desktop") dejaInstallee().then(setDejaLa); }, [installed]);
-  // Revenu d'une première leçon, fiche ou sujet : l'élève a vu ce que contient l'app avant qu'on lui propose de l'installer.
-  const surUneListe = useRoute().path.length < 2;
   if (installed || passe || platform() === "desktop") return null;
-  if (!dejaLa && !(aDecouvert() && surUneListe)) return null;
+  const ios = platform() === "ios";
 
   const continuer = () => {
     try { sessionStorage.setItem(PASSE, "1"); } catch { /* sans stockage, l'écran reviendra au prochain chargement */ }
@@ -158,9 +157,15 @@ export function InstallGate() {
     <div class="install-gate" role="dialog" aria-modal="true" aria-labelledby="gate-title">
       <div class="install-gate-inner">
         <svg class="install-gate-logo" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="12" fill="#FFF3DC"/><path fill="#0F3D2E" d="M18 14h14v3h-4v28h9.5l3-8H44l-1.5 13H18v-3h4V17h-4z"/><circle cx="50" cy="47.5" r="3.5" fill="#C4562B"/></svg>
-        <h1 id="gate-title" class="install-gate-title">Litter<span>ae</span> est déjà installée</h1>
-        <p class="install-gate-texte">Ferme le navigateur et ouvre Litterae depuis l'icône sur ton écran d'accueil.</p>
-        <button type="button" class="install-gate-skip" onClick={continuer}>Continuer dans le navigateur</button>
+        <h1 id="gate-title" class="install-gate-title">Litter<span>ae</span> est déjà sur ton téléphone</h1>
+        <p class="install-gate-texte">{ios
+          ? <>Ferme Safari et touche l'icône <strong>Litterae</strong> sur ton écran d'accueil. Tu y retrouves tout, même sans connexion.</>
+          : <>Ferme le navigateur et touche l'icône <strong>Litterae</strong> sur ton écran d'accueil ou dans tes applis. Tu y retrouves tout, même sans connexion.</>}</p>
+        <div class="install-gate-liens">
+          {/* Sur iPhone, seul l'élève sait si l'icône est encore là. */}
+          {ios && <button type="button" class="install-gate-skip" onClick={() => { write("installee", false); setDejaLa(false); }}>Je ne trouve plus l'icône</button>}
+          <button type="button" class="install-gate-skip" onClick={continuer}>Continuer dans le navigateur</button>
+        </div>
       </div>
     </div>
   );
@@ -171,19 +176,28 @@ export function InstallGate() {
       <div class="install-gate-inner">
         <svg class="install-gate-logo" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="12" fill="#FFF3DC"/><path fill="#0F3D2E" d="M18 14h14v3h-4v28h9.5l3-8H44l-1.5 13H18v-3h4V17h-4z"/><circle cx="50" cy="47.5" r="3.5" fill="#C4562B"/></svg>
         <h1 id="gate-title" class="install-gate-title">Installe Litter<span>ae</span> sur ton téléphone</h1>
-        <ul class="install-gate-points">
-          <li><Icon name="check" size={20} />Elle s'ouvre d'un geste, depuis ton écran d'accueil.</li>
-          <li><Icon name="check" size={20} />Le cours et tes fiches restent lisibles sans connexion.</li>
-          <li><Icon name="check" size={20} />Moins de 1 Mo, sans Play Store ni App Store.</li>
-        </ul>
-        {etapes || (!canPrompt && platform() === "ios") ? (
+        {/* Quand les étapes s'affichent, on garde l'écran court : elles passent avant les arguments. */}
+        {etapes || (!canPrompt && ios) ? (
+          <p class="install-gate-texte">Elle s'ouvre d'un geste et marche même sans connexion.</p>
+        ) : (
+          <ul class="install-gate-points">
+            <li><Icon name="check" size={20} />Elle s'ouvre d'un geste, depuis ton écran d'accueil.</li>
+            <li><Icon name="check" size={20} />Le cours et tes fiches restent lisibles sans connexion.</li>
+            <li><Icon name="check" size={20} />Moins de 1 Mo, sans Play Store ni App Store.</li>
+          </ul>
+        )}
+        {etapes || (!canPrompt && ios) ? (
           <div class="install-gate-steps"><Steps /></div>
         ) : (
           <button type="button" class="btn install-gate-btn" onClick={installer}>
             <Icon name="install_mobile" size={24} />Installer l'application
           </button>
         )}
-        <button type="button" class="install-gate-skip" onClick={continuer}>Continuer dans le navigateur</button>
+        {/* L'iPhone ne dit pas au navigateur que l'app est installée : l'élève nous le dit une fois. */}
+        <div class="install-gate-liens">
+          {ios && <button type="button" class="install-gate-skip" onClick={() => { write("installee", true); setDejaLa(true); }}>Je l'ai déjà installée</button>}
+          <button type="button" class="install-gate-skip" onClick={continuer}>Continuer dans le navigateur</button>
+        </div>
       </div>
     </div>
   );

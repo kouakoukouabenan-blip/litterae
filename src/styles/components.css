@@ -316,6 +316,7 @@
 .install-gate-btn { width: 100%; min-height: 60px; gap: var(--s2); font-size: 1.125rem; font-weight: 700; background: var(--ochre); color: var(--ink-strong); border: 0; border-radius: var(--radius); }
 .install-gate-btn:hover { background: #F5B55F; }
 .install-gate-steps { width: 100%; padding: var(--s4); background: var(--paper); color: var(--ink); border-radius: var(--radius); text-align: left; }
+.install-gate-liens { display: flex; flex-direction: column; align-items: center; }
 .install-gate-skip { margin-top: var(--s2); padding: var(--s2); border: 0; background: none; color: var(--on-dark-muted); font: inherit; font-size: var(--text-xs); text-decoration: underline; text-underline-offset: 2px; cursor: pointer; }
 
 /* Démonstration « Voir comment payer » */
