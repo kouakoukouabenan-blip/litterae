@@ -23,6 +23,7 @@ import { InstallGate, InstallGuide } from "./components/Install";
 import { DemandeNotifs } from "./components/DemandeNotifs";
 import { DemandeAchat } from "./components/DemandeAchat";
 import { Bienvenue } from "./components/Bienvenue";
+import { AvantPayer, preparerAvantPaiement } from "./components/AvantPayer";
 import { CommentPayer } from "./components/CommentPayer";
 import { AccesScreen } from "./screens/Acces";
 import { ContactScreen } from "./screens/Contact";
@@ -64,6 +65,7 @@ export function App() {
     // Sinon, vérification quotidienne de la clé.
     synchroniser().then(change => { if (!change) reverifier(); });
     prevenirAchatHorsLigne();
+    preparerAvantPaiement();
     demarrerStats();
     // Réponses de l'auteur aux questions (accès complet) et nouveautés : au démarrage et au retour dans l'appli.
     actualiserQuestions();
@@ -128,6 +130,7 @@ export function App() {
       <DemandeNotifs />
       <DemandeAchat />
       <Bienvenue />
+      <AvantPayer />
       <PanneauMessages />
       <CommentPayer />
       <InstallGate />

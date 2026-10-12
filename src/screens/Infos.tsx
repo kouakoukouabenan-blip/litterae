@@ -95,7 +95,7 @@ export function CguScreen() {
       <h2 class="section-title">5. Accès complet</h2>
       <p>L'accès complet coûte {PRICE} (francs CFA), payés une seule fois. Il ouvre l'ensemble des sujets corrigés et des fiches d'œuvres, y compris ceux ajoutés par la suite, pour la durée de vie du service.</p>
       <p>L'accès complet permet aussi de poser des questions à l'auteur depuis la page Contact et de recevoir la réponse dans l'application. L'auteur répond dès qu'il le peut, sans délai garanti ; il ne rédige pas les devoirs à la place des élèves et peut ne pas répondre à un message irrespectueux ou hors sujet.</p>
-      <p>Le paiement se fait par Mobile Money (Wave, MTN MoMo, Moov Money…) via la plateforme Chariow, qui traite la transaction. Litterae ne voit ni ne conserve tes codes de paiement. <AchatLien label="Page d'achat sur Chariow" /></p>
+      <p>Le paiement se fait par Mobile Money (Wave, Orange Money, MTN MoMo, Moov Money) via la plateforme Chariow, qui traite la transaction. Litterae ne voit ni ne conserve tes codes de paiement. <AchatLien label="Page d'achat sur Chariow" /></p>
       <p>Après le paiement, Chariow t'envoie par e-mail une clé d'accès personnelle. Elle s'active sur 2 appareils au maximum. Une clé partagée publiquement ou utilisée frauduleusement peut être désactivée.</p>
       <p>Le contenu étant numérique et disponible immédiatement, il n'y a pas de remboursement une fois l'accès activé, sauf si l'accès ne fonctionne pas et que le problème ne peut pas être résolu : écris alors à l'adresse de contact.</p>
 

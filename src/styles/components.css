@@ -451,3 +451,4 @@
 .demande-achat-prix { font-size: 1.125rem; color: var(--ink-strong); }
 .demande-achat-urgent { color: var(--orange-text, var(--orange)); font-weight: 600; }
 .demande-achat .demo-lien { margin-top: var(--s1); }
+.avant-payer-parents { align-self: stretch; display: inline-flex; align-items: center; justify-content: center; gap: var(--s2); }

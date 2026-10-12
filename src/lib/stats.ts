@@ -95,7 +95,7 @@ export function demarrerStats() {
   // Tout lien vers la page d'achat Chariow, où qu'il soit.
   document.addEventListener("click", e => {
     const a = (e.target as Element).closest?.("a[href]") as HTMLAnchorElement | null;
-    if (a && ACHAT_URL && a.href.startsWith(ACHAT_URL)) { noter({ t: "achat", ref: endroit() }); envoyer(); }
+    if (a && ACHAT_URL && a.href.startsWith(ACHAT_URL) && a.dataset.direct == null) { noter({ t: "achat", ref: endroit() }); envoyer(); }
   });
   setTimeout(envoyer, 3000);
   document.addEventListener("visibilitychange", () => { if (document.visibilityState === "hidden") envoyer(); });
