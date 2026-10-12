@@ -16,7 +16,18 @@ interface Licence {
 const KEY = "licence";
 const REVERIFIER_APRES = 864e5;
 
-export const licence = () => read<Licence | null>(KEY, null);
+// Gardée en mémoire : le contenu payant pèse plus d'un mégaoctet, et le relire à chaque appel
+// (des centaines de fois en ouvrant l'accueil) bloquait les téléphones modestes plusieurs secondes.
+let enMemoire: { l: Licence | null } | null = null;
+export const licence = () => (enMemoire ??= { l: read<Licence | null>(KEY, null) }).l;
+
+function enregistrer(l: Licence | null) {
+  enMemoire = null;
+  write(KEY, l);
+}
+
+// Clé ajoutée ou retirée depuis un autre onglet : on relira la valeur enregistrée.
+window.addEventListener("storage", e => { if (e.key === null || e.key.endsWith(KEY)) enMemoire = null; });
 
 /** Identifiant anonyme de l'appareil, pour que Chariow compte les appareils d'une clé. */
 export function appareil() {
@@ -51,12 +62,12 @@ export async function activer(cle: string): Promise<ErreurActivation | null> {
   const data = await res.json().catch(() => null);
   if (!res.ok || !data?.contenu) return { message: data?.message ?? "La clé n'a pas pu être validée. Réessaie dans quelques minutes." };
   // Le serveur renvoie la clé exacte (tiret invisible retiré, O remplacé par 0…) : c'est elle qu'on garde.
-  write(KEY, { cle: typeof data.cle === "string" ? data.cle : cle.trim().toUpperCase(), contenu: data.contenu, verifieeLe: Date.now() } satisfies Licence);
+  enregistrer({ cle: typeof data.cle === "string" ? data.cle : cle.trim().toUpperCase(), contenu: data.contenu, verifieeLe: Date.now() } satisfies Licence);
   return null;
 }
 
 export function retirer() {
-  write(KEY, null);
+  enregistrer(null);
   write("mes-questions", []);
 }
 
@@ -79,7 +90,7 @@ export async function reverifier() {
     const res = await appel("/verifier", { cle: l.cle, appareil: appareil() });
     if (res.ok) {
       const data = await res.json().catch(() => null);
-      write(KEY, { ...l, verifieeLe: Date.now() });
+      enregistrer({ ...l, verifieeLe: Date.now() });
       if (typeof data?.version === "number" && data.version !== l.contenu.version) await activer(l.cle); // pris en compte à la prochaine ouverture
     }
     else if (res.status === 403 || res.status === 404) {
