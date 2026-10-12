@@ -47,6 +47,7 @@ export function AccesScreen({ params }: { params: URLSearchParams }) {
             Tout est ouvert sur cet appareil, même hors connexion.
           </PageHeader>
           <dl class="def">
+            {actuelle.titulaire && <><dt>Au nom de</dt><dd>{actuelle.titulaire.nom}</dd></>}
             <dt>Clé</dt><dd class="mono">{actuelle.cle.replace(/.(?=.{4})/g, "•")}</dd>
           </dl>
           <details class="repli acces-note">

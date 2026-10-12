@@ -6,7 +6,7 @@ import { oeuvre } from "../lib/data";
 import { useNotes, useSaved } from "../lib/carnet";
 import type { Oeuvre } from "../data/types";
 import { Icon } from "../components/Icon";
-import { licence } from "../lib/licence";
+import { licence, titulaire } from "../lib/licence";
 import { AchatLien } from "../components/Achat";
 import { PRICE, useAccess } from "../lib/access";
 import { useQuestions } from "../lib/contact";
@@ -67,13 +67,13 @@ function LigneCollection() {
 export function CarnetScreen() {
   return (
     <Page>
-      <PageHeader title="Mon espace" compact />
+      <PageHeader title={titulaire() ? `Bonjour ${titulaire()!.prenom}` : "Mon espace"} compact />
 
       <a class="row access-row" href="#/acces">
         <Icon name="lock" size={20} />
         <span class="row-body">
           <span class="row-title">{licence() ? "Accès complet actif" : "Accès complet"}</span>
-          <span class="meta">{licence() ? "Voir ma clé d'accès" : "Saisir ma clé ou acheter l'accès"}</span>
+          <span class="meta">{licence() ? (titulaire() ? `Au nom de ${titulaire()!.nom}` : "Voir ma clé d'accès") : "Saisir ma clé ou acheter l'accès"}</span>
         </span>
         <Icon name="chevron_right" />
       </a>

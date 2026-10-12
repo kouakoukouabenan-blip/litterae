@@ -11,7 +11,14 @@ interface Licence {
   cle: string;
   contenu: ContenuPayant;
   verifieeLe: number;
+  /** Nom de l'acheteur chez Chariow (null : Chariow ne le donne pas ; absent : pas encore demandé). */
+  titulaire?: Titulaire | null;
 }
+
+export interface Titulaire { prenom: string; nom: string }
+const lireTitulaire = (t: unknown): Titulaire | null =>
+  t && typeof t === "object" && typeof (t as Titulaire).nom === "string" && (t as Titulaire).nom
+    ? { prenom: String((t as Titulaire).prenom || (t as Titulaire).nom.split(" ")[0]), nom: (t as Titulaire).nom } : null;
 
 const KEY = "licence";
 const REVERIFIER_APRES = 864e5;
@@ -20,6 +27,9 @@ const REVERIFIER_APRES = 864e5;
 // (des centaines de fois en ouvrant l'accueil) bloquait les téléphones modestes plusieurs secondes.
 let enMemoire: { l: Licence | null } | null = null;
 export const licence = () => (enMemoire ??= { l: read<Licence | null>(KEY, null) }).l;
+
+/** Nom de l'élève qui a acheté la clé, pour l'accueillir par son prénom. */
+export const titulaire = () => licence()?.titulaire ?? null;
 
 function enregistrer(l: Licence | null) {
   enMemoire = null;
@@ -62,7 +72,7 @@ export async function activer(cle: string): Promise<ErreurActivation | null> {
   const data = await res.json().catch(() => null);
   if (!res.ok || !data?.contenu) return { message: data?.message ?? "La clé n'a pas pu être validée. Réessaie dans quelques minutes." };
   // Le serveur renvoie la clé exacte (tiret invisible retiré, O remplacé par 0…) : c'est elle qu'on garde.
-  enregistrer({ cle: typeof data.cle === "string" ? data.cle : cle.trim().toUpperCase(), contenu: data.contenu, verifieeLe: Date.now() } satisfies Licence);
+  enregistrer({ cle: typeof data.cle === "string" ? data.cle : cle.trim().toUpperCase(), contenu: data.contenu, verifieeLe: Date.now(), titulaire: lireTitulaire(data.titulaire) } satisfies Licence);
   return null;
 }
 
@@ -85,12 +95,13 @@ export async function rechargerContenu() {
  */
 export async function reverifier() {
   const l = licence();
-  if (!l || !navigator.onLine || Date.now() - l.verifieeLe < REVERIFIER_APRES) return;
+  // Clé activée avant que l'appli connaisse le nom de l'élève : on le demande tout de suite.
+  if (!l || !navigator.onLine || (Date.now() - l.verifieeLe < REVERIFIER_APRES && "titulaire" in l)) return;
   try {
     const res = await appel("/verifier", { cle: l.cle, appareil: appareil() });
     if (res.ok) {
       const data = await res.json().catch(() => null);
-      enregistrer({ ...l, verifieeLe: Date.now() });
+      enregistrer({ ...l, verifieeLe: Date.now(), titulaire: data && "titulaire" in data ? lireTitulaire(data.titulaire) : l.titulaire ?? null });
       if (typeof data?.version === "number" && data.version !== l.contenu.version) await activer(l.cle); // pris en compte à la prochaine ouverture
     }
     else if (res.status === 403 || res.status === 404) {

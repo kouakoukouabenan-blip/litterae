@@ -126,7 +126,7 @@ export function ConfidentialiteScreen() {
         <li>Les œuvres enregistrées et tes notes personnelles.</li>
         <li>Les leçons, fiches d'œuvres et mots du dictionnaire ouverts gratuitement.</li>
         <li>Ton choix concernant l'installation de l'application.</li>
-        <li>Si tu as acheté l'accès complet : ta clé d'accès, le contenu débloqué et un identifiant anonyme de l'appareil.</li>
+        <li>Si tu as acheté l'accès complet : ta clé d'accès, ton nom tel que tu l'as donné à Chariow (pour t'accueillir par ton prénom), le contenu débloqué et un identifiant anonyme de l'appareil.</li>
       </ul>
       <p>Ces informations sont stockées dans ton navigateur. Elles ne sont envoyées à personne, sauf les statistiques anonymes décrites plus bas. Si tu effaces les données du navigateur, elles sont supprimées.</p>
 
@@ -137,7 +137,7 @@ export function ConfidentialiteScreen() {
       <p>Quand le paiement de l'accès complet sera ouvert, la plateforme Chariow recueillera les informations nécessaires à la transaction : nom, adresse e-mail et numéro de téléphone. Elles servent uniquement à activer ton accès et à te contacter en cas de problème avec ton achat. Elles ne sont ni vendues ni utilisées pour de la publicité.</p>
 
       <h2 class="section-title">Vérification des clés</h2>
-      <p>Quand tu saisis ta clé, elle est envoyée avec l'identifiant anonyme de ton appareil à notre serveur (hébergé par Cloudflare), qui la vérifie auprès de Chariow. La clé est ensuite revérifiée environ une fois par semaine. Aucune autre information n'est transmise.</p>
+      <p>Quand tu saisis ta clé, elle est envoyée avec l'identifiant anonyme de ton appareil à notre serveur (hébergé par Cloudflare), qui la vérifie auprès de Chariow et renvoie le nom donné lors de l'achat, gardé seulement sur ton appareil. La clé est ensuite revérifiée environ une fois par semaine. Aucune autre information n'est transmise.</p>
 
       <h2 class="section-title">Statistiques anonymes</h2>
       <p>Pour savoir ce qui est utile aux élèves, Litterae envoie à notre serveur des chiffres anonymes : un identifiant tiré au hasard pour ton appareil, le type d'appareil (Android, iPhone ou ordinateur), si l'application est installée, l'heure d'arrivée, le pays et la ville approximatifs de la connexion (comptés seulement en totaux, sans être reliés à ton appareil), les parties, fiches d'œuvres, sujets, leçons et mots du dictionnaire ouverts, les mots tapés dans les recherches, les contenus réservés affichés et les touches sur « Acheter », le type de contenu partagé (leçon, fiche, sujet ou mot), le rang des fiches, leçons et mots gratuits ouverts sans clé (par exemple « 3e fiche gratuite »), les étapes de ton parcours (première fiche ouverte, 2 puis 6 fiches, sujet de l'atelier commencé, terminé ou envoyé, signalées une seule fois et comptées en totaux), et les messages de l'accueil vus ou touchés. Aucun nom, aucune adresse e-mail, aucun numéro n'est envoyé. Ces chiffres sont gardés au plus 13 mois. Le site utilise aussi Cloudflare Web Analytics, qui compte les visites sans cookie et sans suivre les visiteurs d'un site à l'autre.</p>
