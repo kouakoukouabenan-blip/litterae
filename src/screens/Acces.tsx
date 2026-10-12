@@ -7,6 +7,8 @@ import { PRICE, PRIX_AVANT } from "../lib/access";
 import { ACHAT_URL, lienAide, WHATSAPP } from "../lib/site";
 import { AchatLien } from "../components/Achat";
 import { CommentPayerBouton } from "../components/CommentPayer";
+import { BIENVENUE } from "../components/Bienvenue";
+import { write } from "../lib/storage";
 
 /** Saisie de la clé reçue par e-mail après l'achat, ou état de l'accès complet. */
 export function AccesScreen({ params }: { params: URLSearchParams }) {
@@ -34,6 +36,8 @@ export function AccesScreen({ params }: { params: URLSearchParams }) {
       setEtat("saisie");
     } else {
       setEtat("ok");
+      // Première activation sur cet appareil : un message résume tout ce qui vient de s'ouvrir.
+      if (!actuelle) write(BIENVENUE, true);
       // Recharge pour intégrer le contenu payant partout dans l'application.
       setTimeout(() => { location.hash = "#/accueil"; location.reload(); }, 1200);
     }

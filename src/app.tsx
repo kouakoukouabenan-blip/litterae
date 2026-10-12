@@ -22,6 +22,7 @@ import { AProposScreen, CguScreen, ConfidentialiteScreen } from "./screens/Infos
 import { InstallGate, InstallGuide } from "./components/Install";
 import { DemandeNotifs } from "./components/DemandeNotifs";
 import { DemandeAchat } from "./components/DemandeAchat";
+import { Bienvenue } from "./components/Bienvenue";
 import { CommentPayer } from "./components/CommentPayer";
 import { AccesScreen } from "./screens/Acces";
 import { ContactScreen } from "./screens/Contact";
@@ -126,6 +127,7 @@ export function App() {
       <InstallGuide />
       <DemandeNotifs />
       <DemandeAchat />
+      <Bienvenue />
       <PanneauMessages />
       <CommentPayer />
       <InstallGate />
