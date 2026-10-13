@@ -14,6 +14,7 @@ function ouverte(s: Suggestion) {
   if (s.type) noter({ t: "suggestion", ref: `clic:${s.type}` });
 }
 import { prochaineAction } from "../lib/suggestions";
+import { marquerLue, ouvrirMessages, useAnnonces, type Annonce } from "../lib/annonces";
 import { Fil } from "./Fil";
 import { Icon } from "./Icon";
 import { Flamme } from "./Flamme";
@@ -42,8 +43,38 @@ export function Suggestions() {
   );
 }
 
-/** « Ta prochaine action » : un seul gros bouton en tête de l'accueil, la chose la plus utile à faire maintenant. */
+const ICONES_MESSAGE = { promo: "cadeau", message: "notifications", astuce: "lightbulb" } as const;
+const NOMS_MESSAGE = { promo: "Promo", message: "Message", astuce: "Astuce" };
+
+/** Message de l'éditeur mis en tête de l'accueil : même carte que « Ta prochaine action », jusqu'à ce que l'élève le touche ou le ferme. */
+function MessageEnTete({ a, clic }: { a: Annonce; clic: (id: number) => void }) {
+  const lien = a.lien && /^(https:\/\/|#\/)/.test(a.lien) ? a.lien : null;
+  return (
+    <div class="prochaine-message">
+      <a class="prochaine" href={lien ?? "#/accueil"} {...(lien?.startsWith("http") ? { target: "_blank", rel: "noopener" } : {})}
+        onClick={e => { if (lien) { clic(a.id); marquerLue(a.id); } else { e.preventDefault(); ouvrirMessages(a.id); } }}>
+        {a.image ? <img class="prochaine-image" src={a.image} alt="" />
+          : <span class="prochaine-icone" aria-hidden="true"><Icon name={ICONES_MESSAGE[a.type] ?? "notifications"} size={22} /></span>}
+        <span class="prochaine-texte">
+          <span class="prochaine-etiquette">{NOMS_MESSAGE[a.type] ?? "Message"}</span>
+          <span class="prochaine-titre"><Texte text={a.titre} /></span>
+          {a.texte && <span class="prochaine-detail prochaine-court"><Texte text={a.texte} /></span>}
+          <span class="prochaine-suite">{lien ? a.lienTexte || "Voir" : "Lire le message"}<Icon name="arrow_forward" size={16} /></span>
+        </span>
+      </a>
+      <button type="button" class="prochaine-fermer" onClick={() => marquerLue(a.id)} aria-label="Fermer ce message"><Icon name="close" size={20} /></button>
+    </div>
+  );
+}
+
+/** En tête de l'accueil : le message mis en avant depuis le tableau de bord s'il y en a un, sinon « Ta prochaine action ». */
 export function ProchaineAction() {
+  const { aLaUne, clic } = useAnnonces();
+  return aLaUne ? <MessageEnTete a={aLaUne} clic={clic} /> : <ActionDuJour />;
+}
+
+/** « Ta prochaine action » : un seul gros bouton en tête de l'accueil, la chose la plus utile à faire maintenant. */
+function ActionDuJour() {
   const a = useMemo(() => prochaineAction(), []);
   const recompense = a.cle === "recompense";
   useEffect(() => { if (!recompense) montrees([a]); }, []);

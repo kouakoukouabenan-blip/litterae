@@ -14,6 +14,10 @@ export interface Annonce {
   date: number;
   /** Message urgent : affiché en premier, avec un signal qui clignote. */
   urgent?: boolean;
+  /** Mis en tête de l'accueil, à la place de « Ta prochaine action », tant que l'élève ne l'a pas lu ou fermé. */
+  accueil?: boolean;
+  /** Petite image carrée de ce message de tête (déjà réduite par le tableau de bord). */
+  image?: string | null;
 }
 
 const CACHE = "annonces";
@@ -66,6 +70,7 @@ export function useAnnonces() {
   return {
     annonces: tries,
     nonLues: tries.filter(a => !lues.has(a.id)),
+    aLaUne: tries.find(a => a.accueil && !lues.has(a.id)) ?? null,
     estLue: (id: number) => lues.has(id),
     ouvert,
     clic: (id: number) => noter({ t: "clic", ref: String(id) })

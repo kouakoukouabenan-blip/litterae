@@ -75,11 +75,13 @@ export function PanneauMessages() {
 
 /** Sur l'accueil : seulement le titre des messages non lus ; le toucher ouvre le message. */
 export function Annonces() {
-  const { nonLues } = useAnnonces();
-  if (!nonLues.length) return null;
+  const { nonLues, aLaUne } = useAnnonces();
+  // Le message déjà en tête de l'accueil n'est pas répété ici.
+  const liste = nonLues.filter(a => a !== aLaUne);
+  if (!liste.length) return null;
   return (
     <ul class="annonces-titres" aria-label="Nouveaux messages">
-      {nonLues.slice(0, 3).map(a => (
+      {liste.slice(0, 3).map(a => (
         <li key={a.id}>
           <button type="button" class={`annonce-ligne annonce-${a.type}${a.urgent ? " annonce-urgente" : ""}`} onClick={() => ouvrirMessages(a.id)}>
             <span class="annonce-type">{NOMS[a.type] ?? "Message"}</span>
