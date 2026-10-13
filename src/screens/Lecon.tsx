@@ -15,6 +15,7 @@ import { LigneContact } from "../components/LigneContact";
 import { noter } from "../lib/stats";
 import { noterVue } from "../lib/historique";
 import { synchroniser } from "../lib/synchro";
+import { licence } from "../lib/licence";
 
 function Bloc({ b }: { b: BlocLecon }) {
   if ("p" in b) return <p><Texte text={b.p} /></p>;
@@ -45,11 +46,13 @@ function Bloc({ b }: { b: BlocLecon }) {
  * Leçon publiée depuis le tableau de bord dont le texte n'est pas encore sur l'appareil :
  * il est demandé au serveur tout de suite, et la page se relance dès qu'il est arrivé.
  */
-function TexteEnRoute() {
+function TexteEnRoute({ id }: { id: string }) {
   const [etat, setEtat] = useState<"charge" | "echec">("charge");
   const essayer = () => {
     setEtat("charge");
-    synchroniser(true).then(ok => { if (ok) location.reload(); else setEtat("echec"); });
+    // Le texte peut être déjà arrivé sur l'appareil sans que la page ait été relancée
+    // (leçon modifiée dans le tableau de bord pendant la mise à jour) : on relance alors aussi.
+    synchroniser(true).then(ok => { if (ok || licence()?.contenu.lecons?.[id]?.length) location.reload(); else setEtat("echec"); });
   };
   useEffect(essayer, []);
   return etat === "charge" ? (
@@ -122,7 +125,7 @@ export function LeconScreen({ id }: { id: string }) {
         ) : !lisible ? (
           <LockPanel reason={`Tu as lu tes ${LECONS_GRATUITES} leçons gratuites.`} />
         ) : (
-          l.blocs.length ? <div class="prose">{l.blocs.map((b, k) => <Bloc key={k} b={b} />)}</div> : <TexteEnRoute key={l.id} />
+          l.blocs.length ? <div class="prose">{l.blocs.map((b, k) => <Bloc key={k} b={b} />)}</div> : <TexteEnRoute key={l.id} id={l.id} />
         )}
         <QuizLecon id={l.id} />
         {lisible && <LigneContact page={`#/cours/${l.id}`} objet={`la leçon « ${l.titre} »`} quoi="cette leçon" />}

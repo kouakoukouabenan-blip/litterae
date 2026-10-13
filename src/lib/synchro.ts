@@ -52,8 +52,9 @@ export function synchroniser(force = false): Promise<boolean> {
     if (change && !l) await Promise.all([rafraichirFiches(), rafraichirLecons(), rafraichirMots()]);
     if (l && enRetard(l.contenu) && (await rechargerContenu())) {
       // Rechargé mais toujours en retard (serveur pas encore à jour) : pas de relance en boucle.
+      // Un contenu plus récent que la liste (l'éditeur a encore enregistré entre les deux appels) mérite tout de même la relance.
       const n = licence();
-      if (n && !enRetard(n.contenu)) change = true;
+      if (n && (!enRetard(n.contenu) || n.contenu.revision !== l.contenu.revision)) change = true;
     }
     if (change) relancer(force);
     return change;
