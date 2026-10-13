@@ -46,17 +46,16 @@ export function Suggestions() {
 const ICONES_MESSAGE = { promo: "cadeau", message: "notifications", astuce: "lightbulb" } as const;
 const NOMS_MESSAGE = { promo: "Promo", message: "Message", astuce: "Astuce" };
 
-/** Message de l'éditeur mis en tête de l'accueil : même carte que « Ta prochaine action », jusqu'à ce que l'élève le touche ou le ferme. */
+/** Message de l'éditeur mis en tête de l'accueil : même carte que « Ta prochaine action », qui appelle l'œil (halo, icône qui sonne) jusqu'à ce que l'élève la touche ou la ferme. */
 function MessageEnTete({ a, clic }: { a: Annonce; clic: (id: number) => void }) {
   const lien = a.lien && /^(https:\/\/|#\/)/.test(a.lien) ? a.lien : null;
   return (
     <div class="prochaine-message">
       <a class="prochaine" href={lien ?? "#/accueil"} {...(lien?.startsWith("http") ? { target: "_blank", rel: "noopener" } : {})}
         onClick={e => { if (lien) { clic(a.id); marquerLue(a.id); } else { e.preventDefault(); ouvrirMessages(a.id); } }}>
-        {a.image ? <img class="prochaine-image" src={a.image} alt="" />
-          : <span class="prochaine-icone" aria-hidden="true"><Icon name={ICONES_MESSAGE[a.type] ?? "notifications"} size={22} /></span>}
+        <span class="prochaine-icone" aria-hidden="true"><Icon name={ICONES_MESSAGE[a.type] ?? "notifications"} size={22} /></span>
         <span class="prochaine-texte">
-          <span class="prochaine-etiquette">{NOMS_MESSAGE[a.type] ?? "Message"}</span>
+          <span class="prochaine-etiquette"><span class="prochaine-signal" aria-hidden="true" />{NOMS_MESSAGE[a.type] ?? "Message"}</span>
           <span class="prochaine-titre"><Texte text={a.titre} /></span>
           {a.texte && <span class="prochaine-detail prochaine-court"><Texte text={a.texte} /></span>}
           <span class="prochaine-suite">{lien ? a.lienTexte || "Voir" : "Lire le message"}<Icon name="arrow_forward" size={16} /></span>

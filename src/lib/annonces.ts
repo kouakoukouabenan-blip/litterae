@@ -16,8 +16,6 @@ export interface Annonce {
   urgent?: boolean;
   /** Mis en tête de l'accueil, à la place de « Ta prochaine action », tant que l'élève ne l'a pas lu ou fermé. */
   accueil?: boolean;
-  /** Petite image carrée de ce message de tête (déjà réduite par le tableau de bord). */
-  image?: string | null;
 }
 
 const CACHE = "annonces";
