@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "preact/hooks";
-import { dejaInstallee, navigateurIos, platform, useInstall } from "../lib/install";
+import { dejaInstallee, navigateurAndroid, navigateurIos, platform, useInstall } from "../lib/install";
 import { write } from "../lib/storage";
 import { Icon } from "./Icon";
 
@@ -11,7 +11,7 @@ export function useInstallAction() {
   return { ...install, start: async () => { if (!(await install.prompt())) openGuide(); } };
 }
 
-/** Bouton qui copie l'adresse la page, pour la coller dans Safari. */
+/** Bouton qui copie l'adresse de la page, pour la coller dans Safari ou Chrome. */
 function CopierAdresse() {
   const [copie, setCopie] = useState(false);
   const copier = async () => {
@@ -58,17 +58,49 @@ function StepsIos() {
   );
 }
 
+/** Marche à suivre sur Android, selon le navigateur où l'élève se trouve déjà. */
+function StepsAndroid() {
+  const nav = navigateurAndroid();
+  if (nav === "chrome")
+    return (
+      <>
+        <ol class="install-steps">
+          <li>Touche le menu <Icon name="more_vert" size={18} /> en haut à droite de Chrome.</li>
+          <li>Choisis <strong>Installer l'application</strong> ou <strong>Ajouter à l'écran d'accueil</strong>.</li>
+          <li>Confirme avec <strong>Installer</strong>. L'icône Litterae apparaît sur ton écran d'accueil.</li>
+        </ol>
+        <p class="small muted">Aucune de ces options dans le menu ? Litterae est peut-être déjà installée : cherche son icône dans tes applis.</p>
+      </>
+    );
+  if (nav === "samsung")
+    return (
+      <ol class="install-steps">
+        <li>Touche le menu <strong>≡</strong> en bas à droite.</li>
+        <li>Choisis <strong>Ajouter la page à</strong>, puis <strong>Écran d'accueil</strong>.</li>
+        <li>Confirme avec <strong>Ajouter</strong>. L'icône Litterae apparaît sur ton écran d'accueil.</li>
+      </ol>
+    );
+  return (
+    <>
+      <p class="install-note">{nav === "integre"
+        ? <>Cette fenêtre (Facebook, TikTok…) ne sait pas installer : passe d'abord par <strong>Chrome</strong>.</>
+        : <>Le plus simple pour installer, c'est <strong>Chrome</strong>.</>}</p>
+      <ol class="install-steps">
+        <li>{nav === "integre"
+          ? <>Touche <Icon name="more_vert" size={18} /> en haut à droite, puis <strong>Ouvrir dans Chrome</strong>. Sinon, copie l'adresse et colle-la dans Chrome.</>
+          : <>Copie l'adresse et colle-la dans <strong>Chrome</strong>.</>}</li>
+        <li>Dans Chrome, touche le menu <Icon name="more_vert" size={18} /> en haut à droite.</li>
+        <li>Choisis <strong>Installer l'application</strong> ou <strong>Ajouter à l'écran d'accueil</strong>, puis confirme.</li>
+      </ol>
+      <CopierAdresse />
+    </>
+  );
+}
+
 export function Steps() {
   const p = platform();
   if (p === "ios") return <StepsIos />;
-  if (p === "android")
-    return (
-      <ol class="install-steps">
-        <li>Ouvre cette page dans <strong>Chrome</strong>.</li>
-        <li>Touche le menu <Icon name="more_vert" size={18} /> en haut à droite.</li>
-        <li>Choisis <strong>Installer l'application</strong> ou <strong>Ajouter à l'écran d'accueil</strong>, puis confirme.</li>
-      </ol>
-    );
+  if (p === "android") return <StepsAndroid />;
   return (
     <ol class="install-steps">
       <li>Ouvre cette page dans <strong>Chrome</strong> ou <strong>Edge</strong>.</li>
@@ -143,6 +175,7 @@ export function InstallGate() {
   const [passe, setPasse] = useState(() => { try { return !!sessionStorage.getItem(PASSE); } catch { return false; } });
   const [etapes, setEtapes] = useState(false);
   const [dejaLa, setDejaLa] = useState(false);
+  const [attente, setAttente] = useState(false);
   useEffect(() => { if (!installed && platform() !== "desktop") dejaInstallee().then(setDejaLa); }, [installed]);
   if (installed || passe || platform() === "desktop") return null;
   const ios = platform() === "ios";
@@ -169,7 +202,14 @@ export function InstallGate() {
       </div>
     </div>
   );
-  const installer = async () => { if (!(await prompt())) setEtapes(true); };
+  const installer = async () => {
+    setAttente(true);
+    const ok = await prompt();
+    setAttente(false);
+    if (!ok) setEtapes(true);
+  };
+  // Les étapes ne s'affichent que si le navigateur ne propose pas (ou plus) sa fenêtre d'installation.
+  const montrerEtapes = !canPrompt && (etapes || ios);
 
   return (
     <div class="install-gate" role="dialog" aria-modal="true" aria-labelledby="gate-title">
@@ -177,7 +217,7 @@ export function InstallGate() {
         <svg class="install-gate-logo" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="12" fill="#FFF3DC"/><path fill="#0F3D2E" d="M18 14h14v3h-4v28h9.5l3-8H44l-1.5 13H18v-3h4V17h-4z"/><circle cx="50" cy="47.5" r="3.5" fill="#C4562B"/></svg>
         <h1 id="gate-title" class="install-gate-title">Installe Litter<span>ae</span> sur ton téléphone</h1>
         {/* Quand les étapes s'affichent, on garde l'écran court : elles passent avant les arguments. */}
-        {etapes || (!canPrompt && ios) ? (
+        {montrerEtapes ? (
           <p class="install-gate-texte">Elle s'ouvre d'un geste et marche même sans connexion.</p>
         ) : (
           <ul class="install-gate-points">
@@ -186,11 +226,11 @@ export function InstallGate() {
             <li><Icon name="check" size={20} />Moins de 1 Mo, sans Play Store ni App Store.</li>
           </ul>
         )}
-        {etapes || (!canPrompt && ios) ? (
+        {montrerEtapes ? (
           <div class="install-gate-steps"><Steps /></div>
         ) : (
-          <button type="button" class="btn install-gate-btn" onClick={installer}>
-            <Icon name="install_mobile" size={24} />Installer l'application
+          <button type="button" class="btn install-gate-btn" onClick={installer} disabled={attente}>
+            <Icon name="install_mobile" size={24} />{attente ? "Un instant…" : "Installer l'application"}
           </button>
         )}
         {/* L'iPhone ne dit pas au navigateur que l'app est installée : l'élève nous le dit une fois. */}

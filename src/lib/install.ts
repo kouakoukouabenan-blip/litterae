@@ -54,6 +54,36 @@ export function navigateurIos(): NavigateurIos {
   return "safari";
 }
 
+/**
+ * Sur Android, quatre cas :
+ * - « chrome » : Chrome lui-même (il propose l'installation, parfois quelques secondes après l'ouverture) ;
+ * - « samsung » : Samsung Internet (menu en bas de l'écran) ;
+ * - « integre » : la fenêtre intégrée de Facebook, Instagram, TikTok, Snapchat… qui ne sait pas installer ;
+ * - « autre » : Firefox, Opera, Edge, un navigateur de marque…
+ */
+export type NavigateurAndroid = "chrome" | "samsung" | "integre" | "autre";
+export function navigateurAndroid(): NavigateurAndroid {
+  const ua = navigator.userAgent;
+  if (/FBAN|FBAV|FB_IAB|Instagram|musical_ly|BytedanceWebview|TikTok|Snapchat|Twitter|LinkedInApp|Line\/|; wv\)/.test(ua)) return "integre";
+  if (/SamsungBrowser/.test(ua)) return "samsung";
+  if (/Chrome\/\d/.test(ua) && !/EdgA|OPR|Opera|YaBrowser|UCBrowser|Firefox|MiuiBrowser|HeyTapBrowser|Puffin|Silk/.test(ua)) return "chrome";
+  return "autre";
+}
+
+/**
+ * Chrome ne propose l'installation qu'une fois la page prête (souvent 1 à 3 secondes après l'ouverture).
+ * Si l'élève touche « Installer » trop tôt, on attend un peu l'invitation avant de montrer la marche à suivre.
+ */
+export function attendreInvite(ms: number): Promise<boolean> {
+  if (deferred) return Promise.resolve(true);
+  return new Promise(resolve => {
+    const fin = (ok: boolean) => { clearTimeout(t); listeners.delete(ecoute); resolve(ok); };
+    const ecoute = () => { if (deferred) fin(true); };
+    const t = setTimeout(() => fin(!!deferred), ms);
+    listeners.add(ecoute);
+  });
+}
+
 export function isInstalled() {
   return (
     matchMedia("(display-mode: standalone)").matches ||
@@ -126,6 +156,7 @@ export function useInstall() {
     snooze: () => { write("installation-plus-tard", Date.now() + SNOOZE_DAYS * 864e5); notify(); },
     /** Ouvre la fenêtre native ; renvoie false s'il faut montrer la marche à suivre. */
     prompt: async () => {
+      if (!deferred && platform() !== "ios") await attendreInvite(4000);
       if (!deferred) return false;
       const e = deferred;
       deferred = null;
