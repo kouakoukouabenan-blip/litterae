@@ -154,8 +154,8 @@ export function InstallBanner() {
 
 /** Bouton discret dans la barre du haut, toujours présent tant que l'app n'est pas installée. */
 export function InstallButton() {
-  const { installed, start } = useInstallAction();
-  if (installed) return null;
+  const { installed, installation, start } = useInstallAction();
+  if (installed || installation === "faite") return null;
   return (
     <button type="button" class="icon-btn install-btn" onClick={start} aria-label="Installer l'application">
       <Icon name="install_mobile" size={22} /><span class="install-btn-label">Installer</span>
@@ -171,7 +171,7 @@ const PASSE = "litterae.navigateur";
  * Un lien discret permet de continuer quand même (une fois par visite).
  */
 export function InstallGate() {
-  const { installed, canPrompt, prompt } = useInstall();
+  const { installed, canPrompt, prompt, installation } = useInstall();
   const [passe, setPasse] = useState(() => { try { return !!sessionStorage.getItem(PASSE); } catch { return false; } });
   const [etapes, setEtapes] = useState(false);
   const [dejaLa, setDejaLa] = useState(false);
@@ -184,6 +184,34 @@ export function InstallGate() {
     try { sessionStorage.setItem(PASSE, "1"); } catch { /* sans stockage, l'écran reviendra au prochain chargement */ }
     setPasse(true);
   };
+
+  const logo = <svg class="install-gate-logo" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="12" fill="#FFF3DC"/><path fill="#0F3D2E" d="M18 14h14v3h-4v28h9.5l3-8H44l-1.5 13H18v-3h4V17h-4z"/><circle cx="50" cy="47.5" r="3.5" fill="#C4562B"/></svg>;
+
+  // L'élève vient d'accepter dans la fenêtre de Chrome : on montre que ça travaille, pour qu'il ne retouche pas.
+  if (installation === "en-cours") return (
+    <div class="install-gate" role="dialog" aria-modal="true" aria-labelledby="gate-title">
+      <div class="install-gate-inner">
+        {logo}
+        <h1 id="gate-title" class="install-gate-title">Installation en cours…</h1>
+        <span class="install-gate-attente" role="progressbar" aria-label="Installation en cours" />
+        <p class="install-gate-texte">Chrome ajoute Litterae à ton écran d'accueil. Ne touche à rien, ça prend quelques secondes.</p>
+      </div>
+    </div>
+  );
+
+  // Installation tout juste terminée : on dit où trouver l'icône.
+  if (installation === "faite") return (
+    <div class="install-gate" role="dialog" aria-modal="true" aria-labelledby="gate-title">
+      <div class="install-gate-inner">
+        {logo}
+        <h1 id="gate-title" class="install-gate-title">C'est installé !</h1>
+        <p class="install-gate-texte">Ferme le navigateur et touche l'icône <strong>Litterae</strong> sur ton écran d'accueil ou dans tes applis. Si elle n'y est pas encore, attends quelques secondes.</p>
+        <div class="install-gate-liens">
+          <button type="button" class="install-gate-skip" onClick={continuer}>Continuer dans le navigateur</button>
+        </div>
+      </div>
+    </div>
+  );
 
   // Déjà installée : on invite à ouvrir l'application depuis l'écran d'accueil.
   if (dejaLa) return (

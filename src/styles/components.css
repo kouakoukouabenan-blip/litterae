@@ -316,6 +316,9 @@
 .install-gate-btn { width: 100%; min-height: 60px; gap: var(--s2); font-size: 1.125rem; font-weight: 700; background: var(--ochre); color: var(--ink-strong); border: 0; border-radius: var(--radius); }
 .install-gate-btn:hover { background: #F5B55F; }
 .install-gate-steps { width: 100%; padding: var(--s4); background: var(--paper); color: var(--ink); border-radius: var(--radius); text-align: left; }
+.install-gate-attente { width: 44px; height: 44px; border: 4px solid rgba(255, 243, 220, 0.25); border-top-color: var(--ochre); border-radius: 50%; animation: install-tourne 0.9s linear infinite; }
+@keyframes install-tourne { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .install-gate-attente { animation-duration: 2.5s; } }
 .install-gate-liens { display: flex; flex-direction: column; align-items: center; }
 .install-gate-skip { margin-top: var(--s2); padding: var(--s2); border: 0; background: none; color: var(--on-dark-muted); font: inherit; font-size: var(--text-xs); text-decoration: underline; text-underline-offset: 2px; cursor: pointer; }
 

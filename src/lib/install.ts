@@ -21,11 +21,19 @@ window.addEventListener("beforeinstallprompt", e => {
   deferred = e as InstallPromptEvent;
   notify();
 });
-window.addEventListener("appinstalled", () => {
+/**
+ * Où en est l'installation lancée depuis Litterae : après « Installer » dans la fenêtre de Chrome,
+ * l'ajout à l'écran d'accueil prend quelques secondes sans que rien ne bouge à l'écran.
+ */
+export type EtatInstallation = "aucune" | "en-cours" | "faite";
+let installation: EtatInstallation = "aucune";
+const terminer = () => {
   deferred = null;
+  installation = "faite";
   write("installee", true);
   notify();
-});
+};
+window.addEventListener("appinstalled", terminer);
 
 export type Platform = "ios" | "android" | "desktop";
 
@@ -155,13 +163,21 @@ export function useInstall() {
     showBanner: !isInstalled() && VISITES >= 2 && Date.now() > snoozedUntil,
     snooze: () => { write("installation-plus-tard", Date.now() + SNOOZE_DAYS * 864e5); notify(); },
     /** Ouvre la fenêtre native ; renvoie false s'il faut montrer la marche à suivre. */
+    installation,
     prompt: async () => {
+      // Installation déjà acceptée : un second appui ne doit pas ouvrir la marche à suivre.
+      if (installation !== "aucune") return true;
       if (!deferred && platform() !== "ios") await attendreInvite(4000);
       if (!deferred) return false;
       const e = deferred;
       deferred = null;
       await e.prompt();
-      await e.userChoice;
+      const choix = await e.userChoice;
+      if (choix.outcome === "accepted" && installation === "aucune") {
+        installation = "en-cours";
+        // Certains téléphones ne signalent pas la fin : on la considère faite au bout de 20 secondes.
+        setTimeout(() => { if (installation === "en-cours") terminer(); }, 20000);
+      }
       notify();
       return true;
     }
