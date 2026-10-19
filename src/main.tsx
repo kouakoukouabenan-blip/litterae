@@ -1,3 +1,4 @@
+import "./lib/compat";
 import { render } from "preact";
 import "@fontsource-variable/literata/wght.css";
 import "@fontsource-variable/literata/wght-italic.css";

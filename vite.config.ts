@@ -5,6 +5,8 @@ import { VitePWA } from "vite-plugin-pwa";
 // Chemins relatifs : le site fonctionne sous /litterae/ sur GitHub Pages comme en local.
 export default defineConfig({
   base: "./",
+  // Beaucoup d'élèves ont de vieux téléphones dont Chrome n'est plus mis à jour : on vise large.
+  build: { target: ["es2018", "chrome64", "safari12"], cssTarget: ["chrome64", "safari12"] },
   plugins: [
     preact(),
     VitePWA({

@@ -13,7 +13,7 @@
     <title>Litterae</title>
     <style>
       /* Écran d'ouverture : affiché tout de suite, avant le chargement de l'application. */
-      #splash { position: fixed; inset: 0; z-index: 100; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; background: #0F3D2E; color: #FFF3DC; transition: opacity .35s ease; }
+      #splash { position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 100; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; background: #0F3D2E; color: #FFF3DC; transition: opacity .35s ease; }
       #splash.fin { opacity: 0; pointer-events: none; }
       #splash svg { width: 76px; height: 76px; animation: splash-logo .6s cubic-bezier(.2,.8,.3,1.2) both; }
       #splash .nom { font: 900 34px/1 Georgia, "Times New Roman", serif; letter-spacing: -.01em; animation: splash-texte .5s .15s ease-out both; }
@@ -23,6 +23,10 @@
       @keyframes splash-texte { from { transform: translateY(8px); opacity: 0; } to { transform: none; opacity: 1; } }
       @keyframes splash-frise { to { background-position: 40px 0; } }
       @media (prefers-reduced-motion: reduce) { #splash * { animation: none !important; } }
+      #splash .bloque { max-width: 22rem; padding: 0 20px; text-align: center; font: 16px/1.5 sans-serif; }
+      #splash .bloque a, #splash .bloque button { display: block; width: 100%; margin-top: 12px; padding: 14px; border: 0; border-radius: 10px; font: 700 16px sans-serif; text-decoration: none; box-sizing: border-box; }
+      #splash .bloque a { background: #F2A541; color: #1B1B1B; }
+      #splash .bloque button { background: none; color: #FFF3DC; text-decoration: underline; font-weight: 400; }
     </style>
   </head>
   <body>
@@ -32,6 +36,26 @@
       <div class="frise"></div>
     </div>
     <div id="app"></div>
+    <script>
+      // Filet de sécurité, écrit à l'ancienne pour marcher partout : si l'appli ne démarre pas
+      // (navigateur trop vieux, connexion très lente), on explique quoi faire au lieu de rester bloqué.
+      (function () {
+        var affiche = false;
+        function bloque() {
+          var s = document.getElementById("splash");
+          if (affiche || !s || s.className.indexOf("fin") >= 0) return;
+          affiche = true;
+          var d = document.createElement("div");
+          d.className = "bloque";
+          d.innerHTML = "<p>Litterae n'arrive pas à s'ouvrir. Le plus souvent, c'est que <strong>Chrome n'est pas à jour</strong> sur ce téléphone.</p>"
+            + "<a href='https://play.google.com/store/apps/details?id=com.android.chrome'>Mettre Chrome à jour</a>"
+            + "<button type='button' onclick='location.reload()'>Réessayer</button>";
+          s.appendChild(d);
+        }
+        window.addEventListener("error", function (e) { if (e && (e.error instanceof SyntaxError || /Syntax|Unexpected/.test(e.message || ""))) setTimeout(bloque, 1500); });
+        setTimeout(bloque, 15000);
+      })();
+    </script>
     <noscript>Litterae a besoin de JavaScript pour fonctionner.</noscript>
     <script type="module" src="/src/main.tsx"></script>
     <!-- Cloudflare Web Analytics -->
