@@ -122,7 +122,7 @@ export function DevoirScreen() {
   return (
     <Page title="J'ai un devoir">
       <SujetsOnglets actif="devoir" />
-      <PageHeader title="J'ai un devoir" compact>Colle ton sujet : on te donne de quoi bien démarrer.</PageHeader>
+      <PageHeader title="J'ai un devoir" compact>Colle ton sujet : on t'aide à le comprendre et à bâtir ton plan. La rédaction, c'est toi.</PageHeader>
 
       <form class="devoir-form" onSubmit={analyser}>
         <label class="devoir-champ">
@@ -143,7 +143,7 @@ export function DevoirScreen() {
           {autreExercice && (
             <div class="devoir-note">
               <p>{AUTRE_EXERCICE[analyse.nature]}</p>
-              <button type="button" class="link-btn" onClick={() => setQuandMeme(true)}>C'est bien une dissertation littéraire : voir le plan</button>
+              <button type="button" class="link-btn" onClick={() => setQuandMeme(true)}>C'est bien une dissertation littéraire : voir les pistes</button>
             </div>
           )}
           {analyse.corrige && (
@@ -203,14 +203,14 @@ export function DevoirScreen() {
           </section>}
 
           {!autreExercice && <section>
-            <h2 class="section-title">Un plan pour démarrer</h2>
+            <h2 class="section-title">Des pistes pour ton plan</h2>
             {analyse.plan.problematique && <p class="devoir-problematique"><strong>Problématique.</strong> {analyse.plan.problematique}</p>}
             <ol class="devoir-plan">
               <li><strong>Partie 1.</strong> {analyse.plan.axe1}<Arguments liste={analyse.plan.args1} exemples={analyse.plan.ex1} /></li>
               <li><strong>Partie 2.</strong> {analyse.plan.axe2}<Arguments liste={analyse.plan.args2} exemples={analyse.plan.ex2} /></li>
             </ol>
             {analyse.genres.length > 0 && !analyse.corrige?.ouvert && <p class="small muted">Ton sujet parle {genreDu(analyse.genres)} : les exemples sont choisis dans {analyse.genres.length > 1 ? "ces genres" : "ce genre"}.</p>}
-            <p class="small muted devoir-base">Ce plan est une base : explique chaque argument avec tes mots et vérifie tes exemples dans ton cours.</p>
+            <p class="small devoir-base"><strong>À toi de rédiger.</strong> Ces pistes t'aident à démarrer : explique chaque argument avec tes mots et vérifie tes exemples dans ton cours.</p>
           </section>}
 
           {analyse.oeuvres.length > 0 && (

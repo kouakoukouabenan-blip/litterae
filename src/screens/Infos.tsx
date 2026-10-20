@@ -40,6 +40,8 @@ export function AProposScreen() {
             <dd>{LECONS.length} leçons pour passer du sujet à la conclusion : comprendre le sujet, rédiger l'introduction, le développement et la conclusion. Ta progression est retenue.</dd>
             <dt><Icon name="history_edu" />Les sujets corrigés</dt>
             <dd>{SUJETS.length} sujets traités de bout en bout : thème, thèse, reformulation, plan dialectique, arguments illustrés, transition et conclusion. Filtre par orientation.</dd>
+            <dt><Icon name="edit" />J'ai un devoir</dt>
+            <dd>Colle le sujet donné en classe : l'appli t'aide à le comprendre (fonction de la littérature, thèmes, mots difficiles) et te propose des pistes de plan, des œuvres à citer et des sujets corrigés proches. Ce sont des pistes, pas une copie toute faite : c'est toi qui rédiges, avec tes mots.</dd>
             <dt><Icon name="local_library" />Le moteur de recherche d'œuvres</dt>
             <dd>{OEUVRES.length} œuvres, dont {NB_DETAILLEES} fiches détaillées (résumé complet, idées d'illustration, phrase d'exemple) ; les autres sont des fiches courtes pour repérer une œuvre par thème. Cherche par titre, auteur, thème ou mot-clé, puis combine les filtres : fonction littéraire, thème, genre, aire géographique, pays, idée d'argument.</dd>
             <dt><Icon name="inventory_2" />La boîte à outils</dt>
