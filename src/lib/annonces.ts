@@ -2,6 +2,7 @@ import { useEffect, useState } from "preact/hooks";
 import { SERVEUR_URL } from "./site";
 import { read, write } from "./storage";
 import { noter } from "./stats";
+import { acces } from "./licence";
 
 /** Messages publiés par l'éditeur depuis son tableau de bord : promos, informations, astuces. */
 export interface Annonce {
@@ -31,13 +32,15 @@ const prevenir = () => abonnes.forEach(f => f());
 function charger(forcer = false) {
   if (!SERVEUR_URL || !navigator.onLine) return Promise.resolve();
   if (forcer) enCours = null;
-  enCours ??= fetch(SERVEUR_URL + "/annonces")
+  // Le serveur ne garde que les messages pour tout le monde et ceux du groupe de l'élève (a payé ou non).
+  enCours ??= fetch(`${SERVEUR_URL}/annonces?pour=${acces()}`)
     .then(r => (r.ok ? r.json() : null))
     .then(d => { if (Array.isArray(d?.annonces)) { write(CACHE, d.annonces); prevenir(); } })
     .catch(() => {});
   return enCours;
 }
 document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") charger(true); });
+window.addEventListener("acces-change", () => charger(true));
 
 /** Message ouvert dans le panneau de la cloche (null : panneau fermé ; 0 : liste seule). */
 let ouvert: number | null = null;

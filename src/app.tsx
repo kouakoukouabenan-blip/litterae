@@ -34,6 +34,7 @@ import { ProgresScreen } from "./screens/Progres";
 import { CollectionScreen } from "./screens/Collection";
 import { DuelScreen } from "./screens/Duel";
 import { reverifier } from "./lib/licence";
+import { synchroAccesNotifs } from "./lib/notifications";
 import { synchroniser } from "./lib/synchro";
 import { demarrerStats, noter } from "./lib/stats";
 import { actualiserQuestions } from "./lib/contact";
@@ -75,6 +76,7 @@ export function App() {
       else preparerRappel();
     });
     setTimeout(preparerRappel, 4000);
+    setTimeout(synchroAccesNotifs, 3000);
     // Ouverture depuis une notification : l'adresse porte le numéro du message.
     const depuisNotif = new URLSearchParams(location.search).get("annonce");
     if (depuisNotif) {

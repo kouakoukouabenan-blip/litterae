@@ -32,9 +32,15 @@ export const licence = () => (enMemoire ??= { l: read<Licence | null>(KEY, null)
 export const titulaire = () => licence()?.titulaire ?? null;
 
 function enregistrer(l: Licence | null) {
+  const avant = !!licence();
   enMemoire = null;
   write(KEY, l);
+  // Clé activée ou retirée : les messages et notifications « ont payé / n'ont pas payé » suivent.
+  if (avant !== !!l) window.dispatchEvent(new Event("acces-change"));
 }
+
+/** Pour les messages de l'éditeur : l'élève a l'accès complet sur cet appareil, ou pas. */
+export const acces = (): "paye" | "gratuit" => (licence() ? "paye" : "gratuit");
 
 // Clé ajoutée ou retirée depuis un autre onglet : on relira la valeur enregistrée.
 window.addEventListener("storage", e => { if (e.key === null || e.key.endsWith(KEY)) enMemoire = null; });

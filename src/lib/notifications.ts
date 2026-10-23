@@ -2,6 +2,7 @@ import { useEffect, useState } from "preact/hooks";
 import { SERVEUR_URL } from "./site";
 import { read, write } from "./storage";
 import { isInstalled, platform } from "./install";
+import { acces, appareil, licence } from "./licence";
 
 /**
  * Notifications de Litterae (promos, messages, astuces) sur le téléphone.
@@ -41,13 +42,34 @@ export async function activerNotifs(): Promise<string | null> {
     const reg = await navigator.serviceWorker.ready;
     const abonnement = (await reg.pushManager.getSubscription()) ?? (await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: cleServeur(cle) }));
     const systeme = { ios: "ios", android: "android", desktop: "ordinateur" }[platform()];
-    await appel("/push/abonner", { abonnement: abonnement.toJSON(), systeme });
+    await appel("/push/abonner", { abonnement: abonnement.toJSON(), systeme, ...groupe() });
     write("notif-abonne", true);
+    write("notif-acces", acces());
     return null;
   } catch {
     return "L'activation n'a pas marché. Réessaie dans un moment.";
   }
 }
+
+/** Le serveur range le téléphone avec ceux qui ont payé (clé vérifiée sur cet appareil) ou non. */
+const groupe = () => ({ acces: acces(), cle: licence()?.cle, appareil: appareil() });
+
+/**
+ * Téléphone déjà abonné dont l'accès a changé (clé activée ou retirée), ou abonné avant le choix
+ * « Qui reçoit ? » du tableau de bord : on redit au serveur dans quel groupe il est.
+ */
+export async function synchroAccesNotifs() {
+  if (etatNotif() !== "abonne" || !navigator.onLine || read<string>("notif-acces", "") === acces()) return;
+  try {
+    const abonnement = await (await navigator.serviceWorker.ready).pushManager.getSubscription();
+    if (!abonnement) return;
+    const r = await appel("/push/abonner", { abonnement: abonnement.toJSON(), ...groupe() });
+    if (r?.ok) write("notif-acces", acces());
+  } catch {
+    // On réessaiera à la prochaine ouverture.
+  }
+}
+window.addEventListener("acces-change", () => { synchroAccesNotifs(); });
 
 export async function desactiverNotifs() {
   write("notif-abonne", false);
