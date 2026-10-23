@@ -10,6 +10,7 @@ import { ProchaineAction, Suggestions } from "../components/Suggestions";
 import { sujetsEntrainement } from "../lib/entrainement";
 import { useState } from "preact/hooks";
 import { href } from "../lib/router";
+import { ChoixMethode } from "../components/ChoixMethode";
 
 /** Détail d'une case : version courte sur téléphone, où les cases sont étroites. */
 const Detail = ({ long, court }: { long: string; court: string }) => (
@@ -29,6 +30,8 @@ export function AccueilScreen() {
         <p class="eyebrow">La dissertation littéraire, pas à pas</p>
         <h1 class="home-title">Que veux-tu faire ?</h1>
       </header>
+
+      <ChoixMethode />
 
       <ProchaineAction />
 
