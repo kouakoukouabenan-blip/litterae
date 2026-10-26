@@ -33,6 +33,7 @@ import { RevisionsScreen } from "./screens/Revisions";
 import { ProgresScreen } from "./screens/Progres";
 import { CollectionScreen } from "./screens/Collection";
 import { DuelScreen } from "./screens/Duel";
+import { CommentaireScreen } from "./screens/Commentaire";
 import { reverifier } from "./lib/licence";
 import { synchroAccesNotifs } from "./lib/notifications";
 import { synchroniser } from "./lib/synchro";
@@ -117,6 +118,7 @@ export function App() {
     case "revisions": screen = <RevisionsScreen />; break;
     case "progres": screen = <ProgresScreen />; break;
     case "collection": screen = <CollectionScreen />; break;
+    case "cc": screen = <CommentaireScreen path={path} />; break;
     case "duel": screen = <DuelScreen params={params} />; break;
     default: screen = <NotFound />;
   }

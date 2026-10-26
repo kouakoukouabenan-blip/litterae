@@ -1,3 +1,4 @@
+import { LECONS_CC } from "../data/commentaire";
 import { useMemo, useState } from "preact/hooks";
 import { Page } from "../components/Page";
 import { Texte } from "../components/Texte";
@@ -72,7 +73,7 @@ function CarteRevision({ carte, suivante }: { carte: Carte; suivante: (reussie: 
   }
 
   const q = carte.question;
-  const lecon = LECONS.find(l => l.id === carte.lecon);
+  const lecon = carte.lecon.startsWith("cc:") ? LECONS_CC.find(l => `cc:${l.id}` === carte.lecon) : LECONS.find(l => l.id === carte.lecon);
   return (
     <div class="quiz-card carte-revision">
       <p class="eyebrow">{carte.lecon === "oeuvres" ? "Œuvres lues" : `Quiz${lecon ? ` · ${lecon.titre}` : ""}`}</p>

@@ -66,6 +66,12 @@ function MessageEnTete({ a, clic }: { a: Annonce; clic: (id: number) => void }) 
   );
 }
 
+/** Commentaire composé : seulement le message mis en avant depuis le tableau de bord, s'il y en a un. */
+export function MessageALaUne() {
+  const { aLaUne, clic } = useAnnonces();
+  return aLaUne ? <MessageEnTete a={aLaUne} clic={clic} /> : null;
+}
+
 /** En tête de l'accueil : le message mis en avant depuis le tableau de bord s'il y en a un, sinon « Ta prochaine action ». */
 export function ProchaineAction() {
   const { aLaUne, clic } = useAnnonces();

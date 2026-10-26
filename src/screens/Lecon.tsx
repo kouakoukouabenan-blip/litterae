@@ -16,7 +16,7 @@ import { noter } from "../lib/stats";
 import { noterVue } from "../lib/historique";
 import { synchroniser } from "../lib/synchro";
 
-function Bloc({ b }: { b: BlocLecon }) {
+export function Bloc({ b }: { b: BlocLecon }) {
   if ("p" in b) return <p><Texte text={b.p} /></p>;
   if ("h" in b) return <h2 class="section-title"><Texte text={b.h} /></h2>;
   if ("liste" in b) return <ul class="bullets">{b.liste.map(x => <li key={x}><Texte text={x} /></li>)}</ul>;

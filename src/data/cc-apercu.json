@@ -1,0 +1,1411 @@
+{
+ "lecons": [
+  {
+   "id": "definition",
+   "titre": "Qu'est-ce que le commentaire composé ?",
+   "duree": "10 min",
+   "blocs": []
+  },
+  {
+   "id": "comprendre",
+   "titre": "Comprendre le texte",
+   "duree": "12 min",
+   "blocs": []
+  },
+  {
+   "id": "sous-titres",
+   "titre": "Identifier les sous-titres",
+   "duree": "10 min",
+   "blocs": []
+  },
+  {
+   "id": "organiser",
+   "titre": "Rechercher et organiser les idées",
+   "duree": "12 min",
+   "blocs": []
+  },
+  {
+   "id": "interpreter",
+   "titre": "Interpréter les indices",
+   "duree": "15 min",
+   "blocs": []
+  },
+  {
+   "id": "introduction-longue",
+   "titre": "Rédiger une introduction",
+   "duree": "12 min",
+   "blocs": []
+  },
+  {
+   "id": "paragraphe",
+   "titre": "Rédiger un paragraphe",
+   "duree": "10 min",
+   "blocs": []
+  },
+  {
+   "id": "developpement",
+   "titre": "Rédiger le développement",
+   "duree": "10 min",
+   "blocs": []
+  },
+  {
+   "id": "conclusion",
+   "titre": "Rédiger une conclusion",
+   "duree": "8 min",
+   "blocs": []
+  }
+ ],
+ "corriges": [
+  {
+   "id": "ils-allaient",
+   "titre": "Ils allaient, front haut…",
+   "auteur": "Bottey Zadi Zaourou",
+   "source": "*Fer de lance*, NEI, 2002",
+   "consigne": "",
+   "texte": "",
+   "intro": "",
+   "axes": [],
+   "transition": "",
+   "conclusion": ""
+  },
+  {
+   "id": "nature-ravagee",
+   "titre": "La nature ravagée",
+   "auteur": "Jean Routaud",
+   "source": "*Des hommes illustres*, Éditions de Minuit, 1993",
+   "note": "",
+   "consigne": "",
+   "prose": true,
+   "texte": "",
+   "intro": "",
+   "axes": [],
+   "conclusion": ""
+  },
+  {
+   "id": "bastonnade",
+   "titre": "La bastonnade",
+   "auteur": "Ferdinand Oyono",
+   "source": "*Une vie de boy*, 1956",
+   "consigne": "",
+   "prose": true,
+   "texte": "",
+   "intro": "",
+   "axes": [],
+   "conclusion": ""
+  },
+  {
+   "id": "mariage-kany",
+   "titre": "Le mariage de Kany",
+   "auteur": "Seydou Badian Kouyaté",
+   "source": "*Sous l'orage*, 1957",
+   "consigne": "",
+   "prose": true,
+   "texte": "",
+   "intro": "",
+   "axes": [],
+   "conclusion": ""
+  },
+  {
+   "id": "gorge-de-sang",
+   "titre": "Gorgé de sang",
+   "auteur": "Mukala Kadima N'Zuji",
+   "source": "*Redire les mots anciens*, 1977",
+   "consigne": "",
+   "texte": "",
+   "intro": "",
+   "axes": [],
+   "conclusion": ""
+  },
+  {
+   "id": "ecoliers",
+   "titre": "Ces gosses-là, c'étaient nous",
+   "auteur": "Mongo Beti",
+   "source": "*Mission terminée*, Buchet-Chastel, 1957",
+   "chapeau": "",
+   "consigne": "",
+   "prose": true,
+   "texte": "",
+   "intro": "",
+   "axes": [],
+   "conclusion": ""
+  },
+  {
+   "id": "rien-qu-a-y-penser",
+   "titre": "Rien qu'à y penser",
+   "auteur": "François d'Assise N'Da",
+   "source": "*Le Retour de l'enfant soldat*, Vallesse, 2008",
+   "consigne": "",
+   "prose": true,
+   "texte": "",
+   "intro": "",
+   "axes": [],
+   "transition": "",
+   "conclusion": ""
+  },
+  {
+   "id": "cite-des-milliardaires",
+   "titre": "La Cité des Milliardaires",
+   "auteur": "Serge Grah",
+   "source": "*Passion de soutane*, JD Éditions, 2016",
+   "chapeau": "",
+   "consigne": "",
+   "prose": true,
+   "texte": "",
+   "intro": "",
+   "axes": [],
+   "conclusion": ""
+  },
+  {
+   "id": "roi-podogan",
+   "titre": "Le roi Podogan 1er",
+   "auteur": "Sénouvo Agbota Zinsou",
+   "source": "*La Tortue qui chante*, Hatier, 1988",
+   "consigne": "",
+   "prose": true,
+   "theatre": true,
+   "texte": "",
+   "intro": "",
+   "axes": [],
+   "conclusion": ""
+  },
+  {
+   "id": "blues-afrique",
+   "titre": "Le blues de l'Afrique",
+   "auteur": "Sophie Heidi Kam",
+   "source": "*Quête*, 2004",
+   "consigne": "",
+   "texte": "",
+   "intro": "",
+   "axes": [],
+   "conclusion": ""
+  },
+  {
+   "id": "celle-restee-en-france",
+   "titre": "À celle qui est restée en France",
+   "auteur": "Victor Hugo",
+   "source": "*Les Contemplations*, 1856",
+   "note": "",
+   "consigne": "",
+   "texte": "",
+   "intro": "",
+   "axes": [],
+   "transition": "",
+   "conclusion": ""
+  },
+  {
+   "id": "pin-des-landes",
+   "titre": "Le Pin des Landes",
+   "auteur": "Théophile Gautier",
+   "source": "*España*, 1845",
+   "consigne": "",
+   "texte": "",
+   "intro": "",
+   "axes": [],
+   "transition": "",
+   "conclusion": ""
+  },
+  {
+   "id": "silence-on-developpe",
+   "titre": "Silence on développe",
+   "auteur": "Jean-Marie Adiaffi",
+   "source": "*Silence, on développe*, 1992",
+   "chapeau": "",
+   "consigne": "",
+   "texte": "",
+   "intro": "",
+   "axes": [],
+   "transition": "",
+   "conclusion": ""
+  },
+  {
+   "id": "maturite",
+   "titre": "Maturité",
+   "auteur": "Denise Jallais",
+   "source": "dans *La Poésie féminine contemporaine*",
+   "consigne": "",
+   "texte": "",
+   "intro": "",
+   "axes": [],
+   "transition": "",
+   "conclusion": ""
+  },
+  {
+   "id": "coup-d-etat",
+   "titre": "Un coup d'État",
+   "auteur": "Henri Lopes",
+   "source": "*Le Pleurer-Rire*, Présence Africaine, 1982",
+   "prose": true,
+   "chapeau": "",
+   "consigne": "",
+   "texte": "",
+   "intro": "",
+   "axes": [],
+   "transition": "",
+   "conclusion": ""
+  },
+  {
+   "id": "les-vautours",
+   "titre": "Les Vautours",
+   "auteur": "David Diop",
+   "source": "*Coups de pilon*, Présence Africaine, 1956",
+   "consigne": "",
+   "texte": "",
+   "intro": "",
+   "axes": [],
+   "transition": "",
+   "conclusion": ""
+  },
+  {
+   "id": "livre-de-ma-mere",
+   "titre": "Louange à vous, mères de tous les pays",
+   "auteur": "Albert Cohen",
+   "source": "*Le Livre de ma mère*, Gallimard, 1954",
+   "prose": true,
+   "consigne": "",
+   "texte": "",
+   "intro": "",
+   "axes": [],
+   "transition": "",
+   "conclusion": ""
+  },
+  {
+   "id": "penser",
+   "titre": "Penser",
+   "auteur": "Maxime N'Debeka",
+   "source": "*Soleils neufs*, Éditions CLE, 1969",
+   "note": "",
+   "consigne": "",
+   "texte": "",
+   "intro": "",
+   "axes": [],
+   "transition": "",
+   "conclusion": ""
+  },
+  {
+   "id": "a-une-passante",
+   "titre": "À une passante",
+   "auteur": "Charles Baudelaire",
+   "source": "*Les Fleurs du mal*, 1857",
+   "consigne": "",
+   "texte": "",
+   "intro": "",
+   "axes": [],
+   "transition": "",
+   "conclusion": ""
+  },
+  {
+   "id": "je-vous-remercie-mon-dieu",
+   "titre": "Je vous remercie mon Dieu",
+   "auteur": "Bernard Binlin Dadié",
+   "source": "*La Ronde des jours*, Seghers, 1956",
+   "note": "",
+   "consigne": "",
+   "texte": "",
+   "intro": "",
+   "axes": [],
+   "transition": "",
+   "conclusion": ""
+  },
+  {
+   "id": "faubourg-ouvrier",
+   "titre": "Le faubourg ouvrier",
+   "auteur": "Maxime Gorki",
+   "source": "*La Mère*, 1907",
+   "prose": true,
+   "note": "",
+   "consigne": "",
+   "texte": "",
+   "intro": "",
+   "axes": [],
+   "transition": "",
+   "conclusion": ""
+  }
+ ],
+ "sujets": [
+  {
+   "id": "chanson-automne",
+   "titre": "Chanson d'automne",
+   "auteur": "Paul Verlaine",
+   "source": "*Poèmes saturniens*, 1866",
+   "consigne": "",
+   "texte": "",
+   "pistes": []
+  },
+  {
+   "id": "mignonne",
+   "titre": "Mignonne, allons voir si la rose…",
+   "auteur": "Pierre de Ronsard",
+   "source": "*Odes*, 1550",
+   "consigne": "",
+   "texte": "",
+   "pistes": []
+  },
+  {
+   "id": "ulysse",
+   "titre": "Heureux qui, comme Ulysse…",
+   "auteur": "Joachim du Bellay",
+   "source": "*Les Regrets*, 1558",
+   "consigne": "",
+   "texte": "",
+   "pistes": []
+  },
+  {
+   "id": "boheme",
+   "titre": "Ma Bohème",
+   "auteur": "Arthur Rimbaud",
+   "source": "*Poésies*, 1870",
+   "consigne": "",
+   "texte": "",
+   "pistes": []
+  },
+  {
+   "id": "candide",
+   "titre": "Le nègre de Surinam",
+   "auteur": "Voltaire",
+   "source": "*Candide*, chapitre 19, 1759",
+   "prose": true,
+   "consigne": "",
+   "texte": "",
+   "pistes": []
+  },
+  {
+   "id": "montesquieu",
+   "titre": "De l'esclavage des nègres",
+   "auteur": "Montesquieu",
+   "source": "*De l'esprit des lois*, livre XV, chapitre 5, 1748",
+   "prose": true,
+   "genre": "Argumentation",
+   "consigne": "",
+   "texte": "",
+   "pistes": []
+  },
+  {
+   "id": "chairs-a-impot",
+   "titre": "Des chairs à impôt",
+   "auteur": "René Maran",
+   "source": "*Batouala*, Albin Michel, 1921",
+   "prose": true,
+   "note": "",
+   "consigne": "",
+   "texte": "",
+   "pistes": []
+  },
+  {
+   "id": "briques",
+   "titre": "Briques",
+   "auteur": "Roger Poussi Wheauy",
+   "source": "*Cher mon pays, ne pleure pas*, Edilis, 2007",
+   "consigne": "",
+   "texte": "",
+   "pistes": []
+  },
+  {
+   "id": "nuit-belle-etoile",
+   "titre": "Une nuit à la belle étoile",
+   "auteur": "Jean-Jacques Rousseau",
+   "source": "*Les Confessions*, livre IV, 1782",
+   "prose": true,
+   "note": "",
+   "consigne": "",
+   "texte": "",
+   "pistes": []
+  },
+  {
+   "id": "a-une-femme",
+   "titre": "À une femme",
+   "auteur": "Paul Verlaine",
+   "source": "*Poèmes saturniens*, « Melancholia », 1866",
+   "consigne": "",
+   "texte": "",
+   "pistes": []
+  },
+  {
+   "id": "melancholia",
+   "titre": "Melancholia",
+   "auteur": "Victor Hugo",
+   "source": "*Les Contemplations*, 1856",
+   "note": "",
+   "consigne": "",
+   "texte": "",
+   "pistes": []
+  },
+  {
+   "id": "demain-des-l-aube",
+   "titre": "Demain, dès l'aube…",
+   "auteur": "Victor Hugo",
+   "source": "*Les Contemplations*, 1856",
+   "consigne": "",
+   "texte": "",
+   "pistes": []
+  },
+  {
+   "id": "albatros",
+   "titre": "L'Albatros",
+   "auteur": "Charles Baudelaire",
+   "source": "*Les Fleurs du mal*, 1861",
+   "consigne": "",
+   "texte": "",
+   "pistes": []
+  },
+  {
+   "id": "dormeur-du-val",
+   "titre": "Le Dormeur du val",
+   "auteur": "Arthur Rimbaud",
+   "source": "*Poésies*, 1870",
+   "consigne": "",
+   "texte": "",
+   "pistes": []
+  },
+  {
+   "id": "mon-reve-familier",
+   "titre": "Mon rêve familier",
+   "auteur": "Paul Verlaine",
+   "source": "*Poèmes saturniens*, 1866",
+   "consigne": "",
+   "texte": "",
+   "pistes": []
+  },
+  {
+   "id": "spleen",
+   "titre": "Spleen (Quand le ciel bas et lourd…)",
+   "auteur": "Charles Baudelaire",
+   "source": "*Les Fleurs du mal*, 1857",
+   "consigne": "",
+   "texte": "",
+   "pistes": []
+  },
+  {
+   "id": "l-ennemi",
+   "titre": "L'Ennemi",
+   "auteur": "Charles Baudelaire",
+   "source": "*Les Fleurs du mal*, 1857",
+   "consigne": "",
+   "texte": "",
+   "pistes": []
+  },
+  {
+   "id": "quand-vous-serez-bien-vieille",
+   "titre": "Quand vous serez bien vieille…",
+   "auteur": "Pierre de Ronsard",
+   "source": "*Sonnets pour Hélène*, 1578",
+   "consigne": "",
+   "texte": "",
+   "pistes": []
+  },
+  {
+   "id": "pont-mirabeau",
+   "titre": "Le Pont Mirabeau",
+   "auteur": "Guillaume Apollinaire",
+   "source": "*Alcools*, 1913",
+   "consigne": "",
+   "texte": "",
+   "pistes": []
+  },
+  {
+   "id": "loup-et-agneau",
+   "titre": "Le Loup et l'Agneau",
+   "auteur": "Jean de La Fontaine",
+   "source": "*Fables*, livre I, 1668",
+   "genre": "Fable",
+   "consigne": "",
+   "texte": "",
+   "pistes": []
+  },
+  {
+   "id": "les-fenetres",
+   "titre": "Les Fenêtres",
+   "auteur": "Charles Baudelaire",
+   "source": "*Le Spleen de Paris*, poème XXXV, 1869",
+   "prose": true,
+   "genre": "Poésie",
+   "consigne": "",
+   "texte": "",
+   "pistes": []
+  },
+  {
+   "id": "correspondances",
+   "titre": "Correspondances",
+   "auteur": "Charles Baudelaire",
+   "source": "*Les Fleurs du mal*, 1857",
+   "genre": "Poésie",
+   "consigne": "",
+   "texte": "",
+   "pistes": []
+  },
+  {
+   "id": "harmonie-du-soir",
+   "titre": "Harmonie du soir",
+   "auteur": "Charles Baudelaire",
+   "source": "*Les Fleurs du mal*, 1857",
+   "genre": "Poésie",
+   "consigne": "",
+   "texte": "",
+   "pistes": []
+  },
+  {
+   "id": "il-pleure-dans-mon-coeur",
+   "titre": "Il pleure dans mon cœur",
+   "auteur": "Paul Verlaine",
+   "source": "*Romances sans paroles*, 1874",
+   "genre": "Poésie",
+   "consigne": "",
+   "texte": "",
+   "pistes": []
+  },
+  {
+   "id": "el-desdichado",
+   "titre": "El Desdichado",
+   "auteur": "Gérard de Nerval",
+   "source": "*Les Chimères*, 1854",
+   "genre": "Poésie",
+   "consigne": "",
+   "texte": "",
+   "pistes": []
+  },
+  {
+   "id": "les-conquerants",
+   "titre": "Les Conquérants",
+   "auteur": "José-Maria de Heredia",
+   "source": "*Les Trophées*, 1893",
+   "genre": "Poésie",
+   "consigne": "",
+   "texte": "",
+   "pistes": []
+  },
+  {
+   "id": "le-lac",
+   "titre": "Le Lac",
+   "auteur": "Alphonse de Lamartine",
+   "source": "*Méditations poétiques*, 1820",
+   "genre": "Poésie",
+   "consigne": "",
+   "texte": "",
+   "pistes": []
+  },
+  {
+   "id": "tristesse",
+   "titre": "Tristesse",
+   "auteur": "Alfred de Musset",
+   "source": "*Poésies nouvelles*, 1840",
+   "genre": "Poésie",
+   "consigne": "",
+   "texte": "",
+   "pistes": []
+  },
+  {
+   "id": "o-rage-o-desespoir",
+   "titre": "Ô rage ! ô désespoir !",
+   "auteur": "Pierre Corneille",
+   "source": "*Le Cid*, acte I, scène 4, 1637",
+   "genre": "Théâtre",
+   "chapeau": "",
+   "consigne": "",
+   "texte": "",
+   "pistes": []
+  },
+  {
+   "id": "mon-mal-vient-de-plus-loin",
+   "titre": "Mon mal vient de plus loin",
+   "auteur": "Jean Racine",
+   "source": "*Phèdre*, acte I, scène 3, 1677",
+   "genre": "Théâtre",
+   "chapeau": "",
+   "consigne": "",
+   "texte": "",
+   "pistes": []
+  },
+  {
+   "id": "au-voleur",
+   "titre": "Au voleur !",
+   "auteur": "Molière",
+   "source": "*L'Avare*, acte IV, scène 7, 1668",
+   "prose": true,
+   "genre": "Théâtre",
+   "chapeau": "",
+   "consigne": "",
+   "texte": "",
+   "pistes": []
+  },
+  {
+   "id": "priere-a-dieu",
+   "titre": "Prière à Dieu",
+   "auteur": "Voltaire",
+   "source": "*Traité sur la tolérance*, chapitre 23, 1763",
+   "prose": true,
+   "genre": "Argumentation",
+   "consigne": "",
+   "texte": "",
+   "pistes": []
+  },
+  {
+   "id": "candide-guerre",
+   "titre": "La guerre",
+   "auteur": "Voltaire",
+   "source": "*Candide*, chapitre 3, 1759",
+   "prose": true,
+   "genre": "Récit",
+   "chapeau": "",
+   "consigne": "",
+   "texte": "",
+   "pistes": []
+  },
+  {
+   "id": "chene-et-roseau",
+   "titre": "Le Chêne et le Roseau",
+   "auteur": "Jean de La Fontaine",
+   "source": "*Fables*, livre I, 1668",
+   "genre": "Fable",
+   "consigne": "",
+   "texte": "",
+   "pistes": []
+  },
+  {
+   "id": "cigale-et-fourmi",
+   "titre": "La Cigale et la Fourmi",
+   "auteur": "Jean de La Fontaine",
+   "source": "*Fables*, livre I, 1668",
+   "genre": "Fable",
+   "consigne": "",
+   "texte": "",
+   "pistes": []
+  }
+ ],
+ "etudes": {},
+ "familles": [
+  {
+   "id": "analogie",
+   "titre": "Les figures d'analogie",
+   "intro": "",
+   "figures": [
+    {
+     "nom": "La comparaison",
+     "definition": "",
+     "details": [],
+     "exemples": [],
+     "retenir": ""
+    },
+    {
+     "nom": "La métaphore",
+     "definition": "",
+     "details": [],
+     "exemples": [],
+     "retenir": ""
+    },
+    {
+     "nom": "La personnification",
+     "definition": "",
+     "details": [],
+     "exemples": [],
+     "retenir": ""
+    },
+    {
+     "nom": "L'allégorie",
+     "definition": "",
+     "details": [],
+     "exemples": [],
+     "retenir": ""
+    }
+   ],
+   "exercices": [
+    {
+     "titre": "Exercice 1",
+     "consigne": "",
+     "phrases": [
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    {
+     "titre": "Exercice 2",
+     "consigne": "",
+     "phrases": [
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    {
+     "titre": "Exercice 3",
+     "consigne": "",
+     "phrases": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    }
+   ]
+  },
+  {
+   "id": "substitution",
+   "titre": "Les figures de substitution",
+   "intro": "",
+   "figures": [
+    {
+     "nom": "La métonymie",
+     "definition": "",
+     "details": [],
+     "exemples": [],
+     "retenir": ""
+    },
+    {
+     "nom": "La synecdoque",
+     "definition": "",
+     "exemples": [],
+     "retenir": ""
+    },
+    {
+     "nom": "La périphrase",
+     "definition": "",
+     "details": [],
+     "exemples": [],
+     "retenir": ""
+    }
+   ],
+   "exercices": [
+    {
+     "titre": "Exercice",
+     "consigne": "",
+     "phrases": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    }
+   ]
+  },
+  {
+   "id": "amplification",
+   "titre": "Les figures d'amplification",
+   "intro": "",
+   "figures": [
+    {
+     "nom": "L'hyperbole",
+     "definition": "",
+     "exemples": [],
+     "retenir": ""
+    },
+    {
+     "nom": "L'anaphore",
+     "definition": "",
+     "exemples": [],
+     "retenir": ""
+    },
+    {
+     "nom": "L'accumulation",
+     "definition": "",
+     "exemples": [],
+     "retenir": ""
+    },
+    {
+     "nom": "La gradation",
+     "definition": "",
+     "details": [],
+     "exemples": [],
+     "retenir": ""
+    }
+   ],
+   "exercices": [
+    {
+     "titre": "Exercice",
+     "consigne": "",
+     "phrases": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    }
+   ]
+  },
+  {
+   "id": "attenuation",
+   "titre": "Les figures d'atténuation",
+   "intro": "",
+   "figures": [
+    {
+     "nom": "L'euphémisme",
+     "definition": "",
+     "details": [],
+     "exemples": [],
+     "retenir": ""
+    },
+    {
+     "nom": "La litote",
+     "definition": "",
+     "details": [],
+     "exemples": [],
+     "retenir": ""
+    }
+   ],
+   "exercices": [
+    {
+     "titre": "Exercice",
+     "consigne": "",
+     "phrases": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    }
+   ]
+  },
+  {
+   "id": "opposition",
+   "titre": "Les figures d'opposition",
+   "intro": "",
+   "figures": [
+    {
+     "nom": "L'oxymore",
+     "definition": "",
+     "exemples": [],
+     "retenir": ""
+    },
+    {
+     "nom": "L'antithèse",
+     "definition": "",
+     "exemples": [],
+     "retenir": ""
+    },
+    {
+     "nom": "L'antiphrase",
+     "definition": "",
+     "exemples": [],
+     "retenir": ""
+    },
+    {
+     "nom": "Le chiasme",
+     "definition": "",
+     "details": [],
+     "exemples": [],
+     "retenir": ""
+    }
+   ],
+   "exercices": [
+    {
+     "titre": "Exercice",
+     "consigne": "",
+     "phrases": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    }
+   ]
+  },
+  {
+   "id": "sonorite",
+   "titre": "Les figures de sonorité",
+   "intro": "",
+   "figures": [
+    {
+     "nom": "L'assonance",
+     "definition": "",
+     "exemples": [],
+     "retenir": ""
+    },
+    {
+     "nom": "L'allitération",
+     "definition": "",
+     "exemples": [],
+     "retenir": ""
+    },
+    {
+     "nom": "La paronomase",
+     "definition": "",
+     "exemples": [],
+     "retenir": ""
+    }
+   ],
+   "exercices": [
+    {
+     "titre": "Exercice",
+     "consigne": "",
+     "phrases": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    }
+   ]
+  }
+ ],
+ "corrections": {},
+ "formules": [
+  {
+   "moment": "Amorce",
+   "formules": []
+  },
+  {
+   "moment": "Présentation du texte",
+   "formules": []
+  },
+  {
+   "moment": "Projet de lecture",
+   "formules": []
+  },
+  {
+   "moment": "Annonce des axes",
+   "formules": []
+  },
+  {
+   "moment": "Analyser un procédé",
+   "formules": []
+  },
+  {
+   "moment": "Transition",
+   "formules": []
+  },
+  {
+   "moment": "Conclusion",
+   "formules": []
+  }
+ ],
+ "verbes": [],
+ "tonalites": [
+  {
+   "id": "lyrique",
+   "nom": "La tonalité lyrique",
+   "adjectif": "lyrique",
+   "definition": "",
+   "indices": [],
+   "themes": "",
+   "retenir": "La tonalité lyrique est l'expression des sentiments personnels de l'auteur.",
+   "commentaire": "",
+   "centres": [],
+   "formule": "",
+   "exemple": {
+    "titre": "",
+    "auteur": "",
+    "source": "",
+    "texte": "",
+    "reperes": []
+   }
+  },
+  {
+   "id": "pathetique",
+   "nom": "La tonalité pathétique",
+   "adjectif": "pathétique",
+   "definition": "",
+   "indices": [],
+   "retenir": "La tonalité pathétique exprime le sentiment de pitié.",
+   "commentaire": "",
+   "centres": [],
+   "formule": "",
+   "exemple": {
+    "titre": "",
+    "auteur": "",
+    "source": "",
+    "prose": true,
+    "texte": "",
+    "reperes": []
+   }
+  },
+  {
+   "id": "satirique",
+   "nom": "La tonalité satirique",
+   "adjectif": "satirique",
+   "definition": "",
+   "indices": [],
+   "themes": "",
+   "retenir": "La tonalité satirique critique de façon virulente.",
+   "commentaire": "",
+   "centres": [],
+   "formule": "",
+   "exemple": {
+    "titre": "",
+    "auteur": "",
+    "source": "",
+    "prose": true,
+    "texte": "",
+    "reperes": [],
+    "remarque": ""
+   }
+  },
+  {
+   "id": "didactique",
+   "nom": "La tonalité didactique",
+   "adjectif": "didactique",
+   "definition": "",
+   "indices": [],
+   "retenir": "La tonalité didactique enseigne.",
+   "commentaire": "",
+   "centres": [],
+   "formule": "",
+   "exemple": {
+    "titre": "",
+    "auteur": "",
+    "source": "",
+    "prose": true,
+    "texte": "",
+    "reperes": []
+   }
+  },
+  {
+   "id": "tragique",
+   "nom": "La tonalité tragique",
+   "adjectif": "tragique",
+   "definition": "",
+   "indices": [],
+   "retenir": "La tonalité tragique met en scène une histoire où les personnages sont engagés dans une sorte de fatalité.",
+   "commentaire": "",
+   "centres": [],
+   "formule": "",
+   "exemple": {
+    "titre": "",
+    "auteur": "",
+    "source": "",
+    "chapeau": "",
+    "texte": "",
+    "reperes": []
+   }
+  },
+  {
+   "id": "dramatique",
+   "nom": "La tonalité dramatique",
+   "adjectif": "dramatique",
+   "definition": "",
+   "indices": [],
+   "retenir": "La tonalité dramatique est caractérisée par une succession d'actions qui s'enchaînent et s'accélèrent.",
+   "commentaire": "",
+   "centres": [],
+   "formule": "",
+   "exemple": {
+    "titre": "",
+    "auteur": "",
+    "source": "",
+    "texte": "",
+    "reperes": []
+   }
+  },
+  {
+   "id": "comique",
+   "nom": "La tonalité comique",
+   "adjectif": "comique",
+   "definition": "",
+   "indices": [],
+   "retenir": "La tonalité comique suscite le rire et l'amusement.",
+   "commentaire": "",
+   "centres": [],
+   "formule": "",
+   "exemple": {
+    "titre": "",
+    "auteur": "",
+    "source": "",
+    "prose": true,
+    "texte": "",
+    "reperes": []
+   }
+  },
+  {
+   "id": "ironique",
+   "nom": "La tonalité ironique",
+   "adjectif": "ironique",
+   "definition": "",
+   "indices": [],
+   "retenir": "La tonalité ironique critique indirectement à l'aide de la moquerie.",
+   "commentaire": "",
+   "centres": [],
+   "formule": "",
+   "exemple": {
+    "titre": "",
+    "auteur": "",
+    "source": "",
+    "prose": true,
+    "chapeau": "",
+    "texte": "",
+    "reperes": []
+   }
+  },
+  {
+   "id": "epique",
+   "nom": "La tonalité épique",
+   "adjectif": "épique",
+   "definition": "",
+   "indices": [],
+   "retenir": "La tonalité épique relate les exploits d'un personnage héroïque.",
+   "commentaire": "",
+   "centres": [],
+   "formule": "",
+   "exemple": {
+    "titre": "",
+    "auteur": "",
+    "source": "",
+    "texte": "",
+    "reperes": []
+   }
+  },
+  {
+   "id": "fantastique",
+   "nom": "La tonalité fantastique",
+   "adjectif": "fantastique",
+   "definition": "",
+   "indices": [],
+   "retenir": "La tonalité fantastique présente des faits surnaturels et irrationnels.",
+   "commentaire": "",
+   "centres": [],
+   "formule": "",
+   "exemple": {
+    "titre": "",
+    "auteur": "",
+    "source": "",
+    "prose": true,
+    "texte": "",
+    "reperes": []
+   }
+  },
+  {
+   "id": "polemique",
+   "nom": "La tonalité polémique",
+   "adjectif": "polémique",
+   "definition": "",
+   "indices": [],
+   "retenir": "La tonalité polémique intervient lorsqu'il y a un débat, une dispute ou un dialogue.",
+   "commentaire": "",
+   "centres": [],
+   "formule": "",
+   "exemple": {
+    "titre": "",
+    "auteur": "",
+    "source": "",
+    "prose": true,
+    "chapeau": "",
+    "texte": "",
+    "reperes": [],
+    "remarque": ""
+   }
+  },
+  {
+   "id": "oratoire",
+   "nom": "La tonalité oratoire",
+   "adjectif": "oratoire",
+   "definition": "",
+   "indices": [],
+   "retenir": "La tonalité oratoire intervient dans un discours.",
+   "commentaire": "",
+   "centres": [],
+   "formule": "",
+   "exemple": {
+    "titre": "",
+    "auteur": "",
+    "source": "",
+    "prose": true,
+    "texte": "",
+    "reperes": []
+   }
+  },
+  {
+   "id": "realiste",
+   "nom": "La tonalité réaliste",
+   "adjectif": "réaliste",
+   "definition": "",
+   "indices": [],
+   "retenir": "La tonalité réaliste donne l'illusion du réel.",
+   "commentaire": "",
+   "centres": [],
+   "formule": "",
+   "exemple": {
+    "titre": "",
+    "auteur": "",
+    "source": "",
+    "prose": true,
+    "texte": "",
+    "reperes": []
+   }
+  }
+ ],
+ "testTonalites": [
+  {
+   "texte": "",
+   "extrait": "",
+   "bonne": "",
+   "choix": [],
+   "pourquoi": ""
+  },
+  {
+   "texte": "",
+   "extrait": "",
+   "bonne": "",
+   "choix": [],
+   "pourquoi": ""
+  },
+  {
+   "texte": "",
+   "extrait": "",
+   "bonne": "",
+   "choix": [],
+   "pourquoi": ""
+  },
+  {
+   "texte": "",
+   "extrait": "",
+   "bonne": "",
+   "choix": [],
+   "pourquoi": ""
+  },
+  {
+   "texte": "",
+   "extrait": "",
+   "bonne": "",
+   "choix": [],
+   "pourquoi": ""
+  },
+  {
+   "texte": "",
+   "extrait": "",
+   "bonne": "",
+   "choix": [],
+   "pourquoi": ""
+  },
+  {
+   "texte": "",
+   "extrait": "",
+   "bonne": "",
+   "choix": [],
+   "pourquoi": ""
+  },
+  {
+   "texte": "",
+   "extrait": "",
+   "bonne": "",
+   "choix": [],
+   "pourquoi": ""
+  },
+  {
+   "texte": "",
+   "extrait": "",
+   "bonne": "",
+   "choix": [],
+   "pourquoi": ""
+  },
+  {
+   "texte": "",
+   "extrait": "",
+   "bonne": "",
+   "choix": [],
+   "pourquoi": ""
+  },
+  {
+   "texte": "",
+   "extrait": "",
+   "bonne": "",
+   "choix": [],
+   "pourquoi": ""
+  },
+  {
+   "texte": "",
+   "extrait": "",
+   "bonne": "",
+   "choix": [],
+   "pourquoi": ""
+  }
+ ],
+ "genres": [
+  {
+   "id": "roman",
+   "nom": "Le roman",
+   "resume": "Un long récit en prose, avec un narrateur, des personnages et une intrigue.",
+   "definition": [],
+   "notions": [],
+   "sousGenres": [],
+   "commentaire": [],
+   "exercice": {
+    "texte": "",
+    "questions": []
+   }
+  },
+  {
+   "id": "theatre",
+   "nom": "Le théâtre",
+   "resume": "Un texte en dialogue, écrit pour être joué sur une scène.",
+   "definition": [],
+   "notions": [],
+   "sousGenres": [],
+   "commentaire": [],
+   "exercice": {
+    "texte": "",
+    "questions": []
+   }
+  },
+  {
+   "id": "poesie",
+   "nom": "La poésie",
+   "resume": "Un texte le plus souvent en vers, qui joue sur le rythme et la musique des mots.",
+   "definition": [],
+   "notions": [],
+   "sousGenres": [],
+   "commentaire": [],
+   "exercice": {
+    "texte": "",
+    "questions": []
+   }
+  }
+ ],
+ "quiz": {}
+}

@@ -2,6 +2,7 @@ import { useRoute } from "../lib/router";
 import { read, write } from "../lib/storage";
 import { Icon } from "./Icon";
 import { useQuestions } from "../lib/contact";
+import { useMethode } from "../lib/methodes";
 
 /** Pastille sur « Mon espace » quand l'auteur a répondu à une question. */
 function Pastille() {
@@ -33,11 +34,29 @@ function useDerniersOnglets() {
     const adresse = vue ? `outils?vue=${vue}` : path[0];
     if (read(`onglet-${partie}`, "") !== adresse) write(`onglet-${partie}`, adresse);
   }
+  const [methode] = useMethode();
+  if (path[0] === "cc" && path.length === 2) {
+    const partieCC = path[1] === "cours" || path[1] === "outils" || path[1] === "figures" ? "cours" : path[1] === "genres" || path[1] === "tonalites" ? "genres" : "sujets";
+    const adresseCC = `cc/${path[1]}`;
+    if (read(`onglet-cc-${partieCC}`, "") !== adresseCC) write(`onglet-cc-${partieCC}`, adresseCC);
+  }
+  // Commentaire composé : la barre du bas mène à ses propres leçons et sujets.
+  if (methode.id === "commentaire") return (i: (typeof ITEMS)[number]) =>
+    i.section === "cours" ? `#/${read("onglet-cc-cours", "cc/cours")}` : i.section === "sujets" ? `#/${read("onglet-cc-sujets", "cc/corriges")}` : i.section === "oeuvres" ? `#/${read("onglet-cc-genres", "cc/genres")}` : `#/${read(`onglet-${i.section}`, i.section)}`;
   return (i: (typeof ITEMS)[number]) => `#/${read(`onglet-${i.section}`, "lien" in i ? i.lien : i.section)}`;
 }
 
+/** Commentaire composé : l'onglet Œuvres devient Genres (genres littéraires et tonalités). */
+function useLibelle() {
+  const [methode] = useMethode();
+  return (i: (typeof ITEMS)[number]) => methode.id === "commentaire" && i.section === "oeuvres" ? { label: "Genres", icon: "account_tree" as const } : i;
+}
+
 function useSection() {
-  const section = useRoute().path[0] ?? "accueil";
+  const [premier, second] = useRoute().path;
+  // Commentaire composé : les leçons et outils vont avec Cours, les corrigés et l'entraînement avec Sujets.
+  if (premier === "cc") return second === "cours" || second === "outils" || second === "figures" ? "cours" : second === "corriges" || second === "entrainement" || second === "atelier" ? "sujets" : second === "genres" || second === "tonalites" ? "oeuvres" : "accueil";
+  const section = premier ?? "accueil";
   // Les sujets d'entraînement et « J'ai un devoir » sont des onglets de Sujets ; la boîte à outils se range avec le cours.
   return ["defi", "revisions", "progres"].includes(section) ? "accueil" : section === "entrainement" || section === "devoir" ? "sujets" : section === "outils" ? "cours" : section === "mes-fiches" ? "oeuvres" : section;
 }
@@ -46,11 +65,12 @@ function useSection() {
 export function NavTabs() {
   const current = useSection();
   const lien = useDerniersOnglets();
+  const libelle = useLibelle();
   return (
     <nav class="nav-tabs" aria-label="Navigation principale">
       {ITEMS.map(i => (
         <a key={i.section} href={lien(i)} class="nav-tab" aria-current={current === i.section ? "page" : undefined}>
-          {i.label}
+          {libelle(i).label}
         </a>
       ))}
     </nav>
@@ -61,14 +81,15 @@ export function NavTabs() {
 export function BottomNav() {
   const current = useSection();
   const lien = useDerniersOnglets();
+  const libelle = useLibelle();
   return (
     <nav class="bottom-nav" aria-label="Navigation principale">
       {ITEMS.map(i => {
         const active = current === i.section;
         return (
           <a key={i.section} href={lien(i)} class="bottom-nav-item" aria-current={active ? "page" : undefined}>
-            <span class="bottom-nav-icone"><Icon name={i.icon} filled={active} /></span>
-            <span>{i.label}</span>
+            <span class="bottom-nav-icone"><Icon name={libelle(i).icon} filled={active} /></span>
+            <span>{libelle(i).label}</span>
           </a>
         );
       })}

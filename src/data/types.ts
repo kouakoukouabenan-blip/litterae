@@ -1,3 +1,4 @@
+import type { DonneesCC } from "./cc-types";
 export type Fonction = "Engagement" | "Esthétique" | "Évasion" | "Lyrique" | "Sociale";
 export const FONCTIONS: Fonction[] = ["Engagement", "Esthétique", "Évasion", "Lyrique", "Sociale"];
 
@@ -135,6 +136,8 @@ export interface ContenuPayant {
   dictionnaire?: EntreeDico[];
   /** Texte de toutes les leçons : celles du guide et celles ajoutées ou modifiées depuis le tableau de bord. */
   lecons?: Record<string, BlocLecon[]>;
+  /** Commentaire composé complet (absent des clés activées avant son arrivée). */
+  commentaire?: DonneesCC;
 }
 
 export interface QuestionQuiz {

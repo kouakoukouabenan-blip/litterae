@@ -10,6 +10,9 @@ import { ProchaineAction, Suggestions } from "../components/Suggestions";
 import { sujetsEntrainement } from "../lib/entrainement";
 import { useState } from "preact/hooks";
 import { href } from "../lib/router";
+import { ChoixMethode } from "../components/ChoixMethode";
+import { useMethode } from "../lib/methodes";
+import { AccueilCommentaire } from "./Commentaire";
 
 /** Détail d'une case : version courte sur téléphone, où les cases sont étroites. */
 const Detail = ({ long, court }: { long: string; court: string }) => (
@@ -18,6 +21,11 @@ const Detail = ({ long, court }: { long: string; court: string }) => (
 
 /** Écran d'accueil : la recherche d'œuvres, puis les autres choses que l'élève vient faire. Les leçons ont leur propre écran (Cours). */
 export function AccueilScreen() {
+  const [methode] = useMethode();
+  return methode.id === "commentaire" ? <AccueilCommentaire /> : <AccueilDissertation />;
+}
+
+function AccueilDissertation() {
   const [lues] = useStored<string[]>("lecons-lues", []);
   const suivante = LECONS.find(l => !lues.includes(l.id));
   const nbLues = LECONS.filter(l => lues.includes(l.id)).length;
@@ -29,6 +37,8 @@ export function AccueilScreen() {
         <p class="eyebrow">La dissertation littéraire, pas à pas</p>
         <h1 class="home-title">Que veux-tu faire ?</h1>
       </header>
+
+      <ChoixMethode />
 
       <ProchaineAction />
 

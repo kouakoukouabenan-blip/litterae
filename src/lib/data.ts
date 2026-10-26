@@ -44,7 +44,9 @@ export const contenuEnRetard = (c: ContenuPayant) =>
   // Clés activées avant que le texte des leçons du guide passe dans le contenu payant.
   LECONS_GUIDE.some(l => !c.lecons?.[l.id]?.length) ||
   (c.dictionnaire?.length ?? 0) < dico.entrees.length ||
-  (oeuvres as Oeuvre[]).some(w => w.resume === null && !(w.id in c.oeuvres));
+  (oeuvres as Oeuvre[]).some(w => w.resume === null && !(w.id in c.oeuvres)) ||
+  // Clés activées avant l'arrivée du commentaire composé.
+  !c.commentaire;
 
 /** Nombre de fiches avec résumé complet et idées d'illustration rédigées. */
 export const NB_DETAILLEES = OEUVRES.filter(w => w.detaillee).length;

@@ -1,4 +1,5 @@
 import libres from "../data/quiz-libre.json";
+import { QUIZ_CC } from "../data/quiz-cc";
 import { FONCTIONS, type EntreeDico, type Oeuvre, type QuestionQuiz } from "../data/types";
 import { OEUVRES, oeuvre } from "./data";
 import { licence } from "./licence";
@@ -64,7 +65,10 @@ function contenu(cle: string, s = suivis): Carte | null {
     return question ? { cle, type: "quiz", lecon: "oeuvres", question } : null;
   }
   if (type === "quiz") {
-    const question = (licence()?.contenu.quiz?.[a] ?? (libres as Record<string, QuestionQuiz[]>)[a])?.[Number(b)];
+    // Commentaire composé : quiz publiés avec le site (« cc:<leçon> »), réservés à l'accès complet.
+    const question = a.startsWith("cc:")
+      ? (licence() ? QUIZ_CC[a.slice(3)]?.[Number(b)] : undefined)
+      : (licence()?.contenu.quiz?.[a] ?? (libres as Record<string, QuestionQuiz[]>)[a])?.[Number(b)];
     return question ? { cle, type: "quiz", lecon: a, question } : null;
   }
   return null;
