@@ -1,5 +1,5 @@
 import { Fragment } from "preact";
-import { useState } from "preact/hooks";
+import { useEffect, useState } from "preact/hooks";
 import { Page } from "../components/Page";
 import { Icon } from "../components/Icon";
 import { Texte } from "../components/Texte";
@@ -23,6 +23,8 @@ import type { QuestionQuiz } from "../data/types";
 import { ajouterCarte, cleQuiz } from "../lib/revisions";
 import { marquer } from "../lib/progres";
 import { licence, rechargerContenu } from "../lib/licence";
+import { noter } from "../lib/stats";
+import { useMethode } from "../lib/methodes";
 import { GenreDetailCC, GenresCC, TestTonalitesCC, TonaliteDetailCC, TonalitesCC } from "./GenresCC";
 import { CORRECTIONS, FAMILLES, FIGURES_DEFINITION, FIGURES_SOURCE } from "../data/figures";
 
@@ -216,6 +218,7 @@ function QuizCC({ id, questions }: { id: string; questions: QuestionQuiz[] }) {
     marquer(`quiz:cc:${id}`);
   }
   function suivante() {
+    if (n + 1 >= questions.length) noter({ t: "cc", ref: `quiz:${id}` });
     if (n + 1 >= questions.length && score > (meilleurs[id] ?? -1)) setMeilleurs({ ...meilleurs, [id]: score });
     setN(n + 1); setChoix(null);
   }
@@ -636,8 +639,19 @@ function SujetCC({ id }: { id: string }) {
 }
 
 /** Toutes les pages du commentaire composé, selon l'adresse #/cc/… */
+/** Ce que l'élève ouvre dans le commentaire composé, compté sans savoir qui (tableau de bord › Chiffres). */
+const STAT_CC: Record<string, string> = { cours: "lecon", corriges: "corrige", entrainement: "texte", figures: "figures", genres: "genre", tonalites: "tonalite" };
+
 export function CommentaireScreen({ path }: { path: string[] }) {
   const [, partie, id] = path;
+  const [methode, choisir] = useMethode();
+  useEffect(() => {
+    // Une page du commentaire ouverte depuis un message ou un lien partagé : l'appli passe en commentaire composé.
+    if (partie && methode.id !== "commentaire") choisir("commentaire");
+    if (partie === "outils") noter({ t: "cc", ref: "outils" });
+    else if (partie === "tonalites" && id === "test") noter({ t: "cc", ref: "test" });
+    else if (id && STAT_CC[partie]) noter({ t: "cc", ref: `${STAT_CC[partie]}:${id}` });
+  }, [partie, id]);
   switch (partie) {
     case "cours": return id ? <LeconCC id={id} /> : <CoursCC />;
     case "corriges": return id ? <CorrigeCC id={id} /> : <CorrigesCC />;

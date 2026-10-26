@@ -1,3 +1,4 @@
+import type { CorrigeCC, LeconCC, SujetCC } from "../data/cc-types";
 import { SERVEUR_URL } from "./site";
 import { read, write } from "./storage";
 import { normalize } from "./text";
@@ -35,6 +36,8 @@ export interface ContenuLibre {
   renvois?: { oeuvres: Record<string, string>; dico: Record<string, string> };
   /** Formules pour la copie modifiées, ajoutées (ids « ajout-… ») ou retirées (null) depuis le tableau de bord. */
   formules?: Record<string, { id: string; cat: string; nom: string; texte: string; exemple: string; conseil?: string } | null>;
+  /** Commentaire composé : titres des leçons, corrigés et textes modifiés ou ajoutés dans le tableau de bord (sans leur contenu). */
+  commentaire?: { lecons: LeconCC[]; corriges: CorrigeCC[]; sujets: SujetCC[] };
 }
 
 const CLE = "contenu-libre";

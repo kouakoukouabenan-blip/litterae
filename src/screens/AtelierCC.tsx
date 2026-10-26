@@ -1,4 +1,4 @@
-import { useState } from "preact/hooks";
+import { useEffect, useState } from "preact/hooks";
 import { Page } from "../components/Page";
 import { Icon } from "../components/Icon";
 import { Texte } from "../components/Texte";
@@ -6,6 +6,7 @@ import { LockPanel } from "../components/LockPanel";
 import { NotFound } from "./NotFound";
 import { MiseAJourCC, TexteEtudieBloc } from "./Commentaire";
 import { licence } from "../lib/licence";
+import { noterCCUneFois } from "../lib/stats";
 import { useStored } from "../lib/storage";
 import { useAccesCC as useAccess } from "../data/cc-donnees";
 import { CORRIGES_CC, SUJETS_CC, type TexteEtudie } from "../data/commentaire";
@@ -107,6 +108,12 @@ export function AtelierCC({ id }: { id: string }) {
   const [outil, setOutil] = useState<Centre>(0);
   const [debut, setDebut] = useState<number | null>(null);
   const [choisis, setChoisis] = useState<string[]>([]);
+  // Tableau de bord : atelier commencé, puis arrivé à la dernière étape (une fois par appareil et par texte).
+  useEffect(() => {
+    if (!t || !premium) return;
+    noterCCUneFois(`atelier:${id}`);
+    if (etape === ETAPES.length - 1) noterCCUneFois(`fini:${id}`);
+  }, [id, etape, premium]);
   if (!t) return <NotFound what="Ce texte n'existe pas." back="#/cc/entrainement" />;
   const retour = corrige ? `#/cc/corriges/${id}` : `#/cc/entrainement/${id}`;
   const at = { ...VIDE, ...a };

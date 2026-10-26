@@ -3,6 +3,7 @@ import { SERVEUR_URL } from "./site";
 import { read, write } from "./storage";
 import { noter } from "./stats";
 import { acces } from "./licence";
+import { methodeActive } from "./methodes";
 
 /** Messages publiés par l'éditeur depuis son tableau de bord : promos, informations, astuces. */
 export interface Annonce {
@@ -33,7 +34,7 @@ function charger(forcer = false) {
   if (!SERVEUR_URL || !navigator.onLine) return Promise.resolve();
   if (forcer) enCours = null;
   // Le serveur ne garde que les messages pour tout le monde et ceux du groupe de l'élève (a payé ou non).
-  enCours ??= fetch(`${SERVEUR_URL}/annonces?pour=${acces()}`)
+  enCours ??= fetch(`${SERVEUR_URL}/annonces?pour=${acces()}&methode=${methodeActive()}`)
     .then(r => (r.ok ? r.json() : null))
     .then(d => { if (Array.isArray(d?.annonces)) { write(CACHE, d.annonces); prevenir(); } })
     .catch(() => {});
@@ -41,6 +42,7 @@ function charger(forcer = false) {
 }
 document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") charger(true); });
 window.addEventListener("acces-change", () => charger(true));
+window.addEventListener("methode-change", () => charger(true));
 
 /** Message ouvert dans le panneau de la cloche (null : panneau fermé ; 0 : liste seule). */
 let ouvert: number | null = null;

@@ -3,6 +3,7 @@ import { SERVEUR_URL } from "./site";
 import { read, write } from "./storage";
 import { isInstalled, platform } from "./install";
 import { acces, appareil, licence } from "./licence";
+import { methodeActive } from "./methodes";
 
 /**
  * Notifications de Litterae (promos, messages, astuces) sur le téléphone.
@@ -44,7 +45,7 @@ export async function activerNotifs(): Promise<string | null> {
     const systeme = { ios: "ios", android: "android", desktop: "ordinateur" }[platform()];
     await appel("/push/abonner", { abonnement: abonnement.toJSON(), systeme, ...groupe() });
     write("notif-abonne", true);
-    write("notif-acces", acces());
+    write("notif-acces", etatGroupe());
     return null;
   } catch {
     return "L'activation n'a pas marché. Réessaie dans un moment.";
@@ -52,24 +53,27 @@ export async function activerNotifs(): Promise<string | null> {
 }
 
 /** Le serveur range le téléphone avec ceux qui ont payé (clé vérifiée sur cet appareil) ou non. */
-const groupe = () => ({ acces: acces(), cle: licence()?.cle, appareil: appareil() });
+const groupe = () => ({ acces: acces(), cle: licence()?.cle, appareil: appareil(), methode: methodeActive() });
+/** Ce que le serveur sait du téléphone : accès et méthode ; renvoyé quand l'un des deux change. */
+const etatGroupe = () => `${acces()}|${methodeActive()}`;
 
 /**
  * Téléphone déjà abonné dont l'accès a changé (clé activée ou retirée), ou abonné avant le choix
  * « Qui reçoit ? » du tableau de bord : on redit au serveur dans quel groupe il est.
  */
 export async function synchroAccesNotifs() {
-  if (etatNotif() !== "abonne" || !navigator.onLine || read<string>("notif-acces", "") === acces()) return;
+  if (etatNotif() !== "abonne" || !navigator.onLine || read<string>("notif-acces", "") === etatGroupe()) return;
   try {
     const abonnement = await (await navigator.serviceWorker.ready).pushManager.getSubscription();
     if (!abonnement) return;
     const r = await appel("/push/abonner", { abonnement: abonnement.toJSON(), ...groupe() });
-    if (r?.ok) write("notif-acces", acces());
+    if (r?.ok) write("notif-acces", etatGroupe());
   } catch {
     // On réessaiera à la prochaine ouverture.
   }
 }
 window.addEventListener("acces-change", () => { synchroAccesNotifs(); });
+window.addEventListener("methode-change", () => { synchroAccesNotifs(); });
 
 export async function desactiverNotifs() {
   write("notif-abonne", false);

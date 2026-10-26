@@ -36,6 +36,7 @@ import { DuelScreen } from "./screens/Duel";
 import { CommentaireScreen } from "./screens/Commentaire";
 import { reverifier } from "./lib/licence";
 import { synchroAccesNotifs } from "./lib/notifications";
+import { noterMethodeDuJour } from "./lib/methodes";
 import { synchroniser } from "./lib/synchro";
 import { demarrerStats, noter } from "./lib/stats";
 import { actualiserQuestions } from "./lib/contact";
@@ -78,6 +79,7 @@ export function App() {
     });
     setTimeout(preparerRappel, 4000);
     setTimeout(synchroAccesNotifs, 3000);
+    noterMethodeDuJour();
     // Ouverture depuis une notification : l'adresse porte le numéro du message.
     const depuisNotif = new URLSearchParams(location.search).get("annonce");
     if (depuisNotif) {

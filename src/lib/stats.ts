@@ -9,7 +9,7 @@ import { read, write } from "./storage";
  * les fiches consultées et les messages de l'accueil vus ou cliqués. Aucun nom, aucune adresse.
  * Les événements sont regroupés et envoyés en une fois pour économiser les données mobiles.
  */
-export type Evenement = { t: "ecran" | "oeuvre" | "vue" | "clic" | "notif" | "sujet" | "lecon" | "mot" | "recherche" | "vide" | "verrou" | "achat" | "parcours" | "partage" | "gratuit" | "progres" | "suggestion"; ref: string };
+export type Evenement = { t: "ecran" | "oeuvre" | "vue" | "clic" | "notif" | "sujet" | "lecon" | "mot" | "recherche" | "vide" | "verrou" | "achat" | "parcours" | "partage" | "gratuit" | "progres" | "suggestion" | "cc"; ref: string };
 
 let file: Evenement[] = [];
 let minuterie: ReturnType<typeof setTimeout> | undefined;
@@ -75,8 +75,16 @@ export function noterAtelier(num: string, pct: number, envoye: boolean) {
 /** Partie de l'appli où se trouve l'élève, pour savoir d'où viennent les achats (entonnoir du tableau de bord). */
 export function endroit(): string {
   const [section = "accueil", id] = parseHash().path;
-  const noms: Record<string, string> = { oeuvres: id ? "oeuvre" : "oeuvres", sujets: "sujet", cours: id ? "lecon" : "accueil", outils: "dico", acces: "acces", carnet: "espace", devoirs: "espace", collection: "espace", duel: "accueil", "a-propos": "a-propos", cgu: "a-propos" };
+  const noms: Record<string, string> = { cc: "cc", oeuvres: id ? "oeuvre" : "oeuvres", sujets: "sujet", cours: id ? "lecon" : "accueil", outils: "dico", acces: "acces", carnet: "espace", devoirs: "espace", collection: "espace", duel: "accueil", "a-propos": "a-propos", cgu: "a-propos" };
   return noms[section] ?? "autre";
+}
+
+/** Commentaire composé : une fois par appareil seulement (atelier commencé, atelier terminé). */
+export function noterCCUneFois(ref: string) {
+  const vus = read<string[]>("cc-stats-vus", []);
+  if (vus.includes(ref)) return;
+  write("cc-stats-vus", [...vus, ref].slice(-300));
+  noter({ t: "cc", ref });
 }
 
 /** Recherche faite par l'élève (œuvres ou dictionnaire), notée si elle reste affichée 2 secondes. */
