@@ -38,12 +38,12 @@ export function Page({ title, back, wide, partage, actions, children }: Props) {
           <a class={`brand ${back ? "brand-desktop" : ""}`} href="#/accueil" aria-label="Litterae, accueil">
             Litter<span>ae</span>
           </a>
-          {/* Écrans principaux : le choix de la méthode, à côté du nom de l'appli. */}
-          {!back && <ChoixMethode />}
           {back && title ? <p class="topbar-title">{title}</p> : <span class="topbar-spacer" />}
           <NavTabs />
           {actions}
           {partage && <Partager {...partage} />}
+          {/* Écrans principaux : le choix de la méthode, contre la cloche et le profil. */}
+          {!back && <ChoixMethode />}
           <Cloche />
           <EspaceBouton detail={!!back} />
           <InstallButton />

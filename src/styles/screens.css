@@ -688,7 +688,7 @@
 
 /* Choix de la méthode, dans la barre du haut à côté du nom de l'appli */
 .methode-bouton {
-  display: inline-flex; align-items: center; gap: 6px; min-height: 36px; min-width: 0; margin-left: var(--s1);
+  display: inline-flex; align-items: center; gap: 6px; min-height: 36px; min-width: 0; margin-left: 0;
   padding: 0 6px 0 10px; border: 1.5px solid var(--green); border-radius: 18px;
   background: var(--surface); color: var(--green); font: 700 var(--text-xs)/1 var(--font-text); cursor: pointer; white-space: nowrap;
 }
@@ -820,4 +820,4 @@
 .cc-score { font-weight: 400; opacity: .85; }
 /* Petits téléphones : le nom de la méthode garde la place, la flèche s'efface. */
 @media (max-width: 400px) { .methode-bouton { padding-right: 10px; } .methode-bouton .icon { display: none; } }
-@media (max-width: 360px) { .topbar .brand { font-size: 1.125rem; } .topbar-inner { gap: 4px; } .methode-bouton { margin-left: 0; padding: 0 8px; } }
+@media (max-width: 360px) { .topbar .brand { font-size: 1.125rem; } .topbar-inner { gap: 4px; } .methode-bouton { padding: 0 8px; } }
