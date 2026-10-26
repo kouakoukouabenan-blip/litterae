@@ -5,6 +5,7 @@ import { Icon } from "./Icon";
 import { EspaceBouton, NavTabs } from "./Nav";
 import { InstallButton } from "./Install";
 import { Cloche } from "./Annonces";
+import { ChoixMethode } from "./ChoixMethode";
 import { Partager, type Partage } from "./Partager";
 
 interface Props {
@@ -37,6 +38,8 @@ export function Page({ title, back, wide, partage, actions, children }: Props) {
           <a class={`brand ${back ? "brand-desktop" : ""}`} href="#/accueil" aria-label="Litterae, accueil">
             Litter<span>ae</span>
           </a>
+          {/* Écrans principaux : le choix de la méthode, à côté du nom de l'appli. */}
+          {!back && <ChoixMethode />}
           {back && title ? <p class="topbar-title">{title}</p> : <span class="topbar-spacer" />}
           <NavTabs />
           {actions}

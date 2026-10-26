@@ -10,7 +10,6 @@ import { ProchaineAction, Suggestions } from "../components/Suggestions";
 import { sujetsEntrainement } from "../lib/entrainement";
 import { useState } from "preact/hooks";
 import { href } from "../lib/router";
-import { ChoixMethode } from "../components/ChoixMethode";
 import { useMethode } from "../lib/methodes";
 import { AccueilCommentaire } from "./Commentaire";
 
@@ -37,8 +36,6 @@ function AccueilDissertation() {
         <p class="eyebrow">La dissertation littéraire, pas à pas</p>
         <h1 class="home-title">Que veux-tu faire ?</h1>
       </header>
-
-      <ChoixMethode />
 
       <ProchaineAction />
 

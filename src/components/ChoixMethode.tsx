@@ -3,7 +3,7 @@ import { Icon } from "./Icon";
 import { METHODES, useMethode } from "../lib/methodes";
 import { useAccess } from "../lib/access";
 
-/** Bouton en tête de l'accueil : la méthode en cours, et la liste des autres méthodes. */
+/** Bouton de la barre du haut : la méthode en cours, et la liste des autres méthodes. */
 export function ChoixMethode() {
   const ref = useRef<HTMLDialogElement>(null);
   const { premium } = useAccess();
@@ -18,10 +18,11 @@ export function ChoixMethode() {
 
   return (
     <>
-      <button type="button" class="methode-bouton" style={{ borderColor: METHODE_ACTIVE.couleur, color: METHODE_ACTIVE.encre }} onClick={ouvrir} aria-haspopup="dialog">
+      <button type="button" class="methode-bouton" style={{ borderColor: METHODE_ACTIVE.couleur, color: METHODE_ACTIVE.encre }} onClick={ouvrir} aria-haspopup="dialog"
+        aria-label={`Méthode : ${METHODE_ACTIVE.nom}. Changer de méthode`}>
         <span class="methode-point" style={{ background: METHODE_ACTIVE.couleur }} aria-hidden="true" />
-        {METHODE_ACTIVE.nom}
-        <Icon name="expand_more" size={20} />
+        <span class="methode-nom">{METHODE_ACTIVE.court}</span>
+        <Icon name="expand_more" size={18} />
       </button>
       <dialog ref={ref} class="sheet methode-feuille" aria-labelledby="methode-titre" onClick={e => e.target === ref.current && fermer()}>
         <div class="sheet-head">

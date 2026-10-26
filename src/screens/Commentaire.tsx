@@ -4,7 +4,6 @@ import { Page } from "../components/Page";
 import { Icon } from "../components/Icon";
 import { Texte } from "../components/Texte";
 import { Segments } from "../components/SujetsOnglets";
-import { ChoixMethode } from "../components/ChoixMethode";
 import { InstallBanner } from "../components/Install";
 import { Annonces } from "../components/Annonces";
 import { read, useStored } from "../lib/storage";
@@ -89,7 +88,6 @@ export function AccueilCommentaire() {
         <p class="eyebrow">Le commentaire composé, pas à pas</p>
         <h1 class="home-title">Que veux-tu faire ?</h1>
       </header>
-      <ChoixMethode />
       <MessageALaUne />
       {!premium && licence() && <MiseAJourCC />}
       {!premium && !licence() && <p class="quota cc-quota"><span class="muted quota-texte">Réservé à l'accès complet</span><AchatLien label="Débloquer" /></p>}

@@ -9,6 +9,8 @@ import { jourLocal } from "./progres";
 export interface Methode {
   id: string;
   nom: string;
+  /** Nom court, pour la barre du haut. */
+  court: string;
   /** Couleur de la méthode (pastille, bouton de choix). */
   couleur: string;
   /** Couleur du texte sur fond clair (l'ocre est trop pâle pour du texte). */
@@ -17,9 +19,9 @@ export interface Methode {
 }
 
 export const METHODES: Methode[] = [
-  { id: "dissertation", nom: "Dissertation littéraire", couleur: "var(--green)", encre: "var(--green)", prete: true },
-  { id: "commentaire", nom: "Commentaire composé", couleur: "var(--orange)", encre: "var(--orange-text)", prete: true },
-  { id: "philosophie", nom: "Dissertation philosophique", couleur: "var(--ochre)", encre: "var(--ochre-text)", prete: false }
+  { id: "dissertation", nom: "Dissertation littéraire", court: "Dissertation", couleur: "var(--green)", encre: "var(--green)", prete: true },
+  { id: "commentaire", nom: "Commentaire composé", court: "Commentaire", couleur: "var(--orange)", encre: "var(--orange-text)", prete: true },
+  { id: "philosophie", nom: "Dissertation philosophique", court: "Philosophie", couleur: "var(--ochre)", encre: "var(--ochre-text)", prete: false }
 ];
 
 /** La méthode choisie par l'élève, retenue sur l'appareil. */
