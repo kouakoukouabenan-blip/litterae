@@ -113,7 +113,7 @@ export function LeconScreen({ id }: { id: string }) {
         <header class="page-header">
           <p class="eyebrow">Leçon {i + 1} sur {LECONS.length} · {l.duree}</p>
           <h1 class="page-title"><Texte text={l.titre} /></h1>
-          {ouverte && (
+          {acces.ouverte(id) && (
             <p class="small muted fiche-quota">Leçon gratuite {acces.nbOuvertes} sur {LECONS_GRATUITES}. <AchatLien label="Tout débloquer" /></p>
           )}
         </header>

@@ -38,7 +38,7 @@ export function VerrouCC() {
 }
 
 /** Clé activée avant l'arrivée du commentaire composé, et appareil resté hors ligne : on le fait venir. */
-function MiseAJourCC() {
+export function MiseAJourCC() {
   const [etat, setEtat] = useState<"" | "envoi" | "echec">("");
   async function maj() {
     setEtat("envoi");
@@ -54,6 +54,7 @@ function MiseAJourCC() {
 }
 /** Cadenas en bout de ligne, sans clé. */
 export function Cadenas() {
+  if (licence()) return null;
   return <span class="row-lock" title="Accès complet"><Icon name="lock" size={18} /><span class="sr-only">Réservé à l'accès complet</span></span>;
 }
 
@@ -88,7 +89,8 @@ export function AccueilCommentaire() {
       </header>
       <ChoixMethode />
       <MessageALaUne />
-      {!premium && <p class="quota cc-quota"><span class="muted quota-texte">Réservé à l'accès complet</span><AchatLien label="Débloquer" /></p>}
+      {!premium && licence() && <MiseAJourCC />}
+      {!premium && !licence() && <p class="quota cc-quota"><span class="muted quota-texte">Réservé à l'accès complet</span><AchatLien label="Débloquer" /></p>}
       <nav class="choix" aria-label="Que veux-tu faire ?">
         <a class="choix-carte choix-methode" href={suivante && nbLues > 0 ? `#/cc/cours/${suivante.id}` : "#/cc/cours"}>
           <Icon name="menu_book" size={24} />

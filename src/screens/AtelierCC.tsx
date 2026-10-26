@@ -4,7 +4,8 @@ import { Icon } from "../components/Icon";
 import { Texte } from "../components/Texte";
 import { LockPanel } from "../components/LockPanel";
 import { NotFound } from "./NotFound";
-import { TexteEtudieBloc } from "./Commentaire";
+import { MiseAJourCC, TexteEtudieBloc } from "./Commentaire";
+import { licence } from "../lib/licence";
 import { useStored } from "../lib/storage";
 import { useAccesCC as useAccess } from "../data/cc-donnees";
 import { CORRIGES_CC, SUJETS_CC, type TexteEtudie } from "../data/commentaire";
@@ -146,7 +147,7 @@ export function AtelierCC({ id }: { id: string }) {
   if (!premium) return (
     <Page title="Atelier" back={retour}>
       <header class="page-header"><p class="eyebrow">Atelier</p><h1 class="page-title">{t.titre}</h1></header>
-      <LockPanel reason="Le Commentaire composé est réservé à l'accès complet." contenu="Avec ta clé d'accès, tout le Commentaire composé s'ouvre, atelier compris." />
+      {licence() ? <MiseAJourCC /> : <LockPanel reason="Le Commentaire composé est réservé à l'accès complet." contenu="Avec ta clé d'accès, tout le Commentaire composé s'ouvre, atelier compris." />}
     </Page>
   );
 
