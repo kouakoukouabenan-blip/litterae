@@ -18,19 +18,29 @@ import { CORRIGES_CC, SUJETS_CC, type TexteEtudie } from "../data/commentaire";
 type Centre = 0 | 1;
 interface Soulignement { d: number; f: number; c: Centre }
 interface Groupe { id: string; c: Centre; titre: string; indices: string[] }
+/** Indices analysés ensemble (champ lexical, même figure…) : une seule analyse pour tous. */
+interface Ensemble { id: string; cles: string[]; nature: string }
 interface Atelier {
   paratexte: string; type: string; tonalite: string; theme: string; idee: string;
   centres: [string, string];
   soulignes: Soulignement[];
   groupes: Groupe[];
   analyses: Record<string, { a: string; i: string }>;
+  ensembles: Ensemble[];
   intro: string; dev: string; conclusion: string;
 }
 const VIDE: Atelier = {
   paratexte: "", type: "", tonalite: "", theme: "", idee: "", centres: ["", ""],
-  soulignes: [], groupes: [], analyses: {}, intro: "", dev: "", conclusion: ""
+  soulignes: [], groupes: [], analyses: {}, ensembles: [], intro: "", dev: "", conclusion: ""
 };
 const ETAPES = ["Comprendre", "Centres d'intérêt", "Souligner", "Grouper", "Analyser", "Rédiger"];
+// Ce qui relie des indices analysés ensemble ; « Autre » : l'élève le dit lui-même.
+const NATURES = ["Champ lexical", "Même figure de style", "Même temps des verbes", "Même classe de mots", "Ponctuation", "Sonorités", "Autre"];
+const DEBUTS: Record<string, string> = {
+  "Champ lexical": "Champ lexical de … :", "Même figure de style": "Figure répétée (…) :", "Même temps des verbes": "Verbes au … :",
+  "Même classe de mots": "Série de … :", "Ponctuation": "Ponctuation :", "Sonorités": "Sonorités (…) :"
+};
+const cleEnsemble = (e: Ensemble) => `e:${e.id}`;
 
 interface Mot { m: string; ligne: number; debutLigne: boolean; debutPar: boolean }
 
@@ -108,6 +118,8 @@ export function AtelierCC({ id }: { id: string }) {
   const [outil, setOutil] = useState<Centre>(0);
   const [debut, setDebut] = useState<number | null>(null);
   const [choisis, setChoisis] = useState<string[]>([]);
+  // Étape « Analyser » : indices cochés pour être analysés ensemble.
+  const [aRegrouper, setARegrouper] = useState<string[]>([]);
   // Tableau de bord : atelier commencé, puis arrivé à la dernière étape (une fois par appareil et par texte).
   useEffect(() => {
     if (!t || !premium) return;
@@ -119,7 +131,7 @@ export function AtelierCC({ id }: { id: string }) {
   const at = { ...VIDE, ...a };
   const maj = (p: Partial<Atelier>) => setA({ ...at, ...p });
   const mots = decouper(t);
-  const aller = (k: number) => { setEtape(k); setDebut(null); setChoisis([]); scrollTo({ top: 0 }); };
+  const aller = (k: number) => { setEtape(k); setDebut(null); setChoisis([]); setARegrouper([]); scrollTo({ top: 0 }); };
   const nomCentre = (c: Centre) => at.centres[c].trim() || `Centre d'intérêt ${c + 1}`;
 
   const toucher = (i: number) => {
@@ -141,13 +153,24 @@ export function AtelierCC({ id }: { id: string }) {
 
   const parCle = new Map(at.soulignes.map(s => [cle(s), s]));
   const groupeDe = (k: string) => at.groupes.find(g => g.indices.includes(k));
-  const nbAnalyses = at.soulignes.filter(s => { const x = at.analyses[cle(s)]; return x && x.a.trim() && x.i.trim(); }).length;
+  // Ensembles encore valables (au moins deux indices toujours soulignés) ; les autres indices s'analysent un à un.
+  const ensembles = at.ensembles.map(e => ({ ...e, cles: e.cles.filter(k => parCle.has(k)) })).filter(e => e.cles.length >= 2);
+  const ensembleDe = (k: string) => ensembles.find(e => e.cles.includes(k));
+  /** Ce qui s'analyse dans un bloc : un ensemble à la place de ses indices, à la place du premier d'entre eux. */
+  const unites = (cles: string[]) => cles.flatMap(k => {
+    const e = ensembleDe(k);
+    if (!e) return [{ cle: k, cles: [k], ensemble: null as Ensemble | null }];
+    return e.cles.find(x => cles.includes(x)) === k ? [{ cle: cleEnsemble(e), cles: e.cles, ensemble: e as Ensemble | null }] : [];
+  });
+  const toutes = unites(at.soulignes.map(cle));
+  const nbAnalyses = toutes.filter(u => { const x = at.analyses[u.cle]; return x && x.a.trim() && x.i.trim(); }).length;
+  const citer = (cles: string[]) => cles.map(k => parCle.get(k)).filter(Boolean).map(s => citation(mots, s!)).join(", ");
   const faites = [
     !!(at.type.trim() && at.tonalite.trim() && at.theme.trim() && at.idee.trim()),
     !!(at.centres[0].trim() && at.centres[1].trim()),
     at.soulignes.some(s => s.c === 0) && at.soulignes.some(s => s.c === 1),
     at.groupes.filter(g => g.titre.trim() && g.indices.length).length >= 2,
-    at.soulignes.length > 0 && nbAnalyses === at.soulignes.length,
+    at.soulignes.length > 0 && nbAnalyses === toutes.length,
     !!(at.intro.trim() && at.dev.trim() && at.conclusion.trim())
   ];
 
@@ -264,23 +287,68 @@ export function AtelierCC({ id }: { id: string }) {
 
           {etape === 4 && <>
             <p>Pour chaque indice : comment l'auteur le dit (le procédé), et pourquoi il le dit ainsi (l'effet, le sens).</p>
+            <p class="meta">Des indices vont ensemble (un champ lexical, une même figure, des verbes au même temps) ? Coche-les, puis analyse-les ensemble.</p>
             {!at.soulignes.length && <p class="meta">Souligne d'abord des indices, à l'étape 3.</p>}
             {([0, 1] as Centre[]).map(c => {
-              const blocs = [...at.groupes.filter(g => g.c === c).map(g => ({ titre: g.titre.trim() || "Groupe sans titre", cles: g.indices })),
-                { titre: "Indices sans groupe", cles: at.soulignes.filter(s => s.c === c && !groupeDe(cle(s))).map(cle) }].filter(b => b.cles.length);
+              const blocs = [...at.groupes.filter(g => g.c === c).map(g => ({ id: g.id, titre: g.titre.trim() || "Groupe sans titre", cles: g.indices.filter(k => parCle.has(k)) })),
+                { id: `libres-${c}`, titre: "Indices sans groupe", cles: at.soulignes.filter(s => s.c === c && !groupeDe(cle(s))).map(cle) }].filter(b => b.cles.length);
               if (!blocs.length) return null;
               return <section key={c}>
                 <h2 class="section-title">{nomCentre(c)}</h2>
-                {blocs.map(b => <div key={b.titre} class="cc-groupe">
-                  <h3 class="cc-sous-titre">{b.titre}</h3>
-                  <ul class="cc-fiches">{b.cles.map(k => { const s = parCle.get(k); if (!s) return null; const x = at.analyses[k] ?? { a: "", i: "" };
-                    const ecrire = (p: Partial<{ a: string; i: string }>) => maj({ analyses: { ...at.analyses, [k]: { ...x, ...p } } });
-                    return <li key={k} class="cc-fiche">
-                      <p class="cc-fiche-indice">{citation(mots, s)}</p>
-                      <Champ label="Comment" valeur={x.a} lignes={2} onInput={v => ecrire({ a: v })} />
-                      <Champ label="Pourquoi" valeur={x.i} lignes={2} onInput={v => ecrire({ i: v })} />
-                    </li>; })}</ul>
-                </div>)}
+                {blocs.map(b => {
+                  const coches = aRegrouper.filter(k => b.cles.includes(k));
+                  return <div key={b.id} class="cc-groupe">
+                    <h3 class="cc-sous-titre">{b.titre}</h3>
+                    <ul class="cc-fiches">{unites(b.cles).map(u => {
+                      const x = at.analyses[u.cle] ?? { a: "", i: "" };
+                      const ecrire = (p: Partial<{ a: string; i: string }>) => maj({ analyses: { ...at.analyses, [u.cle]: { ...x, ...p } } });
+                      const e = u.ensemble;
+                      if (!e) {
+                        const coche = aRegrouper.includes(u.cle);
+                        return <li key={u.cle} class={`cc-fiche${coche ? " cc-fiche-cochee" : ""}`}>
+                          <div class="cc-fiche-tete">
+                            <p class="cc-fiche-indice">{citer(u.cles)}</p>
+                            {b.cles.length > 1 && <label class="cc-regrouper"><input type="checkbox" checked={coche}
+                              onChange={() => setARegrouper(coche ? aRegrouper.filter(k => k !== u.cle) : [...aRegrouper, u.cle])} />Regrouper</label>}
+                          </div>
+                          <Champ label="Comment" valeur={x.a} lignes={2} onInput={v => ecrire({ a: v })} />
+                          <Champ label="Pourquoi" valeur={x.i} lignes={2} onInput={v => ecrire({ i: v })} />
+                        </li>;
+                      }
+                      const choisir = (nature: string) => {
+                        const debutTexte = DEBUTS[nature];
+                        // Le début proposé ne remplace jamais ce que l'élève a écrit : c'est une aide, il reste libre.
+                        const a = !x.a.trim() && debutTexte ? `${debutTexte} ${citer(e.cles)}. ` : x.a;
+                        maj({ ensembles: at.ensembles.map(y => y.id === e.id ? { ...y, nature } : y), analyses: { ...at.analyses, [u.cle]: { ...x, a } } });
+                      };
+                      return <li key={u.cle} class="cc-fiche cc-fiche-ensemble">
+                        <p class="cc-fiche-label">{e.cles.length} indices analysés ensemble{e.nature && e.nature !== "Autre" ? ` · ${e.nature}` : ""}</p>
+                        <p class="cc-fiche-indice">{citer(e.cles)}</p>
+                        <div class="cc-natures" role="group" aria-label="Ce qui les relie">
+                          {NATURES.map(n => <button key={n} type="button" class="chip" aria-pressed={e.nature === n} onClick={() => choisir(n)}>{n}</button>)}
+                        </div>
+                        <Champ label="Comment" aide={e.nature === "Autre" ? "Dis toi-même ce qui relie ces indices, puis le procédé." : "Ce qui les relie et le procédé. Complète ou réécris à ta façon."} valeur={x.a} lignes={3} onInput={v => ecrire({ a: v })} />
+                        <Champ label="Pourquoi" valeur={x.i} lignes={3} onInput={v => ecrire({ i: v })} />
+                        <button class="btn cc-btn-discret align-start" onClick={() => {
+                          // Séparer : l'analyse écrite revient au premier indice s'il n'en avait pas.
+                          const premier = e.cles[0], avant = at.analyses[premier];
+                          const analyses = { ...at.analyses };
+                          if (!avant || (!avant.a.trim() && !avant.i.trim())) analyses[premier] = x;
+                          delete analyses[u.cle];
+                          maj({ ensembles: at.ensembles.filter(y => y.id !== e.id), analyses });
+                        }}><Icon name="call_split" size={18} />Séparer</button>
+                      </li>;
+                    })}</ul>
+                    {coches.length > 0 && <button class="btn btn-secondary align-start cc-ensemble-btn" disabled={coches.length < 2} onClick={() => {
+                      const ens: Ensemble = { id: String(Date.now()), cles: b.cles.filter(k => coches.includes(k)), nature: "" };
+                      // Ce qui était déjà écrit pour ces indices est repris dans l'analyse commune.
+                      const ecrits = ens.cles.map(k => at.analyses[k]).filter(v => v && (v.a.trim() || v.i.trim()));
+                      const analyses = { ...at.analyses, [cleEnsemble(ens)]: { a: ecrits.map(v => v!.a.trim()).filter(Boolean).join(" "), i: ecrits.map(v => v!.i.trim()).filter(Boolean).join(" ") } };
+                      maj({ ensembles: [...at.ensembles.filter(y => !y.cles.some(k => ens.cles.includes(k))), ens], analyses });
+                      setARegrouper(aRegrouper.filter(k => !coches.includes(k)));
+                    }}><Icon name="account_tree" size={20} />{coches.length < 2 ? "Coche au moins 2 indices" : `Analyser ensemble (${coches.length})`}</button>}
+                  </div>;
+                })}
               </section>;
             })}
           </>}
@@ -291,7 +359,10 @@ export function AtelierCC({ id }: { id: string }) {
               <summary>Mon plan</summary>
               {([0, 1] as Centre[]).map(c => <div key={c}>
                 <p><strong>{nomCentre(c)}</strong></p>
-                <ol class="outline">{at.groupes.filter(g => g.c === c).map(g => <li key={g.id}>{g.titre || "Groupe sans titre"}</li>)}</ol>
+                <ol class="outline">{at.groupes.filter(g => g.c === c).map(g => <li key={g.id}>{g.titre || "Groupe sans titre"}
+                  <ul class="cc-plan-analyses">{unites(g.indices.filter(k => parCle.has(k))).map(u => { const x = at.analyses[u.cle];
+                    return <li key={u.cle}>{citer(u.cles)}{x?.a.trim() ? ` : ${x.a.trim()}` : ""}{x?.i.trim() ? ` → ${x.i.trim()}` : ""}</li>; })}</ul>
+                </li>)}</ol>
               </div>)}
             </details>
             <Champ label="Introduction" aide="Généralité, présentation du texte, annonce du plan." lignes={6} valeur={at.intro} onInput={v => maj({ intro: v })} />
