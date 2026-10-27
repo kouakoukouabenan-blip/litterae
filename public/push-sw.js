@@ -34,12 +34,20 @@ self.addEventListener("push", event => {
     } catch {
       // Hors connexion ou serveur injoignable : notification générique.
     }
+    // Appli ouverte à l'écran : elle joue son propre petit son et montre le message ; la notification reste muette pour ne pas sonner deux fois.
+    const fenetres = await self.clients.matchAll({ type: "window", includeUncontrolled: true });
+    const visibles = fenetres.filter(f => f.visibilityState === "visible" && f.url.startsWith(self.registration.scope));
+    visibles.forEach(f => f.postMessage({ type: "litterae-notification", annonce }));
     await self.registration.showNotification(annonce?.titre ?? "Litterae", {
       body: annonce ? annonce.texte : "Un nouveau message t'attend sur l'accueil.",
       icon: "icon-192.png",
       badge: "icon-192.png",
       tag: annonce ? `annonce-${annonce.id}` : "litterae",
       lang: "fr",
+      // Appli fermée : son habituel du téléphone, une vibration, et le son même si une notification précédente est remplacée.
+      silent: visibles.length > 0,
+      renotify: visibles.length === 0,
+      vibrate: visibles.length > 0 ? undefined : [200, 100, 200],
       data: { id: annonce?.id ?? null, type: annonce?.type ?? null, lien: annonce?.lien?.startsWith("#/") ? annonce.lien : "#/" }
     });
   })());

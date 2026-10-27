@@ -42,6 +42,7 @@ import { demarrerStats, noter } from "./lib/stats";
 import { actualiserQuestions } from "./lib/contact";
 import { prevenirAchatHorsLigne } from "./components/Achat";
 import { preparerRappel } from "./lib/rappels";
+import { ecouterNotifications } from "./lib/sonNotification";
 
 function useScrollMemory(key: string) {
   const positions = useRef(new Map<string, number>());
@@ -70,6 +71,7 @@ export function App() {
     prevenirAchatHorsLigne();
     preparerAvantPaiement();
     demarrerStats();
+    ecouterNotifications();
     // Réponses de l'auteur aux questions (accès complet) et nouveautés : au démarrage et au retour dans l'appli.
     actualiserQuestions();
     document.addEventListener("visibilitychange", () => {

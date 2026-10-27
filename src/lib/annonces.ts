@@ -47,6 +47,9 @@ window.addEventListener("methode-change", () => charger(true));
 /** Message ouvert dans le panneau de la cloche (null : panneau fermé ; 0 : liste seule). */
 let ouvert: number | null = null;
 
+/** Recharge les messages tout de suite (notification reçue pendant que l'appli est ouverte). */
+export const rechargerAnnonces = () => charger(true);
+
 export function ouvrirMessages(id = 0) { ouvert = id; prevenir(); }
 export function fermerMessages() { ouvert = null; prevenir(); }
 
