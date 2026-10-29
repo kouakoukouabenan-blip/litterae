@@ -144,6 +144,7 @@
   },
   {
    "id": "cite-des-milliardaires",
+   "bac": 2018,
    "titre": "La Cité des Milliardaires",
    "auteur": "Serge Grah",
    "source": "*Passion de soutane*, JD Éditions, 2016",
@@ -257,6 +258,7 @@
   },
   {
    "id": "livre-de-ma-mere",
+   "bac": 2012,
    "titre": "Louange à vous, mères de tous les pays",
    "auteur": "Albert Cohen",
    "source": "*Le Livre de ma mère*, Gallimard, 1954",
@@ -322,6 +324,92 @@
   }
  ],
  "sujets": [
+  {
+   "id": "jc-est-mort",
+   "bac": 2019,
+   "titre": "J.C. est mort",
+   "auteur": "Emmanuel Boundzéki Dongala",
+   "source": "*Jazz et vin de palme*, Hatier, 1982",
+   "prose": true,
+   "chapeau": "",
+   "consigne": "",
+   "texte": "",
+   "pistes": []
+  },
+  {
+   "id": "nuit-cauchemar",
+   "bac": 2017,
+   "titre": "Nuit cauchemar",
+   "auteur": "Guy de Maupassant",
+   "source": "*Clair de lune*, Ollendorff, 1888",
+   "prose": true,
+   "chapeau": "",
+   "note": "",
+   "consigne": "",
+   "texte": "",
+   "pistes": []
+  },
+  {
+   "id": "mon-existence",
+   "bac": 2016,
+   "titre": "Mon existence n'aura pas de parfum",
+   "auteur": "Zégoua Gbessi Nokan",
+   "source": "*Cri*, CEDA",
+   "consigne": "",
+   "texte": "",
+   "pistes": []
+  },
+  {
+   "id": "amphore-sacree",
+   "bac": 2015,
+   "titre": "L'amphore sacrée",
+   "auteur": "Aminata Sow Fall",
+   "source": "*L'Ex-Père de la nation*, L'Harmattan, 1987",
+   "prose": true,
+   "chapeau": "",
+   "note": "",
+   "consigne": "",
+   "texte": "",
+   "pistes": []
+  },
+  {
+   "id": "emigrant",
+   "bac": 2011,
+   "titre": "Émigrant",
+   "auteur": "Jorge Barbosa",
+   "source": "*La Mer et l'exil*, dans *Claridade* n° 7, 1948",
+   "note": "",
+   "consigne": "",
+   "texte": "",
+   "pistes": []
+  },
+  {
+   "id": "lumumba-afrique",
+   "bac": 2010,
+   "titre": "Tu y penses à l'Afrique, quelquefois ?",
+   "auteur": "Aimé Césaire",
+   "source": "*Une saison au Congo*, Seuil, 1973, acte II, scène 11",
+   "prose": true,
+   "theatre": true,
+   "genre": "Théâtre",
+   "chapeau": "",
+   "consigne": "",
+   "texte": "",
+   "pistes": []
+  },
+  {
+   "id": "viande-prison",
+   "bac": 2009,
+   "titre": "Dans ce trou, la viande était la vie",
+   "auteur": "Ibrahim Ly",
+   "source": "*Toiles d'araignées*, 1982",
+   "prose": true,
+   "chapeau": "",
+   "note": "",
+   "consigne": "",
+   "texte": "",
+   "pistes": []
+  },
   {
    "id": "chanson-automne",
    "titre": "Chanson d'automne",
@@ -392,6 +480,7 @@
   },
   {
    "id": "briques",
+   "bac": 2014,
    "titre": "Briques",
    "auteur": "Roger Poussi Wheauy",
    "source": "*Cher mon pays, ne pleure pas*, Edilis, 2007",

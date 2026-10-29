@@ -296,7 +296,7 @@ function LigneTexte({ t, href }: { t: TexteEtudie; href: string }) {
       <a class="row" href={href}>
         <span class="row-body">
           <span class="row-title">{t.titre}</span>
-          <span class="meta">{t.auteur} · <Texte text={t.source} /></span>
+          <span class="meta">{t.bac ? `Bac ${t.bac} · ` : ""}{t.auteur} · <Texte text={t.source} /></span>
         </span>
         {premium ? <Icon name="chevron_right" /> : <Cadenas />}
       </a>
@@ -304,11 +304,11 @@ function LigneTexte({ t, href }: { t: TexteEtudie; href: string }) {
   );
 }
 
-/** Filtre par genre en haut des listes de textes ; le choix reste gardé sur le téléphone. */
+/** Filtre par genre (ou sujets tombés au bac) en haut des listes de textes ; le choix reste gardé sur le téléphone. */
 function useFiltreGenre<T extends TexteEtudie>(cle: string, textes: T[]) {
   const [choix, setChoix] = useStored<string>(cle, "");
-  const presents = GENRES_CC.filter(g => textes.some(t => genreDe(t) === g));
-  const actif = presents.includes(choix as never) ? choix : "";
+  const presents: string[] = [...(textes.some(t => t.bac) ? ["Bac"] : []), ...GENRES_CC.filter(g => textes.some(t => genreDe(t) === g))];
+  const actif = presents.includes(choix) ? choix : "";
   const barre = (
     <div class="sticky-bar">
       <div class="chips" role="group" aria-label="Filtrer par genre">
@@ -319,7 +319,9 @@ function useFiltreGenre<T extends TexteEtudie>(cle: string, textes: T[]) {
       </div>
     </div>
   );
-  return { barre, liste: actif ? textes.filter(t => genreDe(t) === actif) : textes };
+  const liste = actif === "Bac" ? textes.filter(t => t.bac).sort((a, b) => b.bac! - a.bac!)
+    : actif ? textes.filter(t => genreDe(t) === actif) : textes;
+  return { barre, liste };
 }
 
 function CorrigesCC() {
@@ -437,7 +439,7 @@ function CorrigeCC({ id }: { id: string }) {
     <Page title={c.titre} back="#/cc/corriges">
       <article class="reading">
         <header class="page-header">
-          <p class="eyebrow">Exercice corrigé</p>
+          <p class="eyebrow">Exercice corrigé{c.bac ? ` · Bac ${c.bac}` : ""}</p>
           <h1 class="page-title">{c.titre}</h1>
         </header>
         {!premium ? <><p class="lede">{c.auteur}, <Texte text={c.source} /></p><VerrouCC /></> : <div class="prose">
@@ -618,7 +620,7 @@ function SujetCC({ id }: { id: string }) {
     <Page title={s.titre} back="#/cc/entrainement">
       <article class="reading">
         <header class="page-header">
-          <p class="eyebrow">Entraînement</p>
+          <p class="eyebrow">{s.bac ? `Sujet du bac ${s.bac}` : "Entraînement"}</p>
           <h1 class="page-title">{s.titre}</h1>
         </header>
         {!premium ? <><p class="lede">{s.auteur}, <Texte text={s.source} /></p><VerrouCC /></> : <div class="prose">

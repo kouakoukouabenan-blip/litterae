@@ -18,6 +18,8 @@ export interface TexteEtudie {
   /** Note de bas de texte (mot expliqué). */
   note?: string;
   consigne: string;
+  /** Année où le texte est tombé au bac en Côte d'Ivoire. */
+  bac?: number;
   /** Genre affiché dans les filtres ; sinon déduit : théâtre, prose = récit, vers = poésie. */
   genre?: GenreCC;
 }
