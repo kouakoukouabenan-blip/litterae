@@ -15,13 +15,15 @@ export interface Methode {
   couleur: string;
   /** Couleur du texte sur fond clair (l'ocre est trop pâle pour du texte). */
   encre: string;
+  /** Fond pâle de la méthode (fiche de bienvenue). */
+  fond: string;
   prete: boolean;
 }
 
 export const METHODES: Methode[] = [
-  { id: "dissertation", nom: "Dissertation littéraire", court: "Dissertation", couleur: "var(--green)", encre: "var(--green)", prete: true },
-  { id: "commentaire", nom: "Commentaire composé", court: "Commentaire", couleur: "var(--orange)", encre: "var(--orange-text)", prete: true },
-  { id: "philosophie", nom: "Dissertation philosophique", court: "Philosophie", couleur: "var(--ochre)", encre: "var(--ochre-text)", prete: false }
+  { id: "dissertation", nom: "Dissertation littéraire", court: "Dissertation", couleur: "var(--green)", encre: "var(--green)", fond: "var(--green-tint)", prete: true },
+  { id: "commentaire", nom: "Commentaire composé", court: "Commentaire", couleur: "var(--orange)", encre: "var(--orange-text)", fond: "var(--orange-pale)", prete: true },
+  { id: "philosophie", nom: "Dissertation philosophique", court: "Philosophie", couleur: "var(--ochre)", encre: "var(--ochre-text)", fond: "var(--ochre-pale)", prete: false }
 ];
 
 /** La méthode choisie par l'élève, retenue sur l'appareil. */

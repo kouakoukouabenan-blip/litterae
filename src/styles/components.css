@@ -455,3 +455,7 @@
 .demande-achat-urgent { color: var(--orange-text, var(--orange)); font-weight: 600; }
 .demande-achat .demo-lien { margin-top: var(--s1); }
 .avant-payer-parents { align-self: stretch; display: inline-flex; align-items: center; justify-content: center; gap: var(--s2); }
+.bienvenue-methodes li { border-left: 4px solid var(--green); }
+.bienvenue-methodes strong { display: block; }
+.bienvenue-detail { display: block; color: var(--ink); font-size: .9375rem; margin-top: 2px; }
+.bienvenue-bientot { color: var(--muted); font-size: .9375rem; margin: 0; align-self: stretch; text-align: left; }
