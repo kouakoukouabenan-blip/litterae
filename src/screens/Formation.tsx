@@ -43,7 +43,8 @@ const contenuDe = (e: EtapeFormation): ContenuEtape | undefined => e.contenu ?? 
 
 const nbReussies = (f: EtatFormation) => ETAPES.filter(e => f.etapes[e.id]?.reussie).length;
 /** Une étape s'ouvre quand la précédente est réussie. */
-const ouverte = (f: EtatFormation, e: EtapeFormation) => e.num === 1 || !!f.etapes[ETAPES[e.num - 2].id]?.reussie;
+// Avec la clé, toutes les étapes sont ouvertes ; sans clé, chacune s'ouvre quand la précédente est réussie.
+const ouverte = (f: EtatFormation, e: EtapeFormation, premium = false) => premium || e.num === 1 || !!f.etapes[ETAPES[e.num - 2].id]?.reussie;
 
 /** Texte avec **gras** et titres d'œuvres en italique. */
 function Gras({ text }: { text: string }) {
@@ -118,7 +119,7 @@ function Parcours() {
       <ol class="formation-etapes">
         {ETAPES.map(e => {
           const etat = f.etapes[e.id];
-          const libre = ouverte(f, e);
+          const libre = ouverte(f, e, premium);
           const payante = !e.gratuite && !premium;
           const ferme = !libre || payante;
           const statut = etat?.reussie ? `Réussie · ${etat.maitrise} %` : payante ? "Accès complet" : !libre ? `Réussis d'abord l'étape ${e.num - 1}` : etat ? `En cours · meilleur score ${etat.maitrise} %` : e.court;
@@ -155,7 +156,7 @@ function Etape({ etape, partie }: { etape: EtapeFormation; partie: Partie }) {
   );
   if (!etape.gratuite && !premium)
     return <Page title={etape.titre} back="#/formation">{tete}<LockPanel reason={`L'étape ${etape.num}, « ${etape.titre} », est réservée à l'accès complet.`} contenu={CONTENU_FORMATION} /></Page>;
-  if (!ouverte(f, etape))
+  if (!ouverte(f, etape, premium))
     return <Page title={etape.titre} back="#/formation">{tete}<p class="quiz-lock"><span><Icon name="lock" size={18} /> Réussis d'abord l'étape {etape.num - 1} avec au moins {SEUIL} % de maîtrise.</span></p></Page>;
   const c = contenuDe(etape);
   if (!c) return <Page title={etape.titre} back="#/formation">{tete}<RecevoirFormation /></Page>;
