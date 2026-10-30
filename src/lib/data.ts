@@ -45,8 +45,8 @@ export const contenuEnRetard = (c: ContenuPayant) =>
   LECONS_GUIDE.some(l => !c.lecons?.[l.id]?.length) ||
   (c.dictionnaire?.length ?? 0) < dico.entrees.length ||
   (oeuvres as Oeuvre[]).some(w => w.resume === null && !(w.id in c.oeuvres)) ||
-  // Clés activées avant l'arrivée du commentaire composé.
-  !c.commentaire;
+  // Clés activées avant l'arrivée du commentaire composé, puis de la formation.
+  !c.commentaire || !c.formation;
 
 /** Nombre de fiches avec résumé complet et idées d'illustration rédigées. */
 export const NB_DETAILLEES = OEUVRES.filter(w => w.detaillee).length;

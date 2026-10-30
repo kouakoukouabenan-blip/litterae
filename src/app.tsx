@@ -34,6 +34,7 @@ import { ProgresScreen } from "./screens/Progres";
 import { CollectionScreen } from "./screens/Collection";
 import { DuelScreen } from "./screens/Duel";
 import { CommentaireScreen } from "./screens/Commentaire";
+import { FormationScreen } from "./screens/Formation";
 import { reverifier } from "./lib/licence";
 import { synchroAccesNotifs } from "./lib/notifications";
 import { noterMethodeDuJour } from "./lib/methodes";
@@ -123,6 +124,7 @@ export function App() {
     case "progres": screen = <ProgresScreen />; break;
     case "collection": screen = <CollectionScreen />; break;
     case "cc": screen = <CommentaireScreen path={path} />; break;
+    case "formation": screen = <FormationScreen path={path} params={params} />; break;
     case "duel": screen = <DuelScreen params={params} />; break;
     default: screen = <NotFound />;
   }

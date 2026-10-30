@@ -1,3 +1,4 @@
+import type { ContenuEtape } from "./formation";
 import type { DonneesCC } from "./cc-types";
 export type Fonction = "Engagement" | "Esthétique" | "Évasion" | "Lyrique" | "Sociale";
 export const FONCTIONS: Fonction[] = ["Engagement", "Esthétique", "Évasion", "Lyrique", "Sociale"];
@@ -138,6 +139,8 @@ export interface ContenuPayant {
   lecons?: Record<string, BlocLecon[]>;
   /** Commentaire composé complet (absent des clés activées avant son arrivée). */
   commentaire?: DonneesCC;
+  /** Formation à la dissertation : étapes payantes 4 à 13 (absentes des clés activées avant leur arrivée). */
+  formation?: { etapes: Record<string, ContenuEtape> };
 }
 
 export interface QuestionQuiz {

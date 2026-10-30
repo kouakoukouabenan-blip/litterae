@@ -56,6 +56,15 @@ function AccueilDissertation() {
       </form>
       <p class="accueil-astuce">Cherche une illustration par thème, auteur, titre ou argument parmi {OEUVRES.length} fiches d'œuvres.</p>
 
+      <a class="formation-tuile" href="#/formation">
+        <span class="formation-tuile-texte">
+          <span class="formation-tuile-sur">Nouveau · Formation</span>
+          <span class="formation-tuile-titre">La dissertation, étape par étape</span>
+          <span class="formation-tuile-detail">13 étapes, des points à gagner. Les 3 premières sont gratuites.</span>
+        </span>
+        <Icon name="arrow_forward" size={22} />
+      </a>
+
       <nav class="choix" aria-label="Que veux-tu faire ?">
         <a class="choix-carte choix-methode" href={suivante && nbLues > 0 ? `#/cours/${suivante.id}` : "#/cours"}>
           <Icon name="menu_book" size={24} />

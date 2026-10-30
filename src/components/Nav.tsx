@@ -58,7 +58,7 @@ function useSection() {
   if (premier === "cc") return second === "cours" || second === "outils" || second === "figures" ? "cours" : second === "corriges" || second === "entrainement" || second === "atelier" ? "sujets" : second === "genres" || second === "tonalites" ? "oeuvres" : "accueil";
   const section = premier ?? "accueil";
   // Les sujets d'entraînement et « J'ai un devoir » sont des onglets de Sujets ; la boîte à outils se range avec le cours.
-  return ["defi", "revisions", "progres"].includes(section) ? "accueil" : section === "entrainement" || section === "devoir" ? "sujets" : section === "outils" ? "cours" : section === "mes-fiches" ? "oeuvres" : section;
+  return ["defi", "revisions", "progres"].includes(section) ? "accueil" : section === "entrainement" || section === "devoir" ? "sujets" : section === "outils" || section === "formation" ? "cours" : section === "mes-fiches" ? "oeuvres" : section;
 }
 
 /** Onglets dans la barre du haut, sur tablette et ordinateur. */
