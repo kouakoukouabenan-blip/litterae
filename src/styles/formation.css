@@ -132,3 +132,5 @@ a.formation-etape:hover { background: var(--surface-hover); }
   .reussite-trait, .reussite-coche, .univers-reussite > :not(svg), .formation-retour, .formation-pourquoi { animation: none; }
 }
 .formation-defi-suite { display: flex; flex-direction: column; align-items: flex-start; gap: var(--s3); }
+/* Le bouton « Question suivante » reste visible en bas de l'écran ; l'explication se lit en faisant défiler. */
+.formation-quiz-actions { position: sticky; bottom: calc(var(--bottom-nav-h) + env(safe-area-inset-bottom)); z-index: 5; padding: var(--s3) 0; background: linear-gradient(to bottom, transparent, var(--paper) 30%); }
