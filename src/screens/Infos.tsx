@@ -120,7 +120,7 @@ export function ConfidentialiteScreen() {
   return (
     <Legal title="Confidentialité" eyebrow="Données personnelles">
       <h2 class="section-title">En bref</h2>
-      <p>Litterae ne te demande pas de créer de compte et ne collecte aucune donnée personnelle pour fonctionner. Ta progression, ton carnet et tes notes restent sur ton appareil.</p>
+      <p>Litterae ne te demande pas de créer de compte. Ta progression, ton carnet et tes notes restent sur ton appareil. Si tu achètes l'accès complet, ton nom, ton adresse e-mail et ton numéro de téléphone donnés à Chariow servent uniquement à t'envoyer ta clé, à te la redonner si tu la perds et à t'aider en cas de problème.</p>
 
       <h2 class="section-title">Ce qui est gardé sur ton appareil</h2>
       <ul class="bullets">
@@ -133,10 +133,16 @@ export function ConfidentialiteScreen() {
       <p>Ces informations sont stockées dans ton navigateur. Elles ne sont envoyées à personne, sauf les statistiques anonymes décrites plus bas. Si tu effaces les données du navigateur, elles sont supprimées.</p>
 
       <h2 class="section-title">Hébergement</h2>
-      <p>Le site est hébergé par GitHub Pages (GitHub, Inc.). Comme tout hébergeur, GitHub peut enregistrer des données techniques de connexion, comme l'adresse IP, pour la sécurité du service.</p>
+      <p>Le site est hébergé par GitHub Pages (GitHub, Inc.) et notre serveur par Cloudflare. Leurs ordinateurs se trouvent hors de Côte d'Ivoire, surtout en Europe et aux États-Unis : les informations décrites sur cette page y sont donc gardées. Comme tout hébergeur, GitHub et Cloudflare peuvent enregistrer des données techniques de connexion, comme l'adresse IP, pour la sécurité du service.</p>
 
       <h2 class="section-title">Paiement</h2>
-      <p>Quand le paiement de l'accès complet sera ouvert, la plateforme Chariow recueillera les informations nécessaires à la transaction : nom, adresse e-mail et numéro de téléphone. Elles servent uniquement à activer ton accès et à te contacter en cas de problème avec ton achat. Elles ne sont ni vendues ni utilisées pour de la publicité.</p>
+      <p>Le paiement se fait sur la plateforme Chariow, qui recueille ton nom, ton adresse e-mail et ton numéro de téléphone. Ces informations sont visibles par l'auteur de Litterae, dans son espace Chariow et dans le tableau de bord de Litterae. Elles servent uniquement à :</p>
+      <ul class="bullets">
+        <li>t'envoyer ta clé d'accès ;</li>
+        <li>te redonner ta clé si tu la perds ou ne la retrouves pas (par e-mail ou WhatsApp) ;</li>
+        <li>te contacter en cas de problème avec ton achat, ou pour répondre à tes questions.</li>
+      </ul>
+      <p>Elles ne sont ni vendues, ni données à quelqu'un d'autre, ni utilisées pour de la publicité. Notre serveur en garde une copie pour retrouver ta clé plus vite. Si c'est un parent qui a payé, ce sont ses informations à lui qui sont utilisées. Tu peux demander à tout moment que ces informations soient effacées de notre côté (voir « Tes droits »).</p>
 
       <h2 class="section-title">Vérification des clés</h2>
       <p>Quand tu saisis ta clé, elle est envoyée avec l'identifiant anonyme de ton appareil à notre serveur (hébergé par Cloudflare), qui la vérifie auprès de Chariow et renvoie le nom donné lors de l'achat, gardé seulement sur ton appareil. La clé est ensuite revérifiée environ une fois par semaine. Aucune autre information n'est transmise.</p>

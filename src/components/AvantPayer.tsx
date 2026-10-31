@@ -60,6 +60,7 @@ export function AvantPayer() {
           <Icon name="groups" size={20} />Demande à tes parents
         </a>
         <CommentPayerBouton />
+        <p class="small muted avant-payer-cgv">En payant, tu acceptes les <a href="#/cgu" onClick={fermer}>conditions de vente</a>.</p>
       </div>
       <div class="sheet-foot">
         <button type="button" class="btn btn-secondary" onClick={fermer}>Retour</button>
