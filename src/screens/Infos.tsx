@@ -9,6 +9,13 @@ import { LECONS } from "../lib/lecons";
 import { CONTACT_EMAIL, EDITEUR, MISE_A_JOUR } from "../lib/site";
 import { AchatLien } from "../components/Achat";
 import { ReglageNotifs } from "../components/Annonces";
+import { METHODES } from "../lib/methodes";
+
+/** « la dissertation littéraire et le commentaire composé » : suit automatiquement les méthodes prêtes. */
+function listeMethodes(pretes: boolean) {
+  const noms = METHODES.filter(m => m.prete === pretes).map(m => m.nom.charAt(0).toLowerCase() + m.nom.slice(1));
+  return noms.length > 1 ? `${noms.slice(0, -1).join(", ")} et ${noms[noms.length - 1]}` : noms[0] ?? "";
+}
 
 function Contact() {
   return CONTACT_EMAIL ? <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a> : <>l'adresse indiquée sur la page de paiement</>;
@@ -31,14 +38,17 @@ export function AProposScreen() {
     <Page title="À propos">
       <div class="reading reading-left">
         <PageHeader eyebrow="À propos" title="Ce que fait Litterae">
-          Pour réussir la dissertation littéraire au bac.
+          Pour réussir tes épreuves écrites au bac, méthode par méthode.
         </PageHeader>
         <div class="prose">
+          <h2 class="section-title">Plusieurs méthodes</h2>
+          <p>Litterae t'accompagne aujourd'hui en {listeMethodes(true)}{listeMethodes(false) ? <>, et bientôt en {listeMethodes(false)}</> : null}. Chaque méthode a ses cours, ses exercices et ses sujets ; choisis la tienne avec le bouton en haut de l'écran. De nouvelles méthodes et de nouveaux contenus s'ajoutent au fil du temps.</p>
+
           <h2 class="section-title">Fonctionnalités</h2>
           <dl class="features">
-            <dt><Icon name="menu_book" />Le cours</dt>
+            <dt><Icon name="menu_book" />Le cours de dissertation</dt>
             <dd>{LECONS.length} leçons pour passer du sujet à la conclusion : comprendre le sujet, rédiger l'introduction, le développement et la conclusion. Ta progression est retenue.</dd>
-            <dt><Icon name="history_edu" />Les sujets corrigés</dt>
+            <dt><Icon name="history_edu" />Les sujets corrigés de dissertation</dt>
             <dd>{SUJETS.length} sujets traités de bout en bout : thème, thèse, reformulation, plan dialectique, arguments illustrés, transition et conclusion. Filtre par orientation.</dd>
             <dt><Icon name="edit" />J'ai un devoir</dt>
             <dd>Colle le sujet donné en classe : l'appli t'aide à le comprendre (fonction de la littérature, thèmes, mots difficiles) et te propose des pistes de plan, des œuvres à citer et des sujets corrigés proches. Ce sont des pistes, pas une copie toute faite : c'est toi qui rédiges, avec tes mots.</dd>
@@ -53,8 +63,8 @@ export function AProposScreen() {
           </dl>
 
           <h2 class="section-title">Accès gratuit et accès complet</h2>
-          <p>Gratuit : 5 leçons du cours au choix, la boîte à outils (avec 10 mots du dictionnaire au choix), les {FREE_SUBJECTS} premiers sujets corrigés et {FREE_WORKS} fiches d'œuvres au choix, plus une à chaque série de 7 jours d'affilée (la recherche dans toutes les œuvres reste libre).</p>
-          <p>Accès complet : tous les sujets et toutes les fiches, pour {PRICE} payés une seule fois par Mobile Money, et les réponses de l'auteur à tes questions directement dans l'application. Tu reçois une clé d'accès par e-mail, valable sur 2 appareils. <AchatLien label="Acheter une clé sur Chariow" /></p>
+          <p>Gratuit : une partie de chaque méthode. En dissertation littéraire : 5 leçons du cours au choix, la boîte à outils (avec 10 mots du dictionnaire au choix), les {FREE_SUBJECTS} premiers sujets corrigés et {FREE_WORKS} fiches d'œuvres au choix, plus une à chaque série de 7 jours d'affilée (la recherche dans toutes les œuvres reste libre).</p>
+          <p>Accès complet : tout le contenu réservé de toutes les méthodes, avec ce qui s'y ajoute, pour {PRICE} payés une seule fois par Mobile Money, et les réponses de l'auteur à tes questions directement dans l'application. Tu reçois une clé d'accès par e-mail, valable sur 2 appareils. <AchatLien label="Acheter une clé sur Chariow" /></p>
 
           {!installed && (
             <>
@@ -83,19 +93,19 @@ export function CguScreen() {
   return (
     <Legal title="Conditions générales" eyebrow="Utilisation et vente">
       <h2 class="section-title">1. Objet</h2>
-      <p>Les présentes conditions encadrent l'utilisation de Litterae, application web d'aide à la dissertation littéraire, et l'achat de son accès complet. Utiliser Litterae vaut acceptation de ces conditions.</p>
+      <p>Les présentes conditions encadrent l'utilisation de Litterae, application web qui aide les élèves à préparer leurs épreuves écrites (dissertation littéraire, commentaire composé et autres méthodes ajoutées au fil du temps), et l'achat de son accès complet. Utiliser Litterae vaut acceptation de ces conditions.</p>
 
       <h2 class="section-title">2. Éditeur</h2>
       <p>Litterae est éditée à titre personnel par {EDITEUR}. Contact : <Contact />.</p>
 
       <h2 class="section-title">3. Contenu</h2>
-      <p>Litterae propose un cours de méthode, des sujets corrigés, des résumés d'œuvres et des outils de rédaction. Ces contenus sont une aide à l'apprentissage : ils ne remplacent ni l'enseignement de ton professeur ni la lecture des œuvres. Les résumés et corrigés sont rédigés avec soin mais peuvent contenir des erreurs ; tu peux les signaler depuis la page <a href="#/contact?sujet=erreur">Contact</a>.</p>
+      <p>Pour chaque méthode, Litterae propose des cours, des exercices et des sujets corrigés, des sujets d'entraînement, et des outils comme les résumés d'œuvres, le dictionnaire ou les formules de rédaction. De nouvelles méthodes et de nouveaux contenus peuvent s'ajouter : ces conditions s'appliquent aussi à eux. Ces contenus sont une aide à l'apprentissage : ils ne remplacent ni l'enseignement de ton professeur ni la lecture des œuvres. Les résumés et corrigés sont rédigés avec soin mais peuvent contenir des erreurs ; tu peux les signaler depuis la page <a href="#/contact?sujet=erreur">Contact</a>.</p>
 
       <h2 class="section-title">4. Accès gratuit</h2>
-      <p>Sans paiement, tu as accès à 5 leçons du cours et {FREE_WORKS} fiches d'œuvres de ton choix, à la boîte à outils et aux {FREE_SUBJECTS} premiers sujets corrigés. Les leçons et les fiches gratuites sont comptées sur ton appareil. L'éditeur peut faire évoluer le contenu de l'accès gratuit.</p>
+      <p>Sans paiement, tu as accès à une partie du contenu de chaque méthode, signalée dans l'application. Par exemple, en dissertation littéraire : 5 leçons du cours et {FREE_WORKS} fiches d'œuvres de ton choix, la boîte à outils et les {FREE_SUBJECTS} premiers sujets corrigés. Les contenus gratuits au choix sont comptés sur ton appareil. L'éditeur peut faire évoluer le contenu de l'accès gratuit.</p>
 
       <h2 class="section-title">5. Accès complet</h2>
-      <p>L'accès complet coûte {PRICE} (francs CFA), payés une seule fois. Il ouvre l'ensemble des sujets corrigés et des fiches d'œuvres, y compris ceux ajoutés par la suite, pour la durée de vie du service.</p>
+      <p>L'accès complet coûte {PRICE} (francs CFA), payés une seule fois. Il ouvre tout le contenu réservé de Litterae, toutes méthodes confondues, y compris les contenus ajoutés par la suite, pour la durée de vie du service. Si un jour un nouveau service était vendu à part, ce serait clairement indiqué avant tout achat, et ce que tu as déjà payé resterait ouvert.</p>
       <p>L'accès complet permet aussi de poser des questions à l'auteur depuis la page Contact et de recevoir la réponse dans l'application. L'auteur répond dès qu'il le peut, sans délai garanti ; il ne rédige pas les devoirs à la place des élèves et peut ne pas répondre à un message irrespectueux ou hors sujet.</p>
       <p>Le paiement se fait par Mobile Money (Wave, Orange Money, MTN MoMo, Moov Money) via la plateforme Chariow, qui traite la transaction. Litterae ne voit ni ne conserve tes codes de paiement. <AchatLien label="Page d'achat sur Chariow" /></p>
       <p>Après le paiement, Chariow t'envoie par e-mail une clé d'accès personnelle. Elle s'active sur 2 appareils au maximum. Une clé partagée publiquement ou utilisée frauduleusement peut être désactivée.</p>
@@ -124,7 +134,7 @@ export function ConfidentialiteScreen() {
 
       <h2 class="section-title">Ce qui est gardé sur ton appareil</h2>
       <ul class="bullets">
-        <li>Les leçons que tu as lues.</li>
+        <li>La méthode choisie, les leçons que tu as lues, tes exercices, brouillons et ateliers, et ta progression dans les formations.</li>
         <li>Les œuvres enregistrées et tes notes personnelles.</li>
         <li>Les leçons, fiches d'œuvres et mots du dictionnaire ouverts gratuitement.</li>
         <li>Ton choix concernant l'installation de l'application.</li>
