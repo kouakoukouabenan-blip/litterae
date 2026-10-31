@@ -12,6 +12,8 @@ import { useState } from "preact/hooks";
 import { href } from "../lib/router";
 import { useMethode } from "../lib/methodes";
 import { AccueilCommentaire } from "./Commentaire";
+import { useFormation, SEUIL } from "../lib/formation";
+import { ETAPES } from "../data/formation";
 
 /** Détail d'une case : version courte sur téléphone, où les cases sont étroites. */
 const Detail = ({ long, court }: { long: string; court: string }) => (
@@ -56,14 +58,7 @@ function AccueilDissertation() {
       </form>
       <p class="accueil-astuce">Cherche une illustration par thème, auteur, titre ou argument parmi {OEUVRES.length} fiches d'œuvres.</p>
 
-      <a class="formation-tuile" href="#/formation">
-        <span class="formation-tuile-texte">
-          <span class="formation-tuile-sur">Nouveau · Formation</span>
-          <span class="formation-tuile-titre">La dissertation, étape par étape</span>
-          <span class="formation-tuile-detail">13 étapes, des points à gagner. Les 3 premières sont gratuites.</span>
-        </span>
-        <Icon name="arrow_forward" size={22} />
-      </a>
+      <TuileFormation />
 
       <nav class="choix" aria-label="Que veux-tu faire ?">
         <a class="choix-carte choix-methode" href={suivante && nbLues > 0 ? `#/cours/${suivante.id}` : "#/cours"}>
@@ -96,5 +91,38 @@ function AccueilDissertation() {
       <Annonces />
       <InstallBanner />
     </Page>
+  );
+}
+
+/** Tuile Formation : présentation pour qui ne l'a jamais ouverte, sinon l'étape à faire et le chemin parcouru. */
+function TuileFormation() {
+  const [f] = useFormation();
+  const reussies = ETAPES.filter(e => f.etapes[e.id]?.reussie).length;
+  const commencee = f.commencee || Object.keys(f.etapes).length > 0;
+  const prochaine = ETAPES.find(e => !f.etapes[e.id]?.reussie);
+  if (!commencee) return (
+    <a class="formation-tuile" href="#/formation">
+      <span class="formation-tuile-texte">
+        <span class="formation-tuile-sur">Nouveau · Formation</span>
+        <span class="formation-tuile-titre">La dissertation, étape par étape</span>
+        <span class="formation-tuile-detail">{ETAPES.length} étapes, des points à gagner. Les 3 premières sont gratuites.</span>
+      </span>
+      <Icon name="arrow_forward" size={22} />
+    </a>
+  );
+  const enCours = prochaine && f.etapes[prochaine.id];
+  return (
+    <a class="formation-tuile" href={prochaine ? `#/formation/${prochaine.id}` : "#/formation"}>
+      <span class="formation-tuile-texte">
+        <span class="formation-tuile-sur">{prochaine ? "Continue ta formation" : "Formation terminée"}</span>
+        <span class="formation-tuile-titre">{prochaine ? `Étape ${prochaine.num} : ${prochaine.titre}` : "Tu as réussi les 13 étapes"}</span>
+        <span class="formation-tuile-detail">
+          {reussies === 0 ? "Aucune étape réussie pour l'instant" : `${reussies} étape${reussies > 1 ? "s" : ""} réussie${reussies > 1 ? "s" : ""} sur ${ETAPES.length}`} · {f.points} points
+          {enCours ? ` · ton score ${f.etapes[prochaine.id].maitrise} %, il faut ${SEUIL} %` : ""}
+        </span>
+        <span class="formation-tuile-barre" aria-hidden="true"><span style={{ width: `${(reussies / ETAPES.length) * 100}%` }} /></span>
+      </span>
+      <Icon name="arrow_forward" size={22} />
+    </a>
   );
 }

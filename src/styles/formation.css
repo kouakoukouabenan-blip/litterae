@@ -9,6 +9,8 @@
 .formation-tuile-sur { font-size: var(--text-xs); font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--ochre); }
 .formation-tuile-titre { font: 800 1.25rem/1.2 var(--font-head); letter-spacing: -0.02em; color: #fff; }
 .formation-tuile-detail { font-size: var(--text-sm); color: var(--on-dark-muted); }
+.formation-tuile-barre { display: block; height: 4px; margin-top: var(--s2); border-radius: 2px; background: rgba(255,255,255,.15); overflow: hidden; }
+.formation-tuile-barre > span { display: block; height: 100%; background: var(--ochre); border-radius: 2px; transition: width .6s ease-out; }
 
 /* Autre univers : toute la page passe en vert profond */
 html[data-univers="formation"] body { background: var(--green); }
