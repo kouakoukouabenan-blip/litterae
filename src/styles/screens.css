@@ -856,3 +856,8 @@
 .devoir-exemple > span { font-weight: 700; color: var(--ochre-text); }
 .devoir-reponse { font-size: var(--text-sm); }
 .devoir-piste em { font-size: var(--text-xs); color: var(--ochre-text); font-style: normal; }
+/* Une question posée à l'élève : la question en gras, puis ses réponses en vrais boutons. */
+.devoir-question p { margin: 0 0 var(--s2); }
+.devoir-boutons { display: grid; gap: var(--s2); }
+.devoir-boutons .btn { width: 100%; min-height: 44px; }
+@media (min-width: 600px) { .devoir-boutons { grid-template-columns: 1fr 1fr; } }

@@ -43,6 +43,8 @@ export function DevoirScreen() {
   }
   // L'élève confirme que c'est bien une dissertation littéraire, quand l'appli pense le contraire.
   const [quandMeme, setQuandMeme] = useState(false);
+  // L'élève confirme que ce n'est pas une dissertation littéraire : la question disparaît.
+  const [confirme, setConfirme] = useState(false);
   const analyse = useMemo(() => (lu ? analyserSujet(texte, 6, choisie, objetChoisi) : null), [lu, texte, choisie, objetChoisi]);
   const autreExercice = !!analyse && analyse.nature !== "dissertation" && !quandMeme && !choisie;
   // L'appli n'est pas sûre de sa lecture : pas de plan tout de suite, l'élève passe par le guide et choisit sa piste.
@@ -152,7 +154,7 @@ export function DevoirScreen() {
         <label class="devoir-champ">
           <span class="field-label">Ton sujet</span>
           <textarea class="textarea" rows={4} value={texte} placeholder="« La littérature doit être une arme au service du peuple. » Expliquez et discutez."
-            onInput={e => { setTexte((e.target as HTMLTextAreaElement).value); setLu(false); setQuandMeme(false); }} />
+            onInput={e => { setTexte((e.target as HTMLTextAreaElement).value); setLu(false); setQuandMeme(false); setConfirme(false); }} />
         </label>
         <label class="devoir-champ">
           <span class="field-label">Auteur de la citation (facultatif)</span>
@@ -165,15 +167,21 @@ export function DevoirScreen() {
         <div class="devoir-resultat" aria-live="polite">
           <p class="devoir-avertissement"><Icon name="info" size={18} />Ce sont des propositions faites par l'appli : elles peuvent contenir des erreurs. Vérifie-les avec ton cours et ton professeur.</p>
           {autreExercice && (
-            <div class="devoir-note">
-              <p>{AUTRE_EXERCICE[analyse.nature]}</p>
-              <button type="button" class="link-btn" onClick={() => setQuandMeme(true)}>C'est bien une dissertation littéraire : voir les pistes</button>
+            <div class="devoir-note devoir-question">
+              <p>{AUTRE_EXERCICE[analyse.nature].constat}</p>
+              {confirme ? <p>{AUTRE_EXERCICE[analyse.nature].apresOui}</p> : <>
+                <p><strong>{AUTRE_EXERCICE[analyse.nature].question}</strong></p>
+                <div class="devoir-boutons">
+                  <button type="button" class="btn btn-secondary" onClick={() => setConfirme(true)}>{AUTRE_EXERCICE[analyse.nature].oui}</button>
+                  <button type="button" class="btn btn-secondary" onClick={() => setQuandMeme(true)}>{AUTRE_EXERCICE[analyse.nature].changer}</button>
+                </div>
+              </>}
             </div>
           )}
           {analyse.corrige && (
             <div class="devoir-note devoir-note-corrige">
               <p>Ton sujet est presque le <strong>sujet corrigé {Number(analyse.corrige.num)}</strong>.{analyse.corrige.ouvert ? " Le plan ci-dessous est celui du corrigé." : ""}</p>
-              <a class="link-btn" href={`#/sujets/${analyse.corrige.num}`}>Voir le corrigé</a>
+              <a class="link-btn" href={`#/sujets/${analyse.corrige.num}`}>Ouvrir le sujet corrigé {Number(analyse.corrige.num)}</a>
             </div>
           )}
           {guide && (
@@ -233,7 +241,7 @@ export function DevoirScreen() {
                       <p class="tags">{FONCTIONS.map(f => <button key={f} type="button" class={`tag tag-link ${fnClass(f)}`} onClick={() => choisir(f)}>{f}</button>)}</p>
                       <button type="button" class="link-btn devoir-changer" onClick={() => setCorriger(false)}>Annuler</button>
                     </div>
-                  ) : <button type="button" class="link-btn devoir-changer" onClick={() => setCorriger(true)}>Voir les cinq fonctions</button>}
+                  ) : <p class="small devoir-changer">Aucune de ces pistes ne convient ? <button type="button" class="link-btn" onClick={() => setCorriger(true)}>Choisir parmi les cinq fonctions</button></p>}
                 </li>
               </ol>
             </section>
@@ -243,7 +251,7 @@ export function DevoirScreen() {
             <section>
               <h2 class="section-title">Ce que dit ton sujet</h2>
               <p class="small">{analyse.horsCadre ? <>Ton sujet parle {deNom(analyse.horsCadre.nom)} Le plan ne passe pas par les fonctions de la littérature.</> : <>Tu as choisi : ton sujet ne parle pas des fonctions de la littérature.</>}{" "}
-                <button type="button" class="link-btn" onClick={() => choisirLibre(false)}>Revenir aux pistes</button></p>
+                <button type="button" class="link-btn" onClick={() => choisirLibre(false)}>Choisir une autre piste</button></p>
               <p class="small muted devoir-consigne">Consigne : {analyse.travail.toLowerCase()}</p>
             </section>
           )}
@@ -258,41 +266,42 @@ export function DevoirScreen() {
             ) : <p class="small muted">Pas de thème reconnu : vérifie que tu as bien collé toute la citation.</p>}
             {corrigerObjet ? (
               <div class="devoir-corriger">
-                <p class="small">De qui ou de quoi parle ton sujet ?</p>
+                <p class="small"><strong>De qui ou de quoi parle ton sujet ?</strong> Touche la bonne réponse.</p>
                 <p class="tags">
                   {(Object.keys(OBJETS) as Objet[]).map(o => (
                     <button key={o} type="button" class="tag tag-link" aria-pressed={analyse.objet === o} onClick={() => choisirObjet(o)}>{OBJETS[o].choix}</button>
                   ))}
                 </p>
                 <button type="button" class="link-btn devoir-changer" onClick={() => (objetChoisi ? choisirObjet(null) : setCorrigerObjet(false))}>
-                  {objetChoisi ? "Revenir à la proposition de l'appli" : "Annuler"}
+                  {objetChoisi ? "Reprendre ce que l'appli avait trouvé" : "Annuler"}
                 </button>
               </div>
             ) : (
-              <p class="small devoir-objet">Le sujet parle {analyse.objetSur || objetChoisi ? "" : "sans doute "}{deNom(OBJETS[analyse.objet].nom)}{" "}
-                <button type="button" class="link-btn" onClick={() => setCorrigerObjet(true)}>Changer</button></p>
+              <p class="small devoir-objet">{objetChoisi ? "Tu as indiqué que ton sujet parle " : `L'appli pense que ton sujet parle ${analyse.objetSur ? "" : "sans doute "}`}{deNom(OBJETS[analyse.objet].nom)}{" "}
+                <button type="button" class="link-btn" onClick={() => setCorrigerObjet(true)}>{objetChoisi ? "Changer" : "Ce n'est pas ça ? Corriger"}</button></p>
             )}
             {corriger ? (
               <div class="devoir-corriger">
-                <p class="small">Quelle fonction de la littérature ton sujet évoque-t-il ?</p>
+                <p class="small"><strong>Quelle fonction de la littérature ton sujet évoque-t-il ?</strong> Touche la bonne réponse.</p>
                 <p class="tags">
                   {FONCTIONS.map(f => (
                     <button key={f} type="button" class={`tag tag-link ${fnClass(f)}`} aria-pressed={analyse.fonctions[0] === f} onClick={() => choisir(f)}>{f}</button>
                   ))}
                 </p>
                 <button type="button" class="link-btn devoir-changer" onClick={() => (choisie ? choisir(null) : setCorriger(false))}>
-                  {choisie ? "Revenir à la proposition de l'appli" : "Annuler"}
+                  {choisie ? "Reprendre ce que l'appli avait trouvé" : "Annuler"}
                 </button>
               </div>
             ) : (
-              <button type="button" class="link-btn devoir-changer" onClick={() => setCorriger(true)}>
-                {choisie ? "Fonction choisie par toi · Changer" : analyse.fonctions.length ? "Ce n'est pas la bonne fonction ?" : "Choisir la fonction"}
-              </button>
+              <p class="small devoir-changer">
+                {choisie ? <>Tu as choisi la fonction <strong>{NOM[choisie]}</strong>. </> : analyse.fonctions.length ? <>L'appli pense que ton sujet parle de la fonction <strong>{NOM[analyse.fonctions[0]]}</strong>. </> : <>L'appli n'a pas reconnu de fonction. </>}
+                <button type="button" class="link-btn" onClick={() => setCorriger(true)}>{choisie ? "Changer de fonction" : analyse.fonctions.length ? "Ce n'est pas ça ? Choisir une autre fonction" : "Choisir la fonction"}</button>
+              </p>
             )}
             {!corriger && analyse.rejet && <p class="small devoir-indice">L'auteur rejette la fonction {NOM[analyse.rejet]} : le plan défend ce qu'il pense vraiment.</p>}
             {!corriger && analyse.doute && (
-              <p class="small devoir-indice">L'appli hésite : ton sujet peut aussi se lire avec la fonction {NOM[analyse.doute]}.{" "}
-                <button type="button" class="link-btn" onClick={() => choisir(analyse.doute)}>Voir ce plan-là</button></p>
+              <p class="small devoir-indice">L'appli hésite : ton sujet peut aussi parler de la fonction {NOM[analyse.doute]}.{" "}
+                <button type="button" class="link-btn" onClick={() => choisir(analyse.doute)}>Voir le plan avec la fonction {NOM[analyse.doute]}</button></p>
             )}
             {!corriger && !analyse.doute && analyse.faible && !analyse.devalorise && <p class="small devoir-indice">Ton sujet donne peu d'indices : vérifie la fonction avec ton cours.</p>}
             <p class="small muted devoir-consigne">Consigne : {analyse.travail.toLowerCase()}{!auteur.trim() && analyse.auteur ? ` · Auteur : ${analyse.auteur}` : ""}</p>
@@ -387,10 +396,28 @@ const SI: Record<Fonction, string> = {
 const NOM: Record<Fonction, string> = { Engagement: "d'engagement", Sociale: "sociale", Esthétique: "esthétique", Évasion: "d'évasion", Lyrique: "lyrique" };
 
 /** Quand l'énoncé n'est pas une dissertation littéraire. */
-const AUTRE_EXERCICE: Record<string, string> = {
-  commentaire: "Ton sujet demande un commentaire de texte. « J'ai un devoir » aide pour la dissertation littéraire : pour un commentaire, appuie-toi sur le texte lui-même.",
-  resume: "Ton sujet demande un résumé de texte. « J'ai un devoir » aide pour la dissertation littéraire, pas pour le résumé.",
-  generale: "Ton sujet ne parle pas de littérature : c'est sans doute une dissertation sur une question de société. Les fonctions de la littérature ne s'appliquent pas ici, mais les œuvres ci-dessous peuvent te donner des exemples."
+const AUTRE_EXERCICE: Record<string, { constat: string; question: string; oui: string; changer: string; apresOui: string }> = {
+  commentaire: {
+    constat: "D'après l'appli, ton sujet demande un commentaire de texte, pas une dissertation.",
+    question: "Est-ce bien un commentaire de texte ?",
+    oui: "Oui, c'est un commentaire",
+    changer: "Non, c'est une dissertation littéraire",
+    apresOui: "« J'ai un devoir » aide pour la dissertation littéraire. Pour un commentaire, appuie-toi sur le texte lui-même : choisis la méthode Commentaire composé en haut de l'écran."
+  },
+  resume: {
+    constat: "D'après l'appli, ton sujet demande un résumé de texte, pas une dissertation.",
+    question: "Est-ce bien un résumé de texte ?",
+    oui: "Oui, c'est un résumé",
+    changer: "Non, c'est une dissertation littéraire",
+    apresOui: "« J'ai un devoir » aide pour la dissertation littéraire, pas pour le résumé."
+  },
+  generale: {
+    constat: "D'après l'appli, ton sujet parle d'une question de société (la famille, le travail, l'école…), pas de littérature.",
+    question: "Est-ce bien un sujet de société ?",
+    oui: "Oui, c'est un sujet de société",
+    changer: "Non, il parle de littérature (écrivain, poésie, roman, lecture…)",
+    apresOui: "Les fonctions de la littérature ne s'appliquent pas ici, mais les œuvres ci-dessous peuvent te donner des exemples."
+  }
 };
 
 /** Les œuvres d'un argument, en une ligne pour l'atelier : « Titre, Auteur : pourquoi ». */
