@@ -412,10 +412,10 @@ const AUTRE_EXERCICE: Record<string, { constat: string; question: string; oui: s
     apresOui: "« J'ai un devoir » aide pour la dissertation littéraire, pas pour le résumé."
   },
   generale: {
-    constat: "D'après l'appli, ton sujet parle d'une question de société (la famille, le travail, l'école…), pas de littérature.",
+    constat: "D'après l'appli, ton sujet parle d'une question de société (la famille, le travail, l'école…), pas de littérature (l'écrivain, la poésie, le roman, la lecture…).",
     question: "Est-ce bien un sujet de société ?",
     oui: "Oui, c'est un sujet de société",
-    changer: "Non, il parle de littérature (écrivain, poésie, roman, lecture…)",
+    changer: "Non, il parle de littérature",
     apresOui: "Les fonctions de la littérature ne s'appliquent pas ici, mais les œuvres ci-dessous peuvent te donner des exemples."
   }
 };

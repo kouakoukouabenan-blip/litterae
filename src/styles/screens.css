@@ -859,5 +859,5 @@
 /* Une question posée à l'élève : la question en gras, puis ses réponses en vrais boutons. */
 .devoir-question p { margin: 0 0 var(--s2); }
 .devoir-boutons { display: grid; gap: var(--s2); }
-.devoir-boutons .btn { width: 100%; min-height: 44px; }
+.devoir-boutons .btn { width: 100%; min-height: 44px; white-space: normal; text-align: center; padding-top: var(--s2); padding-bottom: var(--s2); line-height: 1.3; }
 @media (min-width: 600px) { .devoir-boutons { grid-template-columns: 1fr 1fr; } }
