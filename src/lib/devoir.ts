@@ -640,6 +640,29 @@ function argumentDe(a: string, o: Objet) {
   return N + base.slice("La littérature".length).replace(/: elle /, `: ${x.il} `);
 }
 
+/** Petits mots qui ne sont jamais des mots clés d'un sujet. */
+const VIDES = new Set("le la les un une des du de d l a au aux et ou mais donc or ni car que qu qui quoi dont ou ce cet cette ces c ca cela ceci son sa ses leur leurs mon ma mes ton ta tes notre nos votre vos il elle ils elles on nous vous je j tu me m te t se s lui y en ne n pas plus point est sont etre etait etaient sera seront doit doivent devrait peut peuvent pourrait faut fait font faire avoir a ont avait dans par pour sur avec sans sous entre comme plutot aussi tres tout tous toute toutes meme seul seule seulement toujours jamais rien autre autres quelqu quelque chose si alors ainsi bien mieux non oui deja encore celui celle ceux celles".split(" "));
+
+/**
+ * Le guide « Comprends ton sujet » : les mots clés de la citation (dans l'ordre, sans les petits mots),
+ * et le début de la phrase que l'élève complète pour redire l'idée avec ses mots.
+ */
+export function lectureDuSujet(citation: string, o: Objet): { motsCles: string[]; debut: string } {
+  const net = sansAuteur(citation);
+  const vus = new Set<string>();
+  const motsCles = (net.match(/[A-Za-zÀ-ÖØ-öø-ÿŒœ’'-]+/g) ?? [])
+    .map(m => m.replace(/^[a-zA-Z][’']/, "").replace(/[’'-]+$/, ""))
+    .filter(m => {
+      const k = normalize(m);
+      if (k.length < 4 || VIDES.has(k) || vus.has(k) || /-(il|elle|ils|elles|on|t|je|tu|nous|vous)$/.test(k)) return false;
+      vus.add(k);
+      return true;
+    })
+    .map(m => m.toLowerCase()).slice(0, 6);
+  const x = OBJETS[o];
+  return { motsCles, debut: `Pour l'auteur, ${x.nom}` };
+}
+
 /** « La poésie est une arme pour dénoncer l'injustice… » : une piste du guide, dite avec le mot du sujet. */
 export function pisteDe(f: Fonction, o: Objet) {
   const m = motsDe(o);

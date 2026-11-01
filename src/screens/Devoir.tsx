@@ -6,7 +6,7 @@ import { useStored, write } from "../lib/storage";
 import { normalize, sansEtoiles } from "../lib/text";
 import { Texte } from "../components/Texte";
 import { FONCTIONS, type Fonction } from "../data/types";
-import { analyserSujet, decouperSujet, genreDu, OBJETS, pisteDe, type Exemple, type Objet } from "../lib/devoir";
+import { analyserSujet, decouperSujet, genreDu, lectureDuSujet, OBJETS, pisteDe, type Exemple, type Objet } from "../lib/devoir";
 import { fnClass } from "../lib/fonctions";
 import { ajouterSujetPerso, CONSIGNE } from "../lib/entrainement";
 import { brouillonVide, lireBrouillon } from "../lib/atelier";
@@ -35,6 +35,12 @@ export function DevoirScreen() {
   // L'élève a choisi la piste « mon sujet parle d'autre chose que les fonctions » : gardé sur le téléphone, rien n'est envoyé.
   const [libres, setLibres] = useStored<Record<string, boolean>>("devoir-libres", {});
   const libre = !!libres[cleSujet];
+  // Les réponses de l'élève aux questions du guide, gardées sur le téléphone et reprises dans l'atelier.
+  const [reponses, setReponses] = useStored<Record<string, { idee: string; question: string }>>("devoir-guide", {});
+  const reponse = reponses[cleSujet] ?? { idee: "", question: "" };
+  function repondre(r: Partial<{ idee: string; question: string }>) {
+    setReponses(Object.fromEntries(Object.entries({ ...reponses, [cleSujet]: { ...reponse, ...r } }).slice(-50)));
+  }
   // L'élève confirme que c'est bien une dissertation littéraire, quand l'appli pense le contraire.
   const [quandMeme, setQuandMeme] = useState(false);
   const analyse = useMemo(() => (lu ? analyserSujet(texte, 6, choisie, objetChoisi) : null), [lu, texte, choisie, objetChoisi]);
@@ -42,6 +48,7 @@ export function DevoirScreen() {
   // L'appli n'est pas sûre de sa lecture : pas de plan tout de suite, l'élève passe par le guide et choisit sa piste.
   const guide = !!analyse && !autreExercice && !analyse.sure && !libre;
   const plan = analyse && libre && !choisie ? analyse.planLibre : analyse?.plan;
+  const lecture = useMemo(() => analyse ? lectureDuSujet(decouperSujet(texte).citation, analyse.objet) : { motsCles: [], debut: "" }, [analyse, texte]);
   function choisirLibre(oui: boolean) {
     const suite = { ...libres };
     delete suite[cleSujet];
@@ -121,7 +128,9 @@ export function DevoirScreen() {
       const b = brouillonVide();
       b.theme = analyse.themes.slice(0, 3).join(", ");
       b.orientations = libre && !choisie ? [] : analyse.fonctions.slice(0, 1);
-      b.problematique = plan.problematique;
+      b.problematique = reponse.question.trim() || plan.problematique;
+      if (reponse.idee.trim()) b.reformulation = reponse.idee.trim();
+      if (lecture.motsCles.length) b.motscles = lecture.motsCles.slice(0, 4).map(mot => ({ mot, def: "" }));
       b.axe1.titre = plan.axe1;
       b.axe2.titre = plan.axe2;
       // Les arguments proposés deviennent les arguments du plan (l'élève écrit l'explication et l'exemple).
@@ -176,33 +185,45 @@ export function DevoirScreen() {
               <ol class="devoir-etapes">
                 <li>
                   <strong>Que dit l'auteur ?</strong>
-                  <span>Redis la citation avec tes propres mots, en une phrase.{analyse.mots.length > 0 && " Vérifie d'abord le sens de ces mots :"}</span>
-                  {analyse.mots.length > 0 && <span class="tags">{analyse.mots.map(m => <a key={m.mot} class="tag tag-link" href={`#/outils?mot=${encodeURIComponent(m.mot)}`}>{m.mot}</a>)}</span>}
+                  <dl class="devoir-reperes">
+                    <dt>Il parle de quoi ?</dt><dd><strong>{majuscule(analyse.horsCadre?.nom ?? OBJETS[analyse.objet].nom)}</strong></dd>
+                    <dt>Les mots clés</dt><dd class="tags">{lecture.motsCles.map(m => <span key={m} class="tag">{m}</span>)}</dd>
+                    {analyse.mots.length > 0 && <><dt>À vérifier dans le dictionnaire</dt><dd class="tags">{analyse.mots.map(m => <a key={m.mot} class="tag tag-link" href={`#/outils?mot=${encodeURIComponent(m.mot)}`}>{m.mot}</a>)}</dd></>}
+                  </dl>
+                  <span>Pour chaque mot clé, demande-toi ce qu'il veut dire ici. Puis redis l'idée de l'auteur en une phrase, avec tes mots :</span>
+                  <textarea class="textarea devoir-reponse" rows={2} value={reponse.idee} placeholder={`${lecture.debut}…`}
+                    onInput={e => repondre({ idee: (e.target as HTMLTextAreaElement).value })} />
                 </li>
                 <li>
                   <strong>Quelle question pose le sujet ?</strong>
-                  <span>{analyse.planLibre.problematique}</span>
+                  <span>Transforme l'idée de l'auteur en une question à laquelle on peut répondre « oui… mais ». C'est ta problématique.</span>
+                  <p class="devoir-exemple"><span>Par exemple :</span> {analyse.planLibre.problematique}</p>
+                  <textarea class="textarea devoir-reponse" rows={2} value={reponse.question} placeholder="Ta problématique, avec tes mots…"
+                    onInput={e => repondre({ question: (e.target as HTMLTextAreaElement).value })} />
                 </li>
                 <li>
                   <strong>Quelle piste retiens-tu ?</strong>
-                  <span>Choisis celle qui répond le mieux à la question. Tu verras ensuite des idées et des œuvres pour ton plan.</span>
+                  <span>Relis tes deux réponses, puis choisis la piste qui leur correspond le mieux. Tu verras ensuite des idées et des œuvres pour ton plan.</span>
                   <div class="devoir-choix">
                     {analyse.horsCadre && (
                       <button type="button" class="devoir-piste" onClick={() => choisirLibre(true)}>
                         <strong>Mon sujet parle {deNom(analyse.horsCadre.nom, false)}</strong>
                         <span>{analyse.horsCadre.conseil}</span>
+                        <em>C'est la piste la plus probable pour ce sujet.</em>
                       </button>
                     )}
                     {[...analyse.fonctions, ...(analyse.doute && !analyse.fonctions.includes(analyse.doute) ? [analyse.doute] : [])].map(f => (
                       <button key={f} type="button" class={`devoir-piste ${fnClass(f)}`} onClick={() => choisir(f)}>
                         <strong>Fonction {NOM[f]}</strong>
                         <span>{pisteDe(f, analyse.objet)}</span>
+                        <em>Choisis-la si {SI[f]}</em>
                       </button>
                     ))}
                     {!analyse.horsCadre && (
                       <button type="button" class="devoir-piste" onClick={() => choisirLibre(true)}>
                         <strong>Aucune de ces pistes</strong>
                         <span>Mon sujet ne parle pas des fonctions de la littérature.</span>
+                        <em>Choisis-la si l'auteur parle d'autre chose : la langue, le lecteur, un genre, le personnage…</em>
                       </button>
                     )}
                   </div>
@@ -350,6 +371,17 @@ function enPiste(t: string) {
   return t.replace(/^Montre /, "Tu peux montrer ").replace(/^Explique /, "Tu peux expliquer ").replace(/^Nuance : /, "Tu peux nuancer : ")
     .replace(/^Approfondis : /, "Tu peux approfondir : ").replace(/^Réponds d'abord /, "Tu peux répondre d'abord ").replace(/^Discute : /, "Tu peux discuter : ");
 }
+
+const majuscule = (t: string) => t.charAt(0).toUpperCase() + t.slice(1);
+
+/** Quand choisir chaque piste : les mots du sujet qui la trahissent. */
+const SI: Record<Fonction, string> = {
+  Engagement: "l'auteur parle de combattre, dénoncer, défendre, éveiller les consciences ou changer la société.",
+  Sociale: "l'auteur parle de montrer la réalité, la société, l'histoire ou les traditions d'un peuple.",
+  Esthétique: "l'auteur parle de beauté, de style, de forme, d'art ou de bien écrire.",
+  Évasion: "l'auteur parle de rêver, d'imaginer, de se divertir, de voyager ou de fuir la réalité.",
+  Lyrique: "l'auteur parle de sentiments, d'émotions ou de la vie intime de l'écrivain."
+};
 
 /** Nom de la fonction dans une phrase. */
 const NOM: Record<Fonction, string> = { Engagement: "d'engagement", Sociale: "sociale", Esthétique: "esthétique", Évasion: "d'évasion", Lyrique: "lyrique" };
