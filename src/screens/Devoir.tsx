@@ -224,7 +224,7 @@ export function DevoirScreen() {
             <section class="devoir-compris-carte">
               <p class="devoir-compris-titre">J'ai compris ton devoir</p>
               <p class="tags devoir-compris-tags">
-                {(choisie ? [choisie] : analyse.fonctions.slice(0, 1)).map(f => <span key={f} class={`tag ${fnClass(f)}`}>Fonction {NOM[f]}{!choisie && analyse.precision ? ` (${analyse.precision})` : ""}</span>)}
+                {(choisie ? [choisie] : analyse.devalorise ? [] : analyse.fonctions.slice(0, 1)).map(f => <span key={f} class={`tag ${fnClass(f)}`}>Fonction {NOM[f]}{!choisie && analyse.precision ? ` (${analyse.precision})` : ""}</span>)}
                 <span class="tag">{majuscule(OBJETS[analyse.objet].nom)}</span>
                 <span class="tag">{analyse.travail.replace(/ \(.*\)$/, "")}</span>
               </p>
