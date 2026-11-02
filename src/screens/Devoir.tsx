@@ -360,7 +360,7 @@ export function DevoirScreen() {
               {confirme ? <p>{AUTRE_EXERCICE[analyse.nature].apresOui}</p> : <>
                 <p><strong>{AUTRE_EXERCICE[analyse.nature].question}</strong></p>
                 <div class="devoir-boutons">
-                  <button type="button" class="btn btn-secondary" onClick={() => setConfirme(true)}>{AUTRE_EXERCICE[analyse.nature].oui}</button>
+                  <button type="button" class="btn btn-secondary" onClick={() => (analyse.nature === "pasSujet" ? autreDevoir() : setConfirme(true))}>{AUTRE_EXERCICE[analyse.nature].oui}</button>
                   <button type="button" class="btn btn-secondary" onClick={() => setQuandMeme(true)}>{AUTRE_EXERCICE[analyse.nature].changer}</button>
                 </div>
               </>}
@@ -475,7 +475,7 @@ export function DevoirScreen() {
             <p class="small devoir-base"><strong>À toi de rédiger.</strong> Ces pistes t'aident à démarrer : explique chaque argument avec tes mots et vérifie tes exemples dans ton cours.</p>
           </section>}
 
-          {analyse.oeuvres.length > 0 && !guide && !parcours && (
+          {analyse.oeuvres.length > 0 && !guide && !parcours && !(autreExercice && analyse.nature === "pasSujet") && (
             <section>
               <h2 class="section-title">{libre && !choisie ? "Des œuvres qui peuvent t'aider" : "Des œuvres pour l'illustrer"}</h2>
               <ul class="devoir-liste">
@@ -486,7 +486,7 @@ export function DevoirScreen() {
             </section>
           )}
 
-          {analyse.mots.length > 0 && !guide && !parcours && (
+          {analyse.mots.length > 0 && !guide && !parcours && !(autreExercice && analyse.nature === "pasSujet") && (
             <section>
               <h2 class="section-title">Des mots à bien comprendre</h2>
               <p class="tags">{analyse.mots.map(m => <a key={m.mot} class="tag tag-link" href={`#/outils?mot=${encodeURIComponent(m.mot)}`}>{m.mot}</a>)}</p>
@@ -496,30 +496,25 @@ export function DevoirScreen() {
 
           {!autreExercice && !guide && (!parcours || fil.length > 0) && <button type="button" class="btn btn-primary btn-block" onClick={rediger}><Icon name="edit" size={20} />Rédiger ce sujet dans l'atelier</button>}
           {parcours && fil.length > 0 && <p class="small muted devoir-prudence">Ce sont des propositions de l'appli : vérifie-les avec ton cours et ton professeur.</p>}
-          {(!parcours || fil.length > 0) && <details class="devoir-options" open={garde || undefined}>
-            <summary>Plus d'options</summary>
-            <div class="devoir-actions">
-              <button type="button" class="btn btn-secondary" onClick={garder} disabled={garde} aria-pressed={garde}>
-                <Icon name="bookmark" filled={garde} size={20} />{garde ? "Gardé dans Mon espace" : "Garder dans Mon espace"}
-              </button>
-            </div>
-            {gardeLe && (
-              <label class="devoir-date">
-                <span>À rendre le</span>
-                <input type="date" class="input" min={jourLocal()} value={gardeLe.pour ?? ""} onChange={e => fixerDate((e.target as HTMLInputElement).value)} />
-              </label>
-            )}
-            {analyse.proches.length > 0 && <>
-              <p class="small"><strong>Des sujets corrigés proches</strong></p>
-              <ul class="devoir-liste">
-                {analyse.proches.map(s => (
-                  <li key={s.num}><a href={`#/sujets/${s.num}`}>Sujet {s.num}</a><span class="muted"> · « {s.citation.length > 70 ? s.citation.slice(0, 68).trimEnd() + "…" : s.citation} »</span></li>
-                ))}
-              </ul>
-            </>}
+          {(!parcours || fil.length > 0) && !(autreExercice && analyse.nature === "pasSujet") && analyse.proches.length > 0 && <details class="devoir-options">
+            <summary>Des sujets corrigés proches</summary>
+            <ul class="devoir-liste">
+              {analyse.proches.map(s => (
+                <li key={s.num}><a href={`#/sujets/${s.num}`}>Sujet {s.num}</a><span class="muted"> · « {s.citation.length > 70 ? s.citation.slice(0, 68).trimEnd() + "…" : s.citation} »</span></li>
+              ))}
+            </ul>
           </details>}
-          {/* Toujours en bas, visible mais discret (Atikan). */}
-          <p class="devoir-autre"><button type="button" class="link-btn" onClick={autreDevoir}><Icon name="add" size={18} />Saisir un autre devoir</button></p>
+          {/* Toujours en bas, visibles mais discrets (Atikan). */}
+          <p class="devoir-autre">
+            {!autreExercice && <button type="button" class="link-btn" onClick={garder} disabled={garde} aria-pressed={garde}><Icon name="bookmark" filled={garde} size={18} />{garde ? "Gardé dans Mon espace" : "Garder dans Mon espace"}</button>}
+            <button type="button" class="link-btn" onClick={autreDevoir}><Icon name="add" size={18} />Saisir un autre devoir</button>
+          </p>
+          {gardeLe && (
+            <label class="devoir-date devoir-date-bas">
+              <span>À rendre le</span>
+              <input type="date" class="input" min={jourLocal()} value={gardeLe.pour ?? ""} onChange={e => fixerDate((e.target as HTMLInputElement).value)} />
+            </label>
+          )}
         </div>
       )}
     </Page>
@@ -567,6 +562,13 @@ const AUTRE_EXERCICE: Record<string, { constat: string; question: string; oui: s
     oui: "Oui, c'est un résumé",
     changer: "Non, c'est une dissertation littéraire",
     apresOui: "« J'ai un devoir » aide pour la dissertation littéraire, pas pour le résumé."
+  },
+  pasSujet: {
+    constat: "Ce texte ne ressemble pas à un sujet de devoir : il n'y a ni citation entre guillemets, ni consigne (Discutez, Expliquez, Commentez…).",
+    question: "As-tu collé le bon texte ?",
+    oui: "Non, je colle mon vrai sujet",
+    changer: "Si, c'est bien mon sujet",
+    apresOui: "Efface ce texte et colle l'énoncé complet de ton devoir : la citation entre guillemets, puis la consigne (par exemple « Discutez »)."
   },
   generale: {
     constat: "D'après l'appli, ton sujet parle d'une question de société (la famille, le travail, l'école…), pas de littérature (l'écrivain, la poésie, le roman, la lecture…).",

@@ -925,3 +925,6 @@
 .devoir-autre .link-btn { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; font-weight: 600; }
 .devoir-autre .icon { fill: currentColor; }
 .devoir-options .devoir-actions { grid-template-columns: 1fr; }
+.devoir-autre { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--s1) var(--s4); }
+.devoir-autre .link-btn:disabled { opacity: 1; color: var(--muted); cursor: default; }
+.devoir-date-bas { justify-content: center; margin-top: var(--s2); font-weight: 500; font-size: var(--text-sm); }

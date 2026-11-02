@@ -191,7 +191,7 @@ export interface Analyse {
   objet: Objet;
   objetSur: boolean;
   /** Ce que demande vraiment l'énoncé : une dissertation littéraire, ou autre chose. */
-  nature: "dissertation" | "commentaire" | "resume" | "generale";
+  nature: "dissertation" | "commentaire" | "resume" | "generale" | "pasSujet";
   oeuvres: Oeuvre[];
   proches: (Sujet | SujetApercu)[];
   /**
@@ -517,10 +517,23 @@ function sujetCorrigeProche(citation: string): Sujet | SujetApercu | null {
 /** Débuts de mots qui montrent qu'un sujet parle de littérature (larges exprès : au moindre doute, c'est une dissertation littéraire). */
 const MOTS_LITTERAIRES = /^(litt?er|lettre|ecri|ecrir|poe|poem|roman|oeuvr|livr|lect|lir|lis|lu$|auteur|artis|art$|arts$|theat|drama|scen|spectat|salle|acteur|conte|recit|raconte|personnag|narra|fiction|styl|langa|vers$|mot$|mots$|chant|critiq|comed|comiq|traged|humour|satir|ironi|rime|rythm|image|metaph|recueil|page|texte|verbe|parole|griot|dire$|forme$|fond$|nouvelle|genre|negritude|imagin|inspir|muse|plume|creat|beaute|esthet|exprim|style|journal|intime|autobio|memoires|fabl|hero|langue|lyri|ouvrage|cre|beau|merveill|invent|legende|epope|mythe|fantais|utopi|essai|culture)/;
 
+/**
+ * Un message collé par erreur (« Pour installer l'application, va sur mon profil ou écris-moi en PV ») :
+ * ni citation entre guillemets, ni consigne, et des mots de messagerie ou d'application.
+ */
+const MOTS_MESSAGERIE = /\b(application|appli|app|profil|pv|inbox|whatsapp|watsap|facebook|fb|tiktok|instagram|telegram|lien|clique[rz]?|telecharg\w*|installe[rz]?|installation|abonne[rz]?|abonnement|salut|bonsoir|merci|svp|stp|numero|contacte[rz]?|ecri[st]?[ -]moi|message|groupe|statut|http|https|www|payer|paiement|prix|francs|fcfa|cle d activation)\b/;
+const CONSIGNE_MOTS = /\b(discut|expliqu|comment(ez|er)|illustr|analys|apprecie|justifi|montre[zr]|qu en pensez|pensez vous|partagez vous|etes vous d accord|dissert|a partir de vos lectures|vos lectures|en vous appuyant)/;
+function pasUnSujet(texte: string) {
+  if (/[«»"“”]/.test(texte)) return false;
+  const t = normalize(texte).replace(/[^a-z ]+/g, " ").replace(/\s+/g, " ");
+  return !CONSIGNE_MOTS.test(t) && MOTS_MESSAGERIE.test(t);
+}
+
 /** Ce que demande vraiment l'énoncé : un commentaire, un résumé, un sujet de société, ou bien une dissertation littéraire. */
 function natureDuSujet(texte: string, citation: string, auteurCite: boolean): Analyse["nature"] {
   const t = normalize(texte).replace(/[^a-z ]+/g, " ");
   if (/\bcommentaire (compose|de texte|litteraire)|\b(vous ferez|faites|faire|redigez) (un|le) commentaire|\bcommentez (ce|le|cet) (texte|poeme|passage|extrait)/.test(t)) return "commentaire";
+  if (pasUnSujet(texte)) return "pasSujet";
   if (/\bresum(ez|er|e) (ce|le|du) texte|\bresume de texte|\bcontraction de texte|\bvous resumerez|\bfaites le resume/.test(t)) return "resume";
   // Toute la phrase compte, consigne comprise (« à partir des œuvres que vous avez lues »).
   const mots = normalize(`${citation} ${texte}`).replace(/[^a-z]+/g, " ").split(" ");

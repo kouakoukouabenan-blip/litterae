@@ -52,6 +52,10 @@ try {
 
   // Sujets pièges : ce que l'appli doit comprendre de la consigne et de l'énoncé.
   const pieges = [
+    // Un message collé par erreur n'est pas un sujet (Atikan, 2026-11-02).
+    ["Pour installer l'application, tu peux juste aller voir sur mon profil ou bien m'écrire en PV", a => a.nature === "pasSujet"],
+    ["Salut, envoie-moi le lien WhatsApp du groupe stp", a => a.nature === "pasSujet"],
+    ["« L'écrivain doit écrire pour son peuple, pas pour les réseaux. » Discutez.", a => a.nature === "dissertation"],
     ["« La littérature doit être une arme au service du peuple opprimé. » Expliquez.", a => !/^Nuance/.test(a.plan.axe2) && a.travail.startsWith("Expliquer (")],
     ["« La littérature doit être une arme au service du peuple opprimé. » Commentez.", a => /^Nuance/.test(a.plan.axe2)],
     ["« Le roman africain permet de découvrir les traditions du continent. » Expliquez et illustrez.", a => a.plan.ex1.every(l => l.length === 2)],
