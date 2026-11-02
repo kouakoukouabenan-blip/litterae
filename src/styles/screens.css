@@ -904,3 +904,8 @@
 .devoir-options > summary { cursor: pointer; color: var(--green); font-weight: 600; min-height: 44px; display: flex; align-items: center; }
 .devoir-options > * + * { margin-top: var(--s2); }
 .devoir-suite .tag { border: 0; cursor: pointer; font-family: inherit; min-height: 36px; padding: 0 var(--s3); }
+/* Les quatre onglets du parcours, collés sous la barre du haut. */
+.devoir-onglets { position: sticky; top: calc(var(--topbar-h) + var(--band-h)); z-index: 9; display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; margin: var(--s3) calc(-1 * var(--s1)) 0; padding: 4px; border-radius: 14px; background: var(--paper); box-shadow: 0 0 0 1px var(--line, #E4DED2); }
+.devoir-onglet { min-height: 48px; padding: 4px 6px; border: 0; border-radius: 10px; background: transparent; color: var(--muted); font: inherit; font-size: .82rem; font-weight: 600; line-height: 1.15; cursor: pointer; }
+.devoir-onglet[aria-selected="true"] { background: var(--green); color: #fff; }
+.devoir-onglet:focus-visible { outline: 2px solid var(--green); outline-offset: 1px; }

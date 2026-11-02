@@ -66,7 +66,8 @@ export function DevoirScreen() {
   }, [lecture2]);
   function travailler(m: Mode) {
     setMode(m);
-    setTimeout(() => { const el = document.querySelector(".devoir-compris-carte"); if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 90, behavior: "smooth" }); }, 50);
+    // On reste en haut de la carte : la thèse puis le contenu choisi, les onglets juste au-dessus.
+    setTimeout(() => { const el = document.querySelector(".devoir-compris-carte"); if (el && el.getBoundingClientRect().top < 0) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 90, behavior: "smooth" }); }, 50);
   }
   const autreExercice = !!analyse && analyse.nature !== "dissertation" && !quandMeme && !choisie;
   // L'appli n'est pas sûre de sa lecture : pas de plan tout de suite, l'élève passe par le guide et choisit sa piste.
@@ -264,9 +265,16 @@ export function DevoirScreen() {
                     </button>
                   ))}
                 </div>
-              </> : <p class="small devoir-mode">Tu travailles sur : <strong>{MODES.find(m => m.id === mode)!.titre.toLowerCase()}</strong>.{" "}
-                <button type="button" class="link-btn" onClick={() => setMode(null)}>Changer</button></p>}
+              </> : null}
             </section>
+          )}
+          {/* Une fois le premier choix fait, quatre onglets restent en haut de l'écran : l'élève passe de l'un à l'autre sans revenir en arrière. */}
+          {parcours && mode && (
+            <div class="devoir-onglets" role="tablist" aria-label="Sur quoi veux-tu travailler ?">
+              {MODES.map(m => (
+                <button key={m.id} type="button" role="tab" aria-selected={mode === m.id} class="devoir-onglet" onClick={() => travailler(m.id)}>{m.court}</button>
+              ))}
+            </div>
           )}
 
           {guide && (
@@ -432,14 +440,6 @@ export function DevoirScreen() {
             </section>
           )}
 
-          {parcours && mode && (
-            <section class="devoir-suite">
-              <p class="small"><strong>Et maintenant ?</strong></p>
-              <p class="tags">
-                {MODES.filter(m => m.id !== mode).map(m => <button key={m.id} type="button" class="tag tag-link" onClick={() => travailler(m.id)}>{m.ensuite}</button>)}
-              </p>
-            </section>
-          )}
 
           {!autreExercice && !guide && (!parcours || mode) && <button type="button" class="btn btn-primary btn-block" onClick={rediger}><Icon name="edit" size={20} />Rédiger ce sujet dans l'atelier</button>}
           {parcours && <p class="small muted devoir-prudence">Ce sont des propositions de l'appli : vérifie-les avec ton cours et ton professeur.</p>}
@@ -576,9 +576,9 @@ export function MesDevoirsScreen() {
 
 type Mode = "comprendre" | "arguments" | "illustrer" | "plan";
 /** Les choix du parcours, dans l'ordre où l'élève les voit. */
-const MODES: { id: Mode; titre: string; detail: string; ensuite: string }[] = [
-  { id: "comprendre", titre: "Comprendre le sujet", detail: "Ce que veut dire l'auteur, la vraie question, des problématiques.", ensuite: "Mieux comprendre le sujet" },
-  { id: "arguments", titre: "Juste des arguments", detail: "Des idées expliquées, pour dire oui et pour nuancer.", ensuite: "Voir juste les arguments" },
-  { id: "illustrer", titre: "Des arguments et des œuvres", detail: "Chaque argument avec une œuvre pour l'illustrer.", ensuite: "Ajouter des œuvres pour illustrer" },
-  { id: "plan", titre: "Un plan détaillé", detail: "Problématique, deux parties, arguments, exemples et amorce.", ensuite: "Voir le plan détaillé" }
+const MODES: { id: Mode; titre: string; court: string; detail: string }[] = [
+  { id: "comprendre", court: "Comprendre", titre: "Comprendre le sujet", detail: "Ce que veut dire l'auteur, la vraie question, des problématiques." },
+  { id: "arguments", court: "Arguments", titre: "Juste des arguments", detail: "Des idées expliquées, pour dire oui et pour nuancer." },
+  { id: "illustrer", court: "Arguments + œuvres", titre: "Des arguments et des œuvres", detail: "Chaque argument avec une œuvre pour l'illustrer." },
+  { id: "plan", court: "Plan détaillé", titre: "Un plan détaillé", detail: "Problématique, deux parties, arguments, exemples et amorce." }
 ];
