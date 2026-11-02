@@ -199,12 +199,12 @@ export function DevoirScreen() {
       case "idee": return <>
         {c && <p><strong>Voici ce que j'ai compris :</strong> {c.these}</p>}
         <p class="small">{t.texte ? "Compare avec ta phrase : dites-vous la même chose ?" : "Ce n'est pas grave : relis le sujet avec cette phrase en tête."}</p>
-        <p>Maintenant, <strong>quelle question pose le sujet ?</strong> Transforme l'idée de l'auteur en une question à laquelle on peut répondre « oui… mais ».</p>
+        <p>Maintenant, <strong>écris ta problématique</strong>, en une question (« Dans quelle mesure… ? ») ou en deux questions : une pour la thèse (pourquoi l'auteur a raison), une pour l'antithèse (ce qui le nuance).</p>
       </>;
       case "question": return <>
         {c && <p><strong>La vraie question :</strong> {c.question}</p>}
         {c?.contraire && <p><strong>L'idée contraire, pour la partie 2 :</strong> {c.contraire}</p>}
-        {c && <><p><strong>Des problématiques possibles :</strong></p><ul class="devoir-liste">{c.problematiques.map(q => <li key={q}>{q}</li>)}</ul></>}
+        {c && <><p><strong>En une question :</strong> {insecable(c.uneQuestion)}</p><p><strong>En deux questions (thèse, puis antithèse) :</strong></p><ul class="devoir-liste">{c.problematiques.map(q => <li key={q}>{insecable(q)}</li>)}</ul></>}
         {motsDico()}
       </>;
       case "arguments": case "illustrer": {
@@ -224,7 +224,8 @@ export function DevoirScreen() {
       case "plan": return <>
         <p>Voici un plan possible. Ce sont des pistes : à toi de rédiger.</p>
         {analyse.devalorise && !choisie && <p class="small devoir-indice">L'auteur dit que {OBJETS[analyse.objet].nom} ne sert à rien : explique d'abord son point de vue, puis montre ce qui le contredit.</p>}
-        {plan.problematique && <p><strong>Problématique.</strong> {plan.problematique}</p>}
+        {plan.problematique && <p><strong>Problématique en deux questions.</strong> {insecable(plan.problematique)}</p>}
+        {c && !choisie && <p><strong>Ou en une question :</strong> {insecable(c.uneQuestion)}</p>}
         {c && !choisie && <details class="devoir-plus">
           <summary>D'autres problématiques et une idée d'amorce</summary>
           <ul>{c.problematiques.slice(1).map(q => <li key={q}>{q}</li>)}</ul>
@@ -306,7 +307,7 @@ export function DevoirScreen() {
         {!ecrit && attente && (
           <form class="devoir-saisie" onSubmit={e => { e.preventDefault(); const v = brouillonFil.trim(); repondre(attente === "idee" ? { idee: v } : { question: v }); demander({ quoi: attente, texte: v }); }}>
             <textarea class="textarea" rows={2} value={brouillonFil} aria-label={attente === "idee" ? "Ce que veut dire l'auteur, avec tes mots" : "Ta problématique, avec tes mots"}
-              placeholder={attente === "idee" ? `${lecture.debut}…` : "Ta question, avec tes mots…"} onInput={e => setBrouillonFil((e.target as HTMLTextAreaElement).value)} />
+              placeholder={attente === "idee" ? `${lecture.debut}…` : "Ta problématique, avec tes mots…"} onInput={e => setBrouillonFil((e.target as HTMLTextAreaElement).value)} />
             <div class="devoir-saisie-actions">
               <button type="button" class="link-btn" onClick={() => demander({ quoi: attente, texte: "" })}>Je ne sais pas</button>
               <button type="submit" class="btn btn-primary" disabled={!brouillonFil.trim()}>Envoyer</button>
@@ -393,7 +394,7 @@ export function DevoirScreen() {
                 </li>
                 <li>
                   <strong>Quelle question pose le sujet ?</strong>
-                  <span>Transforme l'idée de l'auteur en une question à laquelle on peut répondre « oui… mais ». C'est ta problématique.</span>
+                  <span>Écris ta problématique en deux questions : une pour la thèse (pourquoi l'auteur a raison), une pour l'antithèse (ce qui le nuance).</span>
                   <p class="devoir-exemple"><span>Par exemple :</span> {analyse.planLibre.problematique}</p>
                   <textarea class="textarea devoir-reponse" rows={2} value={reponse.question} placeholder="Ta problématique, avec tes mots…"
                     onInput={e => repondre({ question: (e.target as HTMLTextAreaElement).value })} />
@@ -455,7 +456,8 @@ export function DevoirScreen() {
               <p><strong>La vraie question :</strong> {analyse.comprendre.question}</p>
               {analyse.comprendre.contraire && <p><strong>L'idée contraire, pour la partie 2 :</strong> {analyse.comprendre.contraire}</p>}
             </div>}
-            {plan.problematique && <p class="devoir-problematique"><strong>Problématique.</strong> {plan.problematique}</p>}
+            {plan.problematique && <p class="devoir-problematique"><strong>Problématique.</strong> {insecable(plan.problematique)}</p>}
+            {analyse.comprendre && !(libre && !choisie) && !choisie && <p class="small"><strong>Ou en une question :</strong> {insecable(analyse.comprendre.uneQuestion)}</p>}
             {analyse.comprendre && !(libre && !choisie) && !choisie && <details class="devoir-plus">
               <summary>D'autres problématiques et une idée d'amorce</summary>
               <ul>{analyse.comprendre.problematiques.slice(1).map(q => <li key={q}>{q}</li>)}</ul>
@@ -635,6 +637,11 @@ const CHOIX: { id: Demande; texte: string }[] = [
   { id: "illustrer", texte: "Des arguments avec des œuvres" },
   { id: "plan", texte: "Fais-moi le plan complet" }
 ];
+
+/** Une espace insécable avant « ? » : le point d'interrogation ne part jamais seul à la ligne. */
+function insecable(t: string) {
+  return t.replace(/ ([?!:;»])/g, "\u00a0$1").replace(/« /g, "«\u00a0");
+}
 
 /** Le sujet tel que l'élève l'a collé, raccourci s'il est très long. */
 function sujetCourt(t: string) {

@@ -927,7 +927,7 @@ function planDuSujet({ citation, f: f0, f2: f20, consigne, discussion, themes, a
   const reprendre = (c: string) => /\?$/.test(c) ? `L'auteur demande : « ${c} » Que peut-on lui répondre ?`
     : parleDeLui(c) || /[.:!?]\s/.test(c) ? `L'auteur affirme : « ${c} ». A-t-il raison ?`
     : `Peut-on dire, avec l'auteur, ${/^[aeiouyhéèêàâîô]/i.test(c) ? "qu'" : "que "}${c.charAt(0).toLowerCase() + c.slice(1)} ?`;
-  const problematique = !f ? "Que veut dire l'auteur, et a-t-il raison ?"
+  const problematique = !f ? "Que veut dire l'auteur ? A-t-il entièrement raison ?"
     : [rejet && rejet !== f ? `Pourquoi, selon l'auteur, ${m.n} est-${m.il} ${m.bref(f)} plutôt ${/^[aeiouyhé]/.test(m.bref(rejet)) ? "qu'" : "que "}${m.bref(rejet)} ?`
       : these ? `En quoi peut-on dire ${/^[aeiouyhéèêà]/i.test(these) ? "qu'" : "que "}${these} ?`
       : reprise ? reprendre(reprise)
@@ -1012,7 +1012,7 @@ function planDuSujet({ citation, f: f0, f2: f20, consigne, discussion, themes, a
     return {
       axe1, axe2,
       problematique: `Pourquoi, selon l'auteur, ${m.n} est-${m.il} à la fois ${cites.slice(0, -1).join(", ")} et ${cites[cites.length - 1]} ?`
-        + (discussion ? ` Ne peut-${m.il} pas aussi être ${m.bref(fN!)} ?` : ""),
+        + (discussion ? ` Ne peut-${m.il} pas aussi être ${m.bref(fN!)} ?` : " Comment les œuvres le montrent-elles ?"),
       args1: liste.map(el => `« ${titre(el)} »`), args2: a2.map(a => argumentDe(a, objet)),
       ex1: a1.map(a => (a ? exemples(a, undefined) : [])), ex2: a2.map(a => exemples(a, f2b))
     };
@@ -1142,9 +1142,9 @@ function planLibreDu(citation: string, discussion: boolean): Analyse["plan"] {
   const question = /\?$/.test(net);
   const c = net.length >= 15 && net.length <= 170 ? net : "";
   return {
-    problematique: !c ? "Que veut dire l'auteur, et a-t-il raison ?"
-      : question ? `${net.charAt(0).toUpperCase() + net.slice(1)}${discussion ? " Quelles réponses peut-on donner, et avec quelles limites ?" : ""}`
-      : `L'auteur affirme : « ${c} ». A-t-il raison${discussion ? ", et jusqu'où" : ""} ?`,
+    problematique: !c ? "Que veut dire l'auteur ? A-t-il entièrement raison ?"
+      : question ? `${net.charAt(0).toUpperCase() + net.slice(1)} ${discussion ? "Quelles réponses peut-on donner, et avec quelles limites ?" : "Comment les œuvres permettent-elles d'y répondre ?"}`
+      : `L'auteur affirme : « ${c} ». Pourquoi peut-on lui donner raison ? ${discussion ? "Son idée n'a-t-elle pas des limites ?" : "Comment les œuvres le montrent-elles ?"}`,
     axe1: question ? "Réponds d'abord à la question dans un sens : donne tes raisons et des exemples d'œuvres que tu as étudiées."
       : "Explique l'idée de l'auteur et montre ce qui lui donne raison, avec des exemples d'œuvres que tu as étudiées.",
     axe2: discussion
@@ -1156,7 +1156,7 @@ function planLibreDu(citation: string, discussion: boolean): Analyse["plan"] {
 
 // ---- « Ce que dit ton sujet » : ce que l'appli a compris, dit avec d'autres mots que le sujet ----
 
-export interface Comprendre { these: string; question: string; contraire: string | null; problematiques: string[]; amorce: string }
+export interface Comprendre { these: string; question: string; contraire: string | null; problematiques: string[]; uneQuestion: string; amorce: string }
 
 /** La question que pose vraiment un sujet de chaque fonction ({N} : le mot du sujet ; {il} : son pronom). */
 const QUESTION_CACHEE: Record<Fonction, string[]> = {
@@ -1199,10 +1199,20 @@ function comprendreDu(citation: string, f: Fonction, fN: Fonction | null, o: Obj
   const variantes = QUESTION_CACHEE[f];
   const question = dire(variantes[graine(citation) % variantes.length]);
   const contraire = discussion && fN && fN !== f ? `${m.N} peut aussi être ${m.idee(fN)}.` : null;
-  const problematiques = [premiere, question, `Dans quelle mesure ${m.n} est-${m.il} ${m.bref(f)} ?`].filter((x, i, t) => x && t.indexOf(x) === i);
+  // Atikan : une problématique a au moins deux questions, une pour la thèse et une pour l'antithèse.
+  const seconde = (q: string, sinon = "Comment les œuvres le montrent-elles ?") => discussion ? q : sinon;
+  const autre = fN && fN !== f ? m.bref(fN) : null;
+  const problematiques = [
+    premiere,
+    `Comment ${m.n} parvient-${m.il} à être ${m.bref(f)} ? ${seconde(autre ? `Ne peut-${m.il} pas aussi être ${autre} ?` : `Se limite-t-${m.il} pour autant à ce rôle ?`)}`,
+    `Dans quelle mesure ${m.n} est-${m.il} ${m.bref(f)} ? ${seconde(`Ce rôle n'a-t-il pas des limites ?`, "Quels exemples le prouvent le mieux ?")}`
+  ].filter((x, i, t) => x && t.indexOf(x) === i);
   const cles = new Set(themes);
   const amorce = AMORCES.find(([t]) => t.some(x => cles.has(x)))?.[1] ?? AMORCE_FONCTION[f];
-  return { these, question, contraire, problematiques, amorce };
+  // Atikan : proposer aussi une problématique en une seule question.
+  const uneQuestion = devalorise ? `${m.N} est-${m.il} vraiment inutile ?`
+    : discussion ? `Dans quelle mesure ${m.n} est-${m.il} ${m.bref(f)} ?` : `En quoi ${m.n} est-${m.il} ${m.bref(f)} ?`;
+  return { these, question, contraire, problematiques, uneQuestion, amorce };
 }
 
 /** Le plan d'un sujet corrigé que l'élève peut ouvrir : celui écrit par le professeur. */
