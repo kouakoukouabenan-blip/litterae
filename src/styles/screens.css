@@ -904,8 +904,20 @@
 .devoir-options > summary { cursor: pointer; color: var(--green); font-weight: 600; min-height: 44px; display: flex; align-items: center; }
 .devoir-options > * + * { margin-top: var(--s2); }
 .devoir-suite .tag { border: 0; cursor: pointer; font-family: inherit; min-height: 36px; padding: 0 var(--s3); }
-/* Les quatre onglets du parcours, collés sous la barre du haut. */
-.devoir-onglets { position: sticky; top: calc(var(--topbar-h) + var(--band-h)); z-index: 9; display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; margin: var(--s2) calc(-1 * var(--s1)) 0; padding: 4px; border-radius: 14px; background: var(--paper); box-shadow: 0 0 0 1px var(--line, #E4DED2); }
-.devoir-onglet { min-height: 48px; padding: 4px 6px; border: 0; border-radius: 10px; background: transparent; color: var(--muted); font: inherit; font-size: .82rem; font-weight: 600; line-height: 1.15; cursor: pointer; }
-.devoir-onglet[aria-selected="true"] { background: var(--green); color: #fff; }
-.devoir-onglet:focus-visible { outline: 2px solid var(--green); outline-offset: 1px; }
+/* J'ai un devoir en conversation : l'appli à gauche, l'élève à droite, la suite en réponses à toucher. */
+.devoir-fil { display: grid; gap: var(--s2); }
+.bulle { max-width: 92%; padding: var(--s2) var(--s3); border-radius: 16px; display: grid; gap: var(--s1); min-width: 0; overflow-wrap: anywhere; }
+.bulle p { margin: 0; }
+.bulle-appli { justify-self: start; background: var(--surface); border-bottom-left-radius: 4px; box-shadow: 0 1px 2px rgb(0 0 0 / .06); }
+.bulle-eleve { justify-self: end; max-width: 85%; background: var(--green); color: #fff; border-bottom-right-radius: 4px; }
+.bulle-ecrit { flex-direction: row; display: flex; align-items: center; gap: var(--s2); }
+.bulle-titre { font-weight: 700; margin-top: var(--s1) !important; }
+.bulle .devoir-args, .bulle .devoir-plan, .bulle .devoir-liste { margin: 0; }
+.bulle .devoir-plan { padding-left: 1.2em; }
+.bulle .devoir-corriger { margin: 0; }
+.devoir-reponses { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: var(--s1); }
+.devoir-reponses .tag { border: 1px solid var(--green); background: var(--paper); color: var(--green); cursor: pointer; font-family: inherit; min-height: 40px; padding: 0 var(--s3); }
+.devoir-reponses .tag:hover, .devoir-reponses .tag:focus-visible { background: var(--green-pale); }
+.devoir-saisie { justify-self: end; width: 92%; display: grid; gap: var(--s1); }
+.devoir-saisie-actions { display: flex; justify-content: flex-end; align-items: center; gap: var(--s3); }
+.devoir-fil + .btn-primary { margin-top: var(--s4); }
