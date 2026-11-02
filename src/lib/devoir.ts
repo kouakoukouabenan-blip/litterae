@@ -19,16 +19,16 @@ import { redresser, cle, commencePar, jetons, memeFamille, memeMot, type Jeton }
  * début de mot (par défaut), mot entier (« $ ») ou expression (avec une espace, compte double).
  */
 const INDICES: [Fonction, string[]][] = [
-  ["Engagement", ["instrui", "prendre parti", "parti pris", "corriger les moeurs", "corrige les moeurs", "corriger les hommes", "accus", "pistolet", "tract$", "propagande", "militer", "jours meilleurs", "aveugle", "eduqu", "enseign", "former", "moral", "lecon", "verite", "conscientis", "engage$", "engagement", "change$", "changement", "denon", "combat", "lutt", "arme$", "militant", "changer le monde", "changer la societe", "eveill", "conscien", "revolt", "revolution", "liber", "injust", "oppress", "opprim", "servir", "au service", "peuple", "responsab", "mission", "temoign", "bataille", "battre", "porte-parole", "sans voix", "defend", "critiqu", "transform", "agir", "action", "utile$", "guide$", "eclair", "flambeau", "vocation", "croisade", "resist", "dictat", "tyran", "colonis", "esclav", "racis", "fusil", "bombe", "prophet", "verite", "mensonge", "hypocris", "silenc", "devoir$", "accuse", "soumission", "bouche$", "malheur", "voix$", "echo$", "derang", "inquiet", "boulevers", "envahi", "secou", "choqu", "provoqu", "histoire$", "relecture", "relire", "memoire"]],
+  ["Engagement", ["maux de la societe", "maux de notre societe", "maux$", "instrui", "prendre parti", "parti pris", "corriger les moeurs", "corrige les moeurs", "corriger les hommes", "accus", "pistolet", "tract$", "propagande", "militer", "jours meilleurs", "aveugle", "eduqu", "enseign", "former", "moral", "lecon", "verite", "conscientis", "engage$", "engagement", "change$", "changement", "denon", "combat", "lutt", "arme$", "militant", "changer le monde", "changer la societe", "eveill", "conscien", "revolt", "revolution", "liber", "injust", "oppress", "opprim", "servir", "au service", "peuple", "responsab", "mission", "temoign", "bataille", "battre", "porte-parole", "sans voix", "defend", "critiqu", "transform", "agir", "action", "utile$", "guide$", "eclair", "flambeau", "vocation", "croisade", "resist", "dictat", "tyran", "colonis", "esclav", "racis", "fusil", "bombe", "prophet", "verite", "mensonge", "hypocris", "silenc", "devoir$", "accuse", "soumission", "bouche$", "malheur", "voix$", "echo$", "derang", "inquiet", "boulevers", "envahi", "secou", "choqu", "provoqu", "histoire$", "relecture", "relire", "memoire"]],
   ["Sociale", ["tradition", "representer la vie", "represente la vie", "representation de la vie", "imiter la vie", "coutume", "vie d un peuple", "type$", "types$", "condition", "decouvr", "temoin", "temoignage", "point d optique", "realisme", "reflet", "histoire$", "memoire", "connaitre", "classe", "sociaux", "societ", "social", "miroir", "realit", "reel$", "realis", "peindre", "peint", "tableau", "reflet", "refleter", "moeurs", "epoque", "vie quotidienne", "c est la vie", "de la vie", "observ", "decri", "description", "milieu", "photograph", "document", "imiter", "imitation", "faits$", "tels qu", "telle qu", "tel qu", "empreinte", "nous vivons", "ce que nous vivons", "vivent", "information", "barometre"]],
   ["Esthétique", ["maniere", "bien ecrire", "bien ecrit", "langue$", "mots$", "technique", "enchant", "vocabulaire", "dictionnaire", "clairement", "partition", "danse", "grandeur", "peintre", "sonor", "vers$", "ecriture$", "travail", "ciseler", "beau$", "beaute", "belle$", "art$", "l art pour l art", "artist", "forme$", "style", "langage", "poesie pure", "createur", "creation", "creat", "gratuit", "musique", "musical", "harmon", "rime", "rythme", "image$", "verbe$", "perfection", "esthet", "inutile", "elle meme", "symbole", "parole artistique", "orfevre", "sculpt", "spectacle"]],
   ["Évasion", ["refuge", "hors de ce monde", "n importe ou", "menteur", "emport", "loin", "rire$", "comique", "humour", "plaire", "suffit pas", "chambre", "voyager", "fable", "conte$", "contes$", "legende", "aventure", "evasion", "evad", "reve$", "rever$", "reveur", "imagin", "divert", "distrai", "distrac", "fuir", "fuite", "ailleurs", "plaisir", "amus", "oubli", "fiction", "invent", "ennui", "ennuy", "loisir", "detente", "voyag", "aventur", "merveill", "fantast", "fantaisie", "magie", "echapp", "arracher", "consol", "chimere", "illusion", "raconter des histoires", "spectacle", "partir$", "lointain", "endroits"]],
-  ["Lyrique", ["nu$", "lui meme", "soi meme", "moi meme", "se chercher", "autobiograph", "confession", "sincer", "temperament", "vecu", "experience", "coeur", "cri$", "souvenir", "nostalg", "aveu", "sentiment", "emotion", "coeur", "ame$", "moi$", "intime", "souffr", "douleur", "douloureu", "amour", "joie", "tristesse", "triste", "confid", "emouv", "emu$", "toucher le coeur", "touche le coeur", "tourment", "sourire", "souri$", "malheureu", "ressen", "sensib", "larme", "pleur", "chagrin", "melancol", "desesper", "nostalg", "passion", "solitude", "sanglot", "plainte", "lament", "gemi", "chant", "personnel$"]]
+  ["Lyrique", ["maux$", "mettre des mots sur", "met des mots sur", "nu$", "lui meme", "soi meme", "moi meme", "se chercher", "autobiograph", "confession", "sincer", "temperament", "vecu", "experience", "coeur", "cri$", "souvenir", "nostalg", "aveu", "sentiment", "emotion", "coeur", "ame$", "moi$", "intime", "souffr", "douleur", "douloureu", "amour", "joie", "tristesse", "triste", "confid", "emouv", "emu$", "toucher le coeur", "touche le coeur", "tourment", "sourire", "souri$", "malheureu", "ressen", "sensib", "larme", "pleur", "chagrin", "melancol", "desesper", "nostalg", "passion", "solitude", "sanglot", "plainte", "lament", "gemi", "chant", "personnel$"]]
 ];
 
 /** Mots qui annoncent chaque argument de dissertation (les mêmes que ceux des fiches d'œuvres). */
 const INDICES_ARGUMENTS: [string, Fonction, string[]][] = [
-  ["Dénonciation", "Engagement", ["denon", "critiqu", "accuse", "combat", "lutt", "injust", "mensonge", "hypocris", "arme$", "bataille", "croisade", "fusil"]],
+  ["Dénonciation", "Engagement", ["maux de la societe", "denon", "critiqu", "accuse", "combat", "lutt", "injust", "mensonge", "hypocris", "arme$", "bataille", "croisade", "fusil"]],
   ["Éveil des consciences", "Engagement", ["eveill", "conscien", "eclair", "guide$", "flambeau", "aveugle", "instrui", "eduqu", "ouvrir les yeux", "professeur", "enseign", "esper", "espoir", "changer le monde", "transform"]],
   ["Défense des opprimés", "Engagement", ["opprim", "oppress", "sans voix", "voix$", "porte-parole", "bouche$", "malheur", "defend", "peuple", "faible", "pauvre", "misere", "liber", "esclav"]],
   ["Satire", "Engagement", ["satir", "corriger les moeurs", "corrige les moeurs", "moqu", "ridicul", "railler", "caricatur"]],
@@ -37,7 +37,7 @@ const INDICES_ARGUMENTS: [string, Fonction, string[]][] = [
   ["Peinture de la réalité sociale", "Sociale", ["societ", "social", "miroir", "realit", "reel$", "peindre", "peint", "reflet", "refleter", "moeurs", "epoque", "observ", "faits$", "tels qu", "telle qu", "c est la vie", "de la vie", "vie quotidienne"]],
   ["Culte de la forme", "Esthétique", ["forme$", "style", "art$", "langage", "rime", "rythme", "gratuit", "elle meme", "perfection", "musique", "image$", "verbe$", "artist", "createur", "creat"]],
   ["Célébration de la beauté", "Esthétique", ["beaute", "beau$", "belle$", "celebr", "nature", "chant"]],
-  ["Expression des sentiments", "Lyrique", ["sentiment", "emotion", "coeur", "ame$", "amour", "souffr", "douleur", "douloureu", "tristesse", "triste", "joie", "chagrin", "ressen", "sensib", "larme", "desesper", "melancol", "toucher"]],
+  ["Expression des sentiments", "Lyrique", ["maux$", "mettre des mots sur", "sentiment", "emotion", "coeur", "ame$", "amour", "souffr", "douleur", "douloureu", "tristesse", "triste", "joie", "chagrin", "ressen", "sensib", "larme", "desesper", "melancol", "toucher"]],
   ["Expression du vécu", "Lyrique", ["vecu", "experience", "intime", "moi$", "personnel", "autobiograph", "sa propre vie", "sa vie"]],
   ["Imagination", "Évasion", ["imagin", "invent", "fiction", "rever$", "reve$", "reveur", "merveill", "fantast", "fantaisie", "magie", "chimere"]],
   ["Voyage imaginaire", "Évasion", ["voyag", "ailleurs", "evasion", "evad", "fuir", "fuite", "echapp", "arracher", "exotis"]],
@@ -232,12 +232,26 @@ function fonctionsDesThemes() {
 }
 
 /** Deux mots se valent : clé identique, à une ou deux fautes près ; les mots très courts doivent être écrits pareil. */
-const egal = (a: Jeton, b: Jeton) => (b.cle.length < 3 ? a.brut === b.brut || a.brut === b.brut + "s" || (a.cle === b.cle && a.brut.length >= 4 && b.brut.length >= 4) : a.colle ? a.cle === b.cle : memeMot(a.cle, b.cle));
+/**
+ * Mots qui se prononcent pareil mais ne veulent pas dire la même chose (« des mots sur les maux ») :
+ * la lecture au son ne doit jamais les confondre.
+ */
+const HOMOPHONES = [["mot", "mots", "maux", "mal"], ["vers", "verre", "verres", "vert", "verts", "ver"], ["foi", "fois", "foie"], ["voix", "voie", "voies"],
+  ["cour", "cours", "court", "courts"], ["mer", "mers", "mere", "meres", "maire", "maires"], ["sang", "sans", "cent", "cents"], ["chant", "chants", "champ", "champs"],
+  ["conte", "contes", "compte", "comptes", "comte", "comtes"], ["fin", "fins", "faim"], ["sein", "seins", "saint", "saints"], ["paix", "pet"], ["lait", "laid", "laids"],
+  ["cou", "coup", "coups", "cout", "couts"], ["temps", "tant", "tante"], ["pere", "paire", "pair"], ["tache", "taches"], ["peine", "penne"]];
+const SENS = new Map<string, string>();
+for (const g of HOMOPHONES) for (const m of g) SENS.set(m, m.replace(/(s|x)$/, "") || m);
+/** Deux homophones de sens différent (« mots » et « maux ») ne sont jamais le même mot. */
+const sensDifferent = (a: string, b: string) => SENS.has(a) && SENS.has(b) && SENS.get(a) !== SENS.get(b) && a !== b;
+
+const egal = (a: Jeton, b: Jeton) => !sensDifferent(a.brut, b.brut) && (b.cle.length < 3 ? a.brut === b.brut || a.brut === b.brut + "s" || (a.cle === b.cle && a.brut.length >= 4 && b.brut.length >= 4) : a.colle ? a.cle === b.cle : memeMot(a.cle, b.cle));
 
 /** Qualité de la présence d'un mot dans le texte : 3 identique, 2 à quelques fautes près, 1 même famille, 0 absent. */
 function presence(mots: Jeton[], w: Jeton) {
   let q = 0;
   for (const m of mots) {
+    if (sensDifferent(m.brut, w.brut)) continue;
     if (m.cle === w.cle && (w.cle.length >= 3 || m.brut === w.brut || m.brut === w.brut + "s" || (m.brut.length >= 4 && w.brut.length >= 4))) return 3;
     if (egal(m, w)) q = Math.max(q, 2);
     else if (w.cle.length >= 3 && !m.colle && memeFamille(m.cle, w.cle)) q = Math.max(q, 1);

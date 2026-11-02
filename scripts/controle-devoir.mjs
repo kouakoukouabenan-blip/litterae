@@ -97,6 +97,10 @@ try {
     // Lectures de sens.
     ["« L'écrivain n'a pas à prendre parti : son seul devoir est de bien écrire. » Discutez.", a => a.fonctions[0] === "Esthétique"],
     ["« Le théâtre est l'art de représenter la vie. » Expliquez.", a => a.fonctions[0] === "Sociale"],
+    // « mots » et « maux » se prononcent pareil mais ne se confondent pas (Atikan, novembre 2026).
+    ["« Écrire, c'est mettre des mots sur les maux. » Expliquez et discutez.", a => a.fonctions[0] === "Lyrique" && a.fonctions.includes("Engagement")],
+    ["ecrire cest mettre des mots sur les maux discutez", a => a.fonctions[0] === "Lyrique"],
+    ["« Le poète joue avec les mots. » Discutez.", a => a.fonctions[0] === "Esthétique"],
     // Sujets bien lus : le plan reste montré d'emblée.
     ["« Le roman est un miroir qu'on promène le long d'un chemin. » (Stendhal) Expliquez et discutez cette affirmation.", a => a.sure && a.fonctions[0] === "Sociale"],
     ["« Un écrivain qui se tait face à l'injustice est complice. » Discutez.", a => a.sure && a.fonctions[0] === "Engagement"],
