@@ -502,7 +502,6 @@ export function DevoirScreen() {
               <button type="button" class="btn btn-secondary" onClick={garder} disabled={garde} aria-pressed={garde}>
                 <Icon name="bookmark" filled={garde} size={20} />{garde ? "Gardé dans Mon espace" : "Garder dans Mon espace"}
               </button>
-              <button type="button" class="btn btn-secondary" onClick={autreDevoir}><Icon name="add" size={20} />Saisir un autre devoir</button>
             </div>
             {gardeLe && (
               <label class="devoir-date">
@@ -519,6 +518,8 @@ export function DevoirScreen() {
               </ul>
             </>}
           </details>}
+          {/* Toujours en bas, visible mais discret (Atikan). */}
+          <p class="devoir-autre"><button type="button" class="link-btn" onClick={autreDevoir}><Icon name="add" size={18} />Saisir un autre devoir</button></p>
         </div>
       )}
     </Page>

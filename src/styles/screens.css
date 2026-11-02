@@ -921,3 +921,7 @@
 .devoir-saisie { justify-self: end; width: 92%; display: grid; gap: var(--s1); }
 .devoir-saisie-actions { display: flex; justify-content: flex-end; align-items: center; gap: var(--s3); }
 .devoir-fil + .btn-primary { margin-top: var(--s4); }
+.devoir-autre { margin: var(--s3) 0 0; text-align: center; }
+.devoir-autre .link-btn { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; font-weight: 600; }
+.devoir-autre .icon { fill: currentColor; }
+.devoir-options .devoir-actions { grid-template-columns: 1fr; }
