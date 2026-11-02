@@ -833,3 +833,31 @@
 .cc-ensemble-btn { margin-top: var(--s3); position: sticky; bottom: calc(var(--bottom-nav-h) + env(safe-area-inset-bottom) + var(--s3)); z-index: 5; box-shadow: 0 2px 8px rgba(0,0,0,.12); }
 @media (min-width: 720px) { .cc-ensemble-btn { bottom: var(--s4); } }
 .cc-plan-analyses { margin: var(--s1) 0 var(--s2); padding-left: var(--s4); font-size: var(--text-sm); color: var(--muted); }
+
+/* J'ai un devoir : le guide quand l'appli n'est pas sûre de sa lecture (trois questions, puis l'élève choisit sa piste). */
+.devoir-guide > p { margin: 0 0 var(--s3); }
+.devoir-etapes { margin: 0; padding: var(--s3) var(--s4) var(--s3) 2.2em; border-radius: 16px; background: var(--surface); box-shadow: 0 1px 2px rgb(0 0 0 / .06); display: grid; gap: var(--s4); }
+.devoir-etapes > li { display: grid; gap: var(--s1); }
+.devoir-etapes > li::marker { font-weight: 700; color: var(--ochre-text); }
+.devoir-etapes > li > span { color: var(--muted); font-size: var(--text-sm); }
+.devoir-etapes .tags { margin: 0; }
+.devoir-choix { display: grid; gap: var(--s2); margin-top: var(--s1); }
+.devoir-piste { display: grid; gap: 2px; text-align: left; padding: var(--s2) var(--s3); border: 1px solid var(--line); border-left: 4px solid var(--fn, var(--ochre)); border-radius: 12px; background: var(--paper); color: var(--ink); font: inherit; cursor: pointer; }
+.devoir-piste:hover, .devoir-piste:focus-visible { border-color: var(--fn, var(--ochre)); }
+.devoir-piste span { font-size: var(--text-sm); color: var(--muted); }
+.devoir-possible { margin: 0 0 var(--s2); }
+.devoir-conseil { margin: var(--s2) 0 0; padding: var(--s2) var(--s3); border-radius: 12px; background: var(--ochre-pale); }
+.devoir-reperes { display: grid; grid-template-columns: auto 1fr; gap: var(--s1) var(--s3); align-items: baseline; margin: var(--s1) 0; font-size: var(--text-sm); }
+.devoir-reperes dt { color: var(--muted); }
+.devoir-reperes dd { margin: 0; }
+.devoir-reperes .tags { margin: 0; }
+@media (max-width: 420px) { .devoir-reperes { grid-template-columns: 1fr; gap: 2px; } .devoir-reperes dd { margin-bottom: var(--s1); } }
+.devoir-exemple { margin: 0; padding: var(--s2) var(--s3); border-radius: 12px; background: var(--paper); font-size: var(--text-sm); }
+.devoir-exemple > span { font-weight: 700; color: var(--ochre-text); }
+.devoir-reponse { font-size: var(--text-sm); }
+.devoir-piste em { font-size: var(--text-xs); color: var(--ochre-text); font-style: normal; }
+/* Une question posée à l'élève : la question en gras, puis ses réponses en vrais boutons. */
+.devoir-question p { margin: 0 0 var(--s2); }
+.devoir-boutons { display: grid; gap: var(--s2); }
+.devoir-boutons .btn { width: 100%; min-height: 44px; white-space: normal; text-align: center; padding-top: var(--s2); padding-bottom: var(--s2); line-height: 1.3; }
+@media (min-width: 600px) { .devoir-boutons { grid-template-columns: 1fr 1fr; } }

@@ -46,6 +46,7 @@ try {
     if (a.fonctions.includes(attendue)) dansListe++;
     if (a.corrige?.num === s.num) reconnus++; else problemes.push(`Sujet ${s.num} : pas reconnu comme sujet corrigé`);
     if (a.nature !== "dissertation") problemes.push(`Sujet ${s.num} : pris pour « ${a.nature} »`);
+    if (a.horsCadre || a.devalorise) problemes.push(`Sujet ${s.num} : sorti du cadre des fonctions`);
     verifierPlan(`Sujet ${s.num}`, a);
   }
 
@@ -77,7 +78,29 @@ try {
     ["« Le roman est le reflet de la société. » Expliquez et discutez.", a => a.objet === "roman" && !/littérature/.test(a.plan.problematique + a.plan.axe2)],
     ["Je ne crois pas à l'évasion par les livres. Je crois que la littérature doit réveiller les consciences. Discutez.", a => a.objet === "litterature"],
     // Un sujet corrigé tapé avec des fautes reste reconnu.
-    ["faire de la literature cest sarmer pour se faire lecho de ceux qui nont pas de voix expliquer et discuter", a => a.corrige?.num === "01"]
+    ["faire de la literature cest sarmer pour se faire lecho de ceux qui nont pas de voix expliquer et discuter", a => a.corrige?.num === "01"],
+    // Sujets qui ne parlent pas des fonctions de la littérature : pas de plan d'emblée, l'élève passe par le guide (novembre 2026).
+    ["« L'écrivain africain doit-il écrire dans sa langue maternelle plutôt qu'en français ? » Discutez.", a => a.horsCadre?.cle === "langue" && !a.sure],
+    ["« Le théâtre est fait pour être joué et non pour être lu. » Partagez-vous ce point de vue ?", a => a.horsCadre?.cle === "scene" && !a.sure],
+    ["« Un bon roman doit avoir une fin heureuse. » Discutez.", a => a.horsCadre?.cle === "genre" && !a.sure],
+    ["« Le personnage de roman doit être un héros exemplaire. » Discutez cette opinion.", a => a.horsCadre?.cle === "personnage" && !a.sure],
+    ["« Le critique littéraire est un écrivain raté. » Discutez.", a => a.horsCadre?.cle === "critique" && !a.sure],
+    ["« L'œuvre littéraire n'appartient plus à son auteur, elle appartient au lecteur. » Discutez.", a => a.horsCadre?.cle === "lecteur" && !a.sure],
+    ["« On écrit toujours pour quelqu'un. » Expliquez et discutez.", a => a.horsCadre?.cle === "lecteur" && !a.sure],
+    ["« Le roman policier n'est pas de la littérature. » Qu'en pensez-vous ?", a => a.horsCadre?.cle === "genre" && !a.sure],
+    // L'auteur dit que la littérature ne sert à rien : jamais « Montre que la poésie ne sert à rien : c'est la fonction sociale ».
+    ["« La poésie ne sert à rien. » Discutez cette affirmation en vous appuyant sur des exemples précis.", a => a.devalorise && a.sure && !/c'est la fonction/.test(a.plan.axe1) && /utile/.test(a.plan.axe2)],
+    ["« La lecture est une perte de temps à l'ère d'Internet et des réseaux sociaux. » Qu'en pensez-vous ?", a => a.devalorise && /utile/.test(a.plan.axe2)],
+    ["« La littérature doit servir au peuple. Une œuvre littéraire dépourvue de tout message ne sert à rien. » Discutez.", a => !a.devalorise && a.fonctions[0] === "Engagement"],
+    // Un sujet en question : pas de « doit-il… ? ? » ni de « Montre que … doit-elle … ».
+    ["« La littérature doit-elle plaire ou instruire ? » Discutez.", a => !/\?\s*\?|\? :/.test(a.plan.problematique + a.plan.axe1) && a.sure],
+    // Lectures de sens.
+    ["« L'écrivain n'a pas à prendre parti : son seul devoir est de bien écrire. » Discutez.", a => a.fonctions[0] === "Esthétique"],
+    ["« Le théâtre est l'art de représenter la vie. » Expliquez.", a => a.fonctions[0] === "Sociale"],
+    // Sujets bien lus : le plan reste montré d'emblée.
+    ["« Le roman est un miroir qu'on promène le long d'un chemin. » (Stendhal) Expliquez et discutez cette affirmation.", a => a.sure && a.fonctions[0] === "Sociale"],
+    ["« Un écrivain qui se tait face à l'injustice est complice. » Discutez.", a => a.sure && a.fonctions[0] === "Engagement"],
+    ["« La littérature orale africaine est une école de sagesse. » Expliquez et illustrez.", a => a.sure && !a.horsCadre]
   ];
   let piegesOk = 0;
   for (const [t, ok] of pieges) {
@@ -88,21 +111,23 @@ try {
 
   // Vrais sujets (BAC, devoirs, Facebook, envoyés par Atikan) : la fonction principale doit être trouvée en premier.
   const reels = JSON.parse(readFileSync(new URL("./sujets-reels.json", import.meta.url), "utf8"));
-  let reelsJustes = 0;
+  let reelsJustes = 0, reelsSurs = 0;
   for (const [i, x] of reels.entries()) {
     const a = analyserSujet(x.texte, 6);
+    if (a.sure) reelsSurs++;
+    if (a.horsCadre || a.devalorise) problemes.push(`Vrai sujet ${i + 1} : ${a.horsCadre ? `pris pour un sujet sur ${a.horsCadre.nom}` : "pris pour « ne sert à rien »"}`);
     if (a.fonctions[0] === x.fonctions[0] || (a.rejet && a.fonctions.includes(x.fonctions[0]))) reelsJustes++;
     if (a.nature !== "dissertation") problemes.push(`Vrai sujet ${i + 1} : pris pour « ${a.nature} »`);
     else verifierPlan(`Vrai sujet ${i + 1}`, a);
   }
 
   const n = sujets.length;
-  console.log(`J'ai un devoir — fonction juste ${premiere}/${n}, dans la liste ${dansListe}/${n}, corrigés reconnus ${reconnus}/${n}, exemples sûrs ${exemplesSurs}/${exemplesTotal}, pièges ${piegesOk}/${pieges.length}, vrais sujets ${reelsJustes}/${reels.length}`);
+  console.log(`J'ai un devoir — fonction juste ${premiere}/${n}, dans la liste ${dansListe}/${n}, corrigés reconnus ${reconnus}/${n}, exemples sûrs ${exemplesSurs}/${exemplesTotal}, pièges ${piegesOk}/${pieges.length}, vrais sujets ${reelsJustes}/${reels.length}, plan montré d'emblée ${reelsSurs}/${reels.length}`);
   for (const p of problemes) console.log("  · " + p);
   // Seuils : ce que l'appli fait déjà. On ne publie pas en dessous.
   const seuils = [[premiere >= 27, "fonction juste ≥ 27"], [dansListe >= 30, "fonction dans la liste ≥ 30"], [reconnus === n, "tous les corrigés reconnus"],
     [exemplesSurs === exemplesTotal, "aucune fiche incomplète en exemple"], [doublons === 0, "pas d'œuvre en double"], [vides === 0, "un exemple par argument"], [horsGenre === 0, "exemples du genre demandé"], [piegesOk === pieges.length, "tous les pièges"],
-    [reelsJustes >= Math.floor(reels.length * 0.9), "vrais sujets justes ≥ 90 %"]];
+    [reelsJustes >= Math.floor(reels.length * 0.9), "vrais sujets justes ≥ 90 %"], [reelsSurs >= Math.floor(reels.length * 0.85), "plan d'emblée sur ≥ 85 % des vrais sujets"]];
   for (const [ok, nom] of seuils) if (!ok) { echec = true; console.error(`Seuil non atteint : ${nom}`); }
 } finally {
   await vite.close();
