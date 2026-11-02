@@ -102,6 +102,9 @@ try {
     ["« Écrire, c'est mettre des mots sur les maux. » Expliquez et discutez.", a => a.fonctions[0] === "Engagement"],
     ["ecrire cest mettre des mots sur les maux discutez", a => a.fonctions[0] === "Engagement"],
     ["« Le poète joue avec les mots. » Discutez.", a => a.fonctions[0] === "Esthétique"],
+    // Didactique rattaché au social, autobiographique au lyrique (choix d'Atikan, novembre 2026).
+    ["« Le roman ne doit pas seulement distraire, il doit instruire. » Discutez.", a => a.fonctions[0] === "Sociale" && a.precision === "didactique" && a.sure && /rêver|divert/.test(a.plan.axe2)],
+    ["« Toute œuvre est le reflet de la vie de son auteur. » Discutez.", a => a.fonctions[0] === "Lyrique" && a.precision === "autobiographique"],
     // Sujets bien lus : le plan reste montré d'emblée.
     ["« Le roman est un miroir qu'on promène le long d'un chemin. » (Stendhal) Expliquez et discutez cette affirmation.", a => a.sure && a.fonctions[0] === "Sociale"],
     ["« Un écrivain qui se tait face à l'injustice est complice. » Discutez.", a => a.sure && a.fonctions[0] === "Engagement"],

@@ -222,7 +222,7 @@ export function DevoirScreen() {
                     )}
                     {[...analyse.fonctions, ...(analyse.doute && !analyse.fonctions.includes(analyse.doute) ? [analyse.doute] : [])].map(f => (
                       <button key={f} type="button" class={`devoir-piste ${fnClass(f)}`} onClick={() => choisir(f)}>
-                        <strong>Fonction {NOM[f]}</strong>
+                        <strong>Fonction {NOM[f]}{analyse.precision && f === analyse.fonctions[0] ? ` (${analyse.precision})` : ""}</strong>
                         <span>{pisteDe(f, analyse.objet)}</span>
                         <em>Choisis-la si {SI[f]}</em>
                       </button>
@@ -294,7 +294,7 @@ export function DevoirScreen() {
               </div>
             ) : (
               <p class="small devoir-changer">
-                {choisie ? <>Tu as choisi la fonction <strong>{NOM[choisie]}</strong>. </> : analyse.fonctions.length ? <>L'appli pense que ton sujet parle de la fonction <strong>{NOM[analyse.fonctions[0]]}</strong>. </> : <>L'appli n'a pas reconnu de fonction. </>}
+                {choisie ? <>Tu as choisi la fonction <strong>{NOM[choisie]}</strong>. </> : analyse.fonctions.length ? <>L'appli pense que ton sujet parle de la fonction <strong>{NOM[analyse.fonctions[0]]}{analyse.precision ? ` (${analyse.precision})` : ""}</strong>. </> : <>L'appli n'a pas reconnu de fonction. </>}
                 <button type="button" class="link-btn" onClick={() => setCorriger(true)}>{choisie ? "Changer de fonction" : analyse.fonctions.length ? "Ce n'est pas ça ? Choisir une autre fonction" : "Choisir la fonction"}</button>
               </p>
             )}
@@ -386,10 +386,10 @@ const majuscule = (t: string) => t.charAt(0).toUpperCase() + t.slice(1);
 /** Quand choisir chaque piste : les mots du sujet qui la trahissent. */
 const SI: Record<Fonction, string> = {
   Engagement: "l'auteur parle de combattre, dénoncer, défendre, éveiller les consciences ou changer la société.",
-  Sociale: "l'auteur parle de montrer la réalité, la société, l'histoire ou les traditions d'un peuple.",
+  Sociale: "l'auteur parle de montrer la réalité, la société, l'histoire ou les traditions d'un peuple, ou d'instruire et d'éduquer (fonction didactique).",
   Esthétique: "l'auteur parle de beauté, de style, de forme, d'art ou de bien écrire.",
   Évasion: "l'auteur parle de rêver, d'imaginer, de se divertir, de voyager ou de fuir la réalité.",
-  Lyrique: "l'auteur parle de sentiments, d'émotions ou de la vie intime de l'écrivain."
+  Lyrique: "l'auteur parle de sentiments, d'émotions ou de la vie intime de l'écrivain (fonction autobiographique)."
 };
 
 /** Nom de la fonction dans une phrase. */
