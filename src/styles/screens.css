@@ -873,3 +873,19 @@
 .devoir-plus summary { cursor: pointer; color: var(--green, inherit); font-weight: 600; }
 .devoir-plus ul { margin: var(--s1) 0; padding-left: 1.2em; }
 .devoir-plus p { margin: 0; }
+/* J'ai un devoir : la lecture du sujet (deux secondes au plus), « J'ai compris ton devoir » et le choix du travail. */
+.devoir-lecture { display: grid; justify-items: center; gap: var(--s2); padding: var(--s5, 32px) var(--s3); text-align: center; }
+.devoir-lecture p { margin: 0; font-weight: 600; }
+.devoir-lecture-points { display: flex; gap: 6px; }
+.devoir-lecture-points i { width: 10px; height: 10px; border-radius: 50%; background: var(--green); animation: devoir-point 0.9s ease-in-out infinite; }
+.devoir-lecture-points i:nth-child(2) { animation-delay: .15s; background: var(--orange); }
+.devoir-lecture-points i:nth-child(3) { animation-delay: .3s; background: var(--ochre); }
+@keyframes devoir-point { 0%, 100% { transform: translateY(0); opacity: .5; } 50% { transform: translateY(-6px); opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .devoir-lecture-points i { animation: none; } }
+.devoir-compris-carte { display: grid; gap: var(--s2); padding: var(--s3); border-radius: 16px; background: var(--surface); box-shadow: 0 1px 2px rgb(0 0 0 / .06); }
+.devoir-compris-carte p { margin: 0; }
+.devoir-menu { display: grid; gap: var(--s2); }
+.devoir-menu-choix { display: grid; gap: 2px; text-align: left; padding: var(--s2) var(--s3); border-radius: 12px; border: 1px solid var(--line, #E4DED2); background: var(--paper); color: inherit; font: inherit; cursor: pointer; min-height: 48px; }
+.devoir-menu-choix span { font-size: .88em; color: var(--muted); }
+.devoir-menu-choix:hover, .devoir-menu-choix:focus-visible { border-color: var(--green); }
+.devoir-suite .devoir-boutons { display: grid; gap: var(--s2); }

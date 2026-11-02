@@ -46,10 +46,32 @@ export function DevoirScreen() {
   // L'élève confirme que ce n'est pas une dissertation littéraire : la question disparaît.
   const [confirme, setConfirme] = useState(false);
   const analyse = useMemo(() => (lu ? analyserSujet(texte, 6, choisie, objetChoisi) : null), [lu, texte, choisie, objetChoisi]);
+  // Le parcours : l'appli lit le sujet (courte animation), dit ce qu'elle a compris, puis l'élève choisit sur quoi travailler.
+  const [mode, setMode] = useState<Mode | null>(null);
+  const [lecture2, setLecture2] = useState(() => lu);
+  const [etapeLecture, setEtapeLecture] = useState(0);
+  useEffect(() => {
+    if (!lecture2) return;
+    const court = matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
+    const pas = court ? 150 : 600;
+    const t = [1, 2].map(k => setTimeout(() => setEtapeLecture(k), pas * k));
+    const fin = setTimeout(() => {
+      setLecture2(false); setEtapeLecture(0);
+      // Sous la barre du haut, qui reste affichée : l'élève voit tout de suite « J'ai compris ton devoir ».
+      setTimeout(() => { const el = document.querySelector(".devoir-compris-carte, .devoir-resultat"); if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 90, behavior: "smooth" }); }, 50);
+    }, pas * 3);
+    return () => { t.forEach(clearTimeout); clearTimeout(fin); };
+  }, [lecture2]);
+  function travailler(m: Mode) {
+    setMode(m);
+    setTimeout(() => document.querySelector(".devoir-travail")?.scrollIntoView({ behavior: "smooth", block: "start" }), 50);
+  }
   const autreExercice = !!analyse && analyse.nature !== "dissertation" && !quandMeme && !choisie;
   // L'appli n'est pas sûre de sa lecture : pas de plan tout de suite, l'élève passe par le guide et choisit sa piste.
   const guide = !!analyse && !autreExercice && !analyse.sure && !libre;
   const plan = analyse && libre && !choisie ? analyse.planLibre : analyse?.plan;
+  // Le parcours en questions quand l'appli a compris le sujet ; sinon le guide, ou la piste « autre chose », comme avant.
+  const parcours = !!analyse && !autreExercice && !guide && !(libre && !choisie);
   const lecture = useMemo(() => analyse ? lectureDuSujet(decouperSujet(texte).citation, analyse.objet) : { motsCles: [], debut: "" }, [analyse, texte]);
   function choisirLibre(oui: boolean) {
     const suite = { ...libres };
@@ -86,6 +108,8 @@ export function DevoirScreen() {
     e.preventDefault();
     (document.activeElement as HTMLElement | null)?.blur();
     setLu(true);
+    setMode(null);
+    setLecture2(true);
     marquer("devoir");
     noter({ t: "progres", ref: "devoir" });
   }
@@ -112,6 +136,7 @@ export function DevoirScreen() {
     setAuteur("");
     setLu(false);
     setQuandMeme(false);
+    setMode(null);
     window.scrollTo({ top: 0 });
     setTimeout(() => (document.querySelector(".devoir-form textarea") as HTMLTextAreaElement | null)?.focus(), 50);
   }
@@ -154,7 +179,7 @@ export function DevoirScreen() {
         <label class="devoir-champ">
           <span class="field-label">Ton sujet</span>
           <textarea class="textarea" rows={4} value={texte} placeholder="« La littérature doit être une arme au service du peuple. » Expliquez et discutez."
-            onInput={e => { setTexte((e.target as HTMLTextAreaElement).value); setLu(false); setQuandMeme(false); setConfirme(false); }} />
+            onInput={e => { setTexte((e.target as HTMLTextAreaElement).value); setLu(false); setQuandMeme(false); setConfirme(false); setMode(null); }} />
         </label>
         <label class="devoir-champ">
           <span class="field-label">Auteur de la citation (facultatif)</span>
@@ -163,7 +188,14 @@ export function DevoirScreen() {
         <button type="submit" class="btn btn-primary btn-block" disabled={texte.trim().length < 20}>Analyser mon sujet</button>
       </form>
 
-      {analyse && (
+      {analyse && lecture2 && (
+        <div class="devoir-resultat devoir-lecture" aria-live="polite">
+          <span class="devoir-lecture-points" aria-hidden="true"><i /><i /><i /></span>
+          <p>{["Je lis ton sujet…", "Je cherche ce que l'auteur veut dire…", "Je choisis des œuvres pour toi…"][etapeLecture]}</p>
+        </div>
+      )}
+
+      {analyse && !lecture2 && (
         <div class="devoir-resultat" aria-live="polite">
           <p class="devoir-avertissement"><Icon name="info" size={18} />Ce sont des propositions faites par l'appli : elles peuvent contenir des erreurs. Vérifie-les avec ton cours et ton professeur.</p>
           {autreExercice && (
@@ -184,6 +216,24 @@ export function DevoirScreen() {
               <a class="link-btn" href={`#/sujets/${analyse.corrige.num}`}>Ouvrir le sujet corrigé {Number(analyse.corrige.num)}</a>
             </div>
           )}
+          {parcours && (
+            <section class="devoir-compris-carte">
+              <p class="devoir-compris-titre">J'ai compris ton devoir</p>
+              {analyse.comprendre && <p>{analyse.comprendre.these}</p>}
+              {!mode ? <>
+                <p><strong>Sur quoi veux-tu travailler ?</strong></p>
+                <div class="devoir-menu">
+                  {MODES.map(m => (
+                    <button key={m.id} type="button" class="devoir-menu-choix" onClick={() => travailler(m.id)}>
+                      <strong>{m.titre}</strong><span>{m.detail}</span>
+                    </button>
+                  ))}
+                </div>
+              </> : <p class="small">Tu travailles sur : <strong>{MODES.find(m => m.id === mode)!.titre.toLowerCase()}</strong>.{" "}
+                <button type="button" class="link-btn" onClick={() => setMode(null)}>Changer</button></p>}
+            </section>
+          )}
+
           {guide && (
             <section class="devoir-guide">
               <h2 class="section-title">Comprends ton sujet</h2>
@@ -256,7 +306,7 @@ export function DevoirScreen() {
             </section>
           )}
 
-          {!autreExercice && !guide && !(libre && !choisie) && <section>
+          {!autreExercice && !guide && !(libre && !choisie) && mode && <section class="devoir-travail">
             <h2 class="section-title">Ce que dit ton sujet</h2>
             {analyse.themes.length || analyse.fonctions.length ? (
               <p class="tags">
@@ -307,7 +357,32 @@ export function DevoirScreen() {
             <p class="small muted devoir-consigne">Consigne : {analyse.travail.toLowerCase()}{!auteur.trim() && analyse.auteur ? ` · Auteur : ${analyse.auteur}` : ""}</p>
           </section>}
 
-          {!autreExercice && !guide && plan && <section class="devoir-pistes">
+          {parcours && mode === "comprendre" && analyse.comprendre && <section>
+            <h2 class="section-title">Comprendre ton sujet</h2>
+            <div class="devoir-compris">
+              <p>{analyse.comprendre.these}</p>
+              <p><strong>La vraie question :</strong> {analyse.comprendre.question}</p>
+              {analyse.comprendre.contraire && <p><strong>L'idée contraire, pour la partie 2 :</strong> {analyse.comprendre.contraire}</p>}
+            </div>
+            <p><strong>Des problématiques possibles</strong></p>
+            <ul class="devoir-liste">{analyse.comprendre.problematiques.map(q => <li key={q}>{q}</li>)}</ul>
+            <p class="small devoir-base"><strong>À toi.</strong> Redis l'idée de l'auteur avec tes mots, puis choisis la problématique qui te parle le plus.</p>
+          </section>}
+
+          {parcours && (mode === "arguments" || mode === "illustrer") && plan && <section class="devoir-pistes">
+            <h2 class="section-title">{mode === "arguments" ? "Des arguments pour ton devoir" : "Des arguments et des œuvres"}</h2>
+            <p class="small muted devoir-possible">Ce sont des pistes possibles, pas la seule bonne réponse.</p>
+            <ol class="devoir-plan">
+              <li><strong>Pour défendre l'idée de l'auteur</strong><Arguments liste={plan.args1} exemples={mode === "illustrer" ? plan.ex1 : []} explications={plan.expl1} /></li>
+              {plan.transition && <li class="devoir-transition"><strong>Pour passer à l'autre point de vue.</strong> {plan.transition}</li>}
+              {plan.args2.length > 0 && <li><strong>{analyse.discussion ? "Pour nuancer" : "Pour aller plus loin"}</strong><Arguments liste={plan.args2} exemples={mode === "illustrer" ? plan.ex2 : []} explications={plan.expl2} /></li>}
+            </ol>
+            {mode === "illustrer" && plan.autres && plan.autres.length > 0 && <p class="small devoir-autres">Tu n'as pas lu ces œuvres ? D'autres conviennent aussi :{" "}
+              {plan.autres.map((w, i) => <span key={w.id}>{i ? ", " : ""}<a href={`#/oeuvres/${encodeURIComponent(w.id)}`}><cite>{w.titre}</cite></a> ({w.auteur})</span>)}.</p>}
+            <p class="small devoir-base"><strong>À toi de rédiger.</strong> Explique chaque argument avec tes mots{mode === "illustrer" ? " et vérifie tes exemples dans ton cours" : ", puis cherche une œuvre que tu connais pour chacun"}.</p>
+          </section>}
+
+          {!autreExercice && !guide && plan && (!parcours || mode === "plan") && <section class="devoir-pistes">
             <h2 class="section-title">Des pistes pour ton plan</h2>
             <p class="small muted devoir-possible">Ce sont des pistes possibles, pas la seule bonne réponse.</p>
             {analyse.devalorise && !choisie && !libre && <p class="small devoir-indice">L'auteur dit que {OBJETS[analyse.objet].nom} ne sert à rien : explique d'abord son point de vue, puis montre ce qui le contredit.</p>}
@@ -335,7 +410,7 @@ export function DevoirScreen() {
             <p class="small devoir-base"><strong>À toi de rédiger.</strong> Ces pistes t'aident à démarrer : explique chaque argument avec tes mots et vérifie tes exemples dans ton cours.</p>
           </section>}
 
-          {analyse.oeuvres.length > 0 && !guide && (
+          {analyse.oeuvres.length > 0 && !guide && (!parcours || mode === "illustrer" || mode === "plan") && (
             <section>
               <h2 class="section-title">{libre && !choisie ? "Des œuvres qui peuvent t'aider" : "Des œuvres pour l'illustrer"}</h2>
               <ul class="devoir-liste">
@@ -346,14 +421,23 @@ export function DevoirScreen() {
             </section>
           )}
 
-          {analyse.mots.length > 0 && !guide && (
+          {analyse.mots.length > 0 && !guide && (!parcours || mode === "comprendre" || mode === "plan") && (
             <section>
               <h2 class="section-title">Des mots à bien comprendre</h2>
               <p class="tags">{analyse.mots.map(m => <a key={m.mot} class="tag tag-link" href={`#/outils?mot=${encodeURIComponent(m.mot)}`}>{m.mot}</a>)}</p>
             </section>
           )}
 
-          {analyse.proches.length > 0 && (
+          {parcours && mode && (
+            <section class="devoir-suite">
+              <h2 class="section-title">Et maintenant ?</h2>
+              <div class="devoir-boutons">
+                {MODES.filter(m => m.id !== mode).map(m => <button key={m.id} type="button" class="btn btn-secondary" onClick={() => travailler(m.id)}>{m.ensuite}</button>)}
+              </div>
+            </section>
+          )}
+
+          {analyse.proches.length > 0 && (!parcours || mode) && (
             <section>
               <h2 class="section-title">Des sujets corrigés proches</h2>
               <ul class="devoir-liste">
@@ -364,7 +448,7 @@ export function DevoirScreen() {
             </section>
           )}
 
-          {!autreExercice && !guide && <button type="button" class="btn btn-primary btn-block" onClick={rediger}><Icon name="edit" size={20} />Rédiger ce sujet dans l'atelier</button>}
+          {!autreExercice && !guide && (!parcours || mode) && <button type="button" class="btn btn-primary btn-block" onClick={rediger}><Icon name="edit" size={20} />Rédiger ce sujet dans l'atelier</button>}
           <div class="devoir-actions">
             <button type="button" class="btn btn-secondary" onClick={garder} disabled={garde} aria-pressed={garde}>
               <Icon name="bookmark" filled={garde} size={20} />{garde ? "Gardé dans Mon espace" : "Garder dans Mon espace"}
@@ -484,3 +568,12 @@ export function MesDevoirsScreen() {
     </Page>
   );
 }
+
+type Mode = "comprendre" | "arguments" | "illustrer" | "plan";
+/** Les choix du parcours, dans l'ordre où l'élève les voit. */
+const MODES: { id: Mode; titre: string; detail: string; ensuite: string }[] = [
+  { id: "comprendre", titre: "Comprendre le sujet", detail: "Ce que veut dire l'auteur, la vraie question, des problématiques.", ensuite: "Mieux comprendre le sujet" },
+  { id: "arguments", titre: "Juste des arguments", detail: "Des idées expliquées, pour dire oui et pour nuancer.", ensuite: "Voir juste les arguments" },
+  { id: "illustrer", titre: "Des arguments et des œuvres", detail: "Chaque argument avec une œuvre pour l'illustrer.", ensuite: "Ajouter des œuvres pour illustrer" },
+  { id: "plan", titre: "Un plan détaillé", detail: "Problématique, deux parties, arguments, exemples et amorce.", ensuite: "Voir le plan détaillé" }
+];
