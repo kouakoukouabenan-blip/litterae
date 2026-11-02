@@ -311,11 +311,25 @@ export function DevoirScreen() {
             <h2 class="section-title">Des pistes pour ton plan</h2>
             <p class="small muted devoir-possible">Ce sont des pistes possibles, pas la seule bonne réponse.</p>
             {analyse.devalorise && !choisie && !libre && <p class="small devoir-indice">L'auteur dit que {OBJETS[analyse.objet].nom} ne sert à rien : explique d'abord son point de vue, puis montre ce qui le contredit.</p>}
+            {analyse.comprendre && !(libre && !choisie) && !choisie && <div class="devoir-compris">
+              <p class="devoir-compris-titre">Ce que dit ton sujet</p>
+              <p>{analyse.comprendre.these}</p>
+              <p><strong>La vraie question :</strong> {analyse.comprendre.question}</p>
+              {analyse.comprendre.contraire && <p><strong>L'idée contraire, pour la partie 2 :</strong> {analyse.comprendre.contraire}</p>}
+            </div>}
             {plan.problematique && <p class="devoir-problematique"><strong>Problématique.</strong> {plan.problematique}</p>}
+            {analyse.comprendre && !(libre && !choisie) && !choisie && <details class="devoir-plus">
+              <summary>D'autres problématiques et une idée d'amorce</summary>
+              <ul>{analyse.comprendre.problematiques.slice(1).map(q => <li key={q}>{q}</li>)}</ul>
+              <p><strong>Pour commencer ton introduction :</strong> {analyse.comprendre.amorce}</p>
+            </details>}
             <ol class="devoir-plan">
-              <li><strong>Partie 1.</strong> {enPiste(plan.axe1)}<Arguments liste={plan.args1} exemples={plan.ex1} /></li>
-              <li><strong>Partie 2.</strong> {enPiste(plan.axe2)}<Arguments liste={plan.args2} exemples={plan.ex2} /></li>
+              <li><strong>Partie 1.</strong> {enPiste(plan.axe1)}<Arguments liste={plan.args1} exemples={plan.ex1} explications={plan.expl1} /></li>
+              {plan.transition && <li class="devoir-transition"><strong>Pour passer à la partie 2.</strong> {plan.transition}</li>}
+              <li><strong>Partie 2.</strong> {enPiste(plan.axe2)}<Arguments liste={plan.args2} exemples={plan.ex2} explications={plan.expl2} /></li>
             </ol>
+            {plan.autres && plan.autres.length > 0 && <p class="small devoir-autres">Tu n'as pas lu ces œuvres ? D'autres conviennent aussi pour la partie 1 :{" "}
+              {plan.autres.map((w, i) => <span key={w.id}>{i ? ", " : ""}<a href={`#/oeuvres/${encodeURIComponent(w.id)}`}><cite>{w.titre}</cite></a> ({w.auteur})</span>)}.</p>}
             {libre && !choisie && analyse.horsCadre && <p class="small devoir-conseil"><strong>Piste à creuser.</strong> {analyse.horsCadre.conseil}</p>}
             {analyse.genres.length > 0 && !analyse.corrige?.ouvert && !(libre && !choisie) && <p class="small muted">Ton sujet parle {genreDu(analyse.genres)} : les exemples sont choisis dans {analyse.genres.length > 1 ? "ces genres" : "ce genre"}.</p>}
             <p class="small devoir-base"><strong>À toi de rédiger.</strong> Ces pistes t'aident à démarrer : explique chaque argument avec tes mots et vérifie tes exemples dans ton cours.</p>
@@ -426,8 +440,9 @@ function enTexte(ex: Exemple[] | undefined) {
 }
 
 /** Les arguments conseillés pour une partie du plan, un par ligne, chacun avec une ou deux œuvres pour l'illustrer. */
-function Arguments({ liste, exemples }: { liste: string[]; exemples: Exemple[][] }) {
+function Arguments({ liste, exemples, explications }: { liste: string[]; exemples: Exemple[][]; explications?: string[] }) {
   return liste.length ? <ul class="devoir-args">{liste.map((a, i) => <li key={a}>{a}
+    {explications?.[i] && <span class="devoir-expl">{explications[i]}</span>}
     {(exemples[i] ?? []).map((e, k) => e.titre ? (
       <span key={e.id} class="devoir-ex">{k ? "Ou : " : "Par exemple : "}<a href={`#/oeuvres/${encodeURIComponent(e.id)}`}><cite>{e.titre}</cite></a>, {e.auteur}
         {e.pourquoi && <span class="devoir-pourquoi"><Texte text={e.pourquoi} /></span>}</span>

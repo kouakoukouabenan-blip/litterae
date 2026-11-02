@@ -6,6 +6,7 @@ import { fonctionsDuSujet, oeuvresPour } from "./defi";
 import { normalize } from "./text";
 import { ARGUMENTS } from "./arguments";
 import MODELE from "../data/modele-fonctions.json";
+import BANQUE_BRUTE from "../data/banque-arguments.json";
 import { redresser, cle, commencePar, jetons, memeFamille, memeMot, type Jeton } from "./flou";
 
 /**
@@ -165,7 +166,17 @@ export interface Analyse {
   /** Arguments de dissertation que le sujet annonce (« Dénonciation », « Imagination »…). */
   arguments: string[];
   /** `ex1`, `ex2` : pour chaque argument, les œuvres qui l'illustrent (une, ou deux si la consigne demande d'illustrer). */
-  plan: { axe1: string; axe2: string; args1: string[]; args2: string[]; ex1: Exemple[][]; ex2: Exemple[][]; problematique: string };
+  /** « Ce que dit ton sujet » : la thèse redite, la question cachée, l'idée contraire, des problématiques, une idée d'amorce. */
+  comprendre: Comprendre | null;
+  plan: {
+    axe1: string; axe2: string; args1: string[]; args2: string[]; ex1: Exemple[][]; ex2: Exemple[][]; problematique: string;
+    /** Pourquoi chaque argument tient (deux phrases), dans l'ordre des arguments. */
+    expl1?: string[]; expl2?: string[];
+    /** La limite du premier argument : ce qui fait passer à la partie 2. */
+    transition?: string;
+    /** D'autres œuvres possibles, pour que l'élève prenne celle qu'il a lue. */
+    autres?: Exemple[];
+  };
   /** Genres nommés par le sujet (« le poète » → Poésie) : les exemples n'en sortent pas. Vide : tous les genres. */
   genres: string[];
   /** L'autre fonction possible quand l'appli hésite entre deux lectures du sujet. */
@@ -834,14 +845,56 @@ interface Contexte {
   p2: Fonction | null;
   /** « didactique » (rattachée à la fonction sociale) ou « autobiographique » (au lyrique), quand le sujet le dit. */
   precision: Precision | null;
+  /** L'auteur reconnu dans le sujet (ses œuvres passent avant les autres). */
+  auteur?: string | null;
 }
+
+// ---- La banque d'arguments : une cinquantaine, choisis d'après les mots, les thèmes et le genre du sujet ----
+
+interface ArgBanque {
+  id: string; fonction: Fonction; parent: string; titre: string; phrase: string; personne?: string;
+  explication: string; limite: string; mots: string[]; themes: string[]; genres?: string[]; base?: boolean; strict?: boolean;
+}
+const BANQUE = BANQUE_BRUTE as ArgBanque[];
+
+/** La phrase d'un argument de la banque, dite avec le mot du sujet (« Le poète combat la colonisation… »). */
+function phraseBanque(a: ArgBanque, o: Objet) {
+  const x = OBJETS[o], N = x.nom.charAt(0).toUpperCase() + x.nom.slice(1);
+  const modele = x.personne && a.personne ? a.personne : a.phrase;
+  // La lecture garde « la littérature » : « La lecture combat la colonisation » ne veut rien dire.
+  const nom = o === "lecture" ? "La littérature" : N;
+  const il = o === "lecture" ? "elle" : x.il;
+  return modele.replace("{N}", nom).replace(/\{il\}/g, il);
+}
+
+/**
+ * Les arguments de la banque pour une fonction, du plus adapté au moins adapté au sujet :
+ * les mots du sujet qui les appellent, ses thèmes, son genre, les arguments qu'il annonce ;
+ * à égalité, le sujet lui-même départage (deux sujets proches n'ont pas toujours les mêmes).
+ */
+function argumentsBanque(fn: Fonction, citation: string, themes: string[], genres: string[], annonces: string[], exclus: string[], seconde = false) {
+  const m = jetons(citation).filter(x => !TROP_COURANTS.has(x.brut)), ph = ` ${clesDe(citation)} `;
+  const th = new Set(themes.map(normalize));
+  return BANQUE.filter(a => a.fonction === fn && !exclus.includes(a.id)).map(a => {
+    let n = 0;
+    for (const w of a.mots) if (indicePresent(m, w, ph)) n += w.includes(" ") ? 4 : 3;
+    n += a.themes.filter(t => th.has(normalize(t))).length * 2;
+    if (a.genres && genres.length) n += genres.some(g => a.genres!.includes(g)) ? 0.5 : -3;
+    if (annonces.includes(a.parent)) n += 1.5;
+    // Les arguments les plus classiques passent avant les plus particuliers quand le sujet ne dit rien de plus.
+    if (a.base) n += seconde ? 0.6 : 1.2;
+    // En partie 2, le sujet parle rarement de l'idée contraire : on varie davantage d'un sujet à l'autre.
+    return { a, n: n + (graine(citation + a.id) % 100) / (seconde ? 70 : 400) };
+  }).sort((x, y) => y.n - x.n).map(x => x.a);
+}
+
 
 /**
  * Plan conseillé, construit à partir du sujet lui-même : la thèse avec ses mots, les arguments que les
  * fiches des œuvres sur ces thèmes illustrent vraiment, une œuvre pour chaque argument, et une nuance liée au thème.
  * Quand l'auteur rejette une fonction (« Je ne crois pas à l'évasion »), la partie 1 défend ce qu'il pense vraiment.
  */
-function planDuSujet({ citation, f: f0, f2: f20, consigne, discussion, themes, annonces, oeuvres, genres, rejet, liste, objet, sur, devalorise, p2, precision }: Contexte): Analyse["plan"] {
+function planDuSujet({ citation, f: f0, f2: f20, consigne, discussion, themes, annonces, oeuvres, genres, rejet, liste, objet, sur, devalorise, p2, precision, auteur }: Contexte): Analyse["plan"] {
   // L'auteur rejette la fonction que le sujet évoque le plus : sa thèse est l'autre.
   const f = rejet && f0 === rejet ? (f20 && f20 !== rejet ? f20 : OPPOSE[rejet]) : f0;
   const f2 = f20 === f ? f0 : f20;
@@ -964,23 +1017,67 @@ function planDuSujet({ citation, f: f0, f2: f20, consigne, discussion, themes, a
       ex1: a1.map(a => (a ? exemples(a, undefined) : [])), ex2: a2.map(a => exemples(a, f2b))
     };
   }
-  if (precision && DIDACTIQUES.has(precision) && f === "Sociale") {
-    // Instruire, éduquer, donner des leçons : les fiches rangent ces œuvres sous « éveil des consciences » et « valorisation de la culture ».
-    const N = m.N;
-    const d1 = ["Éveil des consciences", "Valorisation de la culture"];
-    const a2 = choisir(f2b, d1);
-    return {
-      axe1, axe2, problematique,
-      args1: [`${N} instruit le lecteur et lui donne des leçons de vie.`, `${N} transmet les valeurs et la sagesse d'un peuple.`],
-      args2: a2.map(a => argumentDe(a, objet)),
-      ex1: [exemples(d1[0], "Engagement"), exemples(d1[1], "Sociale")], ex2: a2.map(a => exemples(a, f2b))
-    };
-  }
-  const a1 = choisir(f, []), a2 = choisir(f2b, a1);
+  // Les œuvres de toute la base, notées pour un argument de la banque : celles dont la fiche illustre cet argument,
+  // sur les thèmes du sujet et de l'argument, au programme ou africaines, de l'auteur cité ; jamais deux fois la même.
+  const thS = new Set(themes.map(normalize));
+  const auteurN = auteur ? normalize(auteur).split(/\s+/).pop() ?? "" : "";
+  const oeuvresDe = (a: ArgBanque) => {
+    const thA = new Set(a.themes.map(normalize));
+    return OEUVRES.filter(w => sure(w) && duGenre(w) && !prises.has(w.id)).map(w => {
+      let n: number;
+      if (w.idees.some(i => i.argument === a.parent && i.fonction === a.fonction)) n = 4;
+      else if (w.idees.some(i => i.argument === a.parent)) n = 2.5;
+      else if (w.fonctions.includes(a.fonction)) n = 0.5;
+      else return null;
+      const wt = w.themes.map(normalize);
+      const surArg = wt.filter(t => thA.has(t)).length, surSujet = wt.filter(t => thS.has(t)).length;
+      // Une œuvre qui n'illustre pas l'argument n'est prise que si elle parle de ses thèmes.
+      if ((n < 1 || a.strict) && !surArg) return null;
+      n += Math.min(2, surArg) * 1.5 + Math.min(2, surSujet) * 2;
+      if (a.genres?.includes(w.genre)) n += 1;
+      if (oeuvres.includes(w)) n += 1.5;
+      if (preferee(w)) n += 2.5;
+      if (auteurN.length > 3 && normalize(w.auteur).includes(auteurN)) n += 3;
+      return { w, n: n + (graine(citation + a.id + w.id) % 100) / 200 };
+    }).filter((x): x is { w: Oeuvre; n: number } => !!x).sort((x, y) => y.n - x.n).map(x => x.w);
+  };
+  const pourquoiDe = (w: Oeuvre, a: ArgBanque) => {
+    const idee = w.idees.find(i => i.argument === a.parent && i.texte)?.texte ?? w.idees.find(i => i.fonction === a.fonction && i.texte)?.texte ?? "";
+    return idee ? court(idee) : "";
+  };
+  const exemplesBanque = (a: ArgBanque): Exemple[] => oeuvresDe(a).slice(0, consigne === "illustrer" ? 2 : 1).map(w => {
+    prises.add(w.id);
+    return { id: w.id, titre: w.titre, auteur: w.auteur, pourquoi: pourquoiDe(w, a) };
+  });
+  // Deux arguments par partie, de deux familles différentes quand c'est possible, chacun avec au moins une œuvre
+  // encore libre (ses exemples sont pris tout de suite, pour que l'argument suivant ne compte pas sur les mêmes).
+  const deux = (fn: Fonction | undefined, imposes: string[] = [], exclus: string[] = []) => {
+    const pris: { a: ArgBanque; ex: Exemple[] }[] = [];
+    if (!fn) return pris;
+    const rang = argumentsBanque(fn, citation, themes, genres, annonces, exclus, exclus.length > 0);
+    const essaie = (a: ArgBanque) => { if (oeuvresDe(a).length) pris.push({ a, ex: exemplesBanque(a) }); };
+    for (const id of imposes) { const a = BANQUE.find(x => x.id === id); if (a) essaie(a); }
+    for (const passe of [0, 1]) for (const a of rang) {
+      if (pris.length >= 2) break;
+      if (pris.some(p => p.a === a) || (passe === 0 && pris.some(p => p.a.parent === a.parent))) continue;
+      essaie(a);
+    }
+    return pris.slice(0, 2);
+  };
+  const didactique = !!precision && DIDACTIQUES.has(precision) && f === "Sociale";
+  const p1 = deux(f, didactique ? ["soc-instruire"] : []);
+  const b1 = p1.map(p => p.a), ex1 = p1.map(p => p.ex);
+  const p2b = deux(f2b, [], b1.map(a => a.id));
+  const b2 = p2b.map(p => p.a), ex2 = p2b.map(p => p.ex);
+  // D'autres œuvres possibles pour les arguments de la partie 1, que l'élève a peut-être lues.
+  const autres = [...new Map(b1.flatMap(a => oeuvresDe(a).slice(0, 3)).map(w => [w.id, w])).values()].slice(0, 3)
+    .map(w => ({ id: w.id, titre: w.titre, auteur: w.auteur, pourquoi: "" }));
   return {
     axe1, axe2, problematique,
-    args1: a1.map(a => argumentDe(a, objet)), args2: a2.map(a => argumentDe(a, objet)),
-    ex1: a1.map(a => exemples(a, f)), ex2: a2.map(a => exemples(a, f2b))
+    args1: b1.map(a => phraseBanque(a, objet)), args2: b2.map(a => phraseBanque(a, objet)),
+    expl1: b1.map(a => a.explication), expl2: b2.map(a => a.explication),
+    transition: discussion && b1[0] && !rejet ? b1[0].limite : undefined,
+    ex1, ex2, autres
   };
 }
 
@@ -1055,6 +1152,57 @@ function planLibreDu(citation: string, discussion: boolean): Analyse["plan"] {
       : "Approfondis : montre, avec d'autres œuvres, d'autres façons dont cette idée se vérifie.",
     args1: [], args2: [], ex1: [], ex2: []
   };
+}
+
+// ---- « Ce que dit ton sujet » : ce que l'appli a compris, dit avec d'autres mots que le sujet ----
+
+export interface Comprendre { these: string; question: string; contraire: string | null; problematiques: string[]; amorce: string }
+
+/** La question que pose vraiment un sujet de chaque fonction ({N} : le mot du sujet ; {il} : son pronom). */
+const QUESTION_CACHEE: Record<Fonction, string[]> = {
+  Engagement: ["{N} doit-{il} se mettre au service d'une cause, ou peut-{il} rester libre ?", "{N} peut-{il} vraiment changer la société ?"],
+  Sociale: ["{N} montre-t-{il} la réalité telle qu'elle est, ou la transforme-t-{il} ?", "{N} n'est-{il} qu'un témoin de son époque ?"],
+  Esthétique: ["La beauté de la forme compte-t-elle plus que le message ?", "{N} doit-{il} chercher la beauté avant tout, ou servir à quelque chose ?"],
+  Évasion: ["{N} sert-{il} à fuir la réalité, ou à mieux la comprendre ?", "Le plaisir et le rêve suffisent-ils à faire une grande œuvre ?"],
+  Lyrique: ["En parlant de ses propres sentiments, l'écrivain parle-t-il aussi des autres ?", "{N} doit-{il} exprimer le moi, ou se tourner vers le monde ?"]
+};
+
+/** Une idée d'amorce pour l'introduction, liée au thème du sujet (sinon à la fonction). */
+const AMORCES: [string[], string][] = [
+  [["Colonisation", "Racisme", "Négritude", "Indépendance", "Indépendances"], "Pendant la colonisation, beaucoup d'écrivains africains ont pris la plume pour dire la souffrance et la dignité de leur peuple."],
+  [["Pouvoir", "Dictature", "Politique", "Corruption", "Désillusion", "Tyrannie", "Pouvoir et politique"], "Après les indépendances, les espoirs des peuples africains ont souvent été déçus par des dirigeants autoritaires, et les écrivains en ont témoigné."],
+  [["Femme", "Condition féminine", "Polygamie", "Mariage", "Patriarcat", "Émancipation"], "Longtemps réduite au silence, la femme africaine a trouvé dans la littérature un moyen de dire sa condition."],
+  [["Tradition et modernité", "Tradition", "Modernité"], "L'Afrique d'aujourd'hui vit entre ses traditions et le monde moderne, et la littérature raconte ce déchirement."],
+  [["Tradition orale", "Culture", "Sagesse", "Mythe"], "Avant l'écriture, la parole des griots et des conteurs transmettait la sagesse africaine ; la littérature écrite a pris le relais."],
+  [["Guerre", "Violence", "Génocide", "Guerre civile"], "Les guerres et les violences du XXe siècle ont profondément marqué la littérature, en Afrique comme ailleurs."],
+  [["Mémoire", "Histoire", "Esclavage"], "Traite négrière, colonisation, indépendances : l'histoire de l'Afrique a laissé des blessures que la littérature n'oublie pas."],
+  [["Exil", "Immigration"], "Beaucoup d'écrivains ont connu l'exil, et leurs œuvres disent la nostalgie du pays perdu."],
+  [["Amour", "Passion"], "Depuis toujours, l'amour est l'un des premiers sujets de la poésie et du roman."],
+  [["Liberté", "Oppression", "Révolte"], "Partout où la liberté a été menacée, des écrivains ont élevé la voix."]
+];
+const AMORCE_FONCTION: Record<Fonction, string> = {
+  Engagement: "De Victor Hugo à Mongo Beti, beaucoup d'écrivains ont mis leur plume au service d'une cause.",
+  Sociale: "De Balzac et Zola en France à Ousmane Sembène en Afrique, le roman a souvent cherché à montrer la société telle qu'elle est.",
+  Esthétique: "Pour certains écrivains, comme Théophile Gautier, l'art n'a pas d'autre but que la beauté.",
+  Évasion: "Depuis les contes de notre enfance, les histoires nous emmènent loin de notre quotidien.",
+  Lyrique: "Des poètes romantiques à Senghor, la littérature a souvent servi à dire les sentiments intimes."
+};
+
+function comprendreDu(citation: string, f: Fonction, fN: Fonction | null, o: Objet, themes: string[], rejet: Fonction | null,
+  devalorise: boolean, discussion: boolean, precision: Precision | null, premiere: string): Comprendre {
+  const m = motsDe(o);
+  const de = themes.map(deTheme).find((x): x is string => !!x) ?? null;
+  const dire = (t: string) => t.replace(/\{N\}/g, m.N).replace(/\{il\}/g, m.il);
+  const these = devalorise ? `Pour l'auteur, ${m.n} ne sert à rien : ${m.il} ne change rien à la vie des hommes.`
+    : rejet && rejet !== f ? `Pour l'auteur, ${m.n} n'est pas d'abord ${m.idee(rejet)} : ${m.il} est plutôt ${m.idee(f)}.`
+    : `Pour l'auteur, ${m.n} est ${m.idee(f)}${de ? `, surtout quand ${m.il} parle ${de}` : ""}${precision ? ` (fonction ${precision})` : ""}.`;
+  const variantes = QUESTION_CACHEE[f];
+  const question = dire(variantes[graine(citation) % variantes.length]);
+  const contraire = discussion && fN && fN !== f ? `${m.N} peut aussi être ${m.idee(fN)}.` : null;
+  const problematiques = [premiere, question, `Dans quelle mesure ${m.n} est-${m.il} ${m.bref(f)} ?`].filter((x, i, t) => x && t.indexOf(x) === i);
+  const cles = new Set(themes);
+  const amorce = AMORCES.find(([t]) => t.some(x => cles.has(x)))?.[1] ?? AMORCE_FONCTION[f];
+  return { these, question, contraire, problematiques, amorce };
 }
 
 /** Le plan d'un sujet corrigé que l'élève peut ouvrir : celui écrit par le professeur. */
@@ -1212,7 +1360,7 @@ export function analyserSujet(texteTape: string, combien = 6, imposee?: Fonction
   // Sujet presque identique à un sujet corrigé : le plan du professeur passe avant le plan automatique.
   const corrigeProche = sujetCorrigeProche(c0);
   const plan = corrigeProche && "axe1" in corrigeProche ? planDuCorrige(corrigeProche)
-    : planDuSujet({ citation: brute, f, f2: fonctions[1], consigne: type, discussion, themes, annonces: argumentsTrouves, oeuvres, genres, rejet, liste: enumeration(brute), objet, sur: !!objetChoisi || objetSur, devalorise: devalorise && !imposee, p2: imposee ? null : p2, precision: precisionDe(f, c0) });
+    : planDuSujet({ citation: brute, f, f2: fonctions[1], consigne: type, discussion, themes, annonces: argumentsTrouves, oeuvres, genres, rejet, liste: enumeration(brute), objet, sur: !!objetChoisi || objetSur, devalorise: devalorise && !imposee, p2: imposee ? null : p2, precision: precisionDe(f, c0), auteur: ecrivain ? ecrivain.cle : auteur });
   const corrige = corrigeProche ? { num: corrigeProche.num, ouvert: "axe1" in corrigeProche } : null;
   // Un sujet corrigé reconnu ne sort jamais du cadre : son plan est celui du professeur.
   const horsCadre = corrige ? null : horsCadreDu(c0);
@@ -1232,6 +1380,8 @@ export function analyserSujet(texteTape: string, combien = 6, imposee?: Fonction
     // Plan montré d'emblée seulement si la lecture est sûre ; sinon l'élève choisit sa piste dans le guide.
     sure: !!corrige?.ouvert || !!imposee || (!horsCadre && !inconnue && ((!doute && !faible && fonctions.length > 0) || devalorise)),
     horsCadre, devalorise: devalorise && !corrige, precision: precisionDe(fonctions[0], c0), planLibre: planLibreDu(brute, discussion),
+    comprendre: f && !horsCadre && !corrige?.ouvert ? comprendreDu(c0, rejet && f === rejet ? (fonctions[1] && fonctions[1] !== rejet ? fonctions[1] : OPPOSE[rejet]) : f,
+      rejet && rejet !== f ? rejet : p2 && p2 !== f ? p2 : OPPOSE[f], objet, themes, rejet, devalorise, discussion, precisionDe(f, c0), plan.problematique) : null,
     nature: natureDuSujet(texte, citation, !!auteur || !!auteurConnu(texteTape) || CITE_ENTRE_PARENTHESES.test(texteTape))
   };
 }

@@ -1,0 +1,1294 @@
+[
+ {
+  "id": "eng-denoncer-injustices",
+  "fonction": "Engagement",
+  "parent": "Dénonciation",
+  "titre": "Dénoncer les injustices",
+  "phrase": "{N} dénonce les injustices et les abus de la société.",
+  "explication": "En montrant au grand jour ce que d'autres cachent, l'œuvre oblige le lecteur à regarder l'injustice en face. Ce qui est écrit ne peut plus être ignoré.",
+  "limite": "Mais dénoncer ne suffit pas toujours : beaucoup d'œuvres engagées n'ont rien changé, et certaines ont vieilli avec la cause qu'elles servaient.",
+  "mots": [
+   "injust",
+   "abus",
+   "denon",
+   "scandal",
+   "mal$",
+   "maux$"
+  ],
+  "themes": [
+   "Injustice",
+   "Justice",
+   "Société",
+   "Corruption"
+  ],
+  "base": true
+ },
+ {
+  "id": "eng-colonisation",
+  "fonction": "Engagement",
+  "parent": "Dénonciation",
+  "titre": "Combattre la colonisation et le racisme",
+  "phrase": "{N} combat la colonisation et le racisme en montrant leurs violences.",
+  "explication": "Les écrivains de la Négritude et du roman anticolonial ont fait de leur œuvre une arme contre le mépris du colon. Ils redonnent sa dignité à l'homme noir.",
+  "limite": "Pourtant, une œuvre peut parler de la colonisation sans militer : certains écrivains la racontent pour comprendre, d'autres pour chanter leur douleur.",
+  "mots": [
+   "colon",
+   "racis",
+   "negr",
+   "noir$",
+   "esclav",
+   "apartheid",
+   "blanc$"
+  ],
+  "themes": [
+   "Colonisation",
+   "Racisme",
+   "Négritude",
+   "Esclavage",
+   "Indépendance",
+   "Indépendances"
+  ],
+  "strict": true
+ },
+ {
+  "id": "eng-pouvoirs",
+  "fonction": "Engagement",
+  "parent": "Dénonciation",
+  "titre": "Critiquer les dirigeants et les dictatures",
+  "phrase": "{N} critique les dirigeants qui trahissent leur peuple et les dictatures.",
+  "explication": "Après les indépendances, beaucoup d'écrivains africains ont tourné leur plume contre les nouveaux maîtres. Ils montrent la corruption, la violence et le mensonge du pouvoir.",
+  "limite": "Mais cette critique a un prix : censure, prison, exil. Certains écrivains choisissent alors le détour du conte ou du rire.",
+  "mots": [
+   "dictat",
+   "tyran",
+   "pouvoir",
+   "dirigeant",
+   "president",
+   "puissant",
+   "gouvern",
+   "politique",
+   "regime",
+   "trahi",
+   "independance"
+  ],
+  "themes": [
+   "Pouvoir",
+   "Dictature",
+   "Politique",
+   "Tyrannie",
+   "Corruption",
+   "Désillusion",
+   "Totalitarisme",
+   "Pouvoir et politique"
+  ],
+  "strict": true
+ },
+ {
+  "id": "eng-voix-sans-voix",
+  "fonction": "Engagement",
+  "parent": "Défense des opprimés",
+  "titre": "Être la voix des sans-voix",
+  "phrase": "{N} prête sa voix à ceux qu'on n'entend pas : les pauvres, les femmes, les opprimés.",
+  "explication": "L'écrivain parle au nom de ceux qui ne peuvent pas écrire ni se défendre. Grâce à lui, leur souffrance entre dans les livres et dans les consciences.",
+  "limite": "Mais parler à la place des autres, c'est aussi risquer de les trahir ou de les enfermer dans le rôle de victimes.",
+  "mots": [
+   "sans voix",
+   "voix$",
+   "porte-parole",
+   "porte parole",
+   "bouche$",
+   "opprim",
+   "pauvre",
+   "faible",
+   "miser",
+   "humbles",
+   "service du peuple",
+   "au service",
+   "peuple"
+  ],
+  "themes": [
+   "Oppression",
+   "Pauvreté",
+   "Misère",
+   "Condition féminine",
+   "Exploitation",
+   "Dignité"
+  ],
+  "base": true
+ },
+ {
+  "id": "eng-femme",
+  "fonction": "Engagement",
+  "parent": "Défense des opprimés",
+  "titre": "Défendre la femme",
+  "phrase": "{N} défend la femme contre les traditions et les hommes qui l'écrasent.",
+  "explication": "Des romancières comme Mariama Bâ ont montré la polygamie, le mariage forcé et le silence imposé aux femmes. Leurs livres ont ouvert le débat dans la société.",
+  "limite": "Mais une œuvre sur la condition féminine peut aussi être un simple témoignage ou une confidence, sans programme de combat.",
+  "mots": [
+   "femme",
+   "feminin",
+   "epouse",
+   "mere$",
+   "fille$",
+   "polygam",
+   "excision",
+   "mariage force"
+  ],
+  "themes": [
+   "Femme",
+   "Condition féminine",
+   "Mariage",
+   "Polygamie",
+   "Patriarcat",
+   "Émancipation"
+  ],
+  "strict": true
+ },
+ {
+  "id": "eng-eveiller",
+  "fonction": "Engagement",
+  "parent": "Éveil des consciences",
+  "titre": "Éveiller les consciences",
+  "phrase": "{N} éveille les consciences et pousse le lecteur à réagir.",
+  "explication": "L'œuvre ne se contente pas de montrer : elle secoue le lecteur, le fait réfléchir et lui donne envie d'agir. Le livre devient un déclencheur.",
+  "limite": "Mais le lecteur reste libre : on peut lire une œuvre engagée pour son histoire ou sa beauté, sans être changé par elle.",
+  "mots": [
+   "eveill",
+   "conscien",
+   "reveill",
+   "ouvrir les yeux",
+   "eclair",
+   "flambeau",
+   "guide$",
+   "lumiere",
+   "secou",
+   "boulevers",
+   "peuple"
+  ],
+  "themes": [
+   "Conscience",
+   "Révolte",
+   "Liberté",
+   "Engagement"
+  ],
+  "base": true
+ },
+ {
+  "id": "eng-espoir",
+  "fonction": "Engagement",
+  "parent": "Éveil des consciences",
+  "titre": "Donner de l'espoir et appeler au changement",
+  "phrase": "{N} annonce un monde meilleur et donne au peuple la force de se battre.",
+  "explication": "Après avoir montré le mal, beaucoup d'œuvres ouvrent un chemin : un personnage qui se lève, une fin qui annonce le changement. Le lecteur repart avec de l'espoir.",
+  "limite": "Pourtant, d'autres œuvres refusent de consoler et montrent un monde sans issue ; elles n'en sont pas moins fortes.",
+  "mots": [
+   "espoir",
+   "esper",
+   "avenir",
+   "meilleur",
+   "changer le monde",
+   "changer la societe",
+   "transform",
+   "jours meilleurs",
+   "demain"
+  ],
+  "themes": [
+   "Espoir",
+   "Révolution",
+   "Liberté",
+   "Utopie"
+  ]
+ },
+ {
+  "id": "eng-satire",
+  "fonction": "Engagement",
+  "parent": "Satire",
+  "titre": "Corriger par le rire (la satire)",
+  "phrase": "{N} tourne en ridicule les vices des hommes et des puissants pour les corriger.",
+  "explication": "La comédie et la satire font rire du menteur, de l'avare ou du chef corrompu. Le rire désarme le pouvoir et fait passer la critique sans sermon.",
+  "limite": "Mais le rire peut aussi n'être qu'un jeu : on rit d'abord pour se détendre, et la leçon passe souvent au second plan.",
+  "mots": [
+   "satir",
+   "rire$",
+   "ridicul",
+   "moqu",
+   "comedi",
+   "comique",
+   "corriger les moeurs",
+   "castigat",
+   "railler",
+   "caricatur"
+  ],
+  "themes": [
+   "Satire",
+   "Hypocrisie",
+   "Corruption",
+   "Comédie",
+   "Avarice",
+   "Humour"
+  ],
+  "genres": [
+   "Théâtre",
+   "Roman"
+  ]
+ },
+ {
+  "id": "eng-memoire-luttes",
+  "fonction": "Engagement",
+  "parent": "Mémoire collective",
+  "titre": "Garder la mémoire des luttes",
+  "phrase": "{N} garde vivante la mémoire des combats et des souffrances d'un peuple.",
+  "explication": "Raconter la traite, la colonisation ou une guerre, c'est empêcher l'oubli et rendre justice aux victimes. La mémoire devient une arme pour le présent.",
+  "limite": "Mais se tourner vers le passé peut aussi enfermer : certains reprochent à cette littérature de ressasser au lieu de regarder l'avenir.",
+  "mots": [
+   "memoire",
+   "souven",
+   "oubli",
+   "passe$",
+   "histoire$",
+   "ancetre",
+   "traite",
+   "genocide"
+  ],
+  "themes": [
+   "Mémoire",
+   "Histoire",
+   "Guerre",
+   "Esclavage",
+   "Génocide",
+   "Résistance"
+  ]
+ },
+ {
+  "id": "eng-refuser-silence",
+  "fonction": "Engagement",
+  "parent": "Éveil des consciences",
+  "titre": "Refuser le silence et la neutralité",
+  "phrase": "{N} ne peut pas rester neutre : se taire face au mal, c'est déjà s'en rendre complice.",
+  "explication": "Pour Sartre, l'écrivain est « en situation » : même son silence est un choix. Écrire, c'est donc prendre position.",
+  "limite": "Mais certains écrivains revendiquent le droit de ne servir aucune cause, et de n'obéir qu'à leur art.",
+  "mots": [
+   "silenc",
+   "taire",
+   "tait$",
+   "neutr",
+   "complic",
+   "responsab",
+   "engag",
+   "prendre parti",
+   "prendre position",
+   "devoir$"
+  ],
+  "themes": [
+   "Engagement",
+   "Liberté",
+   "Justice"
+  ]
+ },
+ {
+  "id": "eng-liberte",
+  "fonction": "Engagement",
+  "parent": "Défense des opprimés",
+  "titre": "Défendre la liberté",
+  "phrase": "{N} défend la liberté contre tout ce qui enferme l'homme.",
+  "explication": "Liberté des peuples face au colon, de l'individu face au tyran, de la femme face à la tradition : la littérature a souvent été un cri pour la liberté.",
+  "limite": "Mais la liberté de l'écrivain, c'est aussi celle de ne parler que de lui ou de la beauté.",
+  "mots": [
+   "liber",
+   "libre",
+   "chaine",
+   "prison",
+   "esclav",
+   "emancip"
+  ],
+  "themes": [
+   "Liberté",
+   "Prison",
+   "Émancipation",
+   "Oppression"
+  ]
+ },
+ {
+  "id": "soc-miroir",
+  "fonction": "Sociale",
+  "parent": "Peinture de la réalité sociale",
+  "titre": "Être le miroir de la société",
+  "phrase": "{N} est le miroir de la société : {il} en montre la réalité telle qu'elle est.",
+  "explication": "Comme Balzac ou Zola, l'écrivain observe et décrit les milieux, les métiers, les mœurs. Le lecteur reconnaît son monde dans le livre.",
+  "limite": "Mais un miroir n'est jamais neutre : l'écrivain choisit ce qu'il montre, et il invente autant qu'il observe.",
+  "mots": [
+   "miroir",
+   "reflet",
+   "refleter",
+   "peindre",
+   "peint",
+   "tableau",
+   "realit",
+   "reel$",
+   "photograph",
+   "tel qu",
+   "telle qu",
+   "tels qu"
+  ],
+  "themes": [
+   "Société",
+   "Ville",
+   "Famille",
+   "Pauvreté"
+  ],
+  "base": true
+ },
+ {
+  "id": "soc-temoin",
+  "fonction": "Sociale",
+  "parent": "Peinture de la réalité sociale",
+  "titre": "Témoigner de son époque",
+  "phrase": "{N} témoigne de son époque et de ce que vivent les hommes de son temps.",
+  "explication": "Une œuvre garde la trace d'un moment de l'histoire : la ville coloniale, les indépendances, une guerre. Des siècles plus tard, on la lit comme un document.",
+  "limite": "Mais le témoin ne raconte qu'une part du réel, avec ses yeux à lui ; l'historien reste plus fiable que le romancier.",
+  "mots": [
+   "temoin",
+   "temoign",
+   "epoque",
+   "son temps",
+   "notre temps",
+   "siecle",
+   "document"
+  ],
+  "themes": [
+   "Histoire",
+   "Guerre",
+   "Indépendance",
+   "Modernité"
+  ],
+  "base": true
+ },
+ {
+  "id": "soc-tradition-modernite",
+  "fonction": "Sociale",
+  "parent": "Peinture de la réalité sociale",
+  "titre": "Montrer le choc entre tradition et modernité",
+  "phrase": "{N} montre le conflit entre les traditions africaines et le monde moderne.",
+  "explication": "Des romans comme L'Aventure ambiguë montrent des personnages déchirés entre l'école des Blancs et la sagesse des anciens. Le lecteur y voit une société en pleine transformation.",
+  "limite": "Mais ce tableau n'est pas toujours objectif : l'écrivain prend souvent parti pour la tradition ou pour la modernité.",
+  "mots": [
+   "tradition",
+   "modern",
+   "ecole",
+   "ancien",
+   "coutume",
+   "village",
+   "ville$"
+  ],
+  "themes": [
+   "Tradition et modernité",
+   "Tradition",
+   "Modernité",
+   "Éducation",
+   "Identité"
+  ],
+  "strict": true
+ },
+ {
+  "id": "soc-memoire",
+  "fonction": "Sociale",
+  "parent": "Mémoire collective",
+  "titre": "Conserver la mémoire d'un peuple",
+  "phrase": "{N} conserve la mémoire d'un peuple et de son histoire.",
+  "explication": "Comme le griot, l'écrivain transmet ce que les anciens ont vécu. Sans lui, des pans entiers de l'histoire africaine seraient oubliés.",
+  "limite": "Mais la mémoire écrite par un seul homme peut déformer le passé, l'embellir ou le noircir.",
+  "mots": [
+   "memoire",
+   "histoire$",
+   "passe$",
+   "ancetre",
+   "griot",
+   "souven",
+   "heritage"
+  ],
+  "themes": [
+   "Mémoire",
+   "Histoire",
+   "Tradition orale",
+   "Héritage"
+  ],
+  "base": true
+ },
+ {
+  "id": "soc-culture",
+  "fonction": "Sociale",
+  "parent": "Valorisation de la culture",
+  "titre": "Valoriser la culture africaine",
+  "phrase": "{N} fait connaître et aimer la culture, les langues et les valeurs d'un peuple.",
+  "explication": "Contes, proverbes, rites et croyances entrent dans le livre et gagnent un public mondial. La littérature prouve qu'une culture longtemps méprisée a sa richesse.",
+  "limite": "Mais cette mise en valeur peut devenir une image figée ou exotique, loin de la vie réelle des gens.",
+  "mots": [
+   "cultur",
+   "tradition",
+   "valeur",
+   "identit",
+   "racine",
+   "coutume",
+   "proverb",
+   "conte$",
+   "oral",
+   "griot",
+   "africa"
+  ],
+  "themes": [
+   "Culture",
+   "Tradition",
+   "Identité",
+   "Identité culturelle",
+   "Afrique",
+   "Tradition orale",
+   "Négritude"
+  ]
+ },
+ {
+  "id": "soc-instruire",
+  "fonction": "Sociale",
+  "parent": "Valorisation de la culture",
+  "titre": "Instruire et donner des leçons de vie (didactique)",
+  "phrase": "{N} instruit le lecteur et lui donne des leçons de vie.",
+  "explication": "Le conte, la fable ou le roman d'apprentissage transmettent une morale : la ruse punie, la sagesse récompensée. Le lecteur apprend en se distrayant.",
+  "limite": "Mais une œuvre trop moralisatrice ennuie, et le lecteur d'aujourd'hui n'aime pas qu'on lui fasse la leçon.",
+  "mots": [
+   "instrui",
+   "eduqu",
+   "enseign",
+   "lecon",
+   "moral",
+   "sagesse",
+   "apprend",
+   "edifi",
+   "didact",
+   "ecole"
+  ],
+  "themes": [
+   "Éducation",
+   "Sagesse",
+   "Morale",
+   "Initiation"
+  ]
+ },
+ {
+  "id": "soc-condition-humaine",
+  "fonction": "Sociale",
+  "parent": "Peinture de la réalité sociale",
+  "titre": "Montrer la condition humaine",
+  "phrase": "{N} montre l'homme face à la misère, à la mort, à l'exil : ce que tout homme peut vivre.",
+  "explication": "Au-delà d'une société précise, l'œuvre parle de l'homme en général. Un lecteur de n'importe quel pays s'y reconnaît.",
+  "limite": "Mais en parlant de l'homme en général, l'œuvre peut perdre la force d'un témoignage précis.",
+  "mots": [
+   "condition humaine",
+   "homme$",
+   "humain",
+   "humanit",
+   "mort$",
+   "exil"
+  ],
+  "themes": [
+   "Humanité",
+   "Mort",
+   "Exil",
+   "Destin",
+   "Solitude",
+   "Absurdité"
+  ]
+ },
+ {
+  "id": "soc-famille-moeurs",
+  "fonction": "Sociale",
+  "parent": "Peinture de la réalité sociale",
+  "titre": "Peindre les mœurs et la vie quotidienne",
+  "phrase": "{N} peint les mœurs, la famille et la vie de tous les jours.",
+  "explication": "Le mariage, la dot, les rivalités entre coépouses, l'argent : le roman africain montre la vie de chaque jour avec précision. Le lecteur y retrouve des scènes qu'il connaît.",
+  "limite": "Mais la vie quotidienne racontée dans un roman est toujours arrangée pour plaire ou pour faire réfléchir.",
+  "mots": [
+   "moeurs",
+   "quotidien",
+   "famille",
+   "mariage",
+   "dot$",
+   "vie de tous",
+   "coutume"
+  ],
+  "themes": [
+   "Famille",
+   "Mariage",
+   "Polygamie",
+   "Argent",
+   "Jeunesse"
+  ]
+ },
+ {
+  "id": "est-art",
+  "fonction": "Esthétique",
+  "parent": "Culte de la forme",
+  "titre": "La littérature est d'abord un art",
+  "phrase": "{N} est d'abord un art : la beauté de la forme compte autant que le message.",
+  "explication": "Une idée juste mal écrite ne touche personne. Ce qui fait vivre une œuvre, c'est son style, ses images, son rythme.",
+  "limite": "Mais une œuvre qui ne cherche que la beauté peut paraître vide ou coupée du monde réel.",
+  "mots": [
+   "art$",
+   "artist",
+   "beau$",
+   "beaute",
+   "forme$",
+   "style",
+   "esthet"
+  ],
+  "themes": [
+   "Art",
+   "Beauté",
+   "Beauté et forme",
+   "Poésie"
+  ],
+  "personne": "{N} est d'abord un artiste : la beauté de la forme compte autant que le message.",
+  "base": true
+ },
+ {
+  "id": "est-travail-langue",
+  "fonction": "Esthétique",
+  "parent": "Culte de la forme",
+  "titre": "Travailler la langue",
+  "phrase": "{N} est un travail de la langue : chaque mot est pesé, chaque phrase ciselée.",
+  "explication": "Flaubert passait des jours sur une page. Kourouma a « malinkisé » le français pour inventer une langue nouvelle. Le travail de la forme est un vrai métier.",
+  "limite": "Mais le travail du style peut rendre l'œuvre difficile et l'éloigner des lecteurs simples.",
+  "mots": [
+   "langue$",
+   "langage",
+   "mots$",
+   "verbe$",
+   "cisel",
+   "orfevre",
+   "artisan",
+   "travail",
+   "vocabulaire",
+   "ecriture$"
+  ],
+  "themes": [
+   "Langage",
+   "Art"
+  ],
+  "personne": "{N} travaille la langue comme un artisan : chaque mot est pesé, chaque phrase ciselée.",
+  "base": true
+ },
+ {
+  "id": "est-musique",
+  "fonction": "Esthétique",
+  "parent": "Culte de la forme",
+  "titre": "Faire de la poésie une musique",
+  "phrase": "{N} fait chanter les mots : rythme, rimes et sonorités en font une musique.",
+  "explication": "Senghor écrivait ses poèmes « pour kôra » ou « pour tam-tam ». La poésie se lit avec l'oreille autant qu'avec l'esprit.",
+  "limite": "Mais la musique des mots ne suffit pas : on attend aussi de la poésie qu'elle dise quelque chose.",
+  "mots": [
+   "musique",
+   "musical",
+   "rythme",
+   "rime",
+   "sonor",
+   "chant",
+   "harmon",
+   "melod",
+   "kora",
+   "tam"
+  ],
+  "themes": [
+   "Poésie",
+   "Art"
+  ],
+  "genres": [
+   "Poésie"
+  ]
+ },
+ {
+  "id": "est-images",
+  "fonction": "Esthétique",
+  "parent": "Culte de la forme",
+  "titre": "Créer des images neuves",
+  "phrase": "{N} invente des images qui font voir le monde autrement.",
+  "explication": "Une métaphore réussie surprend et éclaire. Le poète « voyant » de Rimbaud ou le surréalisme de Césaire changent notre regard par la force des images.",
+  "limite": "Mais des images trop obscures rendent l'œuvre hermétique et découragent le lecteur.",
+  "mots": [
+   "image$",
+   "metaphor",
+   "symbol",
+   "creat",
+   "createur",
+   "inventer",
+   "alchimi",
+   "magie des mots"
+  ],
+  "themes": [
+   "Poésie",
+   "Art",
+   "Beauté"
+  ],
+  "genres": [
+   "Poésie"
+  ]
+ },
+ {
+  "id": "est-beaute-monde",
+  "fonction": "Esthétique",
+  "parent": "Célébration de la beauté",
+  "titre": "Célébrer la beauté du monde",
+  "phrase": "{N} célèbre la beauté de la nature, de la femme et du monde.",
+  "explication": "« Femme nue, femme noire » de Senghor chante la beauté africaine. La littérature apprend à regarder le monde avec admiration.",
+  "limite": "Mais célébrer la beauté peut aussi faire oublier la misère et la violence du réel.",
+  "mots": [
+   "beaute",
+   "beau$",
+   "belle$",
+   "nature",
+   "celebr",
+   "admir",
+   "femme noire",
+   "paysage"
+  ],
+  "themes": [
+   "Beauté",
+   "Nature",
+   "Amour"
+  ],
+  "genres": [
+   "Poésie",
+   "Roman"
+  ]
+ },
+ {
+  "id": "est-gratuite",
+  "fonction": "Esthétique",
+  "parent": "Culte de la forme",
+  "titre": "L'art pour l'art",
+  "phrase": "{N} n'a pas à être utile : sa seule mission est la beauté.",
+  "explication": "Pour Théophile Gautier, « il n'y a de vraiment beau que ce qui ne peut servir à rien ». L'art n'obéit qu'à lui-même.",
+  "limite": "Mais en Afrique surtout, on a reproché à cet art « gratuit » d'ignorer les souffrances du peuple.",
+  "mots": [
+   "l art pour l art",
+   "gratuit",
+   "inutile",
+   "servir a rien",
+   "elle meme",
+   "lui meme",
+   "pure"
+  ],
+  "themes": [
+   "Art",
+   "Beauté"
+  ]
+ },
+ {
+  "id": "est-forme-sert-fond",
+  "fonction": "Esthétique",
+  "parent": "Culte de la forme",
+  "titre": "La forme au service du message",
+  "phrase": "{N} ne sépare pas la beauté du sens : c'est la forme qui donne sa force au message.",
+  "explication": "Le Cahier d'un retour au pays natal frappe autant par ses images que par sa révolte. Une belle forme rend l'idée inoubliable.",
+  "limite": "Mais quand le message passe avant tout, la forme devient un simple outil et perd sa liberté.",
+  "mots": [
+   "forme$",
+   "fond$",
+   "style",
+   "toucher",
+   "emouv",
+   "convainc",
+   "persuad"
+  ],
+  "themes": [
+   "Art",
+   "Engagement"
+  ]
+ },
+ {
+  "id": "eva-rever",
+  "fonction": "Évasion",
+  "parent": "Imagination",
+  "titre": "Faire rêver",
+  "phrase": "{N} fait rêver le lecteur en inventant des mondes imaginaires.",
+  "explication": "Contes merveilleux, romans fantastiques ou d'aventure ouvrent un monde où tout est possible. L'imagination du lecteur prend le relais.",
+  "limite": "Mais le rêve n'est jamais coupé du réel : derrière le merveilleux se cache souvent une critique de notre monde.",
+  "mots": [
+   "reve$",
+   "rever$",
+   "reveur",
+   "imagin",
+   "merveill",
+   "fantast",
+   "fantaisie",
+   "magie",
+   "fiction",
+   "invent"
+  ],
+  "themes": [
+   "Rêve",
+   "Mythe",
+   "Aventure",
+   "Illusion"
+  ],
+  "base": true
+ },
+ {
+  "id": "eva-voyage",
+  "fonction": "Évasion",
+  "parent": "Voyage imaginaire",
+  "titre": "Faire voyager",
+  "phrase": "{N} fait voyager le lecteur loin de chez lui, dans d'autres pays et d'autres époques.",
+  "explication": "Sans quitter sa chambre, le lecteur découvre Paris, la brousse, le désert ou le Moyen Âge. Lire, c'est un voyage immobile.",
+  "limite": "Mais le voyage littéraire peut aussi rendre le lecteur étranger à son propre monde.",
+  "mots": [
+   "voyag",
+   "ailleurs",
+   "loin",
+   "lointain",
+   "partir$",
+   "tapis volant",
+   "exotis",
+   "pays"
+  ],
+  "themes": [
+   "Voyage",
+   "Aventure",
+   "Exil",
+   "Immigration"
+  ],
+  "base": true
+ },
+ {
+  "id": "eva-refuge",
+  "fonction": "Évasion",
+  "parent": "Voyage imaginaire",
+  "titre": "Offrir un refuge contre la dure réalité",
+  "phrase": "{N} offre un refuge : {il} aide à oublier la souffrance et l'ennui de la vie.",
+  "explication": "Pour le prisonnier, le malade ou l'élève fatigué, le livre est une fenêtre ouverte. Il console et redonne des forces.",
+  "limite": "Mais fuir le réel ne le change pas : on peut reprocher à cette évasion d'endormir le lecteur.",
+  "mots": [
+   "refuge",
+   "fuir",
+   "fuite",
+   "echapp",
+   "oubli",
+   "consol",
+   "ennui",
+   "evad",
+   "evasion",
+   "arracher"
+  ],
+  "themes": [
+   "Solitude",
+   "Souffrance",
+   "Prison",
+   "Rêve"
+  ],
+  "base": true
+ },
+ {
+  "id": "eva-divertir",
+  "fonction": "Évasion",
+  "parent": "Divertissement",
+  "titre": "Divertir par une belle histoire",
+  "phrase": "{N} divertit le lecteur par le plaisir d'une histoire bien racontée.",
+  "explication": "Suspense, rebondissements, personnages attachants : le lecteur tourne les pages pour savoir la suite. Le plaisir de lire est la première raison d'ouvrir un livre.",
+  "limite": "Mais un divertissement qui ne fait que distraire s'oublie vite ; les grandes œuvres divertissent en faisant réfléchir.",
+  "mots": [
+   "divert",
+   "distrai",
+   "plaisir",
+   "amus",
+   "loisir",
+   "detente",
+   "histoire$",
+   "raconter",
+   "passer le temps",
+   "plaire"
+  ],
+  "themes": [
+   "Aventure",
+   "Amour",
+   "Comédie"
+  ],
+  "base": true
+ },
+ {
+  "id": "eva-rire",
+  "fonction": "Évasion",
+  "parent": "Rire",
+  "titre": "Faire rire",
+  "phrase": "{N} fait rire et détend le lecteur ou le spectateur.",
+  "explication": "La comédie, le comique de situation et l'humour libèrent des soucis. On sort du théâtre plus léger.",
+  "limite": "Mais le rire cache souvent une critique : chez Molière comme chez Dadié, on rit pour corriger.",
+  "mots": [
+   "rire$",
+   "comique",
+   "humour",
+   "drole",
+   "comedi",
+   "farce",
+   "gai"
+  ],
+  "themes": [
+   "Comédie",
+   "Humour",
+   "Satire"
+  ],
+  "genres": [
+   "Théâtre",
+   "Roman"
+  ]
+ },
+ {
+  "id": "eva-heros",
+  "fonction": "Évasion",
+  "parent": "Imagination",
+  "titre": "Vivre d'autres vies",
+  "phrase": "{N} permet au lecteur de vivre d'autres vies à travers ses personnages.",
+  "explication": "Le lecteur devient un instant le héros : il aime, combat, voyage avec lui. Il vit des aventures qu'il ne vivra jamais.",
+  "limite": "Mais s'identifier au héros peut aussi faire oublier ses propres responsabilités.",
+  "mots": [
+   "heros",
+   "personnage",
+   "aventur",
+   "autres vies",
+   "identifi",
+   "vivre"
+  ],
+  "themes": [
+   "Aventure",
+   "Quête",
+   "Amour",
+   "Initiation"
+  ]
+ },
+ {
+  "id": "eva-catharsis",
+  "fonction": "Évasion",
+  "parent": "Divertissement",
+  "titre": "Libérer des passions (catharsis)",
+  "phrase": "{N} libère le spectateur de ses peurs et de ses passions en les lui faisant vivre sur scène.",
+  "explication": "Pour Aristote, la tragédie purge les passions : en voyant le héros souffrir, le spectateur se libère de sa propre peur. Il sort apaisé.",
+  "limite": "Mais cette émotion peut aussi faire réfléchir et pousser à agir, ce qui rapproche le théâtre de l'engagement.",
+  "mots": [
+   "cathar",
+   "purg",
+   "passion",
+   "tragedi",
+   "pitie",
+   "terreur",
+   "specta"
+  ],
+  "themes": [
+   "Tragédie",
+   "Destin",
+   "Passion",
+   "Mort",
+   "Vengeance",
+   "Folie"
+  ],
+  "genres": [
+   "Théâtre"
+  ],
+  "strict": true
+ },
+ {
+  "id": "lyr-sentiments",
+  "fonction": "Lyrique",
+  "parent": "Expression des sentiments",
+  "titre": "Exprimer ses sentiments",
+  "phrase": "{N} exprime les sentiments intimes : l'amour, la joie, la douleur.",
+  "explication": "Le poète lyrique ouvre son cœur. En lisant, le lecteur reconnaît ses propres émotions et se sent moins seul.",
+  "limite": "Mais une œuvre qui ne parle que du moi peut paraître égoïste face aux malheurs du monde.",
+  "mots": [
+   "sentiment",
+   "emotion",
+   "coeur",
+   "ame$",
+   "sensib",
+   "ressen",
+   "emouv",
+   "emu$",
+   "toucher"
+  ],
+  "themes": [
+   "Amour",
+   "Passion",
+   "Mélancolie"
+  ],
+  "base": true
+ },
+ {
+  "id": "lyr-amour",
+  "fonction": "Lyrique",
+  "parent": "Expression des sentiments",
+  "titre": "Chanter l'amour",
+  "phrase": "{N} chante l'amour, ses joies et ses blessures.",
+  "explication": "De Ronsard à Senghor, l'amour est le premier sujet de la poésie. Les mots donnent une forme à ce que tout amoureux ressent.",
+  "limite": "Mais l'amour chanté par le poète est souvent idéalisé, loin de la réalité du couple.",
+  "mots": [
+   "amour",
+   "aimer",
+   "aime$",
+   "amant",
+   "bien aime",
+   "coeur",
+   "passion"
+  ],
+  "themes": [
+   "Amour",
+   "Passion",
+   "Mariage"
+  ],
+  "strict": true
+ },
+ {
+  "id": "lyr-douleur",
+  "fonction": "Lyrique",
+  "parent": "Expression des sentiments",
+  "titre": "Dire la douleur et le deuil",
+  "phrase": "{N} dit la douleur, le deuil et la solitude, et aide ainsi à les supporter.",
+  "explication": "Écrire sa souffrance, c'est déjà s'en libérer un peu. Le lecteur en deuil trouve dans le poème des mots pour sa propre peine.",
+  "limite": "Mais la plainte peut enfermer l'écrivain dans son malheur au lieu de l'ouvrir aux autres.",
+  "mots": [
+   "douleur",
+   "souffr",
+   "deuil",
+   "larme",
+   "pleur",
+   "triste",
+   "chagrin",
+   "solitude",
+   "desesper",
+   "melancol",
+   "spleen",
+   "plainte",
+   "cri$"
+  ],
+  "themes": [
+   "Souffrance",
+   "Mort",
+   "Solitude",
+   "Mélancolie",
+   "Spleen",
+   "Exil"
+  ],
+  "base": true
+ },
+ {
+  "id": "lyr-vecu",
+  "fonction": "Lyrique",
+  "parent": "Expression du vécu",
+  "titre": "Raconter sa propre vie (autobiographie)",
+  "phrase": "{N} raconte la vie de son auteur : son enfance, ses souvenirs, ses épreuves.",
+  "explication": "L'Enfant noir de Camara Laye ou Une si longue lettre partent du vécu. L'écrivain se raconte pour se comprendre et transmettre son expérience.",
+  "limite": "Mais on ne raconte jamais sa vie tout à fait vrai : la mémoire trie et l'écrivain arrange.",
+  "mots": [
+   "vecu",
+   "autobiograph",
+   "souvenir",
+   "enfance",
+   "experience",
+   "sa vie",
+   "propre vie",
+   "se raconte",
+   "biograph",
+   "je$"
+  ],
+  "themes": [
+   "Enfance",
+   "Mémoire",
+   "Famille",
+   "Initiation"
+  ],
+  "personne": "{N} raconte sa propre vie : son enfance, ses souvenirs, ses épreuves.",
+  "base": true
+ },
+ {
+  "id": "lyr-nostalgie",
+  "fonction": "Lyrique",
+  "parent": "Expression des sentiments",
+  "titre": "Chanter l'exil et la nostalgie",
+  "phrase": "{N} chante le pays perdu, l'exil et la nostalgie de l'enfance.",
+  "explication": "Loin de chez lui, l'écrivain se souvient du village, de la mère, du royaume d'enfance. Ces textes touchent tous ceux qui ont dû partir.",
+  "limite": "Mais la nostalgie embellit le passé et peut faire oublier ce qu'il avait de dur.",
+  "mots": [
+   "nostalg",
+   "exil",
+   "pays natal",
+   "retour",
+   "royaume d enfance",
+   "loin$",
+   "regret"
+  ],
+  "themes": [
+   "Exil",
+   "Enfance",
+   "Immigration",
+   "Mémoire"
+  ],
+  "strict": true
+ },
+ {
+  "id": "lyr-universel",
+  "fonction": "Lyrique",
+  "parent": "Expression des sentiments",
+  "titre": "Parler de soi pour parler de tous",
+  "phrase": "{N} part de l'émotion d'un seul pour toucher ce que tous les hommes ressentent.",
+  "explication": "Victor Hugo disait : « Quand je vous parle de moi, je vous parle de vous. » Le moi du poète devient le miroir du lecteur.",
+  "limite": "Mais certains lecteurs ne se retrouvent pas dans une émotion trop personnelle ou trop éloignée de leur vie.",
+  "mots": [
+   "moi$",
+   "lui meme",
+   "soi meme",
+   "intime",
+   "sincer",
+   "confid",
+   "confession",
+   "aveu"
+  ],
+  "themes": [
+   "Humanité",
+   "Amour",
+   "Solitude"
+  ]
+ },
+ {
+  "id": "lyr-collectif",
+  "fonction": "Lyrique",
+  "parent": "Expression du vécu",
+  "titre": "Le « je » qui dit la souffrance d'un peuple",
+  "phrase": "{N} dit « je » mais exprime la souffrance de tout un peuple.",
+  "explication": "Chez Césaire ou Damas, le cri personnel devient celui de la race opprimée. Le lyrisme se fait collectif.",
+  "limite": "Mais quand le « je » parle pour tous, on passe du lyrisme à l'engagement.",
+  "mots": [
+   "cri$",
+   "peuple",
+   "race",
+   "notre",
+   "nous$",
+   "frere",
+   "negr"
+  ],
+  "themes": [
+   "Négritude",
+   "Colonisation",
+   "Identité"
+  ],
+  "genres": [
+   "Poésie"
+  ],
+  "strict": true
+ },
+ {
+  "id": "eng-guerre",
+  "fonction": "Engagement",
+  "parent": "Dénonciation",
+  "titre": "Dénoncer la guerre et la violence",
+  "phrase": "{N} dénonce l'horreur de la guerre et de la violence.",
+  "explication": "Allah n'est pas obligé de Kourouma montre les enfants soldats ; d'autres œuvres racontent les génocides. Le lecteur ne peut plus fermer les yeux.",
+  "limite": "Mais raconter la violence peut aussi fasciner, ou choquer sans rien expliquer.",
+  "mots": [
+   "guerre",
+   "violence",
+   "massacre",
+   "genocide",
+   "soldat",
+   "sang$",
+   "arme$",
+   "tuer"
+  ],
+  "themes": [
+   "Guerre",
+   "Violence",
+   "Génocide",
+   "Guerre civile"
+  ],
+  "strict": true
+ },
+ {
+  "id": "eng-identite",
+  "fonction": "Engagement",
+  "parent": "Valorisation de la culture",
+  "titre": "Revendiquer son identité (Négritude)",
+  "phrase": "{N} revendique avec fierté l'identité et les valeurs de l'homme noir.",
+  "explication": "Senghor, Césaire et Damas ont répondu au mépris colonial en affirmant la beauté de la culture noire. Écrire devient un acte de fierté.",
+  "limite": "Mais on a reproché à la Négritude de figer l'Africain dans une image, au lieu de le laisser libre d'être moderne.",
+  "mots": [
+   "negritude",
+   "negr",
+   "identit",
+   "fierte",
+   "dignit",
+   "racine",
+   "noir$",
+   "africanit"
+  ],
+  "themes": [
+   "Négritude",
+   "Identité",
+   "Identité culturelle",
+   "Dignité"
+  ],
+  "strict": true
+ },
+ {
+  "id": "soc-afrique-aujourdhui",
+  "fonction": "Sociale",
+  "parent": "Peinture de la réalité sociale",
+  "titre": "Montrer l'Afrique d'aujourd'hui",
+  "phrase": "{N} montre les problèmes de l'Afrique d'aujourd'hui : chômage, exode, corruption, immigration.",
+  "explication": "Les romans récents parlent des jeunes qui partent, de la ville qui écrase, de l'argent facile. Le lecteur africain y reconnaît son quotidien.",
+  "limite": "Mais montrer seulement les problèmes peut donner une image trop sombre du continent.",
+  "mots": [
+   "afrique",
+   "africain",
+   "jeune",
+   "chomage",
+   "exode",
+   "immigr",
+   "migr",
+   "ville$",
+   "argent"
+  ],
+  "themes": [
+   "Afrique",
+   "Immigration",
+   "Jeunesse",
+   "Ville",
+   "Argent",
+   "Modernité"
+  ],
+  "strict": true
+ },
+ {
+  "id": "soc-oralite",
+  "fonction": "Sociale",
+  "parent": "Valorisation de la culture",
+  "titre": "Faire entrer la parole des griots dans le livre",
+  "phrase": "{N} recueille la parole orale des griots et des conteurs pour la transmettre.",
+  "explication": "Birago Diop, Bernard Dadié ou Djibril Tamsir Niane ont écrit ce que les griots racontaient. La tradition orale ne se perd pas.",
+  "limite": "Mais écrire un conte, c'est aussi le figer : il perd la voix, les gestes et le public du conteur.",
+  "mots": [
+   "griot",
+   "oral",
+   "conte$",
+   "contes$",
+   "conteur",
+   "parole",
+   "legende",
+   "epopee"
+  ],
+  "themes": [
+   "Tradition orale",
+   "Mythe",
+   "Culture",
+   "Sagesse"
+  ],
+  "strict": true
+ },
+ {
+  "id": "est-renouveler",
+  "fonction": "Esthétique",
+  "parent": "Culte de la forme",
+  "titre": "Inventer de nouvelles formes",
+  "phrase": "{N} invente de nouvelles formes et bouscule les règles des genres.",
+  "explication": "Le vers libre, le roman éclaté, le théâtre qui mêle conte et chant : les écrivains africains ont créé des formes à eux. L'art avance par l'invention.",
+  "limite": "Mais trop d'audace dans la forme peut perdre le lecteur, qui ne trouve plus ses repères.",
+  "mots": [
+   "nouveau",
+   "nouvelle forme",
+   "invent",
+   "regle",
+   "genre$",
+   "libre",
+   "original",
+   "moderne"
+  ],
+  "themes": [
+   "Art",
+   "Modernité",
+   "Langage"
+  ]
+ },
+ {
+  "id": "eva-merveilleux",
+  "fonction": "Évasion",
+  "parent": "Imagination",
+  "titre": "Émerveiller par le conte et la légende",
+  "phrase": "{N} émerveille par les animaux qui parlent, les génies et les héros des légendes.",
+  "explication": "Le conte africain transporte l'auditeur dans un monde où l'hyène et le lièvre parlent. L'enfant comme l'adulte s'y laisse emporter.",
+  "limite": "Mais le conte n'est pas qu'un rêve : il porte presque toujours une leçon.",
+  "mots": [
+   "conte$",
+   "contes$",
+   "legende",
+   "fable",
+   "genie",
+   "animaux",
+   "merveill",
+   "mythe"
+  ],
+  "themes": [
+   "Mythe",
+   "Tradition orale",
+   "Sagesse"
+  ],
+  "genres": [
+   "Conte",
+   "Roman",
+   "Poésie"
+  ],
+  "strict": true
+ },
+ {
+  "id": "lyr-foi",
+  "fonction": "Lyrique",
+  "parent": "Expression des sentiments",
+  "titre": "Dire sa foi et ses interrogations",
+  "phrase": "{N} exprime la foi, le doute et la quête de sens de l'auteur.",
+  "explication": "Prières, révoltes contre Dieu, recherche de la vérité : beaucoup d'œuvres disent l'inquiétude intime de l'homme face au sacré.",
+  "limite": "Mais ces questions personnelles peuvent sembler loin des préoccupations concrètes du lecteur.",
+  "mots": [
+   "dieu",
+   "foi$",
+   "priere",
+   "sacre",
+   "spirituel",
+   "croyance",
+   "ame$",
+   "sens de la vie"
+  ],
+  "themes": [
+   "Foi",
+   "Religion",
+   "Spiritualité",
+   "Quête"
+  ],
+  "strict": true
+ },
+ {
+  "id": "lyr-liberer",
+  "fonction": "Lyrique",
+  "parent": "Expression du vécu",
+  "titre": "Écrire pour se libérer",
+  "phrase": "{N} permet à l'auteur de se libérer de ce qui le hante.",
+  "explication": "Écrire une blessure, c'est la mettre à distance. Beaucoup d'écrivains disent qu'ils écrivent pour ne pas devenir fous.",
+  "limite": "Mais une écriture qui soigne d'abord son auteur n'intéresse pas toujours le lecteur.",
+  "mots": [
+   "liber",
+   "guerir",
+   "soigner",
+   "therap",
+   "delivr",
+   "hant",
+   "blessure",
+   "trauma"
+  ],
+  "themes": [
+   "Trauma",
+   "Souffrance",
+   "Culpabilité"
+  ],
+  "strict": true
+ }
+]
