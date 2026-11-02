@@ -1,0 +1,302 @@
+[
+ {
+  "texte": "« Écrire, c'est mettre des mots sur les maux. » Expliquez et discutez.",
+  "fonctions": [
+   "Engagement",
+   "Évasion"
+  ],
+  "id": "s01",
+  "source": "atikan-corrige"
+ },
+ {
+  "texte": "« Le poète n'est pas un rêveur : il est la voix de ceux qui n'en ont pas. » Discutez.",
+  "fonctions": [
+   "Engagement",
+   "Évasion"
+  ],
+  "id": "s02",
+  "source": "atikan-ok"
+ },
+ {
+  "texte": "« La poésie est un chant de l'âme. » Expliquez et discutez.",
+  "fonctions": [
+   "Lyrique"
+  ],
+  "id": "s03",
+  "source": "atikan-ok"
+ },
+ {
+  "texte": "« Un roman est un miroir qui se promène sur une grande route. » Expliquez et discutez.",
+  "fonctions": [
+   "Sociale"
+  ],
+  "id": "s04",
+  "source": "atikan-ok"
+ },
+ {
+  "texte": "« L'écrivain peint ce qu'il voit, le poète chante ce qu'il sent. » Discutez.",
+  "fonctions": [
+   "Sociale",
+   "Lyrique"
+  ],
+  "id": "s05",
+  "source": "atikan-corrige"
+ },
+ {
+  "texte": "« La littérature ne fait pas de révolution, elle prépare les esprits. » Discutez.",
+  "fonctions": [
+   "Engagement",
+   "Esthétique"
+  ],
+  "id": "s07",
+  "source": "atikan-ok"
+ },
+ {
+  "texte": "« On ne lit pas pour s'évader, on lit pour comprendre le monde. » Partagez-vous ce point de vue ?",
+  "fonctions": [
+   "Sociale",
+   "Lyrique"
+  ],
+  "id": "s08",
+  "source": "atikan-ok"
+ },
+ {
+  "texte": "« Le roman est d'abord une belle histoire. » Discutez.",
+  "fonctions": [
+   "Évasion",
+   "Engagement"
+  ],
+  "id": "s09",
+  "source": "atikan-corrige"
+ },
+ {
+  "texte": "« Écrire, c'est se dire soi-même. » Expliquez et discutez.",
+  "fonctions": [
+   "Lyrique"
+  ],
+  "id": "s10",
+  "source": "atikan-ok"
+ },
+ {
+  "texte": "« La beauté d'un poème réside dans son message. » Discutez.",
+  "fonctions": [
+   "Engagement",
+   "Esthétique"
+  ],
+  "id": "s12",
+  "source": "atikan-corrige"
+ },
+ {
+  "texte": "« L'art pour l'art est une trahison du peuple. » Discutez.",
+  "fonctions": [
+   "Engagement",
+   "Esthétique"
+  ],
+  "id": "s13",
+  "source": "atikan-corrige"
+ },
+ {
+  "texte": "« Je n'écris pas pour plaire, j'écris pour déranger. » Commentez cette déclaration d'un écrivain africain.",
+  "fonctions": [
+   "Engagement"
+  ],
+  "id": "s14",
+  "source": "atikan-ok"
+ },
+ {
+  "texte": "« La littérature est une fenêtre ouverte sur le monde. » Expliquez et discutez.",
+  "fonctions": [
+   "Évasion",
+   "Sociale"
+  ],
+  "id": "s15",
+  "source": "atikan-ok"
+ },
+ {
+  "texte": "« Le théâtre est l'école du peuple. » Expliquez et illustrez.",
+  "fonctions": [
+   "Sociale",
+   "Évasion"
+  ],
+  "id": "s16",
+  "source": "atikan-corrige"
+ },
+ {
+  "texte": "« La poésie est la mémoire du peuple. » Discutez.",
+  "fonctions": [
+   "Sociale",
+   "Engagement"
+  ],
+  "id": "s17",
+  "source": "atikan-ok"
+ },
+ {
+  "texte": "« Le conte africain ne sert pas qu'à divertir. » Expliquez et illustrez.",
+  "fonctions": [
+   "Engagement",
+   "Évasion"
+  ],
+  "id": "s18",
+  "source": "atikan-corrige"
+ },
+ {
+  "texte": "« L'écrivain est un témoin de son temps et non un juge. » Discutez.",
+  "fonctions": [
+   "Sociale",
+   "Engagement"
+  ],
+  "id": "s19",
+  "source": "atikan-ok"
+ },
+ {
+  "texte": "« La littérature console. » Expliquez et discutez.",
+  "fonctions": [
+   "Évasion"
+  ],
+  "id": "s20",
+  "source": "atikan-ok"
+ },
+ {
+  "texte": "« Le roman africain est né de la colonisation. » Discutez.",
+  "fonctions": [
+   "Engagement"
+  ],
+  "id": "s21",
+  "source": "atikan-ok"
+ },
+ {
+  "texte": "« La littérature est un voyage immobile. » Expliquez et discutez.",
+  "fonctions": [
+   "Évasion"
+  ],
+  "id": "s22",
+  "source": "atikan-ok"
+ },
+ {
+  "texte": "« Le poète est un éternel insatisfait. » Discutez.",
+  "fonctions": [
+   "Lyrique"
+  ],
+  "id": "s23",
+  "source": "atikan-ok"
+ },
+ {
+  "texte": "« Le livre est une arme silencieuse. » Expliquez et discutez.",
+  "fonctions": [
+   "Engagement"
+  ],
+  "id": "s24",
+  "source": "atikan-ok"
+ },
+ {
+  "texte": "« La littérature doit refléter les réalités africaines. » Discutez.",
+  "fonctions": [
+   "Sociale"
+  ],
+  "id": "s25",
+  "source": "atikan-ok"
+ },
+ {
+  "texte": "« Le roman est le genre de la liberté. » Discutez.",
+  "fonctions": [
+   "Engagement"
+  ],
+  "id": "s26",
+  "source": "atikan-ok"
+ },
+ {
+  "texte": "« Écrire, c'est lutter contre l'oubli. » Expliquez et discutez.",
+  "fonctions": [
+   "Engagement",
+   "Évasion"
+  ],
+  "id": "s27",
+  "source": "atikan-ok"
+ },
+ {
+  "texte": "« La littérature engagée a fait son temps. » Discutez.",
+  "fonctions": [
+   "Esthétique",
+   "Engagement"
+  ],
+  "id": "s28",
+  "source": "atikan-corrige"
+ },
+ {
+  "texte": "« Lire un roman, c'est vivre la vie des autres. » Expliquez et discutez.",
+  "fonctions": [
+   "Évasion"
+  ],
+  "id": "s32",
+  "source": "atikan-ok"
+ },
+ {
+  "texte": "« La littérature a pour rôle de faire rêver les hommes pour qu'ils supportent la réalité. » Discutez.",
+  "fonctions": [
+   "Évasion",
+   "Sociale"
+  ],
+  "id": "s33",
+  "source": "atikan-ok"
+ },
+ {
+  "texte": "« La vérité d'une œuvre n'est pas dans ce qu'elle dit mais dans la manière dont elle le dit. » Discutez.",
+  "fonctions": [
+   "Esthétique"
+  ],
+  "id": "s34",
+  "source": "atikan-ok"
+ },
+ {
+  "texte": "« Le poète est le gardien des traditions. » Expliquez et discutez.",
+  "fonctions": [
+   "Sociale"
+  ],
+  "id": "s35",
+  "source": "atikan-ok"
+ },
+ {
+  "texte": "« L'écrivain africain écrit pour l'Occident. » Discutez.",
+  "fonctions": [
+   "Engagement",
+   "Sociale"
+  ],
+  "id": "s36",
+  "source": "atikan-ok"
+ },
+ {
+  "texte": "« Toute œuvre est le reflet de la vie de son auteur. » Discutez.",
+  "fonctions": [
+   "Lyrique",
+   "Sociale"
+  ],
+  "id": "s37",
+  "source": "atikan-corrige"
+ },
+ {
+  "texte": "« Le roman ne doit pas seulement distraire, il doit instruire. » Discutez.",
+  "fonctions": [
+   "Sociale",
+   "Évasion"
+  ],
+  "id": "s38",
+  "source": "atikan-corrige"
+ },
+ {
+  "texte": "« La littérature est un cri. » Expliquez et discutez.",
+  "fonctions": [
+   "Lyrique"
+  ],
+  "id": "s39",
+  "source": "atikan-ok"
+ },
+ {
+  "texte": "« Les larmes du poète sont celles de tout un peuple. » Expliquez et discutez.",
+  "fonctions": [
+   "Engagement",
+   "Lyrique"
+  ],
+  "id": "s40",
+  "source": "atikan-ok"
+ }
+]

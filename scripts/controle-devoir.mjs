@@ -98,8 +98,9 @@ try {
     ["« L'écrivain n'a pas à prendre parti : son seul devoir est de bien écrire. » Discutez.", a => a.fonctions[0] === "Esthétique"],
     ["« Le théâtre est l'art de représenter la vie. » Expliquez.", a => a.fonctions[0] === "Sociale"],
     // « mots » et « maux » se prononcent pareil mais ne se confondent pas (Atikan, novembre 2026).
-    ["« Écrire, c'est mettre des mots sur les maux. » Expliquez et discutez.", a => a.fonctions[0] === "Lyrique" && a.fonctions.includes("Engagement")],
-    ["ecrire cest mettre des mots sur les maux discutez", a => a.fonctions[0] === "Lyrique"],
+    // Atikan : « l'écriture permet de dévoiler les problèmes de la société » (engagement d'abord).
+    ["« Écrire, c'est mettre des mots sur les maux. » Expliquez et discutez.", a => a.fonctions[0] === "Engagement"],
+    ["ecrire cest mettre des mots sur les maux discutez", a => a.fonctions[0] === "Engagement"],
     ["« Le poète joue avec les mots. » Discutez.", a => a.fonctions[0] === "Esthétique"],
     // Sujets bien lus : le plan reste montré d'emblée.
     ["« Le roman est un miroir qu'on promène le long d'un chemin. » (Stendhal) Expliquez et discutez cette affirmation.", a => a.sure && a.fonctions[0] === "Sociale"],
@@ -125,13 +126,21 @@ try {
     else verifierPlan(`Vrai sujet ${i + 1}`, a);
   }
 
+  // Sujets ambigus validés un à un par Atikan (novembre 2026) : la fonction de la Partie 1 doit être la sienne.
+  const ambigus = JSON.parse(readFileSync(new URL("./sujets-ambigus.json", import.meta.url), "utf8"));
+  let ambigusJustes = 0;
+  for (const x of ambigus) {
+    const a = analyserSujet(x.texte, 6);
+    if (a.fonctions[0] === x.fonctions[0]) ambigusJustes++; else problemes.push(`Sujet ambigu ${x.id} : ${a.fonctions.join("/")} au lieu de ${x.fonctions.join("/")}`);
+  }
+
   const n = sujets.length;
-  console.log(`J'ai un devoir — fonction juste ${premiere}/${n}, dans la liste ${dansListe}/${n}, corrigés reconnus ${reconnus}/${n}, exemples sûrs ${exemplesSurs}/${exemplesTotal}, pièges ${piegesOk}/${pieges.length}, vrais sujets ${reelsJustes}/${reels.length}, plan montré d'emblée ${reelsSurs}/${reels.length}`);
+  console.log(`J'ai un devoir — fonction juste ${premiere}/${n}, dans la liste ${dansListe}/${n}, corrigés reconnus ${reconnus}/${n}, exemples sûrs ${exemplesSurs}/${exemplesTotal}, pièges ${piegesOk}/${pieges.length}, vrais sujets ${reelsJustes}/${reels.length}, plan montré d'emblée ${reelsSurs}/${reels.length}, sujets ambigus ${ambigusJustes}/${ambigus.length}`);
   for (const p of problemes) console.log("  · " + p);
   // Seuils : ce que l'appli fait déjà. On ne publie pas en dessous.
   const seuils = [[premiere >= 27, "fonction juste ≥ 27"], [dansListe >= 30, "fonction dans la liste ≥ 30"], [reconnus === n, "tous les corrigés reconnus"],
     [exemplesSurs === exemplesTotal, "aucune fiche incomplète en exemple"], [doublons === 0, "pas d'œuvre en double"], [vides === 0, "un exemple par argument"], [horsGenre === 0, "exemples du genre demandé"], [piegesOk === pieges.length, "tous les pièges"],
-    [reelsJustes >= Math.floor(reels.length * 0.9), "vrais sujets justes ≥ 90 %"], [reelsSurs >= Math.floor(reels.length * 0.85), "plan d'emblée sur ≥ 85 % des vrais sujets"]];
+    [reelsJustes >= Math.floor(reels.length * 0.9), "vrais sujets justes ≥ 90 %"], [reelsSurs >= Math.floor(reels.length * 0.85), "plan d'emblée sur ≥ 85 % des vrais sujets"], [ambigusJustes >= ambigus.length - 1, "sujets ambigus d'Atikan"]];
   for (const [ok, nom] of seuils) if (!ok) { echec = true; console.error(`Seuil non atteint : ${nom}`); }
 } finally {
   await vite.close();
