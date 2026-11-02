@@ -190,7 +190,7 @@ export interface Analyse {
   sure: boolean;
   /** Le sujet ne porte pas d'abord sur les fonctions de la littérature (la langue d'écriture, le lecteur, un genre…). */
   horsCadre: HorsCadre | null;
-  /** « didactique » ou « autobiographique » : la fonction telle que le cours la nomme, rattachée à la fonction trouvée. */
+  /** Le nom que le cours donne à la fonction (« didactique », « ludique », « de témoignage »…), rattaché à la fonction trouvée. */
   precision: Precision | null;
   /** L'auteur dit que la littérature (la poésie, la lecture…) ne sert à rien : la partie 1 explique ce point de vue, la partie 2 le discute. */
   devalorise: boolean;
@@ -687,9 +687,59 @@ export function lectureDuSujet(citation: string, o: Objet): { motsCles: string[]
   return { motsCles, debut: `Pour l'auteur, ${x.nom}` };
 }
 
-/** Les fonctions que les cours nomment à part, rattachées aux cinq de l'appli (choix d'Atikan, novembre 2026). */
-export type Precision = "didactique" | "autobiographique";
+/** Les fonctions que les cours nomment à part, rattachées aux cinq de l'appli (choix d'Atikan, novembre 2026).
+ *  Le nom est gardé tel que le cours le dit (« ludique », « témoignage ») et affiché à côté de la fonction de l'appli. */
+export type Precision = string;
+const NOMS_DE_FONCTION: [RegExp, Fonction, string][] = [
+  [/^didacti/, "Sociale", "didactique"], [/^pedagog/, "Sociale", "pédagogique"], [/^educati/, "Sociale", "éducative"],
+  [/^moralisa/, "Sociale", "moralisatrice"], [/^morale?s?$/, "Sociale", "morale"], [/^edifi/, "Sociale", "édifiante"],
+  [/^testimonia/, "Sociale", "testimoniale"], [/^temoign/, "Sociale", "de témoignage"], [/^documentair/, "Sociale", "documentaire"],
+  [/^informati/, "Sociale", "informative"], [/^histori/, "Sociale", "historique"], [/^memori/, "Sociale", "mémorielle"],
+  [/^memoire/, "Sociale", "de mémoire"], [/^realist/, "Sociale", "réaliste"], [/^mimeti/, "Sociale", "mimétique"],
+  [/^representati/, "Sociale", "de représentation"], [/^cultur/, "Sociale", "culturelle"], [/^identitair/, "Sociale", "identitaire"],
+  [/^patrimon/, "Sociale", "patrimoniale"], [/^sociologi/, "Sociale", "sociologique"],
+  [/^critique/, "Engagement", "critique"], [/^denonciation/, "Engagement", "de dénonciation"], [/^denoncia/, "Engagement", "dénonciatrice"],
+  [/^contesta/, "Engagement", "contestataire"], [/^militant/, "Engagement", "militante"], [/^subversi/, "Engagement", "subversive"],
+  [/^revolution/, "Engagement", "révolutionnaire"], [/^politique/, "Engagement", "politique"], [/^prophet/, "Engagement", "prophétique"],
+  [/^satiri/, "Engagement", "satirique"], [/^combat/, "Engagement", "de combat"], [/^conscienti/, "Engagement", "de conscientisation"],
+  [/^ludique/, "Évasion", "ludique"], [/^recreati/, "Évasion", "récréative"], [/^divertiss/, "Évasion", "de divertissement"],
+  [/^distracti/, "Évasion", "de distraction"], [/^oniri/, "Évasion", "onirique"], [/^consolat/, "Évasion", "consolatrice"],
+  [/^cathar/, "Évasion", "cathartique"], [/^evasion/, "Évasion", "d'évasion"], [/^imaginair/, "Évasion", "imaginaire"],
+  [/^autobiograph/, "Lyrique", "autobiographique"], [/^expressi/, "Lyrique", "expressive"], [/^emoti/, "Lyrique", "émotive"],
+  [/^confession/, "Lyrique", "confessionnelle"], [/^therapeuti/, "Lyrique", "thérapeutique"], [/^intime/, "Lyrique", "intime"],
+  [/^personnel/, "Lyrique", "personnelle"], [/^affecti/, "Lyrique", "affective"],
+  [/^poetique/, "Esthétique", "poétique"], [/^artisti/, "Esthétique", "artistique"], [/^ornement/, "Esthétique", "ornementale"],
+  [/^esthet/, "Esthétique", "esthétique"]
+];
+/** « La littérature a une fonction ludique », « le rôle didactique du théâtre » : la fonction que le sujet nomme lui-même. */
+/** Des noms que l'appli ne sait pas rattacher sans risque : le guide laisse l'élève choisir. */
+const NOMS_NON_RATTACHES = /^(philosoph|religi|spirituel|metaphysi|mystique|sacre|initiati|economi|scientifi|juridi|commerci|existentiel)/;
+function fonctionNommee(citation: string): { f: Fonction | null; nom: string; f2?: Fonction } | null {
+  const m = normalize(citation).replace(/[^a-z]+/g, " ").trim().split(" ");
+  const vus: { f: Fonction | null; nom: string }[] = [];
+  for (let i = 0; i < m.length; i++) {
+    if (!/^(fonctions?|roles?|missions?|vocations?|dimensions?|visees?|vertus?)$/.test(m[i])) continue;
+    // « n'a pas une fonction ludique » : ce qui est nié n'est pas la fonction du sujet.
+    if (m.slice(Math.max(0, i - 4), i).some(x => /^(n|ne|pas|plus|jamais|aucune?)$/.test(x))) continue;
+    // « une fonction ludique », « sa fonction première est pédagogique », « une fonction didactique et ludique ».
+    for (let j = i + 1; j <= Math.min(i + 6, m.length - 1); j++) {
+      if (/^(n|ne|pas|plus|jamais|mais)$/.test(m[j])) break;
+      const nom = NOMS_DE_FONCTION.find(([r]) => r.test(m[j]));
+      if (nom) vus.push({ f: nom[1], nom: nom[2] });
+      else if (NOMS_NON_RATTACHES.test(m[j])) vus.push({ f: null, nom: m[j] });
+      else if (vus.length && !/^(et|ou|de|d|a|aussi)$/.test(m[j])) break;
+    }
+    if (vus.length) break;
+  }
+  if (!vus.length) return null;
+  if (vus.some(v => !v.f)) return { f: null, nom: vus[0].nom };
+  const f2 = vus.find(v => v.f !== vus[0].f)?.f ?? undefined;
+  return { f: vus[0].f, nom: vus[0].nom, f2: f2 ?? undefined };
+}
+const DIDACTIQUES = new Set(["didactique", "pédagogique", "éducative", "moralisatrice", "morale", "édifiante"]);
 function precisionDe(f: Fonction | undefined, citation: string): Precision | null {
+  const nommee = fonctionNommee(citation);
+  if (nommee && nommee.f === f && nommee.nom !== "esthétique") return nommee.nom;
   const t = normalize(citation).replace(/[^a-z]+/g, " ");
   if (f === "Sociale" && /\b(instrui|eduqu|enseign|lecons?\b|moral|ecole\b|didacti|edifi)/.test(t)) return "didactique";
   if (f === "Lyrique" && /\b(vecu|autobiograph|sa propre vie|vie d(e|u)? ?(son|l|sa) ?(auteur|ecrivain|poete)|se raconte|parler de (lui|soi))/.test(t)) return "autobiographique";
@@ -914,7 +964,7 @@ function planDuSujet({ citation, f: f0, f2: f20, consigne, discussion, themes, a
       ex1: a1.map(a => (a ? exemples(a, undefined) : [])), ex2: a2.map(a => exemples(a, f2b))
     };
   }
-  if (precision === "didactique" && f === "Sociale") {
+  if (precision && DIDACTIQUES.has(precision) && f === "Sociale") {
     // Instruire, éduquer, donner des leçons : les fiches rangent ces œuvres sous « éveil des consciences » et « valorisation de la culture ».
     const N = m.N;
     const d1 = ["Éveil des consciences", "Valorisation de la culture"];
@@ -1113,8 +1163,14 @@ export function analyserSujet(texteTape: string, combien = 6, imposee?: Fonction
     fonctions = [autre, seconde];
     p2 = seconde;
   }
+  // « La littérature a une fonction ludique » : le nom donné par le cours décide (rattaché aux cinq fonctions).
+  const nommee0 = !imposee && !seconde ? fonctionNommee(c0) : null;
+  const inconnue = !!nommee0 && !nommee0.f;
+  const nommee = nommee0?.f && !(rejets.get(nommee0.f) ?? 0) ? { f: nommee0.f, nom: nommee0.nom, f2: nommee0.f2 } : null;
+  // « une fonction didactique et ludique » : deux fonctions nommées, la seconde va en Partie 2.
+  if (nommee) { fonctions = nommee.f2 ? [nommee.f, nommee.f2] : [nommee.f]; if (nommee.f2) p2 = nommee.f2; }
   // « L'écrivain peint ce qu'il voit, le poète chante ce qu'il sent » : un plan comparatif, une fonction par membre.
-  const comp = !imposee && !seconde ? comparaison(citation, indices) : null;
+  const comp = !imposee && !seconde && !nommee ? comparaison(citation, indices) : null;
   if (comp) { fonctions = comp; p2 = comp[1]; }
   if (!p2 && fonctions[0]) p2 = opposeePlan(fonctions[0], /\b(art|arts|artiste|beaute|beau|belle|style|forme|esthetique|poesie pure)\b/.test(normalize(citation)));
   // La fonction que l'auteur rejette clairement (plus rejetée qu'affirmée) ; un sentiment nié reste un sentiment.
@@ -1122,8 +1178,8 @@ export function analyserSujet(texteTape: string, combien = 6, imposee?: Fonction
   // Deux lectures presque aussi probables l'une que l'autre : on le dit, et l'élève peut voir l'autre plan.
   const second = classes[1];
   // Un sujet qui dit lui-même ce qui va en Partie 2 (« pas seulement… », une comparaison) ne laisse pas de doute.
-  const doute = !imposee && !rejet && !seconde && !comp && second && second[1] >= meilleur * SEUIL_DOUTE ? second[0] : null;
-  const faible = !imposee && meilleur < SEUIL_FAIBLE && !trouves.length;
+  const doute = !imposee && !rejet && !seconde && !comp && !nommee && second && second[1] >= meilleur * SEUIL_DOUTE ? second[0] : null;
+  const faible = !imposee && !nommee && meilleur < SEUIL_FAIBLE && !trouves.length;
 
   // Mots du dictionnaire présents dans l'énoncé (« ENGAGEMENT (ENGAGÉ) » : chaque forme compte), sans faute ou presque.
   const dico = motsPublics().filter(e => {
@@ -1174,7 +1230,7 @@ export function analyserSujet(texteTape: string, combien = 6, imposee?: Fonction
     proches: corrige ? proches.filter(x => x.num !== corrige.num) : proches,
     genres, doute, faible, rejet, corrige, objet, objetSur,
     // Plan montré d'emblée seulement si la lecture est sûre ; sinon l'élève choisit sa piste dans le guide.
-    sure: !!corrige?.ouvert || !!imposee || (!horsCadre && ((!doute && !faible && fonctions.length > 0) || devalorise)),
+    sure: !!corrige?.ouvert || !!imposee || (!horsCadre && !inconnue && ((!doute && !faible && fonctions.length > 0) || devalorise)),
     horsCadre, devalorise: devalorise && !corrige, precision: precisionDe(fonctions[0], c0), planLibre: planLibreDu(brute, discussion),
     nature: natureDuSujet(texte, citation, !!auteur || !!auteurConnu(texteTape) || CITE_ENTRE_PARENTHESES.test(texteTape))
   };

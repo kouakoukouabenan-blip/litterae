@@ -105,6 +105,16 @@ try {
     // Didactique rattaché au social, autobiographique au lyrique (choix d'Atikan, novembre 2026).
     ["« Le roman ne doit pas seulement distraire, il doit instruire. » Discutez.", a => a.fonctions[0] === "Sociale" && a.precision === "didactique" && a.sure && /rêver|divert/.test(a.plan.axe2)],
     ["« Toute œuvre est le reflet de la vie de son auteur. » Discutez.", a => a.fonctions[0] === "Lyrique" && a.precision === "autobiographique"],
+    // Les noms de fonction des cours, rattachés aux cinq fonctions (choix d'Atikan, novembre 2026).
+    ["« La fonction première de la littérature est pédagogique. » Discutez.", a => a.fonctions[0] === "Sociale" && a.precision === "pédagogique" && a.sure],
+    ["« La littérature a une fonction ludique. » Discutez.", a => a.fonctions[0] === "Évasion" && a.precision === "ludique" && a.sure],
+    ["« La littérature a une fonction de témoignage. » Discutez.", a => a.fonctions[0] === "Sociale" && a.sure],
+    ["« La littérature a une fonction poétique. » Discutez.", a => a.fonctions[0] === "Esthétique" && a.sure],
+    ["« La littérature a une fonction contestataire. » Discutez.", a => a.fonctions[0] === "Engagement" && a.sure],
+    ["« La littérature a une fonction confessionnelle. » Discutez.", a => a.fonctions[0] === "Lyrique" && a.sure],
+    ["« Le conte africain a une fonction didactique et ludique. » Discutez.", a => a.fonctions[0] === "Sociale" && a.fonctions[1] === "Évasion"],
+    ["« La littérature a une fonction religieuse. » Discutez.", a => !a.sure],
+    ["« La littérature n'a pas une fonction ludique, elle doit éduquer. » Discutez.", a => a.fonctions[0] !== "Évasion"],
     // Sujets bien lus : le plan reste montré d'emblée.
     ["« Le roman est un miroir qu'on promène le long d'un chemin. » (Stendhal) Expliquez et discutez cette affirmation.", a => a.sure && a.fonctions[0] === "Sociale"],
     ["« Un écrivain qui se tait face à l'injustice est complice. » Discutez.", a => a.sure && a.fonctions[0] === "Engagement"],
