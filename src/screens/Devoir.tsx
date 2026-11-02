@@ -48,6 +48,8 @@ export function DevoirScreen() {
   const analyse = useMemo(() => (lu ? analyserSujet(texte, 6, choisie, objetChoisi) : null), [lu, texte, choisie, objetChoisi]);
   // Le parcours : l'appli lit le sujet (courte animation), dit ce qu'elle a compris, puis l'élève choisit sur quoi travailler.
   const [mode, setMode] = useState<Mode | null>(null);
+  // « Comprendre le sujet » : l'élève répond d'abord, puis découvre ce que l'appli a compris (1), puis les problématiques (2).
+  const [vu, setVu] = useState(0);
   const [lecture2, setLecture2] = useState(() => lu);
   const [etapeLecture, setEtapeLecture] = useState(0);
   useEffect(() => {
@@ -64,7 +66,7 @@ export function DevoirScreen() {
   }, [lecture2]);
   function travailler(m: Mode) {
     setMode(m);
-    setTimeout(() => document.querySelector(".devoir-travail")?.scrollIntoView({ behavior: "smooth", block: "start" }), 50);
+    setTimeout(() => { const el = document.querySelector(".devoir-compris-carte"); if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 90, behavior: "smooth" }); }, 50);
   }
   const autreExercice = !!analyse && analyse.nature !== "dissertation" && !quandMeme && !choisie;
   // L'appli n'est pas sûre de sa lecture : pas de plan tout de suite, l'élève passe par le guide et choisit sa piste.
@@ -109,6 +111,7 @@ export function DevoirScreen() {
     (document.activeElement as HTMLElement | null)?.blur();
     setLu(true);
     setMode(null);
+    setVu(0);
     setLecture2(true);
     marquer("devoir");
     noter({ t: "progres", ref: "devoir" });
@@ -197,7 +200,7 @@ export function DevoirScreen() {
 
       {analyse && !lecture2 && (
         <div class="devoir-resultat" aria-live="polite">
-          <p class="devoir-avertissement"><Icon name="info" size={18} />Ce sont des propositions faites par l'appli : elles peuvent contenir des erreurs. Vérifie-les avec ton cours et ton professeur.</p>
+          {!parcours && <p class="devoir-avertissement"><Icon name="info" size={18} />Ce sont des propositions faites par l'appli : elles peuvent contenir des erreurs. Vérifie-les avec ton cours et ton professeur.</p>}
           {autreExercice && (
             <div class="devoir-note devoir-question">
               <p>{AUTRE_EXERCICE[analyse.nature].constat}</p>
@@ -219,9 +222,41 @@ export function DevoirScreen() {
           {parcours && (
             <section class="devoir-compris-carte">
               <p class="devoir-compris-titre">J'ai compris ton devoir</p>
-              {analyse.comprendre && <p>{analyse.comprendre.these}</p>}
+              <p class="tags devoir-compris-tags">
+                {(choisie ? [choisie] : analyse.fonctions.slice(0, 1)).map(f => <span key={f} class={`tag ${fnClass(f)}`}>Fonction {NOM[f]}{!choisie && analyse.precision ? ` (${analyse.precision})` : ""}</span>)}
+                <span class="tag">{majuscule(OBJETS[analyse.objet].nom)}</span>
+                <span class="tag">{analyse.travail.replace(/ \(.*\)$/, "")}</span>
+              </p>
+              {/* La thèse n'est pas montrée d'avance quand l'élève veut comprendre seul : il répond d'abord. */}
+              {analyse.comprendre && mode && (mode !== "comprendre" || vu > 0) && <p>{analyse.comprendre.these}</p>}
+              {!corriger && !corrigerObjet && analyse.rejet && <p class="small devoir-indice">L'auteur rejette la fonction {NOM[analyse.rejet]} : les pistes défendent ce qu'il pense vraiment.</p>}
+              {!corriger && !corrigerObjet && analyse.doute && (
+                <p class="small devoir-indice">Ton sujet peut aussi parler de la fonction {NOM[analyse.doute]}.{" "}
+                  <button type="button" class="link-btn" onClick={() => choisir(analyse.doute)}>Essayer avec celle-ci</button></p>
+              )}
+              {!corriger && !corrigerObjet && !analyse.doute && analyse.faible && !analyse.devalorise && <p class="small devoir-indice">Ton sujet donne peu d'indices : vérifie la fonction avec ton cours.</p>}
+              {corriger || corrigerObjet ? (
+                <div class="devoir-corriger">
+                  <p class="small"><strong>De qui ou de quoi parle ton sujet ?</strong></p>
+                  <p class="tags">
+                    {(Object.keys(OBJETS) as Objet[]).map(o => (
+                      <button key={o} type="button" class="tag tag-link" aria-pressed={analyse.objet === o} onClick={() => { choisirObjet(o); setCorriger(true); }}>{OBJETS[o].choix}</button>
+                    ))}
+                  </p>
+                  <p class="small"><strong>Quelle fonction de la littérature évoque-t-il ?</strong></p>
+                  <p class="tags">
+                    {FONCTIONS.map(f => (
+                      <button key={f} type="button" class={`tag tag-link ${fnClass(f)}`} aria-pressed={analyse.fonctions[0] === f} onClick={() => { choisir(f); setCorrigerObjet(false); }}>{f}</button>
+                    ))}
+                  </p>
+                  <p class="small devoir-changer">
+                    <button type="button" class="link-btn" onClick={() => { setCorriger(false); setCorrigerObjet(false); }}>Fermer</button>
+                    {(choisie || objetChoisi) && <>{" · "}<button type="button" class="link-btn" onClick={() => { choisir(null); choisirObjet(null); }}>Reprendre ce que l'appli avait trouvé</button></>}
+                  </p>
+                </div>
+              ) : <p class="small"><button type="button" class="link-btn" onClick={() => { setCorriger(true); setCorrigerObjet(true); }}>Ce n'est pas ça ? Corriger</button></p>}
               {!mode ? <>
-                <p><strong>Sur quoi veux-tu travailler ?</strong></p>
+                <p class="devoir-menu-question"><strong>Sur quoi veux-tu travailler ?</strong></p>
                 <div class="devoir-menu">
                   {MODES.map(m => (
                     <button key={m.id} type="button" class="devoir-menu-choix" onClick={() => travailler(m.id)}>
@@ -229,7 +264,7 @@ export function DevoirScreen() {
                     </button>
                   ))}
                 </div>
-              </> : <p class="small">Tu travailles sur : <strong>{MODES.find(m => m.id === mode)!.titre.toLowerCase()}</strong>.{" "}
+              </> : <p class="small devoir-mode">Tu travailles sur : <strong>{MODES.find(m => m.id === mode)!.titre.toLowerCase()}</strong>.{" "}
                 <button type="button" class="link-btn" onClick={() => setMode(null)}>Changer</button></p>}
             </section>
           )}
@@ -306,67 +341,34 @@ export function DevoirScreen() {
             </section>
           )}
 
-          {!autreExercice && !guide && !(libre && !choisie) && mode && <section class="devoir-travail">
-            <h2 class="section-title">Ce que dit ton sujet</h2>
-            {analyse.themes.length || analyse.fonctions.length ? (
-              <p class="tags">
-                {analyse.fonctions.map(f => <span key={f} class={`tag ${fnClass(f)}`}>{f}</span>)}
-                {analyse.themes.map(t => <span key={t} class="tag">{t}</span>)}
-              </p>
-            ) : <p class="small muted">Pas de thème reconnu : vérifie que tu as bien collé toute la citation.</p>}
-            {corrigerObjet ? (
-              <div class="devoir-corriger">
-                <p class="small"><strong>De qui ou de quoi parle ton sujet ?</strong> Touche la bonne réponse.</p>
-                <p class="tags">
-                  {(Object.keys(OBJETS) as Objet[]).map(o => (
-                    <button key={o} type="button" class="tag tag-link" aria-pressed={analyse.objet === o} onClick={() => choisirObjet(o)}>{OBJETS[o].choix}</button>
-                  ))}
-                </p>
-                <button type="button" class="link-btn devoir-changer" onClick={() => (objetChoisi ? choisirObjet(null) : setCorrigerObjet(false))}>
-                  {objetChoisi ? "Reprendre ce que l'appli avait trouvé" : "Annuler"}
-                </button>
-              </div>
-            ) : (
-              <p class="small devoir-objet">{objetChoisi ? "Tu as indiqué que ton sujet parle " : `L'appli pense que ton sujet parle ${analyse.objetSur ? "" : "sans doute "}`}{deNom(OBJETS[analyse.objet].nom)}{" "}
-                <button type="button" class="link-btn" onClick={() => setCorrigerObjet(true)}>{objetChoisi ? "Changer" : "Ce n'est pas ça ? Corriger"}</button></p>
-            )}
-            {corriger ? (
-              <div class="devoir-corriger">
-                <p class="small"><strong>Quelle fonction de la littérature ton sujet évoque-t-il ?</strong> Touche la bonne réponse.</p>
-                <p class="tags">
-                  {FONCTIONS.map(f => (
-                    <button key={f} type="button" class={`tag tag-link ${fnClass(f)}`} aria-pressed={analyse.fonctions[0] === f} onClick={() => choisir(f)}>{f}</button>
-                  ))}
-                </p>
-                <button type="button" class="link-btn devoir-changer" onClick={() => (choisie ? choisir(null) : setCorriger(false))}>
-                  {choisie ? "Reprendre ce que l'appli avait trouvé" : "Annuler"}
-                </button>
-              </div>
-            ) : (
-              <p class="small devoir-changer">
-                {choisie ? <>Tu as choisi la fonction <strong>{NOM[choisie]}</strong>. </> : analyse.fonctions.length ? <>L'appli pense que ton sujet parle de la fonction <strong>{NOM[analyse.fonctions[0]]}{analyse.precision ? ` (${analyse.precision})` : ""}</strong>. </> : <>L'appli n'a pas reconnu de fonction. </>}
-                <button type="button" class="link-btn" onClick={() => setCorriger(true)}>{choisie ? "Changer de fonction" : analyse.fonctions.length ? "Ce n'est pas ça ? Choisir une autre fonction" : "Choisir la fonction"}</button>
-              </p>
-            )}
-            {!corriger && analyse.rejet && <p class="small devoir-indice">L'auteur rejette la fonction {NOM[analyse.rejet]} : le plan défend ce qu'il pense vraiment.</p>}
-            {!corriger && analyse.doute && (
-              <p class="small devoir-indice">L'appli hésite : ton sujet peut aussi parler de la fonction {NOM[analyse.doute]}.{" "}
-                <button type="button" class="link-btn" onClick={() => choisir(analyse.doute)}>Voir le plan avec la fonction {NOM[analyse.doute]}</button></p>
-            )}
-            {!corriger && !analyse.doute && analyse.faible && !analyse.devalorise && <p class="small devoir-indice">Ton sujet donne peu d'indices : vérifie la fonction avec ton cours.</p>}
-            <p class="small muted devoir-consigne">Consigne : {analyse.travail.toLowerCase()}{!auteur.trim() && analyse.auteur ? ` · Auteur : ${analyse.auteur}` : ""}</p>
-          </section>}
-
-          {parcours && mode === "comprendre" && analyse.comprendre && <section>
+          {parcours && mode === "comprendre" && analyse.comprendre && <section class="devoir-travail">
             <h2 class="section-title">Comprendre ton sujet</h2>
-            <div class="devoir-compris">
-              <p>{analyse.comprendre.these}</p>
-              <p><strong>La vraie question :</strong> {analyse.comprendre.question}</p>
-              {analyse.comprendre.contraire && <p><strong>L'idée contraire, pour la partie 2 :</strong> {analyse.comprendre.contraire}</p>}
-            </div>
-            <p><strong>Des problématiques possibles</strong></p>
-            <ul class="devoir-liste">{analyse.comprendre.problematiques.map(q => <li key={q}>{q}</li>)}</ul>
-            <p class="small devoir-base"><strong>À toi.</strong> Redis l'idée de l'auteur avec tes mots, puis choisis la problématique qui te parle le plus.</p>
+            <ol class="devoir-etapes">
+              <li>
+                <strong>Pour toi, que veut dire l'auteur ?</strong>
+                <span>Repère les mots clés, puis redis son idée en une phrase, avec tes mots.</span>
+                {lecture.motsCles.length > 0 && <p class="tags">{lecture.motsCles.map(m => <span key={m} class="tag">{m}</span>)}</p>}
+                <textarea class="textarea devoir-reponse" rows={2} value={reponse.idee} placeholder={`${lecture.debut}…`}
+                  onInput={e => repondre({ idee: (e.target as HTMLTextAreaElement).value })} />
+                {vu < 1 ? <button type="button" class="btn btn-secondary" onClick={() => setVu(1)}>Voir ce que l'appli a compris</button>
+                  : <div class="devoir-compris"><p class="devoir-compris-titre">Ce que l'appli a compris</p><p>{analyse.comprendre.these}</p></div>}
+              </li>
+              {vu > 0 && <li>
+                <strong>Quelle question pose le sujet ?</strong>
+                <span>Transforme l'idée de l'auteur en une question à laquelle on peut répondre « oui… mais ». C'est ta problématique.</span>
+                <textarea class="textarea devoir-reponse" rows={2} value={reponse.question} placeholder="Ta problématique, avec tes mots…"
+                  onInput={e => repondre({ question: (e.target as HTMLTextAreaElement).value })} />
+                {vu < 2 ? <button type="button" class="btn btn-secondary" onClick={() => setVu(2)}>Comparer avec l'appli</button>
+                  : <div class="devoir-compris">
+                    <p><strong>La vraie question :</strong> {analyse.comprendre.question}</p>
+                    {analyse.comprendre.contraire && <p><strong>L'idée contraire, pour la partie 2 :</strong> {analyse.comprendre.contraire}</p>}
+                    <p><strong>Des problématiques possibles :</strong></p>
+                    <ul class="devoir-liste">{analyse.comprendre.problematiques.map(q => <li key={q}>{q}</li>)}</ul>
+                  </div>}
+              </li>}
+            </ol>
+            {analyse.mots.length > 0 && <p class="small devoir-mots">À vérifier dans le dictionnaire :{" "}
+              {analyse.mots.map((m, i) => <span key={m.mot}>{i ? ", " : ""}<a href={`#/outils?mot=${encodeURIComponent(m.mot)}`}>{m.mot}</a></span>)}</p>}
           </section>}
 
           {parcours && (mode === "arguments" || mode === "illustrer") && plan && <section class="devoir-pistes">
@@ -386,7 +388,7 @@ export function DevoirScreen() {
             <h2 class="section-title">Des pistes pour ton plan</h2>
             <p class="small muted devoir-possible">Ce sont des pistes possibles, pas la seule bonne réponse.</p>
             {analyse.devalorise && !choisie && !libre && <p class="small devoir-indice">L'auteur dit que {OBJETS[analyse.objet].nom} ne sert à rien : explique d'abord son point de vue, puis montre ce qui le contredit.</p>}
-            {analyse.comprendre && !(libre && !choisie) && !choisie && <div class="devoir-compris">
+            {!parcours && analyse.comprendre && !(libre && !choisie) && !choisie && <div class="devoir-compris">
               <p class="devoir-compris-titre">Ce que dit ton sujet</p>
               <p>{analyse.comprendre.these}</p>
               <p><strong>La vraie question :</strong> {analyse.comprendre.question}</p>
@@ -406,11 +408,13 @@ export function DevoirScreen() {
             {plan.autres && plan.autres.length > 0 && <p class="small devoir-autres">Tu n'as pas lu ces œuvres ? D'autres conviennent aussi pour la partie 1 :{" "}
               {plan.autres.map((w, i) => <span key={w.id}>{i ? ", " : ""}<a href={`#/oeuvres/${encodeURIComponent(w.id)}`}><cite>{w.titre}</cite></a> ({w.auteur})</span>)}.</p>}
             {libre && !choisie && analyse.horsCadre && <p class="small devoir-conseil"><strong>Piste à creuser.</strong> {analyse.horsCadre.conseil}</p>}
-            {analyse.genres.length > 0 && !analyse.corrige?.ouvert && !(libre && !choisie) && <p class="small muted">Ton sujet parle {genreDu(analyse.genres)} : les exemples sont choisis dans {analyse.genres.length > 1 ? "ces genres" : "ce genre"}.</p>}
+            {analyse.genres.length > 0 && !parcours && !analyse.corrige?.ouvert && !(libre && !choisie) && <p class="small muted">Ton sujet parle {genreDu(analyse.genres)} : les exemples sont choisis dans {analyse.genres.length > 1 ? "ces genres" : "ce genre"}.</p>}
             <p class="small devoir-base"><strong>À toi de rédiger.</strong> Ces pistes t'aident à démarrer : explique chaque argument avec tes mots et vérifie tes exemples dans ton cours.</p>
+            {parcours && analyse.mots.length > 0 && <p class="small devoir-mots">À vérifier dans le dictionnaire :{" "}
+              {analyse.mots.map((m, i) => <span key={m.mot}>{i ? ", " : ""}<a href={`#/outils?mot=${encodeURIComponent(m.mot)}`}>{m.mot}</a></span>)}</p>}
           </section>}
 
-          {analyse.oeuvres.length > 0 && !guide && (!parcours || mode === "illustrer" || mode === "plan") && (
+          {analyse.oeuvres.length > 0 && !guide && !parcours && (
             <section>
               <h2 class="section-title">{libre && !choisie ? "Des œuvres qui peuvent t'aider" : "Des œuvres pour l'illustrer"}</h2>
               <ul class="devoir-liste">
@@ -421,7 +425,7 @@ export function DevoirScreen() {
             </section>
           )}
 
-          {analyse.mots.length > 0 && !guide && (!parcours || mode === "comprendre" || mode === "plan") && (
+          {analyse.mots.length > 0 && !guide && !parcours && (
             <section>
               <h2 class="section-title">Des mots à bien comprendre</h2>
               <p class="tags">{analyse.mots.map(m => <a key={m.mot} class="tag tag-link" href={`#/outils?mot=${encodeURIComponent(m.mot)}`}>{m.mot}</a>)}</p>
@@ -430,37 +434,38 @@ export function DevoirScreen() {
 
           {parcours && mode && (
             <section class="devoir-suite">
-              <h2 class="section-title">Et maintenant ?</h2>
-              <div class="devoir-boutons">
-                {MODES.filter(m => m.id !== mode).map(m => <button key={m.id} type="button" class="btn btn-secondary" onClick={() => travailler(m.id)}>{m.ensuite}</button>)}
-              </div>
+              <p class="small"><strong>Et maintenant ?</strong></p>
+              <p class="tags">
+                {MODES.filter(m => m.id !== mode).map(m => <button key={m.id} type="button" class="tag tag-link" onClick={() => travailler(m.id)}>{m.ensuite}</button>)}
+              </p>
             </section>
           )}
 
-          {analyse.proches.length > 0 && (!parcours || mode) && (
-            <section>
-              <h2 class="section-title">Des sujets corrigés proches</h2>
+          {!autreExercice && !guide && (!parcours || mode) && <button type="button" class="btn btn-primary btn-block" onClick={rediger}><Icon name="edit" size={20} />Rédiger ce sujet dans l'atelier</button>}
+          {parcours && <p class="small muted devoir-prudence">Ce sont des propositions de l'appli : vérifie-les avec ton cours et ton professeur.</p>}
+          <details class="devoir-options" open={garde || undefined}>
+            <summary>Plus d'options</summary>
+            <div class="devoir-actions">
+              <button type="button" class="btn btn-secondary" onClick={garder} disabled={garde} aria-pressed={garde}>
+                <Icon name="bookmark" filled={garde} size={20} />{garde ? "Gardé dans Mon espace" : "Garder dans Mon espace"}
+              </button>
+              <button type="button" class="btn btn-secondary" onClick={autreDevoir}><Icon name="add" size={20} />Saisir un autre devoir</button>
+            </div>
+            {gardeLe && (
+              <label class="devoir-date">
+                <span>À rendre le</span>
+                <input type="date" class="input" min={jourLocal()} value={gardeLe.pour ?? ""} onChange={e => fixerDate((e.target as HTMLInputElement).value)} />
+              </label>
+            )}
+            {analyse.proches.length > 0 && <>
+              <p class="small"><strong>Des sujets corrigés proches</strong></p>
               <ul class="devoir-liste">
                 {analyse.proches.map(s => (
                   <li key={s.num}><a href={`#/sujets/${s.num}`}>Sujet {s.num}</a><span class="muted"> · « {s.citation.length > 70 ? s.citation.slice(0, 68).trimEnd() + "…" : s.citation} »</span></li>
                 ))}
               </ul>
-            </section>
-          )}
-
-          {!autreExercice && !guide && (!parcours || mode) && <button type="button" class="btn btn-primary btn-block" onClick={rediger}><Icon name="edit" size={20} />Rédiger ce sujet dans l'atelier</button>}
-          <div class="devoir-actions">
-            <button type="button" class="btn btn-secondary" onClick={garder} disabled={garde} aria-pressed={garde}>
-              <Icon name="bookmark" filled={garde} size={20} />{garde ? "Gardé dans Mon espace" : "Garder dans Mon espace"}
-            </button>
-            <button type="button" class="btn btn-secondary" onClick={autreDevoir}><Icon name="add" size={20} />Saisir un autre devoir</button>
-          </div>
-          {gardeLe && (
-            <label class="devoir-date">
-              <span>À rendre le</span>
-              <input type="date" class="input" min={jourLocal()} value={gardeLe.pour ?? ""} onChange={e => fixerDate((e.target as HTMLInputElement).value)} />
-            </label>
-          )}
+            </>}
+          </details>
         </div>
       )}
     </Page>

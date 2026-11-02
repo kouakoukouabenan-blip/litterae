@@ -889,3 +889,18 @@
 .devoir-menu-choix span { font-size: .88em; color: var(--muted); }
 .devoir-menu-choix:hover, .devoir-menu-choix:focus-visible { border-color: var(--green); }
 .devoir-suite .devoir-boutons { display: grid; gap: var(--s2); }
+/* J'ai un devoir rangé : une carte, quatre choix en tuiles, le reste replié. */
+.devoir-compris-tags { margin: 0; }
+.devoir-compris-carte .devoir-indice { margin: 0; }
+.devoir-menu-question { margin-top: var(--s1) !important; }
+@media (min-width: 420px) { .devoir-menu { grid-template-columns: 1fr 1fr; } }
+.devoir-mode { padding-top: var(--s2); border-top: 1px solid var(--line, #E4DED2); }
+.devoir-etapes .btn { justify-self: start; margin-top: var(--s1); }
+.devoir-etapes .devoir-compris { margin: var(--s1) 0 0; }
+.devoir-mots { margin-top: var(--s2); }
+.devoir-suite .tags { margin: 0; }
+.devoir-prudence { margin: var(--s2) 0 0; text-align: center; }
+.devoir-options { margin-top: var(--s3); padding-top: var(--s2); border-top: 1px solid var(--line, #E4DED2); }
+.devoir-options > summary { cursor: pointer; color: var(--green); font-weight: 600; min-height: 44px; display: flex; align-items: center; }
+.devoir-options > * + * { margin-top: var(--s2); }
+.devoir-suite .tag { border: 0; cursor: pointer; font-family: inherit; min-height: 36px; padding: 0 var(--s3); }
