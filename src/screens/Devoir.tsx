@@ -76,7 +76,7 @@ export function DevoirScreen() {
       if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 90, behavior: "smooth" });
     }, 60);
   }
-  const autreExercice = !!analyse && analyse.nature !== "dissertation" && !quandMeme && !choisie;
+  const autreExercice = !!analyse && (analyse.nature === "incomprehensible" || (analyse.nature !== "dissertation" && !quandMeme && !choisie));
   // L'appli n'est pas sûre de sa lecture : pas de plan tout de suite, l'élève passe par le guide et choisit sa piste.
   const guide = !!analyse && !autreExercice && !analyse.sure && !libre;
   const plan = analyse && libre && !choisie ? analyse.planLibre : analyse?.plan;
@@ -353,15 +353,15 @@ export function DevoirScreen() {
 
       {analyse && !lecture2 && (
         <div class="devoir-resultat" aria-live="polite">
-          {!parcours && <p class="devoir-avertissement"><Icon name="info" size={18} />Ce sont des propositions faites par l'appli : elles peuvent contenir des erreurs. Vérifie-les avec ton cours et ton professeur.</p>}
+          {!parcours && analyse.nature !== "incomprehensible" && <p class="devoir-avertissement"><Icon name="info" size={18} />Ce sont des propositions faites par l'appli : elles peuvent contenir des erreurs. Vérifie-les avec ton cours et ton professeur.</p>}
           {autreExercice && (
             <div class="devoir-note devoir-question">
               <p>{AUTRE_EXERCICE[analyse.nature].constat}</p>
               {confirme ? <p>{AUTRE_EXERCICE[analyse.nature].apresOui}</p> : <>
                 <p><strong>{AUTRE_EXERCICE[analyse.nature].question}</strong></p>
                 <div class="devoir-boutons">
-                  <button type="button" class="btn btn-secondary" onClick={() => (analyse.nature === "pasSujet" ? autreDevoir() : setConfirme(true))}>{AUTRE_EXERCICE[analyse.nature].oui}</button>
-                  <button type="button" class="btn btn-secondary" onClick={() => setQuandMeme(true)}>{AUTRE_EXERCICE[analyse.nature].changer}</button>
+                  <button type="button" class="btn btn-secondary" onClick={() => (analyse.nature === "pasSujet" || analyse.nature === "incomprehensible" ? autreDevoir() : setConfirme(true))}>{AUTRE_EXERCICE[analyse.nature].oui}</button>
+                  {AUTRE_EXERCICE[analyse.nature].changer && <button type="button" class="btn btn-secondary" onClick={() => setQuandMeme(true)}>{AUTRE_EXERCICE[analyse.nature].changer}</button>}
                 </div>
               </>}
             </div>
@@ -475,7 +475,7 @@ export function DevoirScreen() {
             <p class="small devoir-base"><strong>À toi de rédiger.</strong> Ces pistes t'aident à démarrer : explique chaque argument avec tes mots et vérifie tes exemples dans ton cours.</p>
           </section>}
 
-          {analyse.oeuvres.length > 0 && !guide && !parcours && !(autreExercice && analyse.nature === "pasSujet") && (
+          {analyse.oeuvres.length > 0 && !guide && !parcours && !(autreExercice && (analyse.nature === "pasSujet" || analyse.nature === "incomprehensible")) && (
             <section>
               <h2 class="section-title">{libre && !choisie ? "Des œuvres qui peuvent t'aider" : "Des œuvres pour l'illustrer"}</h2>
               <ul class="devoir-liste">
@@ -486,7 +486,7 @@ export function DevoirScreen() {
             </section>
           )}
 
-          {analyse.mots.length > 0 && !guide && !parcours && !(autreExercice && analyse.nature === "pasSujet") && (
+          {analyse.mots.length > 0 && !guide && !parcours && !(autreExercice && (analyse.nature === "pasSujet" || analyse.nature === "incomprehensible")) && (
             <section>
               <h2 class="section-title">Des mots à bien comprendre</h2>
               <p class="tags">{analyse.mots.map(m => <a key={m.mot} class="tag tag-link" href={`#/outils?mot=${encodeURIComponent(m.mot)}`}>{m.mot}</a>)}</p>
@@ -496,7 +496,7 @@ export function DevoirScreen() {
 
           {!autreExercice && !guide && (!parcours || fil.length > 0) && <button type="button" class="btn btn-primary btn-block" onClick={rediger}><Icon name="edit" size={20} />Rédiger ce sujet dans l'atelier</button>}
           {parcours && fil.length > 0 && <p class="small muted devoir-prudence">Ce sont des propositions de l'appli : vérifie-les avec ton cours et ton professeur.</p>}
-          {(!parcours || fil.length > 0) && !(autreExercice && analyse.nature === "pasSujet") && analyse.proches.length > 0 && <details class="devoir-options">
+          {(!parcours || fil.length > 0) && !(autreExercice && (analyse.nature === "pasSujet" || analyse.nature === "incomprehensible")) && analyse.proches.length > 0 && <details class="devoir-options">
             <summary>Des sujets corrigés proches</summary>
             <ul class="devoir-liste">
               {analyse.proches.map(s => (
@@ -505,10 +505,10 @@ export function DevoirScreen() {
             </ul>
           </details>}
           {/* Toujours en bas, visibles mais discrets (Atikan). */}
-          <p class="devoir-autre">
+          {analyse.nature !== "incomprehensible" && <p class="devoir-autre">
             {!autreExercice && <button type="button" class="link-btn" onClick={garder} disabled={garde} aria-pressed={garde}><Icon name="bookmark" filled={garde} size={18} />{garde ? "Gardé dans Mon espace" : "Garder dans Mon espace"}</button>}
             <button type="button" class="link-btn" onClick={autreDevoir}><Icon name="add" size={18} />Saisir un autre devoir</button>
-          </p>
+          </p>}
           {gardeLe && (
             <label class="devoir-date devoir-date-bas">
               <span>À rendre le</span>
@@ -562,6 +562,13 @@ const AUTRE_EXERCICE: Record<string, { constat: string; question: string; oui: s
     oui: "Oui, c'est un résumé",
     changer: "Non, c'est une dissertation littéraire",
     apresOui: "« J'ai un devoir » aide pour la dissertation littéraire, pas pour le résumé."
+  },
+  incomprehensible: {
+    constat: "L'appli n'arrive pas à lire ce texte : la plupart des mots n'existent pas en français.",
+    question: "Recopie ton sujet tel qu'il est écrit sur ta feuille : la citation, puis la consigne (par exemple « Discutez »).",
+    oui: "Recopier mon sujet",
+    changer: "",
+    apresOui: ""
   },
   pasSujet: {
     constat: "Ce texte ne ressemble pas à un sujet de devoir : il n'y a ni citation entre guillemets, ni consigne (Discutez, Expliquez, Commentez…).",

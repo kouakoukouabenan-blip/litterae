@@ -191,7 +191,7 @@ export interface Analyse {
   objet: Objet;
   objetSur: boolean;
   /** Ce que demande vraiment l'énoncé : une dissertation littéraire, ou autre chose. */
-  nature: "dissertation" | "commentaire" | "resume" | "generale" | "pasSujet";
+  nature: "dissertation" | "commentaire" | "resume" | "generale" | "pasSujet" | "incomprehensible";
   oeuvres: Oeuvre[];
   proches: (Sujet | SujetApercu)[];
   /**
@@ -445,13 +445,13 @@ function auteurConnu(texte: string) {
     const noms = a.cle.split(" ").filter(m => m.length >= 3).map(m => cle(m)).filter(k => k.length >= 3);
     const n = noms.filter(present).length;
     const nom = noms[noms.length - 1];
-    const seul = n === 1 && nom && nom.length >= 6 && present(nom) && !MOTS_COURANTS.has(nom) && auteurs.filter(b => b.cle.endsWith(a.cle.split(" ").pop()!)).length === 1;
+    const seul = n === 1 && nom && nom.length >= 6 && present(nom) && !MOTS_DE_TOUS_LES_JOURS.has(nom) && auteurs.filter(b => b.cle.endsWith(a.cle.split(" ").pop()!)).length === 1;
     if ((n >= 2 || seul) && (!meilleur || n > meilleur.n)) meilleur = { a, n };
   }
   return meilleur?.a ?? null;
 }
 /** Noms d'auteurs qui sont aussi des mots courants : jamais reconnus seuls. */
-const MOTS_COURANTS = new Set(["racine", "france", "laforgue", "lafontaine"].map(m => cle(m)));
+const MOTS_DE_TOUS_LES_JOURS = new Set(["racine", "france", "laforgue", "lafontaine"].map(m => cle(m)));
 
 /** Ce que demande la consigne. « Commentez » demande aussi d'apprécier, donc de nuancer. */
 function typeDeConsigne(consigne: string, texte: string, tout: string): Consigne {
@@ -529,8 +529,41 @@ function pasUnSujet(texte: string) {
   return !CONSIGNE_MOTS.test(t) && MOTS_MESSAGERIE.test(t);
 }
 
+/**
+ * Un texte tapé au hasard (« Hajd jdka klql jdlls. Osold kzofjb… ») : presque aucun mot n'existe en français.
+ * Chaque mot de 3 lettres ou plus est cherché par son son (les fautes d'orthographe passent) parmi les mots
+ * que l'appli connaît déjà : fiches des œuvres, sujets, arguments, dictionnaire et mots du modèle.
+ */
+let LEXIQUE: Set<string> | null = null;
+function lexique() {
+  if (LEXIQUE) return LEXIQUE;
+  const l = new Set(Object.keys(POIDS));
+  const ajouter = (t: string) => { for (const m of normalize(t.replace(/œ/gi, "oe")).split(/[^a-z]+/)) if (m.length >= 3) l.add(cle(m)); };
+  ajouter(JSON.stringify(OEUVRES)); ajouter(JSON.stringify(SUJETS)); ajouter(JSON.stringify(BANQUE_BRUTE)); ajouter(JSON.stringify(motsPublics()));
+  ajouter(MOTS_SIMPLES);
+  return (LEXIQUE = l);
+}
+/** Mots de tous les jours qui peuvent manquer dans les fiches. */
+const MOTS_SIMPLES = "les des une est sont dans pour par avec sans sur sous qui que quoi quel quelle comment pourquoi quand donc mais car ainsi selon cette ces son ses leur leurs nous vous ils elles lui elle tout tous toute toutes plus moins tres bien mal faire fait dire dit etre avoir peut peuvent doit doivent sert servir chose rien homme femme enfant vie monde pays peuple ecole maison mouton troupeau";
+export function incomprehensible(texte: string): boolean {
+  // La citation entre guillemets doit être lisible à elle seule : « Azjek lmpo » Discutez. n'est pas un sujet.
+  const cite = [...texte.matchAll(/[«"“]([^«»"“”]{3,})[»"”]/g)].map(m => m[1]).join(" ");
+  if (cite && incomprehensibleSeul(cite, true)) return true;
+  return incomprehensibleSeul(texte);
+}
+function incomprehensibleSeul(texte: string, citation = false) {
+  const mots = normalize(redresser(texte).replace(/œ/gi, "oe")).split(/[^a-z]+/).filter(m => m.length >= 3);
+  if (!mots.length) return true;
+  const lex = lexique();
+  const connus = mots.filter(m => lex.has(cle(m))).length;
+  // Moins de deux vrais mots, ou plus des deux tiers des mots inconnus : ce n'est pas un sujet lisible.
+  if (citation) return mots.length >= 2 && connus / mots.length < 0.35;
+  return connus < 2 || connus / mots.length < 0.35;
+}
+
 /** Ce que demande vraiment l'énoncé : un commentaire, un résumé, un sujet de société, ou bien une dissertation littéraire. */
 function natureDuSujet(texte: string, citation: string, auteurCite: boolean): Analyse["nature"] {
+  if (incomprehensible(texte)) return "incomprehensible";
   const t = normalize(texte).replace(/[^a-z ]+/g, " ");
   if (/\bcommentaire (compose|de texte|litteraire)|\b(vous ferez|faites|faire|redigez) (un|le) commentaire|\bcommentez (ce|le|cet) (texte|poeme|passage|extrait)/.test(t)) return "commentaire";
   if (pasUnSujet(texte)) return "pasSujet";

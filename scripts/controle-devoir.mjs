@@ -55,6 +55,13 @@ try {
     // Un message collé par erreur n'est pas un sujet (Atikan, 2026-11-02).
     ["Pour installer l'application, tu peux juste aller voir sur mon profil ou bien m'écrire en PV", a => a.nature === "pasSujet"],
     ["Salut, envoie-moi le lien WhatsApp du groupe stp", a => a.nature === "pasSujet"],
+    // Un texte tapé au hasard n'est jamais guidé, même si l'élève insiste (Atikan, 2026-11-08).
+    ["Hajd jdka klql jdlls jdlls. Osold kzofjb kzlldj.", a => a.nature === "incomprehensible"],
+    ["kfkf lele dldl fofo kdkd la le de qsdf", a => a.nature === "incomprehensible"],
+    ["« Azjek lmpo qsdkf » Discutez cette affirmation.", a => a.nature === "incomprehensible"],
+    ["lécrivin doi ètre engajé pr changé la socièté discuté", a => a.nature !== "incomprehensible"],
+    ["la litérature sè koi ? ele sert a koi dan la vi expliké", a => a.nature !== "incomprehensible"],
+    ["« L'artiste est un mouton qui se sépare du troupeau » (Witold Gombrowicz)", a => a.nature !== "incomprehensible"],
     ["« L'écrivain doit écrire pour son peuple, pas pour les réseaux. » Discutez.", a => a.nature === "dissertation"],
     ["« La littérature doit être une arme au service du peuple opprimé. » Expliquez.", a => !/^Nuance/.test(a.plan.axe2) && a.travail.startsWith("Expliquer (")],
     ["« La littérature doit être une arme au service du peuple opprimé. » Commentez.", a => /^Nuance/.test(a.plan.axe2)],
