@@ -71,6 +71,8 @@ export interface Sujet extends SujetApercu {
   axe1: { titre: string; args: Argument[] };
   transition: string;
   axe2: { titre: string; args: Argument[] };
+  /** Troisième partie, pour les pays qui demandent un plan dialectique (repliée dans le corrigé). */
+  synthese?: { transition: string; titre: string; args: Argument[] };
   conclu: string;
 }
 

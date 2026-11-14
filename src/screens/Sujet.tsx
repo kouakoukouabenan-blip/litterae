@@ -74,6 +74,20 @@ export function SujetScreen({ num }: { num: string }) {
             <h2 class="section-title"><span class="part-num">II.</span> <Texte text={s.axe2.titre} /></h2>
             <Args args={s.axe2.args} />
 
+            {s.synthese && (
+              <details class="synthese">
+                <summary>
+                  <span class="synthese-titre">Voir la synthèse</span>
+                  <span class="meta">Pour les pays où le plan a trois parties</span>
+                  <Icon name="expand_more" size={20} />
+                </summary>
+                <p class="synthese-note">En Côte d'Ivoire, on s'arrête à deux parties. Ailleurs, on ajoute cette troisième partie après l'antithèse : annonce alors trois parties dans l'introduction et reprends la synthèse dans le bilan de la conclusion.</p>
+                <aside class="callout"><p class="callout-label">Transition</p><p><Texte text={s.synthese.transition} /></p></aside>
+                <h2 class="section-title"><span class="part-num">III.</span> <Texte text={s.synthese.titre} /></h2>
+                <Args args={s.synthese.args} />
+              </details>
+            )}
+
             <h2 class="section-title">Conclusion</h2>
             <p><Texte text={s.conclu} /></p>
 

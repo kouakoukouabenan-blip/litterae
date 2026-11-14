@@ -66,6 +66,22 @@
     }
    ]
   },
+  "synthese": {
+   "transition": "Engagement d'un côté, beauté, rêve et confidence de l'autre : ces fonctions semblent s'opposer. Pourtant, ne peuvent-elles pas s'unir au service des sans-voix ?",
+   "titre": "La beauté et l'émotion, les armes les plus sûres de l'engagement",
+   "args": [
+    {
+     "titre": "La beauté du style rend la voix des opprimés plus forte",
+     "expl": "Un cri de révolte mal écrit s'oublie vite. Quand l'écrivain travaille ses images et son rythme, sa défense des sans-voix touche le lecteur et reste dans les mémoires.",
+     "ex": "Cahier d'un retour au pays natal d'Aimé Césaire met une poésie flamboyante, pleine d'images neuves, au service des peuples colonisés : la beauté du verbe donne toute sa force au combat."
+    },
+    {
+     "titre": "Le récit intime peut devenir le témoignage de tout un peuple",
+     "expl": "En racontant ses propres souvenirs, l'écrivain parle aussi pour ceux qui ont vécu la même chose. La confidence personnelle devient alors une parole collective.",
+     "ex": "L'Enfant noir de Camara Laye raconte l'enfance de l'auteur en Haute-Guinée ; ce souvenir personnel montre la richesse d'une culture africaine que le regard colonial méprisait."
+    }
+   ]
+  },
   "conclu": "Au terme de notre analyse, retenons que la littérature porte efficacement la voix de ceux que la société réduit au silence, faisant de l'écrivain un combattant des injustices. Cependant, au-delà de cette fonction engagée, la littérature embrasse aussi la quête du beau, le besoin d'évasion et l'expression du moi profond. En vérité, c'est précisément cette richesse de fonctions — militer, embellir, rêver, ressentir — qui fait de la littérature l'un des arts les plus complets et les plus indispensables à l'humanité. On se demanderait toutefois si, à l'ère des réseaux sociaux, le roman ne trouve pas dans le hashtag militaire un concurrent inattendu.",
   "notion": "Donner une voix aux sans-voix",
   "themes": [
@@ -141,6 +157,22 @@
     }
    ]
   },
+  "synthese": {
+   "transition": "Faire de l'art ou faire du bien : faut-il vraiment choisir ? Il semble plutôt que l'un serve l'autre.",
+   "titre": "L'art, la meilleure manière de faire du bien",
+   "args": [
+    {
+     "titre": "La perfection de la forme donne au message sa durée",
+     "expl": "Une leçon morale dite sans art lasse le lecteur. Habillée d'un beau style, elle plaît, se retient et traverse les siècles.",
+     "ex": "Les Fables de La Fontaine enseignent la prudence et dénoncent les puissants ; on les récite encore aujourd'hui parce qu'elles sont d'abord de petits chefs-d'œuvre de rythme et d'humour."
+    },
+    {
+     "titre": "Le texte engagé n'agit que s'il est beau",
+     "expl": "Pour changer les esprits, l'écrivain doit d'abord toucher. C'est la qualité de l'écriture qui permet au message d'atteindre le cœur du lecteur.",
+     "ex": "Coups de pilon de David Diop dénonce la colonisation avec des images frappantes et un rythme puissant : la beauté des poèmes fait la force de la révolte."
+    }
+   ]
+  },
   "conclu": "Au terme de cette analyse, retenons que la littérature a effectivement pour vocation de faire du beau — la recherche de la perfection formelle est une dignité que l'écrivain ne devrait jamais sacrifier. Cependant, au-delà de cette ambition esthétique, la littérature admet une fonction militante qui fait d'elle un outil précieux au service de la société. Loin d'être contradictoires, ces deux fonctions se complètent et confèrent à l'œuvre écrite toute sa profondeur. L'on se demanderait toutefois si, dans nos sociétés de plus en plus tournées vers l'image et la vitesse, la littérature ne doit pas redoubler d'esthétisme pour séduire d'abord, avant de convaincre.",
   "notion": "L'art pour l'art",
   "themes": [
@@ -210,6 +242,22 @@
      "titre": "L'écriture engagée peut aussi mentir pour mieux convaincre",
      "expl": "Les auteurs font parfois le choix de déformer, d'amplifier, de symboliser pour que leur message passe plus fort. La fidélité absolue aux faits peut même affaiblir la portée littéraire.",
      "ex": "1984 de George Orwell est une fiction dystopique, pas un reportage — mais elle dénonce la dictature avec une force que nul journaliste n'a jamais atteinte."
+    }
+   ]
+  },
+  "synthese": {
+   "transition": "L'écrivain observe, mais il invente aussi. Ces deux attitudes, loin de s'exclure, se complètent dans la création.",
+   "titre": "L'écrivain observe le réel pour mieux le recréer",
+   "args": [
+    {
+     "titre": "L'observation fournit la matière, l'imagination lui donne forme",
+     "expl": "L'écrivain se documente et regarde le monde, puis il choisit, organise et invente une histoire. Sans ce travail, les faits observés resteraient un simple compte rendu.",
+     "ex": "Pour écrire Germinal, Zola a visité les mines du Nord et pris de nombreuses notes ; mais il a inventé Étienne Lantier et fait de la mine un monstre qui dévore les hommes."
+    },
+    {
+     "titre": "La vérité d'une œuvre naît du mélange du vu et de l'inventé",
+     "expl": "Le lecteur reconnaît le réel, mais transformé par le regard de l'auteur. C'est ce mélange qui fait comprendre la réalité mieux qu'un reportage.",
+     "ex": "Les Soleils des Indépendances d'Ahmadou Kourouma peint la déception réelle des années qui suivent les indépendances à travers Fama, un personnage inventé, et une langue française colorée de malinké."
     }
    ]
   },

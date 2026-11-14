@@ -928,3 +928,13 @@
 .devoir-autre { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--s1) var(--s4); }
 .devoir-autre .link-btn:disabled { opacity: 1; color: var(--muted); cursor: default; }
 .devoir-date-bas { justify-content: center; margin-top: var(--s2); font-weight: 500; font-size: var(--text-sm); }
+
+/* Corrigé : synthèse repliée, pour les pays où le plan a trois parties */
+.synthese { margin-top: var(--s5); border-top: 1px dashed var(--line-strong); padding-top: var(--s3); }
+.synthese > summary { cursor: pointer; list-style: none; display: grid; grid-template-columns: 1fr auto; align-items: center; column-gap: var(--s2); min-height: 44px; }
+.synthese > summary::-webkit-details-marker { display: none; }
+.synthese > summary .synthese-titre { font-weight: 700; color: var(--green); }
+.synthese > summary .meta { grid-column: 1; }
+.synthese > summary .icon { grid-column: 2; grid-row: 1 / span 2; fill: var(--green); transition: transform .2s; }
+.synthese[open] > summary .icon { transform: rotate(180deg); }
+.synthese-note { font-size: var(--text-sm); color: var(--muted); margin: var(--s2) 0 var(--s3); }

@@ -79,7 +79,7 @@ const citations = new Map<string, Oeuvre[]>();
 for (const s of SUJETS) {
   if (!estComplet(s)) continue;
   const found = new Map<string, Oeuvre>();
-  for (const a of [...s.axe1.args, ...s.axe2.args]) for (const w of cited(a.ex)) found.set(w.id, w);
+  for (const a of [...s.axe1.args, ...s.axe2.args, ...(s.synthese?.args ?? [])]) for (const w of cited(a.ex)) found.set(w.id, w);
   citations.set(s.num, [...found.values()]);
 }
 
