@@ -23,7 +23,7 @@ export interface Methode {
 export const METHODES: Methode[] = [
   { id: "dissertation", nom: "Dissertation littéraire", court: "Dissertation", couleur: "var(--green)", encre: "var(--green)", fond: "var(--green-tint)", prete: true },
   { id: "commentaire", nom: "Commentaire composé", court: "Commentaire", couleur: "var(--orange)", encre: "var(--orange-text)", fond: "var(--orange-pale)", prete: true },
-  { id: "philosophie", nom: "Dissertation philosophique", court: "Philosophie", couleur: "var(--ochre)", encre: "var(--ochre-text)", fond: "var(--ochre-pale)", prete: false }
+  { id: "resume", nom: "Résumé de texte argumentatif", court: "Résumé", couleur: "var(--ochre)", encre: "var(--ochre-text)", fond: "var(--ochre-pale)", prete: false }
 ];
 
 /** La méthode choisie par l'élève, retenue sur l'appareil. */
