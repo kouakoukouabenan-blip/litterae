@@ -81,7 +81,7 @@ function AccueilDissertation() {
         <a class="choix-carte choix-outils" href="#/outils">
           <Icon name="inventory_2" size={24} />
           <span class="choix-titre">Boîte à outils</span>
-          <Detail long="Dictionnaire, formules, vocabulaire" court="Dico et formules" />
+          <Detail long="Dictionnaire, formules, arguments" court="Dico et formules" />
         </a>
       </nav>
 

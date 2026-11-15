@@ -1,0 +1,1309 @@
+[
+ {
+  "id": "eng-denoncer-injustices",
+  "fonction": "Engagement",
+  "groupe": "Dénonciation",
+  "phrase": "La littérature dénonce les injustices et les abus de la société.",
+  "explication": "En montrant au grand jour ce que d'autres cachent, l'œuvre oblige le lecteur à regarder l'injustice en face. Ce qui est écrit ne peut plus être ignoré.",
+  "limite": "Mais dénoncer ne suffit pas toujours : beaucoup d'œuvres engagées n'ont rien changé, et certaines ont vieilli avec la cause qu'elles servaient.",
+  "exemples": [
+   "miserables",
+   "ville-cruelle",
+   "germinal"
+  ]
+ },
+ {
+  "id": "eng-colonisation",
+  "fonction": "Engagement",
+  "groupe": "Dénonciation",
+  "phrase": "La littérature combat la colonisation et le racisme en montrant leurs violences.",
+  "explication": "Les écrivains de la Négritude et du roman anticolonial ont fait de leur œuvre une arme contre le mépris du colon. Ils redonnent sa dignité à l'homme noir.",
+  "limite": "Pourtant, une œuvre peut parler de la colonisation sans militer : certains écrivains la racontent pour comprendre, d'autres pour chanter leur douleur.",
+  "exemples": [
+   "vie-de-boy",
+   "vieux-negre-et-la-medaille",
+   "discours-sur-le-colonialisme"
+  ]
+ },
+ {
+  "id": "eng-pouvoirs",
+  "fonction": "Engagement",
+  "groupe": "Dénonciation",
+  "phrase": "La littérature critique les dirigeants qui trahissent leur peuple et les dictatures.",
+  "explication": "Après les indépendances, beaucoup d'écrivains africains ont tourné leur plume contre les nouveaux maîtres. Ils montrent la corruption, la violence et le mensonge du pouvoir.",
+  "limite": "Mais cette critique a un prix : censure, prison, exil. Certains écrivains choisissent alors le détour du conte ou du rire.",
+  "exemples": [
+   "en-attendant-le-vote-des-betes-sauvages",
+   "vie-et-demie",
+   "pleurer-rire"
+  ]
+ },
+ {
+  "id": "eng-guerre",
+  "fonction": "Engagement",
+  "groupe": "Dénonciation",
+  "phrase": "La littérature dénonce l'horreur de la guerre et de la violence.",
+  "explication": "Allah n'est pas obligé de Kourouma montre les enfants soldats ; d'autres œuvres racontent les génocides. Le lecteur ne peut plus fermer les yeux.",
+  "limite": "Mais raconter la violence peut aussi fasciner, ou choquer sans rien expliquer.",
+  "exemples": [
+   "allah-n-est-pas-oblige",
+   "murambi-le-livre-des-ossements",
+   "poemes-de-guerre"
+  ]
+ },
+ {
+  "id": "eng-misere",
+  "fonction": "Engagement",
+  "groupe": "Dénonciation",
+  "phrase": "La littérature dénonce la misère et l'exploitation des travailleurs.",
+  "explication": "Mineurs épuisés, cheminots mal payés, enfants affamés : l'écrivain montre ceux qui travaillent dur sans pouvoir vivre dignement, pour que la société en ait honte.",
+  "limite": "Mais montrer la misère ne la fait pas disparaître, et le lecteur aisé peut la regarder de loin, sans rien changer.",
+  "exemples": [
+   "germinal",
+   "bouts-de-bois-de-dieu",
+   "miserables"
+  ]
+ },
+ {
+  "id": "eng-peine-de-mort",
+  "fonction": "Engagement",
+  "groupe": "Dénonciation",
+  "phrase": "La littérature combat la peine de mort et les châtiments cruels.",
+  "explication": "Dans Le Dernier Jour d'un condamné, Victor Hugo fait parler un homme qui va être exécuté. Le lecteur partage sa peur et comprend qu'on ne répare pas un crime par un autre.",
+  "limite": "Mais il a fallu plus d'un siècle après Hugo pour que la France abolisse la peine de mort : un livre ne change pas vite les lois.",
+  "exemples": [
+   "dernier-jour-d-un-condamne",
+   "claude-gueux"
+  ]
+ },
+ {
+  "id": "eng-esclavage",
+  "fonction": "Engagement",
+  "groupe": "Dénonciation",
+  "phrase": "La littérature dénonce l'esclavage et la ségrégation raciale.",
+  "explication": "La Case de l'oncle Tom a fait pleurer l'Amérique et nourri le combat contre l'esclavage. Les écrivains noirs américains ont ensuite montré le racisme qui a continué après.",
+  "limite": "Mais certains écrivains noirs ont reproché à ces livres de montrer le Noir seulement comme une victime soumise.",
+  "exemples": [
+   "case-de-l-oncle-tom",
+   "beloved",
+   "native-son"
+  ]
+ },
+ {
+  "id": "eng-argent",
+  "fonction": "Engagement",
+  "groupe": "Dénonciation",
+  "phrase": "La littérature dénonce la corruption et le pouvoir de l'argent.",
+  "explication": "Le commerçant avide, le fonctionnaire qui réclame un pot-de-vin, le nouveau riche qui oublie son peuple : l'écrivain montre comment l'argent pourrit les hommes.",
+  "limite": "Mais la littérature elle-même se vend : l'écrivain a besoin d'argent et de lecteurs pour vivre.",
+  "exemples": [
+   "xala",
+   "le-mandat-sembene",
+   "thogo-gnini"
+  ]
+ },
+ {
+  "id": "eng-memoire-luttes",
+  "fonction": "Engagement",
+  "groupe": "Combattre",
+  "phrase": "La littérature garde vivante la mémoire des combats et des souffrances d'un peuple.",
+  "explication": "Raconter la traite, la colonisation ou une guerre, c'est empêcher l'oubli et rendre justice aux victimes. La mémoire devient une arme pour le présent.",
+  "limite": "Mais se tourner vers le passé peut aussi enfermer : certains reprochent à cette littérature de ressasser au lieu de regarder l'avenir.",
+  "exemples": [
+   "murambi-le-livre-des-ossements",
+   "beloved",
+   "monne-outrages-et-defis"
+  ]
+ },
+ {
+  "id": "eng-liberte",
+  "fonction": "Engagement",
+  "groupe": "Combattre",
+  "phrase": "La littérature défend la liberté contre tout ce qui enferme l'homme.",
+  "explication": "Liberté des peuples face au colon, de l'individu face au tyran, de la femme face à la tradition : la littérature a souvent été un cri pour la liberté.",
+  "limite": "Mais la liberté de l'écrivain, c'est aussi celle de ne parler que de lui ou de la beauté.",
+  "exemples": [
+   "liberte-poeme",
+   "antigone",
+   "poemes-selection-angelou"
+  ]
+ },
+ {
+  "id": "eng-identite",
+  "fonction": "Engagement",
+  "groupe": "Combattre",
+  "phrase": "La littérature revendique avec fierté l'identité et les valeurs de l'homme noir.",
+  "explication": "Senghor, Césaire et Damas ont répondu au mépris colonial en affirmant la beauté de la culture noire. Écrire devient un acte de fierté.",
+  "limite": "Mais on a reproché à la Négritude de figer l'Africain dans une image, au lieu de le laisser libre d'être moderne.",
+  "exemples": [
+   "pigments",
+   "hosties-noires",
+   "cahier-d-un-retour-au-pays-natal"
+  ]
+ },
+ {
+  "id": "eng-arme",
+  "fonction": "Engagement",
+  "groupe": "Combattre",
+  "phrase": "La littérature est une arme : les mots peuvent frapper plus fort que les fusils.",
+  "explication": "L'écrivain engagé se bat avec sa plume. Un poème ou un roman peut faire réfléchir des milliers de lecteurs, longtemps après sa parution, là où une arme ne touche qu'un homme.",
+  "limite": "Mais une arme sans soldat ne fait rien : seul le lecteur décide d'agir ou non après sa lecture.",
+  "exemples": [
+   "coups-de-pilon",
+   "cahier-d-un-retour-au-pays-natal",
+   "discours-sur-le-colonialisme"
+  ]
+ },
+ {
+  "id": "eng-resistance",
+  "fonction": "Engagement",
+  "groupe": "Combattre",
+  "phrase": "La littérature appelle à résister à l'oppresseur, même au prix de sa vie.",
+  "explication": "Sous l'occupation allemande, le poème « Liberté » d'Éluard a été lancé par avion sur la France. Les mots donnent du courage à ceux qui résistent.",
+  "limite": "Mais appeler les autres à mourir pour une cause pose une question : l'écrivain, lui, prend-il les mêmes risques ?",
+  "exemples": [
+   "liberte-poeme",
+   "chatiments",
+   "antigone-anouilh"
+  ]
+ },
+ {
+  "id": "eng-voix-sans-voix",
+  "fonction": "Engagement",
+  "groupe": "Défense des opprimés",
+  "phrase": "La littérature prête sa voix à ceux qu'on n'entend pas : les pauvres, les femmes, les opprimés.",
+  "explication": "L'écrivain parle au nom de ceux qui ne peuvent pas écrire ni se défendre. Grâce à lui, leur souffrance entre dans les livres et dans les consciences.",
+  "limite": "Mais parler à la place des autres, c'est aussi risquer de les trahir ou de les enfermer dans le rôle de victimes.",
+  "exemples": [
+   "miserables",
+   "bouts-de-bois-de-dieu",
+   "greve-des-battu"
+  ]
+ },
+ {
+  "id": "eng-femme",
+  "fonction": "Engagement",
+  "groupe": "Défense des opprimés",
+  "phrase": "La littérature défend la femme contre les traditions et les hommes qui l'écrasent.",
+  "explication": "Des romancières comme Mariama Bâ ont montré la polygamie, le mariage forcé et le silence imposé aux femmes. Leurs livres ont ouvert le débat dans la société.",
+  "limite": "Mais une œuvre sur la condition féminine peut aussi être un simple témoignage ou une confidence, sans programme de combat.",
+  "exemples": [
+   "si-longue-lettre",
+   "rebelle",
+   "femme-d-afrique"
+  ]
+ },
+ {
+  "id": "eng-traditions",
+  "fonction": "Engagement",
+  "groupe": "Défense des opprimés",
+  "phrase": "La littérature combat les coutumes qui font souffrir : mariage forcé, excision, dot excessive.",
+  "explication": "Toutes les traditions ne sont pas bonnes. L'écrivain montre la jeune fille qu'on marie de force ou qu'on mutile, pour que la société ouvre les yeux et change.",
+  "limite": "Mais certains lecteurs y voient une attaque contre leur culture, et l'écrivain doit éviter de mépriser toute la tradition.",
+  "exemples": [
+   "rebelle",
+   "sous-l-orage",
+   "trois-pretendants"
+  ]
+ },
+ {
+  "id": "eng-eveiller",
+  "fonction": "Engagement",
+  "groupe": "Éveil des consciences",
+  "phrase": "La littérature éveille les consciences et pousse le lecteur à réagir.",
+  "explication": "L'œuvre ne se contente pas de montrer : elle secoue le lecteur, le fait réfléchir et lui donne envie d'agir. Le livre devient un déclencheur.",
+  "limite": "Mais le lecteur reste libre : on peut lire une œuvre engagée pour son histoire ou sa beauté, sans être changé par elle.",
+  "exemples": [
+   "coups-de-pilon",
+   "cahier-d-un-retour-au-pays-natal",
+   "germinal"
+  ]
+ },
+ {
+  "id": "eng-espoir",
+  "fonction": "Engagement",
+  "groupe": "Éveil des consciences",
+  "phrase": "La littérature annonce un monde meilleur et donne au peuple la force de se battre.",
+  "explication": "Après avoir montré le mal, beaucoup d'œuvres ouvrent un chemin : un personnage qui se lève, une fin qui annonce le changement. Le lecteur repart avec de l'espoir.",
+  "limite": "Pourtant, d'autres œuvres refusent de consoler et montrent un monde sans issue ; elles n'en sont pas moins fortes.",
+  "exemples": [
+   "bouts-de-bois-de-dieu",
+   "germinal",
+   "remember-ruben"
+  ]
+ },
+ {
+  "id": "eng-refuser-silence",
+  "fonction": "Engagement",
+  "groupe": "Éveil des consciences",
+  "phrase": "La littérature ne peut pas rester neutre : se taire face au mal, c'est déjà s'en rendre complice.",
+  "explication": "Pour Sartre, l'écrivain est « en situation » : même son silence est un choix. Écrire, c'est donc prendre position.",
+  "limite": "Mais certains écrivains revendiquent le droit de ne servir aucune cause, et de n'obéir qu'à leur art.",
+  "exemples": [
+   "chatiments",
+   "antigone-anouilh",
+   "justes"
+  ]
+ },
+ {
+  "id": "eng-guide",
+  "fonction": "Engagement",
+  "groupe": "Éveil des consciences",
+  "phrase": "L'écrivain est un guide : il éclaire le peuple et lui montre le chemin.",
+  "explication": "Pour Victor Hugo, le poète « vient préparer des jours meilleurs » : il voit plus loin que les autres et marche devant eux, comme une lumière dans la nuit.",
+  "limite": "Mais l'écrivain n'est pas un prophète : il peut se tromper, et le peuple n'a pas toujours besoin qu'on pense à sa place.",
+  "exemples": [
+   "rayons-et-les-ombres",
+   "cahier-d-un-retour-au-pays-natal",
+   "tragedie-du-roi-christophe"
+  ]
+ },
+ {
+  "id": "eng-totalitarisme",
+  "fonction": "Engagement",
+  "groupe": "Éveil des consciences",
+  "phrase": "La littérature met en garde contre les régimes qui surveillent et écrasent la pensée.",
+  "explication": "En imaginant un monde où l'on brûle les livres ou où « Big Brother » voit tout, l'écrivain nous avertit : voilà ce qui peut arriver si on laisse faire.",
+  "limite": "Mais ces récits restent des fictions : certains lecteurs n'y voient qu'une histoire qui fait peur, sans lien avec leur propre pays.",
+  "exemples": [
+   "1984",
+   "fahrenheit-451",
+   "nous-autres"
+  ]
+ },
+ {
+  "id": "eng-immigration",
+  "fonction": "Engagement",
+  "groupe": "Éveil des consciences",
+  "phrase": "La littérature dénonce le mirage de l'Europe et les dangers de l'immigration.",
+  "explication": "Beaucoup de jeunes Africains rêvent de l'Europe. L'écrivain raconte la vérité : la solitude, le racisme, la pauvreté là-bas, et les morts en mer.",
+  "limite": "Mais ces récits peuvent aussi décourager ceux qui partent pour de bonnes raisons, étudier ou travailler.",
+  "exemples": [
+   "ventre-de-l-atlantique",
+   "mirages-de-paris",
+   "preference-nationale"
+  ]
+ },
+ {
+  "id": "eng-nature",
+  "fonction": "Engagement",
+  "groupe": "Éveil des consciences",
+  "phrase": "La littérature alerte sur la destruction de la nature et ses dangers pour l'homme.",
+  "explication": "Sécheresse, désert qui avance, forêts coupées : l'écrivain montre que l'homme scie la branche sur laquelle il est assis, pour pousser le lecteur à protéger la terre.",
+  "limite": "Mais face à un problème mondial, la voix d'un livre paraît bien faible à côté des décisions des États.",
+  "exemples": [
+   "agonie-de-gorom-gorom"
+  ]
+ },
+ {
+  "id": "eng-satire",
+  "fonction": "Engagement",
+  "groupe": "Satire",
+  "phrase": "La littérature tourne en ridicule les vices des hommes et des puissants pour les corriger.",
+  "explication": "La comédie et la satire font rire du menteur, de l'avare ou du chef corrompu. Le rire désarme le pouvoir et fait passer la critique sans sermon.",
+  "limite": "Mais le rire peut aussi n'être qu'un jeu : on rit d'abord pour se détendre, et la leçon passe souvent au second plan.",
+  "exemples": [
+   "tartuffe",
+   "thogo-gnini",
+   "candide"
+  ]
+ },
+ {
+  "id": "eng-hypocrisie",
+  "fonction": "Engagement",
+  "groupe": "Satire",
+  "phrase": "La littérature démasque les hypocrites, les faux dévots et les charlatans.",
+  "explication": "Le faux religieux, le faux médecin, le beau parleur trompent les naïfs. L'écrivain arrache leur masque pour que le lecteur apprenne à se méfier.",
+  "limite": "Mais en riant des hypocrites, on peut aussi blesser les gens sincères, comme l'ont reproché à Molière les dévots de son temps.",
+  "exemples": [
+   "tartuffe",
+   "knock-ou-le-triomphe-de-la-medecine",
+   "pauvre-christ-de-bomba"
+  ]
+ },
+ {
+  "id": "eng-detour",
+  "fonction": "Engagement",
+  "groupe": "Satire",
+  "phrase": "La littérature critique par le détour : la fable, le conte ou un pays imaginaire.",
+  "explication": "Pour échapper à la censure, l'écrivain fait parler des animaux ou invente un pays lointain. Le lecteur comprend très bien de qui il s'agit.",
+  "limite": "Mais le détour peut aussi brouiller le message : certains lecteurs ne voient que l'histoire et passent à côté de la critique.",
+  "exemples": [
+   "candide",
+   "ferme-des-animaux",
+   "en-attendant-le-vote-des-betes-sauvages"
+  ]
+ },
+ {
+  "id": "est-art",
+  "fonction": "Esthétique",
+  "groupe": "Culte de la forme",
+  "phrase": "La littérature est d'abord un art : la beauté de la forme compte autant que le message.",
+  "explication": "Une idée juste mal écrite ne touche personne. Ce qui fait vivre une œuvre, c'est son style, ses images, son rythme.",
+  "limite": "Mais une œuvre qui ne cherche que la beauté peut paraître vide ou coupée du monde réel.",
+  "exemples": [
+   "fleurs-du-mal",
+   "ethiopiques",
+   "trophees"
+  ]
+ },
+ {
+  "id": "est-musique",
+  "fonction": "Esthétique",
+  "groupe": "Culte de la forme",
+  "phrase": "La littérature fait chanter les mots : rythme, rimes et sonorités en font une musique.",
+  "explication": "Senghor écrivait ses poèmes « pour kôra » ou « pour tam-tam ». La poésie se lit avec l'oreille autant qu'avec l'esprit.",
+  "limite": "Mais la musique des mots ne suffit pas : on attend aussi de la poésie qu'elle dise quelque chose.",
+  "exemples": [
+   "ethiopiques",
+   "romances-sans-paroles",
+   "chants-d-ombre"
+  ]
+ },
+ {
+  "id": "est-images",
+  "fonction": "Esthétique",
+  "groupe": "Culte de la forme",
+  "phrase": "La littérature invente des images qui font voir le monde autrement.",
+  "explication": "Une métaphore réussie surprend et éclaire. Le poète « voyant » de Rimbaud ou le surréalisme de Césaire changent notre regard par la force des images.",
+  "limite": "Mais des images trop obscures rendent l'œuvre hermétique et découragent le lecteur.",
+  "exemples": [
+   "cahier-d-un-retour-au-pays-natal",
+   "illuminations",
+   "alcools"
+  ]
+ },
+ {
+  "id": "est-forme-sert-fond",
+  "fonction": "Esthétique",
+  "groupe": "Culte de la forme",
+  "phrase": "La littérature ne sépare pas la beauté du sens : c'est la forme qui donne sa force au message.",
+  "explication": "Le Cahier d'un retour au pays natal frappe autant par ses images que par sa révolte. Une belle forme rend l'idée inoubliable.",
+  "limite": "Mais quand le message passe avant tout, la forme devient un simple outil et perd sa liberté.",
+  "exemples": [
+   "cahier-d-un-retour-au-pays-natal",
+   "chatiments",
+   "coups-de-pilon"
+  ]
+ },
+ {
+  "id": "est-regles",
+  "fonction": "Esthétique",
+  "groupe": "Culte de la forme",
+  "phrase": "La littérature est belle parce qu'elle respecte des règles : vers, rimes, genres.",
+  "explication": "La tragédie classique obéit à des règles strictes, et l'alexandrin compte douze syllabes. Ces contraintes obligent l'écrivain à choisir chaque mot.",
+  "limite": "Mais des règles trop strictes étouffent la création : les romantiques puis les poètes modernes les ont brisées.",
+  "exemples": [
+   "phedre",
+   "cid",
+   "trophees"
+  ]
+ },
+ {
+  "id": "est-durer",
+  "fonction": "Esthétique",
+  "groupe": "Culte de la forme",
+  "phrase": "C'est la beauté de la forme qui fait durer une œuvre à travers les siècles.",
+  "explication": "On relit encore Racine ou Baudelaire, alors que leurs idées ont vieilli. Ce qui reste, c'est la beauté de leurs vers.",
+  "limite": "Mais certaines œuvres durent aussi par la force de leurs idées, comme les grands romans engagés.",
+  "exemples": [
+   "phedre",
+   "fleurs-du-mal",
+   "contemplations"
+  ]
+ },
+ {
+  "id": "est-autres-arts",
+  "fonction": "Esthétique",
+  "groupe": "Culte de la forme",
+  "phrase": "La littérature dialogue avec les autres arts : la musique, la peinture, la danse.",
+  "explication": "Senghor écrit ses poèmes pour être accompagnés de kôra, Apollinaire dessine avec les mots. L'écriture devient chant, image et danse.",
+  "limite": "Mais en voulant imiter les autres arts, la littérature peut oublier ce qui lui est propre : le sens des mots.",
+  "exemples": [
+   "ethiopiques",
+   "calligrammes",
+   "zaouli"
+  ]
+ },
+ {
+  "id": "est-travail-langue",
+  "fonction": "Esthétique",
+  "groupe": "Travail de la langue",
+  "phrase": "La littérature est un travail de la langue : chaque mot est pesé, chaque phrase ciselée.",
+  "explication": "Flaubert passait des jours sur une page. Kourouma a « malinkisé » le français pour inventer une langue nouvelle. Le travail de la forme est un vrai métier.",
+  "limite": "Mais le travail du style peut rendre l'œuvre difficile et l'éloigner des lecteurs simples.",
+  "exemples": [
+   "madame-bovary",
+   "soleils-des-independances",
+   "verre-casse"
+  ]
+ },
+ {
+  "id": "est-renouveler",
+  "fonction": "Esthétique",
+  "groupe": "Travail de la langue",
+  "phrase": "La littérature invente de nouvelles formes et bouscule les règles des genres.",
+  "explication": "Le vers libre, le roman éclaté, le théâtre qui mêle conte et chant : les écrivains africains ont créé des formes à eux. L'art avance par l'invention.",
+  "limite": "Mais trop d'audace dans la forme peut perdre le lecteur, qui ne trouve plus ses repères.",
+  "exemples": [
+   "elle-sera-de-jaspe-et-de-corail",
+   "verre-casse",
+   "calligrammes"
+  ]
+ },
+ {
+  "id": "est-francais-africain",
+  "fonction": "Esthétique",
+  "groupe": "Travail de la langue",
+  "phrase": "La littérature africaine invente un français nouveau, coloré par les langues africaines.",
+  "explication": "Kourouma écrit en français mais pense en malinké : proverbes, images et tournures africaines entrent dans la phrase. La langue devient plus vivante.",
+  "limite": "Mais ce français inventé peut dérouter les lecteurs qui ne connaissent pas les langues africaines.",
+  "exemples": [
+   "soleils-des-independances",
+   "allah-n-est-pas-oblige",
+   "verre-casse"
+  ]
+ },
+ {
+  "id": "est-jeu-mots",
+  "fonction": "Esthétique",
+  "groupe": "Travail de la langue",
+  "phrase": "La littérature joue avec les mots et avec la langue.",
+  "explication": "Georges Perec a écrit un roman entier sans la lettre « e ». Apollinaire dessine avec ses vers. Le jeu avec les mots montre tout ce que la langue peut faire.",
+  "limite": "Mais le jeu peut devenir un simple exercice d'adresse, sans rien dire au lecteur.",
+  "exemples": [
+   "disparition",
+   "calligrammes",
+   "paroles"
+  ]
+ },
+ {
+  "id": "est-oralite",
+  "fonction": "Esthétique",
+  "groupe": "Travail de la langue",
+  "phrase": "La littérature africaine reprend la beauté de l'oralité : chant, répétition, proverbe.",
+  "explication": "Le griot répète, chante, s'adresse à son public. Les écrivains reprennent ces procédés dans leurs livres, ce qui leur donne un rythme unique.",
+  "limite": "Mais sur la page, la parole orale perd une partie de sa magie : la voix, le geste et le public.",
+  "exemples": [
+   "soundjata-ou-l-epopee-mandingue",
+   "contes-d-amadou-koumba",
+   "soleils-des-independances"
+  ]
+ },
+ {
+  "id": "est-beaute-monde",
+  "fonction": "Esthétique",
+  "groupe": "Célébration de la beauté",
+  "phrase": "La littérature célèbre la beauté de la nature, de la femme et du monde.",
+  "explication": "« Femme nue, femme noire » de Senghor chante la beauté africaine. La littérature apprend à regarder le monde avec admiration.",
+  "limite": "Mais célébrer la beauté peut aussi faire oublier la misère et la violence du réel.",
+  "exemples": [
+   "femme-noire",
+   "chants-d-ombre",
+   "contemplations"
+  ]
+ },
+ {
+  "id": "est-beaute-du-laid",
+  "fonction": "Esthétique",
+  "groupe": "Célébration de la beauté",
+  "phrase": "La littérature transforme même la laideur et le mal en beauté.",
+  "explication": "Baudelaire décrit un cadavre au bord du chemin dans un poème magnifique. Il dit avoir pris la « boue » du monde pour en faire de « l'or ».",
+  "limite": "Mais faire du mal un objet de beauté peut choquer, et les Fleurs du mal ont été condamnées en justice.",
+  "exemples": [
+   "fleurs-du-mal",
+   "chants-de-maldoror",
+   "spleen-de-paris"
+  ]
+ },
+ {
+  "id": "est-emouvoir",
+  "fonction": "Esthétique",
+  "groupe": "Célébration de la beauté",
+  "phrase": "La littérature émeut le lecteur par la seule beauté de ses vers.",
+  "explication": "Chez Verlaine, la musique des mots touche avant même qu'on ait compris le sens. Le lecteur ressent un plaisir proche de celui de la musique.",
+  "limite": "Mais ce plaisir de la beauté ne touche pas tout le monde : il demande une habitude de la lecture.",
+  "exemples": [
+   "romances-sans-paroles",
+   "fetes-galantes",
+   "illuminations"
+  ]
+ },
+ {
+  "id": "est-gratuite",
+  "fonction": "Esthétique",
+  "groupe": "L'art pour l'art",
+  "phrase": "La littérature n'a pas à être utile : sa seule mission est la beauté.",
+  "explication": "Pour Théophile Gautier, « il n'y a de vraiment beau que ce qui ne peut servir à rien ». L'art n'obéit qu'à lui-même.",
+  "limite": "Mais en Afrique surtout, on a reproché à cet art « gratuit » d'ignorer les souffrances du peuple.",
+  "exemples": [
+   "trophees",
+   "poemes-barbares",
+   "fetes-galantes"
+  ]
+ },
+ {
+  "id": "est-perfection",
+  "fonction": "Esthétique",
+  "groupe": "L'art pour l'art",
+  "phrase": "La littérature recherche une beauté parfaite, travaillée comme une sculpture.",
+  "explication": "Les poètes du Parnasse polissaient leurs sonnets comme un orfèvre polit un bijou. Ils voulaient une beauté calme, parfaite et durable.",
+  "limite": "Mais cette beauté froide a paru à beaucoup sans émotion, loin de la vie.",
+  "exemples": [
+   "trophees",
+   "poemes-barbares",
+   "jeune-parque"
+  ]
+ },
+ {
+  "id": "est-mission-beaute",
+  "fonction": "Esthétique",
+  "groupe": "L'art pour l'art",
+  "phrase": "L'écrivain est d'abord un artiste, pas un militant ni un professeur.",
+  "explication": "Son travail, c'est de créer une œuvre belle et réussie. Lui demander de servir une cause, c'est le transformer en simple porte-parole.",
+  "limite": "Mais refuser tout message, c'est aussi un choix, et on a reproché à certains artistes de se taire face aux malheurs de leur temps.",
+  "exemples": [
+   "fetes-galantes",
+   "trophees",
+   "illuminations"
+  ]
+ },
+ {
+  "id": "eva-rever",
+  "fonction": "Évasion",
+  "groupe": "Imagination",
+  "phrase": "La littérature fait rêver le lecteur en inventant des mondes imaginaires.",
+  "explication": "Contes merveilleux, romans fantastiques ou d'aventure ouvrent un monde où tout est possible. L'imagination du lecteur prend le relais.",
+  "limite": "Mais le rêve n'est jamais coupé du réel : derrière le merveilleux se cache souvent une critique de notre monde.",
+  "exemples": [
+   "petit-prince",
+   "seigneur-des-anneaux",
+   "vingt-mille-lieues-sous-les-mers"
+  ]
+ },
+ {
+  "id": "eva-heros",
+  "fonction": "Évasion",
+  "groupe": "Imagination",
+  "phrase": "La littérature permet au lecteur de vivre d'autres vies à travers ses personnages.",
+  "explication": "Le lecteur devient un instant le héros : il aime, combat, voyage avec lui. Il vit des aventures qu'il ne vivra jamais.",
+  "limite": "Mais s'identifier au héros peut aussi faire oublier ses propres responsabilités.",
+  "exemples": [
+   "trois-mousquetaires",
+   "monte-cristo",
+   "hobbit"
+  ]
+ },
+ {
+  "id": "eva-merveilleux",
+  "fonction": "Évasion",
+  "groupe": "Imagination",
+  "phrase": "La littérature émerveille par les animaux qui parlent, les génies et les héros des légendes.",
+  "explication": "Le conte africain transporte l'auditeur dans un monde où l'hyène et le lièvre parlent. L'enfant comme l'adulte s'y laisse emporter.",
+  "limite": "Mais le conte n'est pas qu'un rêve : il porte presque toujours une leçon.",
+  "exemples": [
+   "contes-d-amadou-koumba",
+   "pagne-noir",
+   "kaidara"
+  ]
+ },
+ {
+  "id": "eva-futur",
+  "fonction": "Évasion",
+  "groupe": "Imagination",
+  "phrase": "La littérature imagine le futur, les machines et d'autres planètes.",
+  "explication": "La science-fiction emmène le lecteur sur Mars, dans le désert de Dune ou parmi les robots. Elle fait rêver à ce que pourrait devenir l'humanité.",
+  "limite": "Mais la science-fiction parle souvent de notre présent : derrière les planètes lointaines, elle critique notre monde.",
+  "exemples": [
+   "dune",
+   "chroniques-martiennes",
+   "robots"
+  ]
+ },
+ {
+  "id": "eva-mondes",
+  "fonction": "Évasion",
+  "groupe": "Imagination",
+  "phrase": "La littérature crée des mondes entiers, avec leurs peuples, leurs langues et leurs cartes.",
+  "explication": "Tolkien a inventé des langues pour ses elfes. Le lecteur entre dans un monde complet et y croit, le temps de la lecture.",
+  "limite": "Mais ces mondes merveilleux reprennent souvent les vieux combats de notre monde : le bien contre le mal, le pouvoir qui corrompt.",
+  "exemples": [
+   "seigneur-des-anneaux",
+   "hobbit",
+   "chroniques-de-narnia"
+  ]
+ },
+ {
+  "id": "eva-frisson",
+  "fonction": "Évasion",
+  "groupe": "Imagination",
+  "phrase": "La littérature fait frissonner le lecteur par le fantastique et la peur.",
+  "explication": "Dans Le Horla, le héros sent une présence invisible. Le lecteur hésite : est-ce réel ou est-il fou ? Cette peur délicieuse est un plaisir de lecture.",
+  "limite": "Mais le fantastique parle aussi de choses très réelles : la folie, l'angoisse, la solitude.",
+  "exemples": [
+   "horla",
+   "l-ile-du-docteur-moreau"
+  ]
+ },
+ {
+  "id": "eva-utopie",
+  "fonction": "Évasion",
+  "groupe": "Imagination",
+  "phrase": "La littérature imagine des sociétés idéales ou un monde à l'envers.",
+  "explication": "L'Eldorado de Candide, une Afrique riche où les Européens émigrent : l'utopie fait rêver d'un autre monde et amuse par ses surprises.",
+  "limite": "Mais l'utopie sert souvent à critiquer le monde réel : le rêve cache une leçon.",
+  "exemples": [
+   "candide",
+   "aux-etats-unis-d-afrique"
+  ]
+ },
+ {
+  "id": "eva-enfance",
+  "fonction": "Évasion",
+  "groupe": "Imagination",
+  "phrase": "La littérature redonne au lecteur un regard d'enfant et le goût de l'émerveillement.",
+  "explication": "« Toutes les grandes personnes ont d'abord été des enfants », dit Le Petit Prince. Le livre nous fait retrouver la fraîcheur de l'enfance.",
+  "limite": "Mais derrière la simplicité du conte se cachent souvent des réflexions profondes sur la vie adulte.",
+  "exemples": [
+   "petit-prince",
+   "chroniques-de-narnia",
+   "contes-d-amadou-koumba"
+  ]
+ },
+ {
+  "id": "eva-epopee",
+  "fonction": "Évasion",
+  "groupe": "Imagination",
+  "phrase": "L'épopée transporte le lecteur dans un temps de héros extraordinaires.",
+  "explication": "Soundjata, qui ne marchait pas, devient le plus grand roi du Manding. L'épopée raconte des exploits plus grands que la vie et fait rêver de grandeur.",
+  "limite": "Mais l'épopée sert aussi à transmettre l'histoire et les valeurs d'un peuple : elle n'est pas qu'un rêve.",
+  "exemples": [
+   "soundjata-ou-l-epopee-mandingue",
+   "legende-des-siecles",
+   "kaidara"
+  ]
+ },
+ {
+  "id": "eva-voyage",
+  "fonction": "Évasion",
+  "groupe": "Voyage imaginaire",
+  "phrase": "La littérature fait voyager le lecteur loin de chez lui, dans d'autres pays et d'autres époques.",
+  "explication": "Sans quitter sa chambre, le lecteur découvre Paris, la brousse, le désert ou le Moyen Âge. Lire, c'est un voyage immobile.",
+  "limite": "Mais le voyage littéraire peut aussi rendre le lecteur étranger à son propre monde.",
+  "exemples": [
+   "tour-du-monde",
+   "voyage-dans-la-lune",
+   "negre-a-paris"
+  ]
+ },
+ {
+  "id": "eva-refuge",
+  "fonction": "Évasion",
+  "groupe": "Voyage imaginaire",
+  "phrase": "La littérature offre un refuge : elle aide à oublier la souffrance et l'ennui de la vie.",
+  "explication": "Pour le prisonnier, le malade ou l'élève fatigué, le livre est une fenêtre ouverte. Il console et redonne des forces.",
+  "limite": "Mais fuir le réel ne le change pas : on peut reprocher à cette évasion d'endormir le lecteur.",
+  "exemples": [
+   "chroniques-de-narnia",
+   "petit-prince",
+   "tour-du-monde"
+  ]
+ },
+ {
+  "id": "eva-ailleurs",
+  "fonction": "Évasion",
+  "groupe": "Voyage imaginaire",
+  "phrase": "La poésie emporte le lecteur vers l'ailleurs et le rêve.",
+  "explication": "Baudelaire invite au voyage, Hugo chante l'Orient, Rimbaud ouvre des visions étranges. Le poème est une porte vers un autre monde.",
+  "limite": "Mais cet ailleurs rêvé est souvent une fuite : le poète s'évade parce que son monde le fait souffrir.",
+  "exemples": [
+   "fleurs-du-mal",
+   "orientales",
+   "illuminations"
+  ]
+ },
+ {
+  "id": "eva-divertir",
+  "fonction": "Évasion",
+  "groupe": "Divertissement",
+  "phrase": "La littérature divertit le lecteur par le plaisir d'une histoire bien racontée.",
+  "explication": "Suspense, rebondissements, personnages attachants : le lecteur tourne les pages pour savoir la suite. Le plaisir de lire est la première raison d'ouvrir un livre.",
+  "limite": "Mais un divertissement qui ne fait que distraire s'oublie vite ; les grandes œuvres divertissent en faisant réfléchir.",
+  "exemples": [
+   "trois-mousquetaires",
+   "monte-cristo",
+   "et-pourtant-elle-pleurait"
+  ]
+ },
+ {
+  "id": "eva-catharsis",
+  "fonction": "Évasion",
+  "groupe": "Divertissement",
+  "phrase": "La littérature libère le spectateur de ses peurs et de ses passions en les lui faisant vivre sur scène.",
+  "explication": "Pour Aristote, la tragédie purge les passions : en voyant le héros souffrir, le spectateur se libère de sa propre peur. Il sort apaisé.",
+  "limite": "Mais cette émotion peut aussi faire réfléchir et pousser à agir, ce qui rapproche le théâtre de l'engagement.",
+  "exemples": [
+   "phedre",
+   "antigone",
+   "romeo-et-juliette"
+  ]
+ },
+ {
+  "id": "eva-aventure",
+  "fonction": "Évasion",
+  "groupe": "Divertissement",
+  "phrase": "La littérature passionne par l'aventure et le suspense.",
+  "explication": "Duels, évasions, trésors cachés : le lecteur ne peut plus lâcher le livre. Il vit des émotions fortes sans courir aucun danger.",
+  "limite": "Mais les romans d'aventure ont parfois été jugés comme une lecture facile, moins sérieuse que les autres.",
+  "exemples": [
+   "trois-mousquetaires",
+   "monte-cristo",
+   "vingt-mille-lieues-sous-les-mers"
+  ]
+ },
+ {
+  "id": "eva-amour",
+  "fonction": "Évasion",
+  "groupe": "Divertissement",
+  "phrase": "La littérature fait rêver d'amour et de grandes passions.",
+  "explication": "Amours impossibles, rencontres, trahisons : le roman sentimental et la tragédie amoureuse font vibrer le lecteur qui rêve d'un amour aussi fort.",
+  "limite": "Mais cet amour de roman est idéalisé, et peut donner une image fausse de la vie à deux.",
+  "exemples": [
+   "romeo-et-juliette",
+   "dame-aux-camelias",
+   "et-pourtant-elle-pleurait"
+  ]
+ },
+ {
+  "id": "eva-passe-temps",
+  "fonction": "Évasion",
+  "groupe": "Divertissement",
+  "phrase": "La littérature est un passe-temps qui remplit agréablement les heures libres.",
+  "explication": "Dans le car, à la maison, pendant les vacances, le lecteur ouvre un roman pour se détendre. Il n'y cherche ni leçon ni combat, seulement un bon moment.",
+  "limite": "Mais réduire la littérature à un passe-temps, c'est oublier qu'elle peut aussi instruire et faire réfléchir.",
+  "exemples": [
+   "et-pourtant-elle-pleurait",
+   "merci-l-artiste",
+   "trois-mousquetaires"
+  ]
+ },
+ {
+  "id": "eva-rire",
+  "fonction": "Évasion",
+  "groupe": "Rire",
+  "phrase": "La littérature fait rire et détend le lecteur ou le spectateur.",
+  "explication": "La comédie, le comique de situation et l'humour libèrent des soucis. On sort du théâtre plus léger.",
+  "limite": "Mais le rire cache souvent une critique : chez Molière comme chez Dadié, on rit pour corriger.",
+  "exemples": [
+   "fourberies-de-scapin",
+   "malade-imaginaire",
+   "thogo-gnini"
+  ]
+ },
+ {
+  "id": "eva-absurde",
+  "fonction": "Évasion",
+  "groupe": "Rire",
+  "phrase": "La littérature amuse par l'absurde et le non-sens.",
+  "explication": "Des personnages qui parlent sans rien se dire, un roi grotesque, un voyage galactique délirant : le lecteur rit de ce qui n'a pas de sens.",
+  "limite": "Mais l'absurde fait aussi réfléchir sur le vide de nos conversations et de nos vies.",
+  "exemples": [
+   "cantatrice-chauve",
+   "ubu-roi",
+   "guide-du-voyageur-galactique"
+  ]
+ },
+ {
+  "id": "lyr-sentiments",
+  "fonction": "Lyrique",
+  "groupe": "Expression des sentiments",
+  "phrase": "La littérature exprime les sentiments intimes : l'amour, la joie, la douleur.",
+  "explication": "Le poète lyrique ouvre son cœur. En lisant, le lecteur reconnaît ses propres émotions et se sent moins seul.",
+  "limite": "Mais une œuvre qui ne parle que du moi peut paraître égoïste face aux malheurs du monde.",
+  "exemples": [
+   "contemplations",
+   "fleurs-du-mal",
+   "nocturnes-senghor"
+  ]
+ },
+ {
+  "id": "lyr-amour",
+  "fonction": "Lyrique",
+  "groupe": "Expression des sentiments",
+  "phrase": "La littérature chante l'amour, ses joies et ses blessures.",
+  "explication": "De Ronsard à Senghor, l'amour est le premier sujet de la poésie. Les mots donnent une forme à ce que tout amoureux ressent.",
+  "limite": "Mais l'amour chanté par le poète est souvent idéalisé, loin de la réalité du couple.",
+  "exemples": [
+   "nocturnes-senghor",
+   "capitale-de-la-douleur",
+   "sonnets"
+  ]
+ },
+ {
+  "id": "lyr-douleur",
+  "fonction": "Lyrique",
+  "groupe": "Expression des sentiments",
+  "phrase": "La littérature dit la douleur, le deuil et la solitude, et aide ainsi à les supporter.",
+  "explication": "Écrire sa souffrance, c'est déjà s'en libérer un peu. Le lecteur en deuil trouve dans le poème des mots pour sa propre peine.",
+  "limite": "Mais la plainte peut enfermer l'écrivain dans son malheur au lieu de l'ouvrir aux autres.",
+  "exemples": [
+   "contemplations",
+   "si-longue-lettre",
+   "poemes-selection"
+  ]
+ },
+ {
+  "id": "lyr-nostalgie",
+  "fonction": "Lyrique",
+  "groupe": "Expression des sentiments",
+  "phrase": "La littérature chante le pays perdu, l'exil et la nostalgie de l'enfance.",
+  "explication": "Loin de chez lui, l'écrivain se souvient du village, de la mère, du royaume d'enfance. Ces textes touchent tous ceux qui ont dû partir.",
+  "limite": "Mais la nostalgie embellit le passé et peut faire oublier ce qu'il avait de dur.",
+  "exemples": [
+   "chants-d-ombre",
+   "l-enfant-noir",
+   "cahier-d-un-retour-au-pays-natal"
+  ]
+ },
+ {
+  "id": "lyr-universel",
+  "fonction": "Lyrique",
+  "groupe": "Expression des sentiments",
+  "phrase": "La littérature part de l'émotion d'un seul pour toucher ce que tous les hommes ressentent.",
+  "explication": "Victor Hugo disait : « Quand je vous parle de moi, je vous parle de vous. » Le moi du poète devient le miroir du lecteur.",
+  "limite": "Mais certains lecteurs ne se retrouvent pas dans une émotion trop personnelle ou trop éloignée de leur vie.",
+  "exemples": [
+   "contemplations",
+   "fleurs-du-mal"
+  ]
+ },
+ {
+  "id": "lyr-foi",
+  "fonction": "Lyrique",
+  "groupe": "Expression des sentiments",
+  "phrase": "La littérature exprime la foi, le doute et la quête de sens de l'auteur.",
+  "explication": "Prières, révoltes contre Dieu, recherche de la vérité : beaucoup d'œuvres disent l'inquiétude intime de l'homme face au sacré.",
+  "limite": "Mais ces questions personnelles peuvent sembler loin des préoccupations concrètes du lecteur.",
+  "exemples": [
+   "poemes-selection-tagore",
+   "l-aventure-ambigue",
+   "de-l-eau-et-de-l-esprit"
+  ]
+ },
+ {
+  "id": "lyr-temps",
+  "fonction": "Lyrique",
+  "groupe": "Expression des sentiments",
+  "phrase": "La littérature dit l'angoisse du temps qui passe et de la mort.",
+  "explication": "« Vienne la nuit sonne l'heure, les jours s'en vont je demeure », écrit Apollinaire. Le poète exprime ce que chacun ressent : la peur de vieillir et de perdre ce qu'il aime.",
+  "limite": "Mais cette plainte sur le temps est très ancienne, et peut paraître répétitive au lecteur.",
+  "exemples": [
+   "alcools",
+   "contemplations",
+   "poemes-saturniens"
+  ]
+ },
+ {
+  "id": "lyr-joie",
+  "fonction": "Lyrique",
+  "groupe": "Expression des sentiments",
+  "phrase": "La littérature exprime la joie de vivre et l'émerveillement devant la nature.",
+  "explication": "La poésie ne dit pas que la douleur : elle chante aussi le matin, la lumière, la beauté d'un paysage. Le lecteur partage la joie du poète.",
+  "limite": "Mais la joie inspire moins les écrivains que la douleur, et les poèmes heureux sont plus rares.",
+  "exemples": [
+   "poemes-selection-tagore",
+   "contemplations",
+   "chants-d-ombre"
+  ]
+ },
+ {
+  "id": "lyr-mere",
+  "fonction": "Lyrique",
+  "groupe": "Expression des sentiments",
+  "phrase": "La littérature chante la mère, la famille et les êtres chers.",
+  "explication": "Camara Laye ouvre L'Enfant noir par un poème à sa mère. Hugo pleure sa fille Léopoldine. L'écrivain rend hommage à ceux qu'il aime.",
+  "limite": "Mais ces textes très personnels peuvent idéaliser la famille et cacher ses conflits.",
+  "exemples": [
+   "l-enfant-noir",
+   "contemplations",
+   "si-longue-lettre"
+  ]
+ },
+ {
+  "id": "lyr-spleen",
+  "fonction": "Lyrique",
+  "groupe": "Expression des sentiments",
+  "phrase": "La littérature exprime le mal de vivre, l'ennui et la mélancolie.",
+  "explication": "Baudelaire appelle ce mal le « spleen » : une tristesse lourde, sans raison claire. En le disant, le poète met des mots sur un malaise que beaucoup ressentent.",
+  "limite": "Mais trop de mélancolie peut rendre l'œuvre pesante, et décourager le lecteur au lieu de l'aider.",
+  "exemples": [
+   "fleurs-du-mal",
+   "rene",
+   "poemes-saturniens"
+  ]
+ },
+ {
+  "id": "lyr-revolte",
+  "fonction": "Lyrique",
+  "groupe": "Expression des sentiments",
+  "phrase": "La littérature crie la révolte intérieure de l'écrivain.",
+  "explication": "La colère, le dégoût, le refus de la vie qu'on lui impose : l'écrivain les jette sur la page. Le cri du poète devient un texte inoubliable.",
+  "limite": "Mais quand cette révolte vise la société, on passe du lyrisme à l'engagement.",
+  "exemples": [
+   "saison-en-enfer",
+   "pigments",
+   "chants-de-maldoror"
+  ]
+ },
+ {
+  "id": "lyr-pays",
+  "fonction": "Lyrique",
+  "groupe": "Expression des sentiments",
+  "phrase": "La littérature chante l'amour du pays natal et de l'Afrique.",
+  "explication": "« Afrique mon Afrique », écrit David Diop. Senghor chante Joal, son village d'enfance. Le poète dit son attachement profond à sa terre.",
+  "limite": "Mais cet amour peut aussi devenir un cri politique, quand la terre aimée est colonisée.",
+  "exemples": [
+   "coups-de-pilon",
+   "chants-d-ombre",
+   "cahier-d-un-retour-au-pays-natal"
+  ]
+ },
+ {
+  "id": "lyr-vecu",
+  "fonction": "Lyrique",
+  "groupe": "Expression du vécu",
+  "phrase": "La littérature raconte la vie de son auteur : son enfance, ses souvenirs, ses épreuves.",
+  "explication": "L'Enfant noir de Camara Laye ou Une si longue lettre partent du vécu. L'écrivain se raconte pour se comprendre et transmettre son expérience.",
+  "limite": "Mais on ne raconte jamais sa vie tout à fait vrai : la mémoire trie et l'écrivain arrange.",
+  "exemples": [
+   "l-enfant-noir",
+   "amkoullel-l-enfant-peul",
+   "climbie"
+  ]
+ },
+ {
+  "id": "lyr-collectif",
+  "fonction": "Lyrique",
+  "groupe": "Expression du vécu",
+  "phrase": "La littérature dit « je » mais exprime la souffrance de tout un peuple.",
+  "explication": "Chez Césaire ou Damas, le cri personnel devient celui de la race opprimée. Le lyrisme se fait collectif.",
+  "limite": "Mais quand le « je » parle pour tous, on passe du lyrisme à l'engagement.",
+  "exemples": [
+   "cahier-d-un-retour-au-pays-natal",
+   "pigments",
+   "coups-de-pilon"
+  ]
+ },
+ {
+  "id": "lyr-liberer",
+  "fonction": "Lyrique",
+  "groupe": "Expression du vécu",
+  "phrase": "La littérature permet à l'auteur de se libérer de ce qui le hante.",
+  "explication": "Écrire une blessure, c'est la mettre à distance. Beaucoup d'écrivains disent qu'ils écrivent pour ne pas devenir fous.",
+  "limite": "Mais une écriture qui soigne d'abord son auteur n'intéresse pas toujours le lecteur.",
+  "exemples": [
+   "si-longue-lettre",
+   "saison-en-enfer",
+   "c-est-le-soleil-qui-m-a-brulee"
+  ]
+ },
+ {
+  "id": "lyr-confidence",
+  "fonction": "Lyrique",
+  "groupe": "Expression du vécu",
+  "phrase": "La littérature est une confidence : lettre, journal, souvenirs.",
+  "explication": "Dans Une si longue lettre, Ramatoulaye écrit à son amie ce qu'elle ne dit à personne. Le lecteur entre dans l'intimité d'une vie.",
+  "limite": "Mais une confidence publiée n'est plus tout à fait secrète : l'écrivain choisit ce qu'il montre au lecteur.",
+  "exemples": [
+   "si-longue-lettre",
+   "carnet-de-prison",
+   "femme-d-afrique"
+  ]
+ },
+ {
+  "id": "lyr-quete-soi",
+  "fonction": "Lyrique",
+  "groupe": "Expression du vécu",
+  "phrase": "La littérature aide l'écrivain à chercher qui il est vraiment.",
+  "explication": "Écrire, c'est se poser des questions sur son identité, son pays, sa place dans le monde. L'œuvre devient le récit de cette recherche.",
+  "limite": "Mais cette quête est souvent sans fin, et l'œuvre laisse parfois le lecteur sans réponse.",
+  "exemples": [
+   "baobab-fou",
+   "l-enfant-de-sable",
+   "l-aventure-ambigue"
+  ]
+ },
+ {
+  "id": "lyr-voix-femme",
+  "fonction": "Lyrique",
+  "groupe": "Expression du vécu",
+  "phrase": "La littérature permet aux femmes de dire enfin leur intimité.",
+  "explication": "Longtemps, les femmes devaient se taire. En écrivant, elles disent leurs sentiments, leur corps, leurs blessures, avec leurs propres mots.",
+  "limite": "Mais cette parole intime devient souvent aussi un combat pour toutes les femmes, donc un engagement.",
+  "exemples": [
+   "si-longue-lettre",
+   "l-amour-la-fantasia",
+   "c-est-le-soleil-qui-m-a-brulee"
+  ]
+ },
+ {
+  "id": "soc-miroir",
+  "fonction": "Sociale",
+  "groupe": "Peinture de la réalité sociale",
+  "phrase": "La littérature est le miroir de la société : elle en montre la réalité telle qu'elle est.",
+  "explication": "Comme Balzac ou Zola, l'écrivain observe et décrit les milieux, les métiers, les mœurs. Le lecteur reconnaît son monde dans le livre.",
+  "limite": "Mais un miroir n'est jamais neutre : l'écrivain choisit ce qu'il montre, et il invente autant qu'il observe.",
+  "exemples": [
+   "pere-goriot",
+   "l-assommoir",
+   "soleils-des-independances"
+  ]
+ },
+ {
+  "id": "soc-temoin",
+  "fonction": "Sociale",
+  "groupe": "Peinture de la réalité sociale",
+  "phrase": "La littérature témoigne de son époque et de ce que vivent les hommes de son temps.",
+  "explication": "Une œuvre garde la trace d'un moment de l'histoire : la ville coloniale, les indépendances, une guerre. Des siècles plus tard, on la lit comme un document.",
+  "limite": "Mais le témoin ne raconte qu'une part du réel, avec ses yeux à lui ; l'historien reste plus fiable que le romancier.",
+  "exemples": [
+   "soleils-des-independances",
+   "vie-de-boy",
+   "debacle"
+  ]
+ },
+ {
+  "id": "soc-tradition-modernite",
+  "fonction": "Sociale",
+  "groupe": "Peinture de la réalité sociale",
+  "phrase": "La littérature montre le conflit entre les traditions africaines et le monde moderne.",
+  "explication": "Des romans comme L'Aventure ambiguë montrent des personnages déchirés entre l'école des Blancs et la sagesse des anciens. Le lecteur y voit une société en pleine transformation.",
+  "limite": "Mais ce tableau n'est pas toujours objectif : l'écrivain prend souvent parti pour la tradition ou pour la modernité.",
+  "exemples": [
+   "l-aventure-ambigue",
+   "things-fall-apart-le-monde-s-effondre",
+   "trois-pretendants"
+  ]
+ },
+ {
+  "id": "soc-condition-humaine",
+  "fonction": "Sociale",
+  "groupe": "Peinture de la réalité sociale",
+  "phrase": "La littérature montre l'homme face à la misère, à la mort, à l'exil : ce que tout homme peut vivre.",
+  "explication": "Au-delà d'une société précise, l'œuvre parle de l'homme en général. Un lecteur de n'importe quel pays s'y reconnaît.",
+  "limite": "Mais en parlant de l'homme en général, l'œuvre peut perdre la force d'un témoignage précis.",
+  "exemples": [
+   "l-etranger",
+   "condition-humaine",
+   "en-attendant-godot"
+  ]
+ },
+ {
+  "id": "soc-famille-moeurs",
+  "fonction": "Sociale",
+  "groupe": "Peinture de la réalité sociale",
+  "phrase": "La littérature peint les mœurs, la famille et la vie de tous les jours.",
+  "explication": "Le mariage, la dot, les rivalités entre coépouses, l'argent : le roman africain montre la vie de chaque jour avec précision. Le lecteur y retrouve des scènes qu'il connaît.",
+  "limite": "Mais la vie quotidienne racontée dans un roman est toujours arrangée pour plaire ou pour faire réfléchir.",
+  "exemples": [
+   "si-longue-lettre",
+   "trois-pretendants",
+   "maimouna"
+  ]
+ },
+ {
+  "id": "soc-afrique-aujourdhui",
+  "fonction": "Sociale",
+  "groupe": "Peinture de la réalité sociale",
+  "phrase": "La littérature montre les problèmes de l'Afrique d'aujourd'hui : chômage, exode, corruption, immigration.",
+  "explication": "Les romans récents parlent des jeunes qui partent, de la ville qui écrase, de l'argent facile. Le lecteur africain y reconnaît son quotidien.",
+  "limite": "Mais montrer seulement les problèmes peut donner une image trop sombre du continent.",
+  "exemples": [
+   "ventre-de-l-atlantique",
+   "verre-casse",
+   "adama-force-des-choses"
+  ]
+ },
+ {
+  "id": "soc-ville",
+  "fonction": "Sociale",
+  "groupe": "Peinture de la réalité sociale",
+  "phrase": "La littérature montre l'exode rural et la vie difficile dans les villes.",
+  "explication": "Le jeune quitte le village pour la ville, attiré par l'argent et la lumière. Le roman montre ce qu'il y trouve : chômage, solitude, injustice.",
+  "limite": "Mais la ville n'est pas que malheur : elle offre aussi l'école, le travail et la liberté que certains ne trouvent pas au village.",
+  "exemples": [
+   "ville-cruelle",
+   "adama-force-des-choses",
+   "karim"
+  ]
+ },
+ {
+  "id": "soc-ecole",
+  "fonction": "Sociale",
+  "groupe": "Peinture de la réalité sociale",
+  "phrase": "La littérature montre le rôle de l'école et ce qu'elle change dans la vie des hommes.",
+  "explication": "L'école des Blancs ouvre des portes mais éloigne l'enfant des siens. Les romans racontent la cour de l'école, le « symbole », la réussite et le déchirement.",
+  "limite": "Mais l'écrivain qui raconte son école la voit souvent à travers ses souvenirs, embellis ou assombris.",
+  "exemples": [
+   "climbie",
+   "l-aventure-ambigue",
+   "l-enfant-noir"
+  ]
+ },
+ {
+  "id": "soc-generations",
+  "fonction": "Sociale",
+  "groupe": "Peinture de la réalité sociale",
+  "phrase": "La littérature montre les conflits entre parents et enfants, entre anciens et jeunes.",
+  "explication": "Le père veut marier sa fille, le fils veut choisir sa vie : le roman et le théâtre mettent en scène ces disputes que connaissent toutes les familles.",
+  "limite": "Mais l'œuvre prend souvent le parti des jeunes, et ne rend pas toujours justice à la sagesse des parents.",
+  "exemples": [
+   "sous-l-orage",
+   "trois-pretendants",
+   "au-dela-des-tourments"
+  ]
+ },
+ {
+  "id": "soc-memoire",
+  "fonction": "Sociale",
+  "groupe": "Mémoire collective",
+  "phrase": "La littérature conserve la mémoire d'un peuple et de son histoire.",
+  "explication": "Comme le griot, l'écrivain transmet ce que les anciens ont vécu. Sans lui, des pans entiers de l'histoire africaine seraient oubliés.",
+  "limite": "Mais la mémoire écrite par un seul homme peut déformer le passé, l'embellir ou le noircir.",
+  "exemples": [
+   "soundjata-ou-l-epopee-mandingue",
+   "amkoullel-l-enfant-peul",
+   "segou"
+  ]
+ },
+ {
+  "id": "soc-histoire",
+  "fonction": "Sociale",
+  "groupe": "Mémoire collective",
+  "phrase": "La littérature fait revivre les grands moments et les grands héros de l'histoire.",
+  "explication": "Soundjata, Chaka, la reine Pokou : grâce aux écrivains, ces héros du passé continuent de vivre. Le lecteur apprend l'histoire en la vivant de l'intérieur.",
+  "limite": "Mais le roman ou la pièce historique arrange les faits pour émouvoir : ce n'est pas un livre d'histoire.",
+  "exemples": [
+   "soundjata-ou-l-epopee-mandingue",
+   "mort-de-chaka",
+   "reine-pokou"
+  ]
+ },
+ {
+  "id": "soc-culture",
+  "fonction": "Sociale",
+  "groupe": "Valorisation de la culture",
+  "phrase": "La littérature fait connaître et aimer la culture, les langues et les valeurs d'un peuple.",
+  "explication": "Contes, proverbes, rites et croyances entrent dans le livre et gagnent un public mondial. La littérature prouve qu'une culture longtemps méprisée a sa richesse.",
+  "limite": "Mais cette mise en valeur peut devenir une image figée ou exotique, loin de la vie réelle des gens.",
+  "exemples": [
+   "contes-d-amadou-koumba",
+   "l-enfant-noir",
+   "things-fall-apart-le-monde-s-effondre"
+  ]
+ },
+ {
+  "id": "soc-oralite",
+  "fonction": "Sociale",
+  "groupe": "Valorisation de la culture",
+  "phrase": "La littérature recueille la parole orale des griots et des conteurs pour la transmettre.",
+  "explication": "Birago Diop, Bernard Dadié ou Djibril Tamsir Niane ont écrit ce que les griots racontaient. La tradition orale ne se perd pas.",
+  "limite": "Mais écrire un conte, c'est aussi le figer : il perd la voix, les gestes et le public du conteur.",
+  "exemples": [
+   "contes-d-amadou-koumba",
+   "soundjata-ou-l-epopee-mandingue",
+   "pagne-noir"
+  ]
+ },
+ {
+  "id": "soc-croyances",
+  "fonction": "Sociale",
+  "groupe": "Valorisation de la culture",
+  "phrase": "La littérature montre la place des croyances et du sacré dans la société.",
+  "explication": "Rites d'initiation, prêtres, ancêtres, génies : l'œuvre montre comment la religion organise la vie d'un peuple et ce qui arrive quand elle est bousculée.",
+  "limite": "Mais en décrivant les croyances de l'extérieur, l'écrivain peut les rendre étranges ou les juger.",
+  "exemples": [
+   "things-fall-apart-le-monde-s-effondre",
+   "arrow-of-god",
+   "de-l-eau-et-de-l-esprit"
+  ]
+ },
+ {
+  "id": "soc-instruire",
+  "fonction": "Sociale",
+  "groupe": "Instruire",
+  "phrase": "La littérature instruit le lecteur et lui donne des leçons de vie.",
+  "explication": "Le conte, la fable ou le roman d'apprentissage transmettent une morale : la ruse punie, la sagesse récompensée. Le lecteur apprend en se distrayant.",
+  "limite": "Mais une œuvre trop moralisatrice ennuie, et le lecteur d'aujourd'hui n'aime pas qu'on lui fasse la leçon.",
+  "exemples": [
+   "pagne-noir",
+   "contes-d-amadou-koumba",
+   "kaidara"
+  ]
+ },
+ {
+  "id": "soc-modeles",
+  "fonction": "Sociale",
+  "groupe": "Instruire",
+  "phrase": "La littérature propose des modèles de courage et de dignité.",
+  "explication": "Le héros qui refuse de se soumettre, la femme qui se sacrifie pour son peuple : ces personnages donnent au lecteur un exemple à suivre.",
+  "limite": "Mais un héros trop parfait n'est pas crédible, et le lecteur se reconnaît souvent mieux dans un personnage faible.",
+  "exemples": [
+   "exil-d-albouri",
+   "reine-pokou",
+   "soundjata-ou-l-epopee-mandingue"
+  ]
+ },
+ {
+  "id": "soc-valeurs",
+  "fonction": "Sociale",
+  "groupe": "Instruire",
+  "phrase": "La littérature rappelle les valeurs qui unissent une société : solidarité, partage, respect.",
+  "explication": "Le conte punit celui qui refuse de partager, la pièce célèbre l'union du village. L'œuvre rappelle au lecteur ce qui fait vivre une communauté.",
+  "limite": "Mais ces valeurs peuvent aussi devenir une prison, quand la communauté écrase la liberté de l'individu.",
+  "exemples": [
+   "aux-chemins-de-babo-naki",
+   "os-de-mor-lam",
+   "contes-d-amadou-koumba"
+  ]
+ },
+ {
+  "id": "soc-se-connaitre",
+  "fonction": "Sociale",
+  "groupe": "Instruire",
+  "phrase": "La littérature aide le lecteur à mieux se connaître et à comprendre les autres.",
+  "explication": "En suivant les erreurs d'Emma Bovary ou l'indifférence de Meursault, le lecteur s'interroge sur lui-même. Le personnage devient un miroir.",
+  "limite": "Mais le lecteur ne voit dans un livre que ce qu'il est prêt à voir : la leçon n'est jamais garantie.",
+  "exemples": [
+   "madame-bovary",
+   "l-etranger",
+   "pere-goriot"
+  ]
+ },
+ {
+  "id": "soc-autres-peuples",
+  "fonction": "Sociale",
+  "groupe": "Faire connaître",
+  "phrase": "La littérature fait connaître les autres peuples et rapproche les hommes.",
+  "explication": "Dans Un Nègre à Paris, Dadié observe les Parisiens comme un explorateur. En lisant, on découvre d'autres façons de vivre et on comprend mieux l'autre.",
+  "limite": "Mais le regard d'un écrivain sur un peuple étranger peut aussi être plein de clichés.",
+  "exemples": [
+   "negre-a-paris",
+   "things-fall-apart-le-monde-s-effondre",
+   "voyage-au-congo"
+  ]
+ },
+ {
+  "id": "soc-metissage",
+  "fonction": "Sociale",
+  "groupe": "Faire connaître",
+  "phrase": "La littérature montre la rencontre et le mélange des cultures.",
+  "explication": "Le métis, l'étudiant parti en Europe, le couple mixte : l'œuvre montre ce que la rencontre des cultures apporte, et ce qu'elle fait souffrir.",
+  "limite": "Mais certains écrivains voient surtout dans ce mélange une perte de ses racines.",
+  "exemples": [
+   "kotia-nima-1-rencontre-avec-l-europe",
+   "lys-et-le-flamboyant",
+   "l-aventure-ambigue"
+  ]
+ }
+]

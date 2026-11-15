@@ -55,7 +55,7 @@ export function AProposScreen() {
             <dt><Icon name="local_library" />Le moteur de recherche d'œuvres</dt>
             <dd>{OEUVRES.length} œuvres, dont {NB_DETAILLEES} fiches détaillées (résumé complet, idées d'illustration, phrase d'exemple) ; les autres sont des fiches courtes pour repérer une œuvre par thème. Cherche par titre, auteur, thème ou mot-clé, puis combine les filtres : fonction littéraire, thème, genre, aire géographique, pays, idée d'argument.</dd>
             <dt><Icon name="inventory_2" />La boîte à outils</dt>
-            <dd>Dictionnaire littéraire avec recherche (le sens des mots des sujets et leur fonction ; 10 mots gratuits, tout le dictionnaire avec l'accès complet), formules d'introduction, de transition et de conclusion à copier, connecteurs logiques, vocabulaire de chaque orientation.</dd>
+            <dd>Dictionnaire littéraire avec recherche (le sens des mots des sujets et leur fonction ; 10 mots gratuits, tout le dictionnaire avec l'accès complet), formules d'introduction, de transition et de conclusion à copier, connecteurs logiques, et plus de 100 arguments rangés par fonction avec leur explication et des exemples d'œuvres.</dd>
             <dt><Icon name="person" />Mon espace</dt>
             <dd>Ton carnet (œuvres enregistrées et notes personnelles, gardées sur ton appareil), ta clé d'accès et tes messages à l'auteur. Avec l'accès complet, ses réponses à tes questions arrivent ici.</dd>
             <dt><Icon name="wifi_off" />Sans connexion</dt>

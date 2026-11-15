@@ -5,31 +5,39 @@ import { Page } from "../components/Page";
 import { Icon } from "../components/Icon";
 import { copyText } from "../components/Toast";
 import { href, replaceRoute, useRoute } from "../lib/router";
+import { FONCTIONS } from "../data/types";
+import { fnClass } from "../lib/fonctions";
 import { CoursOnglets } from "../components/SujetsOnglets";
 import { DicoRecherche, DicoResultats } from "./Dictionnaire";
 import { useGlisser } from "../lib/glisser";
 import { CATEGORIES, PARTIES, categorie, formulesDe } from "../lib/formules";
 import { Partie, FormuleExemple, FormuleTexte } from "../components/Formule";
+import { ArgumentsFonction, fonctionArguments } from "../components/ArgumentsFonction";
 
 const O = outils as Outils;
 /** Trois rubriques seulement, toutes visibles sur un téléphone sans défiler de côté. */
 const RUBRIQUES = [
   { id: "dictionnaire", label: "Dictionnaire" },
   { id: "formules", label: "Formules" },
-  { id: "vocabulaire", label: "Vocabulaire" }
+  { id: "arguments", label: "Arguments" }
 ];
 /** Anciennes adresses des groupes de formules (liens des leçons, de l'atelier, des messages déjà publiés). */
 const ANCIENS: Record<string, string> = { introduction: "entree", conclusion: "bilan", expressions: "style" };
 const idGroupe = (id: string | null) => id ? (ANCIENS[id] ?? id) : null;
+/** Les connecteurs logiques, rangés à la fin de la liste des moments du devoir. */
+const CONNECTEURS = "connecteurs";
 
 export function OutilsScreen() {
   const { params } = useRoute();
   // Anciennes adresses (?vue=introduction, ?vue=connecteurs…) : on retombe sur la bonne rubrique.
   const brut = params.get("vue") ?? "dictionnaire";
   const ancienGroupe = categorie(idGroupe(brut) ?? "");
-  const vue = ancienGroupe ? "formules" : brut === "connecteurs" || brut === "orientations" ? "vocabulaire"
+  // L'ancien onglet Vocabulaire est devenu Arguments ; ses connecteurs logiques sont rangés dans Formules.
+  const connecteurs = brut === "connecteurs" || params.get("groupe") === CONNECTEURS;
+  const vue = ancienGroupe || connecteurs ? "formules" : brut === "orientations" || brut === "vocabulaire" ? "arguments"
     : RUBRIQUES.some(r => r.id === brut) ? brut : "dictionnaire";
   const groupe = categorie(idGroupe(params.get("groupe")) ?? ancienGroupe?.id ?? "") ?? CATEGORIES[0];
+  const fonctionArg = fonctionArguments(params.get("fonction"));
   const allerGroupe = (id: string) => { aller({ vue: "formules", groupe: id }); scrollTo(0, 0); };
   const q = params.get("q") ?? "";
   const fonction = params.get("fonction");
@@ -61,15 +69,26 @@ export function OutilsScreen() {
           ))}
         </div>
         {vue === "dictionnaire" && <DicoRecherche q={q} onChange={nq => dico(nq, fonction)} />}
+        {vue === "arguments" && (
+          <nav class="fn-rangee arg-fonctions" aria-label="Choisir une fonction">
+            {FONCTIONS.map(f => (
+              <button key={f} type="button" class={`fn-mini ${fnClass(f)}`} aria-pressed={f === fonctionArg}
+                onClick={() => { aller({ vue: "arguments", fonction: f }); scrollTo(0, 0); }}>{f}</button>
+            ))}
+          </nav>
+        )}
         {vue === "formules" && (
           <label class="outils-choix">
             <span class="sr-only">Moment du devoir</span>
-            <select class="select outils-select" value={groupe.id} onChange={e => allerGroupe((e.target as HTMLSelectElement).value)}>
+            <select class="select outils-select" value={connecteurs ? CONNECTEURS : groupe.id} onChange={e => allerGroupe((e.target as HTMLSelectElement).value)}>
               {PARTIES.map(p => (
                 <optgroup key={p.id} label={p.nom}>
                   {CATEGORIES.filter(c => c.partie === p.id).map(c => <option key={c.id} value={c.id}>{c.nom}</option>)}
                 </optgroup>
               ))}
+              <optgroup label="Mots de liaison">
+                <option value={CONNECTEURS}>Connecteurs logiques</option>
+              </optgroup>
             </select>
           </label>
         )}
@@ -77,7 +96,21 @@ export function OutilsScreen() {
 
       {vue === "dictionnaire" && <DicoResultats q={q} fonction={fonction} mot={params.get("mot")} onChange={dico} />}
 
-      {vue === "formules" && (
+      {vue === "formules" && connecteurs && (
+        <div class="reading reading-left" role="tabpanel">
+          <p class="small outils-intro"><strong>Partout dans le devoir.</strong> <span class="muted">Ils relient tes idées et guident le correcteur.</span></p>
+          <dl class="vocab">
+            {O.connecteurs.map(c => (
+              <Fragment key={c.titre}>
+                <dt>{c.titre}</dt>
+                <dd>{c.mots.join(" · ")}</dd>
+              </Fragment>
+            ))}
+          </dl>
+        </div>
+      )}
+
+      {vue === "formules" && !connecteurs && (
         <div class="reading reading-left" role="tabpanel">
           <Partie cat={groupe.id} />
           <p class="small outils-intro"><strong>{groupe.place}.</strong> <span class="muted">{groupe.role}</span></p>
@@ -98,28 +131,7 @@ export function OutilsScreen() {
         </div>
       )}
 
-      {vue === "vocabulaire" && (
-        <div class="reading reading-left" role="tabpanel">
-          <h2 class="sub-title outils-titre">Connecteurs logiques</h2>
-          <dl class="vocab">
-            {O.connecteurs.map(c => (
-              <Fragment key={c.titre}>
-                <dt>{c.titre}</dt>
-                <dd>{c.mots.join(" · ")}</dd>
-              </Fragment>
-            ))}
-          </dl>
-          <h2 class="sub-title outils-titre">Mots de chaque orientation</h2>
-          <dl class="vocab">
-            {O.orientations.map(o => (
-              <Fragment key={o.titre}>
-                <dt>{o.titre}</dt>
-                <dd>{o.mots.join(" · ")}<span class="vocab-oppose">{o.oppose}</span></dd>
-              </Fragment>
-            ))}
-          </dl>
-        </div>
-      )}
+      {vue === "arguments" && <ArgumentsFonction fonction={fonctionArg} />}
     </Page>
   );
 }
