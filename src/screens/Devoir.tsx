@@ -223,7 +223,7 @@ export function DevoirScreen() {
       }
       case "plan": return <>
         <p>Voici un plan possible. Ce sont des pistes : à toi de rédiger.</p>
-        {analyse.devalorise && !choisie && <p class="small devoir-indice">L'auteur dit que {OBJETS[analyse.objet].nom} ne sert à rien : explique d'abord son point de vue, puis montre ce qui le contredit.</p>}
+        {analyse.devalorise && !choisie && <p class="small devoir-indice">L'auteur doute que {OBJETS[analyse.objet].nom} soit vraiment utile : explique d'abord son point de vue, puis montre ce qui le contredit.</p>}
         {plan.problematique && <p><strong>Problématique en deux questions.</strong> {insecable(plan.problematique)}</p>}
         {c && !choisie && <p><strong>Ou en une question :</strong> {insecable(c.uneQuestion)}</p>}
         {c && !choisie && <details class="devoir-plus">
@@ -449,7 +449,7 @@ export function DevoirScreen() {
           {!autreExercice && !guide && plan && !parcours && <section class="devoir-pistes">
             <h2 class="section-title">Des pistes pour ton plan</h2>
             <p class="small muted devoir-possible">Ce sont des pistes possibles, pas la seule bonne réponse.</p>
-            {analyse.devalorise && !choisie && !libre && <p class="small devoir-indice">L'auteur dit que {OBJETS[analyse.objet].nom} ne sert à rien : explique d'abord son point de vue, puis montre ce qui le contredit.</p>}
+            {analyse.devalorise && !choisie && !libre && <p class="small devoir-indice">L'auteur doute que {OBJETS[analyse.objet].nom} soit vraiment utile : explique d'abord son point de vue, puis montre ce qui le contredit.</p>}
             {!parcours && analyse.comprendre && !(libre && !choisie) && !choisie && <div class="devoir-compris">
               <p class="devoir-compris-titre">Ce que dit ton sujet</p>
               <p>{analyse.comprendre.these}</p>
