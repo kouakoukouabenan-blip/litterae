@@ -46,3 +46,32 @@ export const SUJETS_NOVEMBRE = [
   ["« La littérature est un luxe dans un pays pauvre. » Discutez.", a => a.devalorise],
   ["« Le roman africain contemporain a abandonné la dénonciation pour le plaisir de raconter. » Expliquez et discutez.", a => p1(a)==='Évasion' && a.rejet==='Engagement'],
 ];
+
+// 25 sujets plus difficiles (second test du 16 novembre 2026) : comparaisons, négations, questions, images.
+export const SUJETS_NOVEMBRE_2 = [
+  ["« Certes, la littérature divertit, mais elle doit surtout éveiller les consciences. » Discutez.", a => p1(a)==='Engagement'],
+  ["« Le roman est moins une peinture de la société qu'une invention du romancier. » Discutez.", a => p1(a)==='Évasion'],
+  ["Faut-il que la poésie soit belle pour être utile ? Discutez.", a => /ne donne pas d'avis/.test(a.comprendre?.these ?? '')],
+  ["« Le poète chante autant pour lui-même que pour son peuple. » Discutez.", a => p1(a)==='Lyrique'],
+  ["« La littérature africaine est-elle condamnée à parler de politique ? » Discutez.", a => /ne donne pas d'avis/.test(a.comprendre?.these ?? '')],
+  ["Selon Senghor, « l'émotion est nègre comme la raison est hellène ». Qu'en pensez-vous ?", a => !a.sure || p1(a)==='Lyrique'],
+  ["« Plus qu'un miroir, le roman est une loupe qui grossit les défauts de la société. » Discutez.", a => p1(a)==='Engagement'],
+  ["« Un bon livre est celui qu'on referme en se sentant meilleur. » Discutez.", a => p1(a)==='Sociale'],
+  ["« la litterature c pour rever et oublie les probleme de la vie » expliké et discuté", a => sur(a,'Évasion')],
+  ["« Le théâtre africain doit retourner aux sources de la tradition. » Discutez.", a => sur(a,'Sociale')],
+  ["« Le roman n'imite pas la vie : il la recompose. » Discutez.", a => a.rejet==='Sociale' && p1(a)!=='Sociale'],
+  ["« La poésie est une arme miraculeuse. » Aimé Césaire. Expliquez et discutez.", a => sur(a,'Engagement')],
+  ["« Ce qui compte dans une œuvre, ce n'est pas ce qu'elle dit, mais comment elle le dit. » Discutez.", a => !a.sure || p1(a)==='Esthétique'],
+  ["« Le romancier est un historien du présent. » Discutez.", a => sur(a,'Sociale')],
+  ["« Les écrivains engagés finissent toujours par être récupérés par le pouvoir. » Discutez.", a => !a.sure || p1(a)!=='Engagement'],
+  ["« La littérature doit-elle plaire ou instruire ? » Discutez.", a => a.fonctions[0]==='Évasion' && a.fonctions[1]==='Sociale' && /choisir entre deux/.test(a.comprendre?.these ?? '')],
+  ["« Écrire pour soi, c'est déjà écrire pour les autres. » Discutez.", a => !a.sure || p1(a)==='Lyrique'],
+  ["« Le conteur africain est une bibliothèque vivante. » Expliquez et discutez.", a => p1(a)==='Sociale' && a.objet==='conteur'],
+  ["« La poésie moderne a tué la rime, mais pas la musique. » Discutez.", a => sur(a,'Esthétique')],
+  ["« Le rire est une arme plus efficace que la colère. » Discutez à partir d'œuvres théâtrales.", a => p1(a)==='Engagement'],
+  ["« Aucun livre n'a jamais rendu un homme meilleur. » Discutez.", a => a.devalorise],
+  ["« L'écrivain ne doit rien à la société. » Discutez.", a => !a.sure || (a.rejet==='Sociale' && p1(a)!=='Sociale')],
+  ["« Le roman d'aventures nous apprend plus sur nous-mêmes que bien des traités de morale. » Discutez.", a => ['Évasion','Sociale'].includes(p1(a))],
+  ["« La poésie n'est pas faite pour être comprise mais pour être aimée. » Discutez.", a => !a.sure || p1(a)==='Lyrique'],
+  ["« Une œuvre qui ne dérange personne ne sert à rien. » Discutez.", a => sur(a,'Engagement')],
+];
