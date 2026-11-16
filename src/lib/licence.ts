@@ -1,6 +1,7 @@
 import type { ContenuPayant } from "../data/types";
 import { read, write } from "./storage";
 import { SERVEUR_URL } from "./site";
+import { contenuLibre } from "./libre";
 
 /**
  * Accès complet par clé de licence Chariow.
@@ -15,7 +16,12 @@ interface Licence {
   titulaire?: Titulaire | null;
   /** Fin de l'accès (ms) pour une clé achetée après la mise en place de la durée ; null ou absent : sans limite. */
   fin?: number | null;
+  /** Réglage de durée connu lors de la dernière vérification : s'il change, on revérifie tout de suite. */
+  duree?: string;
 }
+
+/** Réglage de durée de l'éditeur, tel que reçu (« null » tant que les clés sont sans limite). */
+const dureeActuelle = () => JSON.stringify(contenuLibre()?.duree ?? null);
 
 /** Accès terminé sur cet appareil : gardé pour proposer de renouveler (et prolonger avec une nouvelle clé). */
 interface Termine { cle: string; fin: number; titulaire: Titulaire | null }
@@ -103,7 +109,7 @@ export async function activer(cle: string): Promise<ErreurActivation | null> {
   const data = await res.json().catch(() => null);
   if (!res.ok || !data?.contenu) return { message: data?.message ?? "La clé n'a pas pu être validée. Réessaie dans quelques minutes." };
   // Le serveur renvoie la clé exacte (tiret invisible retiré, O remplacé par 0…) : c'est elle qu'on garde.
-  enregistrer({ cle: typeof data.cle === "string" ? data.cle : cle.trim().toUpperCase(), contenu: data.contenu, verifieeLe: Date.now(), titulaire: lireTitulaire(data.titulaire), fin: typeof data.fin === "number" ? data.fin : null } satisfies Licence);
+  enregistrer({ cle: typeof data.cle === "string" ? data.cle : cle.trim().toUpperCase(), contenu: data.contenu, verifieeLe: Date.now(), titulaire: lireTitulaire(data.titulaire), fin: typeof data.fin === "number" ? data.fin : null, duree: dureeActuelle() } satisfies Licence);
   write(TERMINE, null);
   return null;
 }
@@ -128,14 +134,15 @@ export async function rechargerContenu() {
 export async function reverifier() {
   const l = licence();
   // Clé activée avant que l'appli connaisse le nom de l'élève : on le demande tout de suite.
-  if (!l || !navigator.onLine || (Date.now() - l.verifieeLe < REVERIFIER_APRES && "titulaire" in l)) return;
+  // Durée mise en place ou changée par l'éditeur depuis la dernière vérification : on demande tout de suite la date de fin.
+  if (!l || !navigator.onLine || (Date.now() - l.verifieeLe < REVERIFIER_APRES && "titulaire" in l && l.duree === dureeActuelle())) return;
   try {
     const res = await appel("/verifier", { cle: l.cle, appareil: appareil() });
     if (res.ok) {
       const data = await res.json().catch(() => null);
       enregistrer({ ...l, verifieeLe: Date.now(), titulaire: data && "titulaire" in data ? lireTitulaire(data.titulaire) : l.titulaire ?? null,
         // Fin changée par l'éditeur (geste, erreur) ou fixée à la première vérification après la mise en place de la durée.
-        fin: data && "fin" in data ? (typeof data.fin === "number" ? data.fin : null) : l.fin ?? null });
+        fin: data && "fin" in data ? (typeof data.fin === "number" ? data.fin : null) : l.fin ?? null, duree: dureeActuelle() });
       if (typeof data?.version === "number" && data.version !== l.contenu.version) await activer(l.cle); // pris en compte à la prochaine ouverture
     }
     else if (res.status === 403 || res.status === 404) {
