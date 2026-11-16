@@ -13,7 +13,13 @@ interface Licence {
   verifieeLe: number;
   /** Nom de l'acheteur chez Chariow (null : Chariow ne le donne pas ; absent : pas encore demandé). */
   titulaire?: Titulaire | null;
+  /** Fin de l'accès (ms) pour une clé achetée après la mise en place de la durée ; null ou absent : sans limite. */
+  fin?: number | null;
 }
+
+/** Accès terminé sur cet appareil : gardé pour proposer de renouveler (et prolonger avec une nouvelle clé). */
+interface Termine { cle: string; fin: number; titulaire: Titulaire | null }
+const TERMINE = "acces-termine";
 
 export interface Titulaire { prenom: string; nom: string }
 const lireTitulaire = (t: unknown): Titulaire | null =>
@@ -26,7 +32,24 @@ const REVERIFIER_APRES = 864e5;
 // Gardée en mémoire : le contenu payant pèse plus d'un mégaoctet, et le relire à chaque appel
 // (des centaines de fois en ouvrant l'accueil) bloquait les téléphones modestes plusieurs secondes.
 let enMemoire: { l: Licence | null } | null = null;
-export const licence = () => (enMemoire ??= { l: read<Licence | null>(KEY, null) }).l;
+export const licence = () => (enMemoire ??= { l: lireLicence() }).l;
+
+/** Lit la clé gardée ; si son année est passée (même hors connexion), l'appli repasse en version gratuite. */
+function lireLicence(): Licence | null {
+  const l = read<Licence | null>(KEY, null);
+  if (l?.fin && Date.now() > l.fin) {
+    write(TERMINE, { cle: l.cle, fin: l.fin, titulaire: l.titulaire ?? null } satisfies Termine);
+    write(KEY, null);
+    return null;
+  }
+  return l;
+}
+
+/** Date de fin de l'accès sur cet appareil (null : sans limite ou pas de clé). */
+export const finAcces = () => licence()?.fin ?? null;
+
+/** Accès terminé sur cet appareil (pour proposer de renouveler), ou null. */
+export const accesTermine = () => (licence() ? null : read<Termine | null>(TERMINE, null));
 
 /** Nom de l'élève qui a acheté la clé, pour l'accueillir par son prénom. */
 export const titulaire = () => licence()?.titulaire ?? null;
@@ -71,14 +94,17 @@ export async function activer(cle: string): Promise<ErreurActivation | null> {
   if (!navigator.onLine) return { message: "Tu es hors connexion. Connecte-toi à Internet pour valider ta clé." };
   let res: Response;
   try {
-    res = await appel("/activer", { cle: cle.trim(), appareil: appareil() });
+    // Clé précédente de cet appareil : si elle courait encore, ses jours restants s'ajoutent à la nouvelle.
+    const ancienne = licence()?.cle ?? read<Termine | null>(TERMINE, null)?.cle ?? null;
+    res = await appel("/activer", { cle: cle.trim(), appareil: appareil(), ancienne });
   } catch {
     return { message: "Impossible de joindre le serveur. Vérifie ta connexion et réessaie." };
   }
   const data = await res.json().catch(() => null);
   if (!res.ok || !data?.contenu) return { message: data?.message ?? "La clé n'a pas pu être validée. Réessaie dans quelques minutes." };
   // Le serveur renvoie la clé exacte (tiret invisible retiré, O remplacé par 0…) : c'est elle qu'on garde.
-  enregistrer({ cle: typeof data.cle === "string" ? data.cle : cle.trim().toUpperCase(), contenu: data.contenu, verifieeLe: Date.now(), titulaire: lireTitulaire(data.titulaire) } satisfies Licence);
+  enregistrer({ cle: typeof data.cle === "string" ? data.cle : cle.trim().toUpperCase(), contenu: data.contenu, verifieeLe: Date.now(), titulaire: lireTitulaire(data.titulaire), fin: typeof data.fin === "number" ? data.fin : null } satisfies Licence);
+  write(TERMINE, null);
   return null;
 }
 
@@ -107,11 +133,20 @@ export async function reverifier() {
     const res = await appel("/verifier", { cle: l.cle, appareil: appareil() });
     if (res.ok) {
       const data = await res.json().catch(() => null);
-      enregistrer({ ...l, verifieeLe: Date.now(), titulaire: data && "titulaire" in data ? lireTitulaire(data.titulaire) : l.titulaire ?? null });
+      enregistrer({ ...l, verifieeLe: Date.now(), titulaire: data && "titulaire" in data ? lireTitulaire(data.titulaire) : l.titulaire ?? null,
+        // Fin changée par l'éditeur (geste, erreur) ou fixée à la première vérification après la mise en place de la durée.
+        fin: data && "fin" in data ? (typeof data.fin === "number" ? data.fin : null) : l.fin ?? null });
       if (typeof data?.version === "number" && data.version !== l.contenu.version) await activer(l.cle); // pris en compte à la prochaine ouverture
     }
     else if (res.status === 403 || res.status === 404) {
       const data = await res.json().catch(() => null);
+      // Année d'accès terminée : l'appli repasse en version gratuite et propose de renouveler (les questions restent).
+      if (data?.erreur === "terminee") {
+        write(TERMINE, { cle: l.cle, fin: typeof data.fin === "number" ? data.fin : Date.now(), titulaire: l.titulaire ?? null } satisfies Termine);
+        enregistrer(null);
+        location.reload();
+        return;
+      }
       // « appareil-libere » : l'éditeur a retiré cet appareil de la clé (téléphone perdu ou changé).
       if (["revoquee", "cle-invalide", "expiree", "appareil-libere"].includes(data?.erreur)) {
         retirer();

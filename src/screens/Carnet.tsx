@@ -6,9 +6,9 @@ import { oeuvre } from "../lib/data";
 import { useNotes, useSaved } from "../lib/carnet";
 import type { Oeuvre } from "../data/types";
 import { Icon } from "../components/Icon";
-import { licence, titulaire } from "../lib/licence";
+import { accesTermine, finAcces, licence, titulaire } from "../lib/licence";
 import { AchatLien } from "../components/Achat";
-import { PRICE, useAccess } from "../lib/access";
+import { PRICE, dateFin, joursAvant, useAccess } from "../lib/access";
 import { useQuestions } from "../lib/contact";
 import { OeuvresOnglets } from "../components/SujetsOnglets";
 import { auteursDebloques, badgeGagne, badges } from "../lib/collection";
@@ -65,6 +65,9 @@ function LigneCollection() {
 }
 
 export function CarnetScreen() {
+  // Un mois avant la fin de l'accès, une ligne discrète propose de renouveler.
+  const fin = finAcces(), termine = accesTermine();
+  const bientot = fin !== null && joursAvant(fin) <= 30;
   return (
     <Page>
       <PageHeader title={titulaire() ? `Bonjour ${titulaire()!.prenom}` : "Mon espace"} compact />
@@ -72,12 +75,15 @@ export function CarnetScreen() {
       <a class="row access-row" href="#/acces">
         <Icon name="lock" size={20} />
         <span class="row-body">
-          <span class="row-title">{licence() ? "Accès complet actif" : "Accès complet"}</span>
-          <span class="meta">{licence() ? (titulaire() ? `Au nom de ${titulaire()!.nom}` : "Voir ma clé d'accès") : "Saisir ma clé ou acheter l'accès"}</span>
+          <span class="row-title">{licence() ? "Accès complet actif" : termine ? "Accès complet terminé" : "Accès complet"}</span>
+          <span class="meta">{licence()
+            ? (bientot ? `Jusqu'au ${dateFin(fin!)}` : titulaire() ? `Au nom de ${titulaire()!.nom}` : "Voir ma clé d'accès")
+            : termine ? `Depuis le ${dateFin(termine.fin)}` : "Saisir ma clé ou acheter l'accès"}</span>
         </span>
         <Icon name="chevron_right" />
       </a>
-      {!licence() && <p class="small muted access-buy">Pas encore de clé ? <AchatLien label={`Acheter l'accès complet, ${PRICE}`} /></p>}
+      {bientot && <p class="small muted access-buy">Ton accès se termine bientôt. <AchatLien label={`Renouveler, ${PRICE}`} /></p>}
+      {!licence() && <p class="small muted access-buy">{termine ? <AchatLien label={`Renouveler l'accès complet, ${PRICE}`} /> : <>Pas encore de clé ? <AchatLien label={`Acheter l'accès complet, ${PRICE}`} /></>}</p>}
       <a class="row access-row" href="#/progres">
         <Icon name="history_edu" size={20} />
         <span class="row-body">

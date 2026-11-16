@@ -4,7 +4,7 @@ import apercu from "../data/quiz-apercu.json";
 import libres from "../data/quiz-libre.json";
 import type { QuestionQuiz } from "../data/types";
 import { activer, licence } from "../lib/licence";
-import { PRICE } from "../lib/access";
+import { DUREE, PRICE } from "../lib/access";
 import { useStored } from "../lib/storage";
 import { plural } from "../lib/text";
 import { AchatLien } from "./Achat";
@@ -41,7 +41,7 @@ function Verrou({ nombre }: { nombre: number }) {
   useVerrou("quiz");
   return (
     <div class="quiz-lock">
-      <p><Icon name="lock" size={18} /> Les {nombre} questions de ce quiz, avec la correction expliquée, font partie de l'accès complet ({PRICE}, une seule fois).</p>
+      <p><Icon name="lock" size={18} /> Les {nombre} questions de ce quiz, avec la correction expliquée, font partie de l'accès complet ({PRICE}, {DUREE ? `pour ${DUREE}` : "une seule fois"}).</p>
       <div class="lock-actions">
         <AchatLien class="btn btn-primary" label={`Acheter une clé, ${PRICE}`} />
         <a class="btn btn-secondary" href="#/acces">J'ai une clé d'accès</a>

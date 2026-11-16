@@ -37,6 +37,30 @@ export const PRICE = PRIX.prix;
 /** Prix normal barré pendant une promo, sinon null. */
 export const PRIX_AVANT = PRIX.avant;
 
+/**
+ * Durée de l'accès acheté aujourd'hui, réglée dans le tableau de bord : null tant que les clés sont sans limite.
+ * Les textes de vente en dépendent (« pour 1 an » au lieu de « payés une seule fois »).
+ */
+function dureeDuJour() {
+  const d = contenuLibre()?.duree;
+  if (!d?.depuis || !d.mois) return null;
+  const t = new Date();
+  const aujourdhui = `${t.getFullYear()}-${String(t.getMonth() + 1).padStart(2, "0")}-${String(t.getDate()).padStart(2, "0")}`;
+  if (aujourdhui < d.depuis) return null;
+  return d.mois === 12 ? "1 an" : d.mois % 12 === 0 ? `${d.mois / 12} ans` : `${d.mois} mois`;
+}
+/** « 1 an », « 2 ans »… ou null si l'accès acheté aujourd'hui est sans limite. */
+export const DUREE = dureeDuJour();
+/** Jour à partir duquel les clés achetées ont une durée (« 1er décembre 2026 »), ou null. */
+export const DUREE_DEPUIS = DUREE ? new Date(`${contenuLibre()!.duree!.depuis}T12:00:00`).toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" }) : null;
+/** « pour 1 an » ou « payés une seule fois », après le prix. */
+export const PAYE = DUREE ? `pour ${DUREE}` : "payés une seule fois";
+
+/** « 12 mars 2027 » */
+export const dateFin = (t: number) => new Date(t).toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" });
+/** Jours restants avant la fin de l'accès (arrondi au-dessus). */
+export const joursAvant = (t: number) => Math.ceil((t - Date.now()) / 864e5);
+
 /** Accès aux contenus payants : complet dès qu'une clé de licence a été validée sur l'appareil. */
 export function useAccess() {
   const premium = !!licence();

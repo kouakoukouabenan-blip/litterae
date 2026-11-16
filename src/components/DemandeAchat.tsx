@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "preact/hooks";
 import { Icon } from "./Icon";
 import { CommentPayerBouton } from "./CommentPayer";
-import { PRICE, PRIX_AVANT, PRIX_NORMAL, finPromo, finPromoDans } from "../lib/access";
+import { PRICE, PRIX_AVANT, PAYE, PRIX_NORMAL, finPromo, finPromoDans } from "../lib/access";
 import { ACHAT_URL } from "../lib/site";
 import { licence } from "../lib/licence";
 import { fichesGratuites, fichesOuvertes } from "../lib/fiches";
@@ -91,7 +91,7 @@ export function DemandeAchat() {
           <li><Icon name="inventory_2" size={20} /><span><strong>Tout le dictionnaire</strong> ({motsPublics().length} mots)</span></li>
         </ul>
         <p class="demande-achat-prix">
-          {PRIX_AVANT && <><s class="prix-avant">{PRIX_AVANT}</s> </>}<strong>{PRICE}</strong>, payés une seule fois
+          {PRIX_AVANT && <><s class="prix-avant">{PRIX_AVANT}</s> </>}<strong>{PRICE}</strong>, {PAYE}
         </p>
         {PRIX_AVANT && date && <p class={`small${fin !== null && fin <= 2 ? " demande-achat-urgent" : " muted"}`}>
           {fin === 0 ? `Dernier jour de la promo : ${PRIX_NORMAL} dès demain.` : fin === 1 ? `Promo jusqu'à demain soir, puis ${PRIX_NORMAL}.` : `Promo jusqu'au ${date}, puis ${PRIX_NORMAL}.`}

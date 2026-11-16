@@ -23,6 +23,7 @@ import { InstallGate, InstallGuide } from "./components/Install";
 import { DemandeNotifs } from "./components/DemandeNotifs";
 import { DemandeAchat } from "./components/DemandeAchat";
 import { Bienvenue } from "./components/Bienvenue";
+import { FinAcces } from "./components/FinAcces";
 import { AvantPayer, preparerAvantPaiement } from "./components/AvantPayer";
 import { CommentPayer } from "./components/CommentPayer";
 import { AccesScreen } from "./screens/Acces";
@@ -140,6 +141,7 @@ export function App() {
       <DemandeNotifs />
       <DemandeAchat />
       <Bienvenue />
+      <FinAcces />
       <AvantPayer />
       <PanneauMessages />
       <CommentPayer />

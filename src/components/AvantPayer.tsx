@@ -1,7 +1,7 @@
 import { useRef } from "preact/hooks";
 import { Icon } from "./Icon";
 import { CommentPayerBouton } from "./CommentPayer";
-import { PRICE, PRIX_NORMAL, PRIX_AVANT, finPromo } from "../lib/access";
+import { PAYE, PRICE, PRIX_NORMAL, PRIX_AVANT, finPromo } from "../lib/access";
 import { ACHAT_URL } from "../lib/site";
 import { OEUVRES, SUJETS } from "../lib/data";
 import { noter } from "../lib/stats";
@@ -28,7 +28,7 @@ function messageParents() {
   return [
     "Bonjour, j'ai besoin de ton aide pour préparer la dissertation littéraire.",
     `Il y a une application, Litterae, avec ${OEUVRES.filter(w => w.detaillee).length} fiches d'œuvres, ${SUJETS.length} sujets corrigés et le cours complet.`,
-    `L'accès complet coûte ${PRICE}, payés une seule fois${promo}, par Mobile Money (Wave, Orange Money, MTN, Moov).`,
+    `L'accès complet coûte ${PRICE}, ${PAYE}${promo}, par Mobile Money (Wave, Orange Money, MTN, Moov).`,
     `Tu peux payer ici : ${ACHAT_URL}`,
     "Une clé arrive ensuite par e-mail : mets mon adresse e-mail au moment de payer, ou envoie-moi la clé. Merci !"
   ].join("\n\n");

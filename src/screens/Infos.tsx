@@ -3,7 +3,7 @@ import { Page } from "../components/Page";
 import { PageHeader } from "../components/PageHeader";
 import { Icon } from "../components/Icon";
 import { useInstallAction } from "../components/Install";
-import { FREE_SUBJECTS, FREE_WORKS, PRICE } from "../lib/access";
+import { FREE_SUBJECTS, FREE_WORKS, PRICE, PAYE, DUREE, DUREE_DEPUIS } from "../lib/access";
 import { OEUVRES, SUJETS, NB_DETAILLEES } from "../lib/data";
 import { LECONS } from "../lib/lecons";
 import { CONTACT_EMAIL, EDITEUR, MISE_A_JOUR } from "../lib/site";
@@ -64,7 +64,7 @@ export function AProposScreen() {
 
           <h2 class="section-title">Accès gratuit et accès complet</h2>
           <p>Gratuit : une partie de chaque méthode. En dissertation littéraire : 5 leçons du cours au choix, la boîte à outils (avec 10 mots du dictionnaire au choix), les {FREE_SUBJECTS} premiers sujets corrigés et {FREE_WORKS} fiches d'œuvres au choix, plus une à chaque série de 7 jours d'affilée (la recherche dans toutes les œuvres reste libre).</p>
-          <p>Accès complet : tout le contenu réservé de toutes les méthodes, avec ce qui s'y ajoute, pour {PRICE} payés une seule fois par Mobile Money, et les réponses de l'auteur à tes questions directement dans l'application. Tu reçois une clé d'accès par e-mail, valable sur 2 appareils. <AchatLien label="Acheter une clé sur Chariow" /></p>
+          <p>Accès complet : tout le contenu réservé de toutes les méthodes, avec ce qui s'y ajoute, pour {PRICE} {PAYE} par Mobile Money, et les réponses de l'auteur à tes questions directement dans l'application. Tu reçois une clé d'accès par e-mail, valable sur 2 appareils. <AchatLien label="Acheter une clé sur Chariow" /></p>
 
           {!installed && (
             <>
@@ -105,7 +105,15 @@ export function CguScreen() {
       <p>Sans paiement, tu as accès à une partie du contenu de chaque méthode, signalée dans l'application. Par exemple, en dissertation littéraire : 5 leçons du cours et {FREE_WORKS} fiches d'œuvres de ton choix, la boîte à outils et les {FREE_SUBJECTS} premiers sujets corrigés. Les contenus gratuits au choix sont comptés sur ton appareil. L'éditeur peut faire évoluer le contenu de l'accès gratuit.</p>
 
       <h2 class="section-title">5. Accès complet</h2>
-      <p>L'accès complet coûte {PRICE} (francs CFA), payés une seule fois. Il ouvre tout le contenu réservé de Litterae, toutes méthodes confondues, y compris les contenus ajoutés par la suite, pour la durée de vie du service. Si un jour un nouveau service était vendu à part, ce serait clairement indiqué avant tout achat, et ce que tu as déjà payé resterait ouvert.</p>
+      {DUREE ? (
+        <>
+          <p>L'accès complet coûte {PRICE} (francs CFA) et dure {DUREE} à partir du jour de l'achat. Pendant ce temps, il ouvre tout le contenu réservé de Litterae, toutes méthodes confondues, y compris les contenus ajoutés en cours de route. Si un jour un nouveau service était vendu à part, ce serait clairement indiqué avant tout achat.</p>
+          <p>La date de fin est indiquée dans l'application (Mon espace, puis Accès complet). À cette date, l'application repasse en version gratuite : ce que tu as écrit et enregistré sur ton appareil reste. Pour continuer, tu achètes une nouvelle clé ; si tu le fais avant la fin, les jours qui te restaient s'ajoutent à la nouvelle clé, sur le même appareil.</p>
+          <p>Les clés achetées avant le {DUREE_DEPUIS} gardent leur accès sans limite de durée, comme prévu au moment de leur achat.</p>
+        </>
+      ) : (
+        <p>L'accès complet coûte {PRICE} (francs CFA), payés une seule fois. Il ouvre tout le contenu réservé de Litterae, toutes méthodes confondues, y compris les contenus ajoutés par la suite, pour la durée de vie du service. Si un jour un nouveau service était vendu à part, ce serait clairement indiqué avant tout achat, et ce que tu as déjà payé resterait ouvert.</p>
+      )}
       <p>L'accès complet permet aussi de poser des questions à l'auteur depuis la page Contact et de recevoir la réponse dans l'application. L'auteur répond dès qu'il le peut, sans délai garanti ; il ne rédige pas les devoirs à la place des élèves et peut ne pas répondre à un message irrespectueux ou hors sujet.</p>
       <p>Le paiement se fait par Mobile Money (Wave, Orange Money, MTN MoMo, Moov Money) via la plateforme Chariow, qui traite la transaction. Litterae ne voit ni ne conserve tes codes de paiement. <AchatLien label="Page d'achat sur Chariow" /></p>
       <p>Après le paiement, Chariow t'envoie par e-mail une clé d'accès personnelle. Elle s'active sur 2 appareils au maximum. Une clé partagée publiquement ou utilisée frauduleusement peut être désactivée.</p>

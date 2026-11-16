@@ -2,8 +2,8 @@ import { useState } from "preact/hooks";
 import { Page } from "../components/Page";
 import { PageHeader } from "../components/PageHeader";
 import { Icon } from "../components/Icon";
-import { activer, licence, retirer } from "../lib/licence";
-import { PRICE, PRIX_AVANT } from "../lib/access";
+import { accesTermine, activer, licence, retirer } from "../lib/licence";
+import { PAYE, PRICE, PRIX_AVANT, dateFin, joursAvant, DUREE } from "../lib/access";
 import { ACHAT_URL, lienAide, WHATSAPP } from "../lib/site";
 import { AchatLien } from "../components/Achat";
 import { CommentPayerBouton } from "../components/CommentPayer";
@@ -13,6 +13,9 @@ import { write } from "../lib/storage";
 /** Saisie de la clé reçue par e-mail après l'achat, ou état de l'accès complet. */
 export function AccesScreen({ params }: { params: URLSearchParams }) {
   const actuelle = licence();
+  const termine = accesTermine();
+  const fin = actuelle?.fin ?? null;
+  const reste = fin ? joursAvant(fin) : null;
   // Lien reçu par e-mail (…#/acces?cle=ABCD-1234) : la clé est déjà remplie, il ne reste qu'à valider.
   const [cle, setCle] = useState(() => (params.get("cle") ?? "").trim().toUpperCase());
   const peutColler = typeof navigator.clipboard?.readText === "function";
@@ -43,7 +46,7 @@ export function AccesScreen({ params }: { params: URLSearchParams }) {
     }
   }
 
-  if (actuelle && etat !== "ok")
+  if (actuelle && etat !== "ok" && !params.get("nouvelle"))
     return (
       <Page title="Accès complet" back="#/accueil">
         <div class="reading">
@@ -53,7 +56,16 @@ export function AccesScreen({ params }: { params: URLSearchParams }) {
           <dl class="def">
             {actuelle.titulaire && <><dt>Au nom de</dt><dd>{actuelle.titulaire.nom}</dd></>}
             <dt>Clé</dt><dd class="mono">{actuelle.cle.replace(/.(?=.{4})/g, "•")}</dd>
+            {fin ? <><dt>Valable jusqu'au</dt><dd>{dateFin(fin)}</dd></> : DUREE && <><dt>Durée</dt><dd>Sans limite</dd></>}
           </dl>
+          {reste !== null && reste <= 30 && ACHAT_URL && (
+            <section class="acces-renouveler">
+              <p>{reste <= 1 ? "Ton accès se termine aujourd'hui." : `Ton accès se termine dans ${reste} jours.`} Renouvelle maintenant : les jours qui te restent s'ajoutent à ta nouvelle clé.</p>
+              <AchatLien class="btn btn-primary align-start" label={`Renouveler, ${PRICE}`} />
+              <p class="small muted">Ensuite, colle la nouvelle clé ici, sur ce téléphone.</p>
+              <a class="btn btn-secondary align-start" href="#/acces?nouvelle=1">J'ai ma nouvelle clé</a>
+            </section>
+          )}
           <details class="repli acces-note">
             <summary>Ta clé marche sur 2 appareils</summary>
             <p>Garde l'e-mail qui la contient pour la saisir sur un nouveau téléphone. Attention : effacer les données du navigateur compte comme un nouvel appareil. En cas de souci, <a href={lienAide("ma clé Litterae a atteint sa limite d'appareils")} target="_blank" rel="noopener">écris-nous</a>.</p>
@@ -68,10 +80,17 @@ export function AccesScreen({ params }: { params: URLSearchParams }) {
   return (
     <Page title="Clé d'accès" back="#/accueil">
       <div class="reading">
-        <PageHeader eyebrow="Accès complet" title="Saisir ma clé d'accès">
-          La clé reçue par e-mail après l'achat.
-          {ACHAT_URL && <> Pas de clé ? <AchatLien label="Acheter une clé" /></>}
-        </PageHeader>
+        {termine && etat !== "ok" ? (
+          <PageHeader eyebrow="Accès complet" title="Ton accès est terminé">
+            Ton accès complet a pris fin le {dateFin(termine.fin)}. Tes travaux restent sur ton téléphone ; une nouvelle clé rouvre tout.
+            {ACHAT_URL && <> <AchatLien label={`Renouveler, ${PRICE}`} /></>}
+          </PageHeader>
+        ) : (
+          <PageHeader eyebrow="Accès complet" title={actuelle ? "Saisir ma nouvelle clé" : "Saisir ma clé d'accès"}>
+            La clé reçue par e-mail après l'achat.
+            {ACHAT_URL && !actuelle && <> Pas de clé ? <AchatLien label="Acheter une clé" /></>}
+          </PageHeader>
+        )}
 
         {etat === "ok" ? (
           <p class="notice notice-success" role="status"><Icon name="check" size={20} />Clé validée. Ouverture de l'accès complet…</p>
@@ -101,11 +120,11 @@ export function AccesScreen({ params }: { params: URLSearchParams }) {
         </details>
 
         <section class="acces-achat">
-          <h2 class="section-title">Pas encore de clé ?</h2>
-          <p>{PRIX_AVANT && <><s class="prix-avant">{PRIX_AVANT}</s> </>}<strong>{PRICE}</strong>, payés une seule fois par Mobile Money.</p>
+          <h2 class="section-title">{termine || actuelle ? "Pas encore ta nouvelle clé ?" : "Pas encore de clé ?"}</h2>
+          <p>{PRIX_AVANT && <><s class="prix-avant">{PRIX_AVANT}</s> </>}<strong>{PRICE}</strong>, {PAYE} par Mobile Money.</p>
           {ACHAT_URL ? (
             <>
-              <AchatLien class="btn btn-primary align-start" label={`Acheter une clé, ${PRICE}`} />
+              <AchatLien class="btn btn-primary align-start" label={termine || actuelle ? `Renouveler, ${PRICE}` : `Acheter une clé, ${PRICE}`} />
               <CommentPayerBouton />
             </>
           ) : (

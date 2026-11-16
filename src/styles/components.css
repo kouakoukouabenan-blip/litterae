@@ -224,6 +224,8 @@
 .acces-aide > :not(summary) { margin-top: var(--s3); }
 .acces-aide > p { color: var(--ink); }
 .acces-note { margin: var(--s4) 0; }
+.acces-renouveler { display: flex; flex-direction: column; gap: var(--s3); margin: var(--s4) 0; padding: var(--s4); border-radius: var(--radius); background: var(--ochre-pale); color: var(--ochre-text); }
+.acces-renouveler p { margin: 0; }
 .access-row { background: var(--surface); border: var(--border) solid var(--line); border-radius: var(--radius); margin-bottom: var(--s5); }
 .access-row > .icon:first-child { color: var(--orange); }
 
