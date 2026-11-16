@@ -1476,7 +1476,8 @@ export function analyserSujet(texteTape: string, combien = 6, imposee?: Fonction
   return {
     themes, fonctions, mots: dico, discussion, arguments: argumentsTrouves, travail: TRAVAIL[type], auteur, plan, oeuvres,
     proches: corrige ? proches.filter(x => x.num !== corrige.num) : proches,
-    genres, doute, faible, rejet, corrige, objet, objetSur,
+    // « La littérature est un luxe » : le plan suit la critique de l'auteur, pas une autre fonction possible.
+    genres, doute: devalorise ? null : doute, faible, rejet, corrige, objet, objetSur,
     // Plan montré d'emblée seulement si la lecture est sûre ; sinon l'élève choisit sa piste dans le guide.
     sure: !!corrige?.ouvert || !!imposee || (!horsCadre && !inconnue && ((!doute && !faible && appuyee && fonctions.length > 0) || devalorise)),
     horsCadre, devalorise: devalorise && !corrige, precision: precisionDe(fonctions[0], c0), planLibre: planLibreDu(brute, discussion),
