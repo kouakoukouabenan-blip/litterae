@@ -20,11 +20,11 @@ import { redresser, cle, commencePar, jetons, memeFamille, memeMot, type Jeton }
  * début de mot (par défaut), mot entier (« $ ») ou expression (avec une espace, compte double).
  */
 const INDICES: [Fonction, string[]][] = [
-  ["Engagement", ["condamner la", "condamne la", "cri de revolte", "prendre position", "prise de position", "transformer la societe", "transforme la societe", "changer la societe", "dire la verite", "indign", "fustig", "condamn", "stigmatis", "mobilis", "rebelle", "rebellion", "subversi", "contest", "sentinelle", "eclaireur", "refuser le silence", "denonc", "reside dans son message", "reside dans le message", "trahison du peuple", "trahir le peuple", "dans son message", "dans le message", "trahison", "trahir", "trahi$", "maux de la societe", "maux de notre societe", "maux$", "mettre des mots sur", "met des mots sur", "prendre parti", "parti pris", "corriger les moeurs", "corrige les moeurs", "corriger les hommes", "accus", "pistolet", "tract$", "propagande", "militer", "jours meilleurs", "aveugle", "verite", "conscientis", "engage$", "engagement", "change$", "changement", "denon", "combat", "lutt", "arme$", "militant", "changer le monde", "changer la societe", "eveill", "conscien", "revolt", "revolution", "liber", "injust", "oppress", "opprim", "servir", "au service", "peuple", "responsab", "mission", "temoign", "bataille", "battre", "porte-parole", "sans voix", "defend", "critiqu", "transform", "agir", "action", "utile$", "guide$", "eclair", "flambeau", "vocation", "croisade", "resist", "dictat", "tyran", "colonis", "esclav", "racis", "fusil", "bombe", "prophet", "verite", "mensonge", "hypocris", "silenc", "devoir$", "accuse", "soumission", "bouche$", "malheur", "voix$", "echo$", "derang", "inquiet", "boulevers", "envahi", "secou", "choqu", "provoqu", "histoire$", "relecture", "relire", "memoire"]],
-  ["Sociale", ["eduque$", "eduquer$", "sa culture", "ses racines", "histoire d un peuple", "histoire des peuples", "memoire des peuples", "memoire d un peuple", "sagesse des anciens", "transmet la sagesse", "valoriser la culture", "valorise la culture", "enseigne la morale", "enseigner la morale", "enseign", "transmet", "transmett", "valoris", "enracin", "sagesse", "ancetre", "reportage", "reporter", "instrui", "eduqu", "moraliser", "lecon de", "ce qu il voit", "ce que l on voit", "ce qu ils voient", "ecole du peuple", "ecole$", "didact", "moralis", "edifi", "tradition", "representer la vie", "represente la vie", "representation de la vie", "imiter la vie", "coutume", "vie d un peuple", "type$", "types$", "condition", "decouvr", "temoin", "temoignage", "point d optique", "realisme", "reflet", "histoire$", "memoire", "connaitre", "classe", "sociaux", "societ", "social", "miroir", "realit", "reel$", "realis", "peindre", "peint", "tableau", "reflet", "refleter", "moeurs", "epoque", "vie quotidienne", "c est la vie", "de la vie", "observ", "decri", "description", "milieu", "photograph", "document", "imiter", "imitation", "faits$", "tels qu", "telle qu", "tel qu", "empreinte", "nous vivons", "ce que nous vivons", "vivent", "information", "barometre"]],
+  ["Engagement", ["condamner la", "condamne la", "cri de revolte", "prendre position", "prise de position", "transformer la societe", "transforme la societe", "changer la societe", "dire la verite", "indign", "fustig", "condamn", "stigmatis", "mobilis", "rebelle", "rebellion", "subversi", "contest", "sentinelle", "eclaireur", "refuser le silence", "denonc", "reside dans son message", "reside dans le message", "trahison du peuple", "trahir le peuple", "dans son message", "dans le message", "trahison", "trahir", "trahi$", "maux de la societe", "maux de notre societe", "maux$", "mettre des mots sur", "met des mots sur", "prendre parti", "parti pris", "corriger les moeurs", "corrige les moeurs", "corriger les hommes", "accus", "pistolet", "tract$", "propagande", "militer", "jours meilleurs", "aveugle", "verite", "conscientis", "engage$", "engagement", "change$", "changement", "denon", "combat", "lutt", "arme$", "militant", "changer le monde", "changer la societe", "eveill", "conscien", "revolt", "revolution", "liber", "injust", "oppress", "opprim", "servir", "au service", "peuple", "responsab", "mission", "temoign", "bataille", "battre", "porte-parole", "sans voix", "defend", "critiqu", "transform", "agir", "action", "utile$", "guide$", "eclair", "flambeau", "vocation", "croisade", "resist", "dictat", "tyran", "colonis", "esclav", "racis", "fusil", "bombe", "prophet", "politi", "homme politique", "verite", "mensonge", "hypocris", "silenc", "devoir$", "accuse", "soumission", "bouche$", "malheur", "voix$", "echo$", "derang", "inquiet", "boulevers", "envahi", "secou", "choqu", "provoqu", "histoire$", "relecture", "relire", "memoire"]],
+  ["Sociale", ["apprendre a vivre", "apprend a vivre", "apprennent a vivre", "appren", "eduque$", "eduquer$", "sa culture", "ses racines", "histoire d un peuple", "histoire des peuples", "memoire des peuples", "memoire d un peuple", "sagesse des anciens", "transmet la sagesse", "valoriser la culture", "valorise la culture", "enseigne la morale", "enseigner la morale", "enseign", "transmet", "transmett", "valoris", "enracin", "sagesse", "ancetre", "reportage", "reporter", "instrui", "eduqu", "moraliser", "lecon de", "ce qu il voit", "ce que l on voit", "ce qu ils voient", "ecole du peuple", "ecole$", "didact", "moralis", "edifi", "tradition", "representer la vie", "represente la vie", "representation de la vie", "imiter la vie", "coutume", "vie d un peuple", "type$", "types$", "condition", "decouvr", "temoin", "temoignage", "point d optique", "realisme", "reflet", "histoire$", "memoire", "connaitre", "classe", "sociaux", "societ", "social", "miroir", "realit", "reel$", "realis", "peindre", "peint", "tableau", "reflet", "refleter", "moeurs", "epoque", "vie quotidienne", "c est la vie", "de la vie", "observ", "decri", "description", "milieu", "photograph", "document", "imiter", "imitation", "faits$", "tels qu", "telle qu", "tel qu", "empreinte", "nous vivons", "ce que nous vivons", "vivent", "information", "barometre"]],
   ["Esthétique", ["magie des mots", "jeu sur les mots", "par sa forme", "sa forme", "elegan", "embelli", "alchimi", "maniere", "bien ecrire", "bien ecrit", "langue$", "mots$", "technique", "enchant", "vocabulaire", "dictionnaire", "clairement", "partition", "danse", "grandeur", "peintre", "sonor", "vers$", "ecriture$", "travail", "ciseler", "beau$", "beaute", "belle$", "art$", "l art pour l art", "artist", "forme$", "style", "langage", "poesie pure", "createur", "creation", "creat", "gratuit", "musique", "musical", "harmon", "rime", "rythme", "image$", "verbe$", "perfection", "esthet", "inutile", "elle meme", "symbole", "parole artistique", "orfevre", "sculpt", "spectacle"]],
-  ["Évasion", ["enchante la vie", "passer le temps", "fait passer le temps", "tapis volant", "belle histoire", "belles histoires", "raconter une histoire", "refuge", "hors de ce monde", "n importe ou", "menteur", "emport", "loin", "rire$", "comique", "humour", "plaire", "suffit pas", "chambre", "voyager", "fable", "conte$", "contes$", "legende", "aventure", "evasion", "evad", "reve$", "rever$", "reveur", "imagin", "divert", "distrai", "distrac", "fuir", "fuite", "ailleurs", "plaisir", "amus", "oubli", "fiction", "invent", "ennui", "ennuy", "loisir", "detente", "voyag", "aventur", "merveill", "fantast", "fantaisie", "magie", "echapp", "arracher", "consol", "chimere", "illusion", "raconter des histoires", "spectacle", "partir$", "lointain", "endroits"]],
-  ["Lyrique", ["biograph", "ses souvenirs", "se raconte", "se devoile", "se confie", "se confier", "parler de soi", "devoil", "epanch", "etat d ame", "etats d ame", "vie de son auteur", "vie de l auteur", "sa propre vie", "propre vie", "nu$", "lui meme", "soi meme", "moi meme", "se chercher", "autobiograph", "confession", "sincer", "temperament", "vecu", "experience", "coeur", "cri$", "souvenir", "nostalg", "aveu", "sentiment", "emotion", "coeur", "ame$", "moi$", "intime", "souffr", "douleur", "douloureu", "amour", "joie", "tristesse", "triste", "confid", "emouv", "emu$", "toucher le coeur", "touche le coeur", "tourment", "sourire", "souri$", "malheureu", "ressen", "sensib", "larme", "pleur", "chagrin", "melancol", "desesper", "nostalg", "passion", "solitude", "sanglot", "plainte", "lament", "gemi", "chant", "personnel$"]]
+  ["Évasion", ["enchante la vie", "passer le temps", "fait passer le temps", "tapis volant", "belle histoire", "belles histoires", "raconter une histoire", "refuge", "hors de ce monde", "n importe ou", "menteur", "emport", "loin", "rire$", "comique", "humour", "plaire", "suffit pas", "chambre", "voyager", "fable", "conte$", "contes$", "legende", "aventure", "evasion", "evad", "reve$", "rever$", "reveur", "imagin", "divert", "distrai", "distrac", "fuir", "fuite", "ailleurs", "plaisir", "amus", "oubli", "fiction", "invent", "ennui", "ennuy", "loisir", "detente", "voyag", "aventur", "merveill", "fantast", "fantaisie", "magie", "echapp", "arracher", "consol", "endorm", "chimere", "illusion", "raconter des histoires", "spectacle", "partir$", "lointain", "endroits"]],
+  ["Lyrique", ["se ressent", "se ressentent", "se mettre a nu", "se met a nu", "mettre son coeur a nu", "biograph", "ses souvenirs", "se raconte", "se devoile", "se confie", "se confier", "parler de soi", "devoil", "epanch", "etat d ame", "etats d ame", "vie de son auteur", "vie de l auteur", "sa propre vie", "propre vie", "nu$", "lui meme", "soi meme", "moi meme", "se chercher", "autobiograph", "confession", "sincer", "temperament", "vecu", "experience", "coeur", "cri$", "souvenir", "nostalg", "aveu", "sentiment", "emotion", "coeur", "ame$", "moi$", "intime", "souffr", "douleur", "douloureu", "amour", "joie", "tristesse", "triste", "confid", "emouv", "emu$", "toucher le coeur", "touche le coeur", "tourment", "sourire", "souri$", "malheureu", "ressen", "sensib", "larme", "pleur", "chagrin", "melancol", "desesper", "nostalg", "passion", "solitude", "sanglot", "plainte", "lament", "gemi", "chant", "personnel$"]]
 ];
 
 /** Mots qui annoncent chaque argument de dissertation (les mêmes que ceux des fiches d'œuvres). */
@@ -308,6 +308,9 @@ function affirmeEtNie(phrase: string) {
   const estNegation = (m: string, i: number) => NIENT.has(m) && (m === "non" || mots.slice(Math.max(0, i - 6), i).some(x => x === "ne" || x === "n"));
   const negations = mots.filter(estNegation).length;
   if (negations !== 1) return { affirme: phrase, nie: "", sujet: "" };
+  // « Il n'y a pas de littérature sans révolte » : deux négations, l'auteur affirme (pas de X sans Y = X a besoin de Y).
+  const ou = mots.findIndex(estNegation);
+  if (mots.slice(ou + 1).includes("sans")) return { affirme: phrase, nie: "", sujet: "" };
   const affirme: string[] = [], nie: string[] = [];
   let reste = 0, sujet = "";
   mots.forEach((m, i) => {
@@ -479,6 +482,10 @@ const SEUIL_DOUTE = 0.8;
 /** « … » (Jean de La Fontaine) : une citation suivie de son auteur entre parenthèses. */
 const CITE_ENTRE_PARENTHESES = /[»"”>]\s*\(\s*[A-ZÀ-Ý][^)]{2,80}\)/u;
 
+/** Ce que dit l'auteur qui juge sévèrement ce qu'il vient de nommer (« … ne suffit pas », « … vieillit vite »). */
+const FINI = /\b(?:a fait son temps|est depassee?s?|sont depassees?|est morte?|est demodee?|n a plus sa place|appartient au passe|est revolue?|ne (?:lui )?(?:suffit|suffisent|suffira) (?:pas|plus)|ne (?:fait|font|fera) pas (?:a elle seule |a lui seul )?(?:un |une |le |la |les |de )?(?:grands?|grandes?|vrais?|vraies?|bons?|bonnes?) |n est pas suffisante?|est une forme d egoisme|est (?:un |de l )?egoisme|est egoiste|vieilli(?:t|ssent|ra)|ne dure(?:nt)? pas|est une impasse|est un piege|est dangereuse?|sont dangereu(?:x|ses))\b/;
+/** « abandonner (cesser de, délaisser, renoncer à…) X pour Y » : X est rejeté, Y est choisi. */
+const QUITTE = /\b(?:abandonn|delaiss|renonc|cess|tourn)[a-z]*\s+(?:(?:a|de|d|le dos a)\s+)?((?:[a-z]+\s+){1,7}?)pour\s+((?:[a-z]+\s*){1,6})/;
 /** Tournures par lesquelles un auteur écarte une idée. */
 const REJETTE = /\b(n est pas|ne sont pas|n est plus|ne crois pas|ne lis pas|n ecris pas|ne raconte pas|ne chante pas|ne doit pas|n a pas pour|pas pour|non pas|pas fait)\b/;
 /** En dessous, presque aucun indice : la fonction proposée est un simple pari. */
@@ -798,9 +805,15 @@ function precisionDe(f: Fonction | undefined, citation: string): Precision | nul
   const nommee = fonctionNommee(citation);
   if (nommee && nommee.f === f && nommee.nom !== "esthétique") return nommee.nom;
   const t = normalize(citation).replace(/[^a-z]+/g, " ");
-  if (f === "Sociale" && /\b(instrui|eduqu|enseign|lecons?\b|moral|ecole\b|didacti|edifi)/.test(t)) return "didactique";
+  if (f === "Sociale" && /\b(instrui|eduqu|enseign|lecons?\b|moral|ecole\b|didacti|edifi|appren)/.test(t)) return "didactique";
   if (f === "Lyrique" && /\b(vecu|autobiograph|sa propre vie|vie d(e|u)? ?(son|l|sa) ?(auteur|ecrivain|poete)|se raconte|parler de (lui|soi))/.test(t)) return "autobiographique";
   return null;
+}
+
+/** Ce qu'est l'objet du sujet selon la fonction ; « didactique » se dit « instruire », pas « miroir de la société ». */
+function ideeDe(o: Objet, f: Fonction, precision: Precision | null) {
+  if (f === "Sociale" && precision && DIDACTIQUES.has(precision)) return OBJETS[o].personne ? "un éducateur qui instruit les hommes" : "un moyen d'instruire et d'éduquer les hommes";
+  return motsDe(o).idee(f);
 }
 
 /** « La poésie est une arme pour dénoncer l'injustice… » : une piste du guide, dite avec le mot du sujet. */
@@ -949,11 +962,12 @@ function planDuSujet({ citation, f: f0, f2: f20, consigne, discussion, themes, a
   const question = /\?\s*$/.test(sansAuteur(citation));
   const m = motsDe(objet);
   const axe1 = !f ? "Explique la citation : ce que l'auteur veut dire, avec des exemples d'œuvres."
+    // Ce que l'auteur rejette passe avant la reprise de la citation : jamais « … vieillit vite : c'est la fonction d'engagement ».
+    : rejet && rejet !== f ? `Montre pourquoi, pour l'auteur, ${m.n} n'est pas d'abord ${m.idee(rejet).replace(" d'abord", "")} : ${m.il} est plutôt ${m.idee(f)}.`
     : these ? `Montre que, selon l'auteur, ${these} : c'est ${NOM_FONCTION[f]}${precision ? ` (${precision})` : ""}.`
     : question ? `Réponds d'abord à la question posée : montre que ${m.n} peut être ${m.idee(f)}.`
     : liste.length ? `Le sujet énumère ${liste.length} idées : explique-les l'une après l'autre et illustre chacune.`
-    : rejet && rejet !== f ? `Montre pourquoi, pour l'auteur, ${m.n} n'est pas d'abord ${m.idee(rejet)} : ${m.il} est plutôt ${m.idee(f)}.`
-    : courte ? `Explique ce que veut dire l'auteur par « ${courte} » : pour lui, ${m.n} est ${m.idee(f)}${precision ? ` (fonction ${precision})` : ""}.`
+    : courte ? `Explique ce que veut dire l'auteur par « ${courte} » : pour lui, ${m.n} est ${ideeDe(objet, f, precision)}${precision ? ` (fonction ${precision})` : ""}.`
     : `Explique la thèse : pour l'auteur, ${m.n} est ${m.idee(f)}${de ? `, surtout quand ${m.il} parle ${de}` : ""}.`;
   // L'écrivain « au service » de quelqu'un : la nuance naturelle, c'est qu'il a aussi servi les puissants, ou l'art seul.
   const auService = f === "Engagement" && OBJETS[objet].personne && /\b(servir|sert|service|serviteur)\b/.test(normalize(citation));
@@ -1158,13 +1172,13 @@ export function enumeration(citation: string): string[] {
  * Chaque famille a sa piste de réflexion, écrite à la main (jamais un plan tout fait).
  */
 const HORS_CADRE: { cle: string; nom: string; motif: RegExp; conseil: string }[] = [
-  { cle: "langue", nom: "la langue dans laquelle on écrit", motif: /\b(langues? (maternelles?|africaines?|nationales?|locales?|etrangeres?|du colon|coloniales?|d ecriture)|(ecrit|ecrire|ecrivent|ecrite|ecrites) en (francais|anglais|langue)|langue de l autre)\b/,
+  { cle: "langue", nom: "la langue dans laquelle on écrit", motif: /\b(langues? (maternelles?|africaines?|nationales?|locales?|etrangeres?|du colon|coloniales?|d ecriture)|(ecrit|ecrire|ecrivent|ecrite|ecrites) en (francais|anglais|langue)|langue de l autre|langues? (de ses|de son|de sa|de leurs?|des|du) (ancetres|peuples?|pays|mere|parents|origine)|dans (sa|leur|quelle) (propre )?langue)\b/,
     conseil: "Pèse ce que gagne l'écrivain en écrivant en français (être lu par beaucoup de lecteurs, dans beaucoup de pays) et ce qu'il gagne dans sa langue maternelle (toucher son peuple, garder sa culture). Pense aussi aux écrivains qui mêlent les deux, en faisant entendre leur langue dans leur français." },
-  { cle: "scene", nom: "le théâtre lu ou joué", motif: /\b(etre (lu|joue)s?|lu ou joue|joue ou lu|pour la scene|sur la scene|representation theatrale|mise en scene|lire (une|la) piece|lire du theatre)\b/,
+  { cle: "scene", nom: "le théâtre lu ou joué", motif: /\b(etre (lu|joue)s?|lu ou joue|joue ou lu|pour la scene|sur la scene|(?:que|vraiment|seulement) sur (?:la )?scene|etre jouees?|faite pour etre jouee|representation theatrale|mise en scene|lire (une|la) piece|lire du theatre)\b/,
     conseil: "Pense à ce qu'apporte la scène (les acteurs, la voix, les gestes, le décor, le public) et à ce que garde le texte lu (les didascalies, le temps de relire, l'imagination du lecteur)." },
-  { cle: "lecteur", nom: "le lecteur et son rôle", motif: /\b(appartient (au|aux) lecteurs?|appartient a (son|ses) lecteurs?|role du lecteur|le lecteur (fait|cree|acheve|complete|termine|donne)|ecrit(on)? (toujours|d abord|surtout|seulement)? ?pour (quelqu un|qui|les autres|soi|lui meme|un public|le lecteur|ses lecteurs)|pour qui ecri|lecteur ideal)\b/,
+  { cle: "lecteur", nom: "le lecteur et son rôle", motif: /\b(appartient (au|aux) lecteurs?|appartient a (son|ses) lecteurs?|role du lecteur|le lecteur (fait|cree|acheve|complete|termine|donne)|lecteurs? (est|sont) (le |la |les |un |une )?(veritables? |vrais? |seconds? |premiers? |seuls? |autres? )?(co )?(auteurs?|createurs?|coauteurs?)|c est le lecteur qui|ecrit(on)? (toujours|d abord|surtout|seulement)? ?pour (quelqu un|qui|les autres|soi|lui meme|un public|le lecteur|ses lecteurs)|pour qui ecri|lecteur ideal)\b/,
     conseil: "Demande-toi pour qui écrit l'écrivain et ce que fait le lecteur : il interprète, il imagine, il donne vie au texte. L'auteur, lui, choisit ce qu'il veut dire. À qui appartient alors le sens de l'œuvre ?" },
-  { cle: "personnage", nom: "le personnage et le héros", motif: /\b(personnages? (exemplaires?|positifs?|negatifs?|mediocres?|modeles?|ideals?|parfaits?)|heros (positif|exemplaire|modele|negatif|de roman)|anti heros|etre un heros|des heros)\b/,
+  { cle: "personnage", nom: "le personnage et le héros", motif: /\b(personnages? (exemplaires?|positifs?|negatifs?|mediocres?|modeles?|ideals?|parfaits?)|heros (positif|exemplaire|modele|negatif|de roman)|anti heros|etre un heros|des heros|personnages? (de (roman|theatre|fiction|recit) )?(est|sont|parait|paraissent) plus (vrais?|reels?|vivants?|humains?))\b/,
     conseil: "Pense aux héros qui servent de modèle au lecteur, et aux personnages faibles, ratés ou méchants qui nous apprennent aussi quelque chose sur l'homme et la société." },
   { cle: "critique", nom: "la critique littéraire", motif: /\b(critiques? litteraires?|le critique|les critiques (ne|sont|est)|critique est)\b/,
     conseil: "Pense à ce que fait le critique : il explique, il juge et il fait connaître les œuvres. Est-ce le même travail que celui de l'écrivain ? Le critique peut-il aider l'écrivain et le lecteur ?" },
@@ -1180,7 +1194,7 @@ export function horsCadreDu(citation: string): HorsCadre | null {
 }
 
 /** L'auteur dit que la littérature ne sert à rien, est inutile ou fait perdre son temps. */
-const DEVALORISE = /^(?:\w+ ){0,2}?(?:la |le |l |les )?(?:litterature|poesie|lecture|lire|ecrire|roman|theatre|art|livres?|poemes?|poetes?|ecrivains?|oeuvres? litteraires?)(?: \w+){0,4} (?:ne (?:sert|servent|servira) (?:plus )?a rien|(?:est|sont) (?:totalement |completement |vraiment )?inutiles?|(?:est|sont) une perte de temps|fait perdre (?:son|du|notre|leur) temps|ne vaut rien|ne change rien|n a aucune utilite)/;
+const DEVALORISE = /^(?:\w+ ){0,2}?(?:la |le |l |les )?(?:litterature|poesie|lecture|lire|ecrire|roman|theatre|art|livres?|poemes?|poetes?|ecrivains?|oeuvres? litteraires?)(?: \w+){0,4} (?:ne (?:sert|servent|servira) (?:plus )?a rien|(?:est|sont) (?:totalement |completement |vraiment )?inutiles?|(?:est|sont) une perte de temps|fait perdre (?:son|du|notre|leur) temps|ne vaut rien|ne change rien|n a aucune utilite|n (?:a|ont) jamais (?:empeche|change|arrete|sauve|nourri|gueri)|ne (?:peut|peuvent) rien (?:contre|changer|pour)|(?:est|sont) (?:un|des) luxes?|eloignen?t? (?:\w+ ){0,3}(?:de la |des |du )(?:realit|reel|vie))/;
 
 /** Plan sans fonction : l'élève explique l'idée de l'auteur, puis la discute. Rien n'est inventé à sa place. */
 function planLibreDu(citation: string, discussion: boolean): Analyse["plan"] {
@@ -1235,13 +1249,17 @@ const AMORCE_FONCTION: Record<Fonction, string> = {
 };
 
 function comprendreDu(citation: string, f: Fonction, fN: Fonction | null, o: Objet, themes: string[], rejet: Fonction | null,
-  devalorise: boolean, discussion: boolean, precision: Precision | null, premiere: string): Comprendre {
+  devalorise: boolean, discussion: boolean, precision: Precision | null, premiere: string, telQuel = citation): Comprendre {
   const m = motsDe(o);
   const de = themes.map(deTheme).find((x): x is string => !!x) ?? null;
   const dire = (t: string) => t.replace(/\{N\}/g, m.N).replace(/\{il\}/g, m.il);
-  const these = devalorise ? `Pour l'auteur, ${m.n} ne sert à rien : ${m.il} ne change rien à la vie des hommes.`
-    : rejet && rejet !== f ? `Pour l'auteur, ${m.n} n'est pas d'abord ${m.idee(rejet)} : ${m.il} est plutôt ${m.idee(f)}.`
-    : `Pour l'auteur, ${m.n} est ${m.idee(f)}${de ? `, surtout quand ${m.il} parle ${de}` : ""}${precision ? ` (fonction ${precision})` : ""}.`;
+  const redite = theseDe(telQuel), courte = citationCourte(sansAuteur(telQuel)), idee = ideeDe(o, f, precision);
+  const these = devalorise ? (courte ? `L'auteur dit : « ${courte} ». Il doute que ${m.n} soit vraiment utile aux hommes.` : `Pour l'auteur, ${m.n} ne sert à rien : ${m.il} ne change rien à la vie des hommes.`)
+    : rejet && rejet !== f ? `Pour l'auteur, ${m.n} n'est pas d'abord ${m.idee(rejet).replace(" d'abord", "")} : ${m.il} est plutôt ${m.idee(f)}.`
+    // La thèse redite d'abord avec les mots du sujet, puis ce qu'elle veut dire : l'élève voit que l'appli a lu SON sujet.
+    : redite ? `Pour l'auteur, ${redite}. Autrement dit, ${m.n} est ${idee}${precision ? ` (fonction ${precision})` : ""}.`
+    : courte && !/\?/.test(courte) ? `L'auteur dit : « ${courte} ». Pour lui, ${m.n} est ${idee}${precision ? ` (fonction ${precision})` : ""}.`
+    : `Pour l'auteur, ${m.n} est ${idee}${de ? `, surtout quand ${m.il} parle ${de}` : ""}${precision ? ` (fonction ${precision})` : ""}.`;
   const variantes = QUESTION_CACHEE[f];
   const question = dire(variantes[graine(citation) % variantes.length]);
   const contraire = discussion && fN && fN !== f ? `${m.N} peut aussi être ${m.idee(fN)}.` : null;
@@ -1316,6 +1334,8 @@ export function analyserSujet(texteTape: string, combien = 6, imposee?: Fonction
   };
   // Ce que l'auteur rejette (« je ne crois pas à l'évasion », « au lieu de s'évader ») et ce qu'il affirme, par fonction.
   const rejets = new Map<Fonction, number>(), affirmes = new Map<Fonction, number>(), secondes = new Map<Fonction, number>();
+  // « cesser de X pour Y » où Y ne dit aucune fonction : l'appli ne sait pas ce que l'auteur défend.
+  let quitteVide = false;
   const ajoute = (m: Map<Fonction, number>, f: Fonction, n: number) => m.set(f, (m.get(f) ?? 0) + n);
   for (const brute of normalize(citation).replace(/,/g, " , ").replace(/[^a-z.;!?,]+/g, " ").split(/[.;!?]/)) {
     // « au lieu de s'évader par une œuvre » : ce qui suit est écarté par l'auteur.
@@ -1324,9 +1344,22 @@ export function analyserSujet(texteTape: string, combien = 6, imposee?: Fonction
     const pasSeul = brute.match(/\b(?:ne|n)\s+(?:[a-z]+\s+){0,3}pas\s+(?:seulement|uniquement|que|qu)\s+(?:(?:a|de|d|pour)\s+)?((?:[a-z]+\s*){1,4})|\bnon seulement\s+((?:[a-z]+\s*){1,4})/);
     if (pasSeul) for (const [f, n] of indices(pasSeul[1] ?? pasSeul[2])) if (n) secondes.set(f, (secondes.get(f) ?? 0) + n);
     // « La littérature engagée a fait son temps » : l'auteur rejette ce qu'il nomme.
-    const fini = brute.match(/\b(?:a fait son temps|est depassee?s?|sont depassees?|est morte?|est demodee?|n a plus sa place|appartient au passe|est revolue?)\b/);
-    if (fini) for (const [f, n] of indices(brute.slice(0, fini.index))) if (n) { ajoute(rejets, f, n * 2); plus(f, -n); plus(OPPOSE[f], n * 1.5); }
-    const sansSeul = pasSeul ? brute.replace(pasSeul[0], " ") : brute;
+    // « Le beau style ne suffit pas », « L'art pour l'art est une forme d'égoïsme », « La littérature engagée vieillit vite » :
+    // l'auteur juge sévèrement ce qu'il nomme (test du 16 novembre 2026 : ces sujets recevaient le plan de la fonction critiquée).
+    const fini = brute.match(FINI);
+    // Seulement ce qui est jugé : « l'aveu que la vie ne suffit pas » juge la vie, pas l'art nommé avant « que ».
+    const juge = fini ? brute.slice(0, fini.index).replace(/^.*(?:\bque\b|\bqu\b|\bqui\b|,)/, "") : "";
+    if (fini) for (const [f, n] of indices(juge)) if (n) { ajoute(rejets, f, n * 2); plus(f, -n); plus(OPPOSE[f], n * 1.5); }
+    // « Le roman a abandonné la dénonciation pour le plaisir de raconter » : X est laissé, Y est choisi.
+    const quitte = brute.match(QUITTE);
+    if (quitte && !indices(quitte[2]).some(([, n]) => n)) quitteVide = true;
+    if (quitte) {
+      for (const [f, n] of indices(quitte[1])) if (n) { ajoute(rejets, f, n * 2); plus(f, -n); }
+      for (const [f, n] of indices(quitte[2])) if (n) { plus(f, n * 1.5); ajoute(affirmes, f, n); }
+    }
+    // Ce qui est jugé a déjà été compté (comme rejeté) : on ne le compte pas une seconde fois comme affirmé.
+    const sansJuge = (x: string) => fini ? x.replace(brute.slice(0, fini.index! + fini[0].length), " ") : quitte ? x.replace(quitte[0], " ") : x;
+    const sansSeul = sansJuge(pasSeul ? brute.replace(pasSeul[0], " ") : brute);
     const phrase = lieu ? sansSeul.replace(lieu[0], " ") : sansSeul;
     const ecartees = lieu ? indices(lieu[1]) : [];
     for (const [f, n] of ecartees) if (n) { plus(f === "Lyrique" ? f : OPPOSE[f], n * 0.5); ajoute(rejets, f, n); }
@@ -1334,7 +1367,9 @@ export function analyserSujet(texteTape: string, combien = 6, imposee?: Fonction
     const niees = indices(nie), duSujet = sujet ? indices(sujet) : [];
     const sujetNie = sujet && !niees.some(([, n]) => n) && duSujet.some(([, n]) => n);
     // Un vrai rejet : « n'est pas », « je ne crois pas », « pas pour »… mais pas « ne doit pas faire oublier » (double négation).
-    if (REJETTE.test(phrase) && !/oubli|empech|neglig|exclu|sans/.test(nie)) for (const [f, n] of sujetNie ? duSujet : niees) if (n) ajoute(rejets, f, n);
+    // « … n'est pas fait pour X mais pour Y » : le rejet est net, il compte double.
+    const net = /\bpas (?:fait |faite |faits |ecrit |la )?pour\b.*\bmais (?:pour|a)\b/.test(phrase) ? 2 : 1;
+    if (REJETTE.test(phrase) && !/oubli|empech|neglig|exclu|sans/.test(nie)) for (const [f, n] of sujetNie ? duSujet : niees) if (n) ajoute(rejets, f, n * net);
     for (const [f, n] of indices(affirme)) if (n) { plus(f, n); ajoute(affirmes, f, n); }
     // Un sentiment nié reste un sentiment (« des gens qui n'ont jamais souri ») : seul le reste est renversé.
     for (const [f, n] of sujetNie ? duSujet : niees) if (n) plus(f === "Lyrique" ? f : OPPOSE[f], n * (sujetNie ? 1.5 : 0.5));
@@ -1342,7 +1377,8 @@ export function analyserSujet(texteTape: string, combien = 6, imposee?: Fonction
     if (sujetNie) for (const [f, n] of duSujet) if (n) plus(f, -n);
   }
   // Ce que le modèle appris en pense (il connaît bien plus de mots que la liste d'indices).
-  for (const [f, n] of scoresAppris(citation)) plus(f, n * ECHELLE);
+  const appris = scoresAppris(citation);
+  for (const [f, n] of appris) plus(f, n * ECHELLE);
   // Les thèmes trouvés départagent (et suffisent quand aucun indice n'apparaît).
   for (const x of trouves.slice(0, 6)) {
     const m = fonctionsDesThemes().get(normalize(x.th.nom));
@@ -1384,6 +1420,14 @@ export function analyserSujet(texteTape: string, combien = 6, imposee?: Fonction
   // Un sujet qui dit lui-même ce qui va en Partie 2 (« pas seulement… », une comparaison) ne laisse pas de doute.
   const doute = !imposee && !rejet && !seconde && !comp && !nommee && second && second[1] >= meilleur * SEUIL_DOUTE ? second[0] : null;
   const faible = !imposee && !nommee && meilleur < SEUIL_FAIBLE && !trouves.length;
+  // La fonction de la partie 1 (jamais celle que l'auteur rejette) doit s'appuyer sur un vrai mot du sujet :
+  // choisie seulement par les thèmes ou le modèle, elle reste une hypothèse, et l'élève passe par le guide.
+  const fPlan = rejet && fonctions[0] === rejet ? (fonctions[1] && fonctions[1] !== rejet ? fonctions[1] : OPPOSE[rejet]) : fonctions[0];
+  const appuyee = !!imposee || !!nommee || !!comp || !!seconde || (!!fPlan && (affirmes.get(fPlan) ?? 0) > 0) || (!!rejet && rejet !== fPlan && !quitteVide)
+    // Le modèle appris (qui connaît « insurrection », « censure »…) la place lui aussi en tête.
+    || (!quitteVide && !!fPlan && [...appris].sort((x, y) => y[1] - x[1])[0]?.[0] === fPlan)
+    // Aucun mot des listes dans le sujet : le modèle appris décide seul, comme avant (il connaît bien plus de mots).
+    || (!quitteVide && ![...affirmes.values(), ...rejets.values()].some(n => n > 0));
 
   // Mots du dictionnaire présents dans l'énoncé (« ENGAGEMENT (ENGAGÉ) » : chaque forme compte), sans faute ou presque.
   const dico = motsPublics().filter(e => {
@@ -1434,10 +1478,10 @@ export function analyserSujet(texteTape: string, combien = 6, imposee?: Fonction
     proches: corrige ? proches.filter(x => x.num !== corrige.num) : proches,
     genres, doute, faible, rejet, corrige, objet, objetSur,
     // Plan montré d'emblée seulement si la lecture est sûre ; sinon l'élève choisit sa piste dans le guide.
-    sure: !!corrige?.ouvert || !!imposee || (!horsCadre && !inconnue && ((!doute && !faible && fonctions.length > 0) || devalorise)),
+    sure: !!corrige?.ouvert || !!imposee || (!horsCadre && !inconnue && ((!doute && !faible && appuyee && fonctions.length > 0) || devalorise)),
     horsCadre, devalorise: devalorise && !corrige, precision: precisionDe(fonctions[0], c0), planLibre: planLibreDu(brute, discussion),
     comprendre: f && !horsCadre && !corrige?.ouvert ? comprendreDu(c0, rejet && f === rejet ? (fonctions[1] && fonctions[1] !== rejet ? fonctions[1] : OPPOSE[rejet]) : f,
-      rejet && rejet !== f ? rejet : p2 && p2 !== f ? p2 : OPPOSE[f], objet, themes, rejet, devalorise, discussion, precisionDe(f, c0), plan.problematique) : null,
+      rejet && rejet !== f ? rejet : p2 && p2 !== f ? p2 : OPPOSE[f], objet, themes, rejet, devalorise, discussion, precisionDe(f, c0), plan.problematique, brute) : null,
     nature: natureDuSujet(texte, citation, !!auteur || !!auteurConnu(texteTape) || CITE_ENTRE_PARENTHESES.test(texteTape))
   };
 }

@@ -167,13 +167,22 @@ try {
     if (a.fonctions[0] === f) lexiqueJuste++; else problemes.push(`Mot de la fonction ${f} : « ${p} » lu ${a.fonctions.join("/") || "sans fonction"}`);
   }
 
+  // 40 sujets jamais vus (test du 16 novembre 2026) : l'avis de l'auteur (pour ou contre), les sujets hors fonctions, le guide quand l'appli doute.
+  const { SUJETS_NOVEMBRE } = await import("./sujets-novembre.mjs");
+  let novembreOk = 0;
+  for (const [t, ok] of SUJETS_NOVEMBRE) {
+    const a = analyserSujet(t, 6);
+    if (ok(a)) novembreOk++; else problemes.push(`Sujet du test de novembre raté : ${t}`);
+    if (a.nature === "dissertation") verifierPlan(`Sujet de novembre « ${t.slice(0, 40)}… »`, a);
+  }
+
   const n = sujets.length;
-  console.log(`J'ai un devoir — fonction juste ${premiere}/${n}, dans la liste ${dansListe}/${n}, corrigés reconnus ${reconnus}/${n}, exemples sûrs ${exemplesSurs}/${exemplesTotal}, pièges ${piegesOk}/${pieges.length}, vrais sujets ${reelsJustes}/${reels.length}, plan montré d'emblée ${reelsSurs}/${reels.length}, sujets ambigus ${ambigusJustes}/${ambigus.length}, mots des fonctions ${lexiqueJuste}/${lexiqueTotal}`);
+  console.log(`J'ai un devoir — fonction juste ${premiere}/${n}, dans la liste ${dansListe}/${n}, corrigés reconnus ${reconnus}/${n}, exemples sûrs ${exemplesSurs}/${exemplesTotal}, pièges ${piegesOk}/${pieges.length}, vrais sujets ${reelsJustes}/${reels.length}, plan montré d'emblée ${reelsSurs}/${reels.length}, sujets ambigus ${ambigusJustes}/${ambigus.length}, mots des fonctions ${lexiqueJuste}/${lexiqueTotal}, sujets de novembre ${novembreOk}/${SUJETS_NOVEMBRE.length}`);
   for (const p of problemes) console.log("  · " + p);
   // Seuils : ce que l'appli fait déjà. On ne publie pas en dessous.
   const seuils = [[premiere >= 27, "fonction juste ≥ 27"], [dansListe >= 30, "fonction dans la liste ≥ 30"], [reconnus === n, "tous les corrigés reconnus"],
     [exemplesSurs === exemplesTotal, "aucune fiche incomplète en exemple"], [doublons === 0, "pas d'œuvre en double"], [vides === 0, "un exemple par argument"], [horsGenre === 0, "exemples du genre demandé"], [piegesOk === pieges.length, "tous les pièges"],
-    [reelsJustes >= Math.floor(reels.length * 0.9), "vrais sujets justes ≥ 90 %"], [reelsSurs >= Math.floor(reels.length * 0.85), "plan d'emblée sur ≥ 85 % des vrais sujets"], [ambigusJustes >= ambigus.length - 1, "sujets ambigus d'Atikan"], [lexiqueJuste >= lexiqueTotal - 3, "mots des fonctions"]];
+    [reelsJustes >= Math.floor(reels.length * 0.9), "vrais sujets justes ≥ 90 %"], [reelsSurs >= Math.floor(reels.length * 0.85), "plan d'emblée sur ≥ 85 % des vrais sujets"], [ambigusJustes >= ambigus.length - 1, "sujets ambigus d'Atikan"], [lexiqueJuste >= lexiqueTotal - 3, "mots des fonctions"], [novembreOk === SUJETS_NOVEMBRE.length, "sujets du test de novembre"]];
   for (const [ok, nom] of seuils) if (!ok) { echec = true; console.error(`Seuil non atteint : ${nom}`); }
 } finally {
   await vite.close();

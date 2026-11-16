@@ -1,0 +1,48 @@
+// 40 sujets jamais vus, écrits pour le test du 16 novembre 2026 (thread « Affiner J'ai un devoir »).
+// Chaque sujet a ce que l'appli doit comprendre : la fonction de la partie 1, ce que l'auteur rejette, ou « passe par le guide ».
+const OPP = { Engagement: "Esthétique", Esthétique: "Engagement", Sociale: "Évasion", Évasion: "Sociale", Lyrique: "Engagement" };
+/** La fonction que défend la partie 1 (celle que l'auteur rejette n'y va jamais). */
+export const p1 = a => a.devalorise ? "devalorise" : a.horsCadre ? "hors" : a.rejet && a.fonctions[0] === a.rejet ? (a.fonctions[1] && a.fonctions[1] !== a.rejet ? a.fonctions[1] : OPP[a.rejet]) : a.fonctions[0];
+const sur = (a, f) => a.sure && p1(a) === f;
+export const SUJETS_NOVEMBRE = [
+  ["« La littérature africaine doit cesser de pleurer sur le passé colonial pour regarder l'avenir. » Expliquez et discutez cette affirmation.", a => !a.sure],
+  ["« Le roman est un miroir qu'on promène le long d'un chemin. » Stendhal. Commentez et discutez.", a => sur(a,'Sociale')],
+  ["« Le poète n'est pas un homme politique ; son rôle est de chanter la beauté du monde. » Discutez.", a => p1(a)==='Esthétique' && a.rejet==='Engagement'],
+  ["« Lire, c'est voyager ; voyager, c'est lire. » Victor Hugo. Expliquez et discutez.", a => sur(a,'Évasion')],
+  ["« Un écrivain qui se tait face à l'injustice est complice. » Qu'en pensez-vous ?", a => sur(a,'Engagement')],
+  ["« La poésie est le cri du cœur. » Expliquez et discutez à partir d'exemples précis.", a => sur(a,'Lyrique')],
+  ["« Le théâtre corrige les mœurs en faisant rire. » Expliquez et discutez.", a => a.sure && ['Engagement','Sociale'].includes(p1(a))],
+  ["« On ne lit pas pour apprendre mais pour oublier. » Discutez.", a => p1(a)==='Évasion' && a.rejet==='Sociale'],
+  ["« L'écrivain africain est le gardien de la mémoire de son peuple. » Expliquez et illustrez.", a => sur(a,'Sociale') && !a.discussion],
+  ["« La littérature n'a jamais empêché une guerre. » Discutez.", a => a.devalorise],
+  ["« Écrire, c'est se mettre à nu. » Expliquez et discutez.", a => p1(a)==='Lyrique'],
+  ["« Le beau style ne suffit pas à faire un grand livre. » Discutez.", a => a.rejet==='Esthétique' && p1(a)!=='Esthétique'],
+  ["« Le roman doit divertir avant tout. » Expliquez et discutez.", a => sur(a,'Évasion')],
+  ["« Toute œuvre littéraire est le reflet de la société qui l'a vue naître. » Expliquez et discutez.", a => sur(a,'Sociale')],
+  ["« La poésie africaine moderne est une arme de combat. » Discutez cette affirmation.", a => sur(a,'Engagement')],
+  ["« L'art pour l'art est une forme d'égoïsme. » Expliquez et discutez.", a => a.rejet==='Esthétique' && p1(a)==='Engagement'],
+  ["« Le lecteur est le véritable auteur du livre. » Discutez.", a => !!a.horsCadre],
+  ["« Le personnage de roman est plus vrai que la personne réelle. » Discutez.", a => !!a.horsCadre],
+  ["« L'écrivain doit-il écrire dans la langue de ses ancêtres ? » Discutez.", a => !!a.horsCadre],
+  ["« Une pièce de théâtre n'existe vraiment que sur scène. » Expliquez et discutez.", a => !!a.horsCadre],
+  ["« La littérature console des malheurs de la vie. » Expliquez et discutez.", a => p1(a)==='Évasion'],
+  ["« Je n'écris pas pour plaire, j'écris pour réveiller les consciences. » Discutez.", a => p1(a)==='Engagement' && a.rejet==='Évasion'],
+  ["« Les livres nous apprennent à vivre. » Expliquez et discutez.", a => p1(a)==='Sociale'],
+  ["« La poésie ne se comprend pas, elle se ressent. » Discutez.", a => p1(a)==='Lyrique' || !a.sure],
+  ["« Le conte africain n'est pas fait pour endormir les enfants mais pour les éduquer. » Expliquez et discutez.", a => p1(a)==='Sociale' && (a.rejet==='Évasion' || a.fonctions[1]==='Évasion')],
+  ["Selon un critique, « la littérature engagée vieillit vite ». Partagez-vous ce point de vue ?", a => a.rejet==='Engagement' && p1(a)!=='Engagement'],
+  ["« La femme africaine a trouvé dans le roman une voix pour dénoncer sa condition. » Expliquez et discutez.", a => sur(a,'Engagement')],
+  ["« Écrire, c'est lutter contre l'oubli et la mort. » Discutez.", a => !a.sure || ['Engagement','Sociale','Lyrique'].includes(p1(a))],
+  ["« Le roman policier n'est pas de la vraie littérature. » Discutez.", a => !!a.horsCadre],
+  ["« L'écrivain est un témoin de son temps. » Expliquez et discutez en vous appuyant sur des œuvres lues.", a => sur(a,'Sociale')],
+  ["« Le poète est un voyant. » Rimbaud. Expliquez et discutez.", a => !a.sure || p1(a)==='Lyrique'],
+  ["« Il n'y a pas de littérature sans révolte. » Discutez.", a => sur(a,'Engagement')],
+  ["« La lecture des romans éloigne les jeunes des réalités. » Discutez.", a => a.devalorise],
+  ["« Le théâtre est l'école du peuple. » Expliquez et discutez.", a => sur(a,'Sociale')],
+  ["« La littérature est un jeu avec les mots. » Expliquez et discutez.", a => sur(a,'Esthétique')],
+  ["Pensez-vous, comme le prétend un auteur, que « les écrivains d'aujourd'hui écrivent pour gagner de l'argent plutôt que pour éclairer » ?", a => !a.sure || p1(a)==='Engagement'],
+  ["« Les grands romans nous font aimer les hommes. » Discutez.", a => !a.sure || p1(a)==='Sociale'],
+  ["« Toute poésie est autobiographique. » Expliquez et discutez.", a => sur(a,'Lyrique')],
+  ["« La littérature est un luxe dans un pays pauvre. » Discutez.", a => a.devalorise],
+  ["« Le roman africain contemporain a abandonné la dénonciation pour le plaisir de raconter. » Expliquez et discutez.", a => p1(a)==='Évasion' && a.rejet==='Engagement'],
+];
