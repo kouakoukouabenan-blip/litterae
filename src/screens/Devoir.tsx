@@ -260,7 +260,8 @@ export function DevoirScreen() {
       <div class="devoir-fil">
         <div class="bulle bulle-eleve"><p>{sujetCourt(texte)}</p></div>
         <div class="bulle bulle-appli devoir-compris-carte">
-          <p>J'ai lu ton sujet.{fonction ? <> Il parle de la <strong>fonction {NOM[fonction]}{!choisie && analyse.precision ? ` (${analyse.precision})` : ""}</strong>.</> : null}</p>
+          <p>J'ai lu ton sujet.{fonction && analyse.deuxReponses && !choisie && analyse.fonctions[1] ? <> Il oppose deux fonctions : la <strong>fonction {NOM[fonction]}</strong> et la <strong>fonction {NOM[analyse.fonctions[1]]}</strong>.</>
+            : fonction ? <> Il parle de la <strong>fonction {NOM[fonction]}{!choisie && analyse.precision ? ` (${analyse.precision})` : ""}</strong>.</> : null}</p>
           {analyse.comprendre && <p>{analyse.comprendre.these}</p>}
           <p>Tu dois : {analyse.travail.replace(/ \(.*\)$/, "").toLowerCase()}.</p>
           {analyse.rejet && <p class="small devoir-indice">L'auteur rejette la fonction {NOM[analyse.rejet]} : mes pistes défendent ce qu'il pense vraiment.</p>}

@@ -205,6 +205,8 @@ export interface Analyse {
   precision: Precision | null;
   /** L'auteur dit que la littérature (la poésie, la lecture…) ne sert à rien : la partie 1 explique ce point de vue, la partie 2 le discute. */
   devalorise: boolean;
+  /** « Doit-elle plaire ou instruire ? » : le sujet oppose deux fonctions (la première, puis la seconde). */
+  deuxReponses: boolean;
   /** Plan sans fonction, pour un sujet qui parle d'autre chose : ce qui donne raison à l'auteur, puis ses limites. */
   planLibre: Analyse["plan"];
 }
@@ -1323,7 +1325,7 @@ function comprendreDu(citation: string, f: Fonction, fN: Fonction | null, o: Obj
     : rejet && rejet !== f ? `Pour l'auteur, ${m.n} n'est pas d'abord ${m.idee(rejet).replace(" d'abord", "")} : ${m.il} est plutôt ${m.idee(f)}.`
     // La thèse redite d'abord avec les mots du sujet, puis ce qu'elle veut dire : l'élève voit que l'appli a lu SON sujet.
     // Une question : l'auteur ne donne pas d'avis, l'appli ne lui en prête pas.
-    : enQuestion && alt && fN ? `Le sujet ne donne pas d'avis : il te demande de choisir entre deux rôles. D'un côté, ${m.n} est ${idee} ; de l'autre, ${m.il} est ${m.idee(fN)}. Montre les deux, puis dis ce qui compte le plus pour toi.`
+    : enQuestion && alt && fN ? `Le sujet ne donne pas d'avis : il te demande de choisir entre deux rôles. D'un côté, ${m.n} est ${idee} ; de l'autre, ${m.il} est ${ideeDe(o, fN, /\b(instrui|eduqu|enseign|appren)/.test(normalize(telQuel)) ? "didactique" : null)}. Montre les deux, puis dis ce qui compte le plus pour toi.`
     : enQuestion ? `Le sujet ne donne pas d'avis : il pose une question. Une première réponse : oui, ${m.n} peut être ${idee}${discussion && fN && fN !== f ? `. Une autre réponse : ${m.il} peut aussi être ${m.idee(fN)}` : ""}.`
     : redite ? `Pour l'auteur, ${redite}. ${image ?? `Autrement dit, ${m.n} est ${idee}`}${precision && !image ? ` (fonction ${precision})` : ""}.`
     : courte && !/\?/.test(courte) ? `L'auteur dit : « ${courte} ». ${image ?? `Pour lui, ${m.n} est ${idee}`}${precision && !image ? ` (fonction ${precision})` : ""}.`
@@ -1618,7 +1620,7 @@ export function analyserSujet(texteTape: string, combien = 6, imposee?: Fonction
     genres, doute: devalorise ? null : doute, faible, rejet, corrige, objet, objetSur,
     // Plan montré d'emblée seulement si la lecture est sûre ; sinon l'élève choisit sa piste dans le guide.
     sure: !!corrige?.ouvert || !!imposee || (!horsCadre && !inconnue && ((!doute && !faible && appuyee && fonctions.length > 0) || devalorise)),
-    horsCadre, devalorise: devalorise && !corrige, precision: precisionDe(fonctions[0], c0), planLibre: planLibreDu(brute, discussion),
+    horsCadre, devalorise: devalorise && !corrige, deuxReponses: !!alt && fonctions.length === 2, precision: precisionDe(fonctions[0], c0), planLibre: planLibreDu(brute, discussion),
     comprendre: f && !horsCadre && !corrige?.ouvert ? comprendreDu(c0, rejet && f === rejet ? (fonctions[1] && fonctions[1] !== rejet ? fonctions[1] : OPPOSE[rejet]) : f,
       rejet && rejet !== f ? rejet : p2 && p2 !== f ? p2 : OPPOSE[f], objet, themes, rejet, devalorise, discussion, precisionDe(f, c0), plan.problematique, brute) : null,
     nature: natureDuSujet(texte, citation, !!auteur || !!auteurConnu(texteTape) || CITE_ENTRE_PARENTHESES.test(texteTape))
