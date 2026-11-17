@@ -1,6 +1,7 @@
 import { useEffect, useState } from "preact/hooks";
 import { Icon } from "./Icon";
 import { cleRecue, codePassage, iphoneInstallee, lienPassage, oublierCleRecue } from "../lib/passage";
+import { read } from "../lib/storage";
 import { ESSAI, PASSAGE_VERS, lienAidePassage } from "../lib/site";
 import { BoutonVideo } from "./VideoInstallation";
 import { platform } from "../lib/install";
@@ -9,7 +10,7 @@ import { activer } from "../lib/licence";
 const logo = <svg class="install-gate-logo" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="12" fill="#FFF3DC"/><path fill="#0F3D2E" d="M18 14h14v3h-4v28h9.5l3-8H44l-1.5 13H18v-3h4V17h-4z"/><circle cx="50" cy="47.5" r="3.5" fill="#C4562B"/></svg>;
 const nom = () => (PASSAGE_VERS || "https://litterae.app/").replace(/^https?:\/\//, "").replace(/\/$/, "");
 
-/** Site d'essai : #/passage-demo montre l'écran de passage (?iphone pour la version iPhone), le lien revient sur l'essai. */
+/** Site d'essai : #/passage-demo montre l'écran de passage (?iphone : version iPhone, ?gratuit : sans accès complet), le lien revient sur l'essai. */
 export const demoPassage = () => ESSAI && location.hash.startsWith("#/passage-demo");
 
 const Aide = () => (
@@ -35,6 +36,8 @@ export function PassageDepart() {
     const t = setTimeout(partir, demo ? 8000 : 4000);
     return () => clearTimeout(t);
   }, [attendre]);
+  // Sans accès complet : pas de clé à faire suivre, l'écran est plus simple (le code ne sert qu'à garder la progression).
+  const paye = demo ? !location.hash.includes("gratuit") : !!read("licence", null);
   const video = platform() === "ios" || iphone ? "ios" : "android";
   const copier = async () => {
     try { await navigator.clipboard.writeText(codePassage()); setCopie(true); }
@@ -47,7 +50,22 @@ export function PassageDepart() {
         {logo}
         <h1 id="passage-titre" class="install-gate-title">Litter<span>ae</span> change d'adresse</h1>
         <p class="passage-adresse">{nom()}</p>
-        {iphone ? (
+        {iphone && !paye ? (
+          <>
+            <p class="install-gate-texte">Litterae continue à la nouvelle adresse. Ça prend une minute.</p>
+            <ol class="install-gate-steps passage-etapes">
+              <li>Ouvre <strong>Safari</strong> et va sur <strong>{nom()}</strong>.</li>
+              <li>Installe la nouvelle appli sur ton écran d'accueil.</li>
+              <li>Supprime cette ancienne icône.</li>
+            </ol>
+            <button type="button" class="video-aide-bouton" onClick={copier}>
+              <Icon name={copie ? "check" : "content_copy"} size={22} />{copie ? "Code copié" : "Garder ma progression (copier un code)"}
+            </button>
+            {copie && <p class="install-gate-texte passage-note">Dans la nouvelle appli, va dans <strong>Mon espace › Accès complet</strong> et colle ce code.</p>}
+            <BoutonVideo os="ios" />
+            <Aide />
+          </>
+        ) : iphone ? (
           <>
             <p class="install-gate-texte">Ta clé, tes fiches et ta progression viennent avec toi. Sur iPhone, il faut juste un code.</p>
             <button type="button" class="btn install-gate-btn" onClick={copier}>
@@ -64,7 +82,7 @@ export function PassageDepart() {
           </>
         ) : (
           <>
-            <p class="install-gate-texte">Ta clé, tes fiches et ta progression viennent avec toi. Tu n'as rien à retaper.</p>
+            <p class="install-gate-texte">{paye ? "Ta clé, tes fiches et ta progression viennent avec toi. Tu n'as rien à retaper." : "Tes fiches et ta progression viennent avec toi."}</p>
             <button type="button" class="btn install-gate-btn" onClick={partir}>
               <Icon name="arrow_forward" size={24} />Continuer sur {nom()}
             </button>
