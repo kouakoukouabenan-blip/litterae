@@ -46,3 +46,7 @@ npm run import-contenu -- ../litterae-contenu
 L'élève achète une licence sur Chariow et reçoit une clé par e-mail. Il la saisit dans l'écran « Clé d'accès » (`#/acces`) ; le serveur du dépôt privé la vérifie auprès de Chariow et renvoie le contenu payant, gardé ensuite sur l'appareil.
 
 Réglages dans `src/lib/site.ts` : `ACHAT_URL` (page de vente Chariow) et `SERVEUR_URL` (adresse du serveur Cloudflare, ou variable `VITE_SERVEUR_URL`).
+
+## Nouvelle adresse litterae.app
+
+Cloudflare Pages construit ce dépôt avec `npm run build:app` (icône crème du dossier icones-app/, sortie dist). GitHub Pages (ancienne adresse) garde l'icône verte et emmène les élèves vers litterae.app.
