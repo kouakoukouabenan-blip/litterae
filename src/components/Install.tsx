@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "preact/hooks";
 import { dejaInstallee, navigateurAndroid, navigateurIos, platform, useInstall } from "../lib/install";
-import { write } from "../lib/storage";
+import { read, write } from "../lib/storage";
 import { BoutonVideo } from "./VideoInstallation";
 import { Icon } from "./Icon";
 
@@ -62,9 +62,12 @@ function StepsIos() {
 /** Marche à suivre sur Android, selon le navigateur où l'élève se trouve déjà. */
 function StepsAndroid() {
   const nav = navigateurAndroid();
+  // Arrivé depuis l'ancienne appli Android : la page peut s'ouvrir dans une fenêtre de l'ancienne appli, sans « Installer » dans le menu.
+  const depuisAncienne = read<number>("passage-recu", 0) > 0;
   if (nav === "chrome")
     return (
       <>
+        {depuisAncienne && <p class="small">Tu vois une croix <strong>✕</strong> en haut à gauche ? Tu es encore dans l'ancienne appli : touche le menu <Icon name="more_vert" size={18} />, puis <strong>Ouvrir dans Chrome</strong>. Tes données te suivent.</p>}
         <ol class="install-steps">
           <li>Touche le menu <Icon name="more_vert" size={18} /> en haut à droite de Chrome.</li>
           <li>Choisis <strong>Installer l'application</strong> ou <strong>Ajouter à l'écran d'accueil</strong>.</li>

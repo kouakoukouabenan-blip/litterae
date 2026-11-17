@@ -93,7 +93,7 @@ export function PassageDepart() {
               <Icon name="arrow_forward" size={24} />Continuer sur {nom()}
             </button>
             {!attendre && !android && <span class="install-gate-attente" role="progressbar" aria-label="On t'emmène sur la nouvelle adresse" />}
-            <p class="install-gate-texte passage-note">{android ? "Litterae s'ouvre dans Chrome : installe la nouvelle icône, puis supprime l'ancienne." : "Là-bas, installe la nouvelle icône, puis supprime l'ancienne."}</p>
+            <p class="install-gate-texte passage-note">{android ? <>Installe la nouvelle icône, puis supprime l'ancienne. Si Litterae s'ouvre dans une fenêtre avec une croix <strong>✕</strong>, touche le menu <strong>⋮</strong> en haut à droite, puis <strong>Ouvrir dans Chrome</strong>.</> : "Là-bas, installe la nouvelle icône, puis supprime l'ancienne."}</p>
             <BoutonVideo os={video} passage onOuvrir={() => setAttendre(true)} />
             <span onClick={() => setAttendre(true)}><Aide /></span>
           </>
