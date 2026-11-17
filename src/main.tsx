@@ -16,7 +16,7 @@ import "./lib/install";
 import { App } from "./app";
 import { conserverDonnees } from "./lib/storage";
 import { registerSW } from "virtual:pwa-register";
-import { PassageArrivee, PassageDepart } from "./components/Passage";
+import { PassageArrivee, PassageDepart, demoPassage } from "./components/Passage";
 
 conserverDonnees();
 
@@ -36,6 +36,7 @@ registerSW({
 
 const racine = document.getElementById("app")!;
 if (cleRecue() && navigator.onLine) render(<PassageArrivee />, racine);
+else if (demoPassage()) { document.getElementById("splash")?.remove(); render(<PassageDepart />, racine); }
 else {
   render(<App />, racine);
   // Ancienne adresse : dès que la nouvelle répond, l'élève y est emmené avec sa clé et sa progression.

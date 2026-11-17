@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "preact/hooks";
 import { dejaInstallee, navigateurAndroid, navigateurIos, platform, useInstall } from "../lib/install";
 import { write } from "../lib/storage";
+import { BoutonVideo } from "./VideoInstallation";
 import { Icon } from "./Icon";
 
 let openGuide = () => {};
@@ -261,6 +262,8 @@ export function InstallGate() {
             <Icon name="install_mobile" size={24} />{attente ? "Un instant…" : "Installer l'application"}
           </button>
         )}
+        {/* Bloqué ? La vidéo montre chaque geste sur son type de téléphone. */}
+        <BoutonVideo os={ios ? "ios" : "android"} />
         {/* L'iPhone ne dit pas au navigateur que l'app est installée : l'élève nous le dit une fois. */}
         <div class="install-gate-liens">
           {ios && <button type="button" class="install-gate-skip" onClick={() => { write("installee", true); setDejaLa(true); }}>Je l'ai déjà installée</button>}

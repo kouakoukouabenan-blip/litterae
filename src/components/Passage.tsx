@@ -1,25 +1,41 @@
 import { useEffect, useState } from "preact/hooks";
 import { Icon } from "./Icon";
 import { cleRecue, codePassage, iphoneInstallee, lienPassage, oublierCleRecue } from "../lib/passage";
-import { PASSAGE_VERS } from "../lib/site";
+import { ESSAI, PASSAGE_VERS, lienAidePassage } from "../lib/site";
+import { BoutonVideo } from "./VideoInstallation";
+import { platform } from "../lib/install";
 import { activer } from "../lib/licence";
 
 const logo = <svg class="install-gate-logo" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="12" fill="#FFF3DC"/><path fill="#0F3D2E" d="M18 14h14v3h-4v28h9.5l3-8H44l-1.5 13H18v-3h4V17h-4z"/><circle cx="50" cy="47.5" r="3.5" fill="#C4562B"/></svg>;
-const nom = () => PASSAGE_VERS.replace(/^https?:\/\//, "").replace(/\/$/, "");
+const nom = () => (PASSAGE_VERS || "https://litterae.app/").replace(/^https?:\/\//, "").replace(/\/$/, "");
+
+/** Site d'essai : #/passage-demo montre l'écran de passage (?iphone pour la version iPhone), le lien revient sur l'essai. */
+export const demoPassage = () => ESSAI && location.hash.startsWith("#/passage-demo");
+
+const Aide = () => (
+  <a class="passage-aide" href={lienAidePassage()} target="_blank" rel="noopener">Un souci ? Écris-nous sur WhatsApp</a>
+);
 
 /**
  * Ancienne adresse : l'élève est emmené sur la nouvelle avec sa clé et sa progression.
  * Sur iPhone (appli installée), le navigateur ne peut pas les emporter : on donne un code à coller.
  */
 export function PassageDepart() {
-  const iphone = iphoneInstallee();
+  const demo = demoPassage();
+  const iphone = iphoneInstallee() || (demo && location.hash.includes("iphone"));
   const [copie, setCopie] = useState(false);
-  const partir = () => { location.href = lienPassage(); };
+  // L'élève regarde la vidéo ou écrit sur WhatsApp : on ne part pas tout seul.
+  const [attendre, setAttendre] = useState(false);
+  const partir = () => {
+    if (demo) { location.href = location.pathname + "#passage=" + codePassage(); location.reload(); return; }
+    location.href = lienPassage();
+  };
   useEffect(() => {
-    if (iphone) return;
-    const t = setTimeout(partir, 3500);
+    if (iphone || attendre) return;
+    const t = setTimeout(partir, demo ? 8000 : 4000);
     return () => clearTimeout(t);
-  }, []);
+  }, [attendre]);
+  const video = platform() === "ios" || iphone ? "ios" : "android";
   const copier = async () => {
     try { await navigator.clipboard.writeText(codePassage()); setCopie(true); }
     catch { setCopie(false); }
@@ -43,6 +59,8 @@ export function PassageDepart() {
               <li>Ouvre-la, va dans <strong>Mon espace › Accès complet</strong> et colle ton code.</li>
             </ol>
             <p class="install-gate-texte passage-note">Ensuite, tu peux supprimer cette ancienne icône.</p>
+            <BoutonVideo os="ios" />
+            <Aide />
           </>
         ) : (
           <>
@@ -50,8 +68,10 @@ export function PassageDepart() {
             <button type="button" class="btn install-gate-btn" onClick={partir}>
               <Icon name="arrow_forward" size={24} />Continuer sur {nom()}
             </button>
-            <span class="install-gate-attente" role="progressbar" aria-label="On t'emmène sur la nouvelle adresse" />
+            {!attendre && <span class="install-gate-attente" role="progressbar" aria-label="On t'emmène sur la nouvelle adresse" />}
             <p class="install-gate-texte passage-note">Là-bas, installe la nouvelle icône, puis supprime l'ancienne.</p>
+            <BoutonVideo os={video} onOuvrir={() => setAttendre(true)} />
+            <span onClick={() => setAttendre(true)}><Aide /></span>
           </>
         )}
       </div>
@@ -92,6 +112,7 @@ export function PassageArrivee() {
             <div class="install-gate-liens">
               <button type="button" class="install-gate-skip" onClick={continuer}>Continuer sans ma clé pour l'instant</button>
             </div>
+            <Aide />
           </>
         ) : (
           <>
