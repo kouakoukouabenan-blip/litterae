@@ -29,7 +29,7 @@ export function AccesScreen({ params }: { params: URLSearchParams }) {
       if (t) { setCle(estCodePassage(t) ? t : t.toUpperCase()); setErreur(""); }
     } catch { /* l'élève peut toujours coller à la main */ }
   };
-  const [etat, setEtat] = useState<"saisie" | "envoi" | "ok">("saisie");
+  const [etat, setEtat] = useState<"saisie" | "envoi" | "ok" | "progression">("saisie");
   const [erreur, setErreur] = useState("");
 
   async function valider(e: Event) {
@@ -42,7 +42,7 @@ export function AccesScreen({ params }: { params: URLSearchParams }) {
     if (estCodePassage(cle)) {
       if (!recevoir(cle)) { setErreur("Ce code de passage est incomplet. Recopie-le en entier depuis l'ancienne appli."); setEtat("saisie"); return; }
       const recue = cleRecue();
-      if (!recue) { setEtat("ok"); setTimeout(() => { location.hash = "#/accueil"; location.reload(); }, 1200); return; }
+      if (!recue) { setEtat("progression"); setTimeout(() => { location.hash = "#/accueil"; location.reload(); }, 3500); return; }
       aValider = recue;
     }
     const err = await activer(aValider);
@@ -107,6 +107,9 @@ export function AccesScreen({ params }: { params: URLSearchParams }) {
 
         {etat === "ok" ? (
           <p class="notice notice-success" role="status"><Icon name="check" size={20} />Clé validée. Ouverture de l'accès complet…</p>
+        ) : etat === "progression" ? (
+          // Code de passage d'une ancienne appli sans accès complet : seule la progression arrive, pas de clé.
+          <p class="notice notice-success" role="status"><Icon name="check" size={20} />Ta progression est bien arrivée. L'ancienne appli n'avait pas de clé active : si tu as payé, saisis ta clé reçue par e-mail.</p>
         ) : (
           <form class="key-form" onSubmit={valider} noValidate>
             <label class="field-label" for="cle">Clé d'accès</label>

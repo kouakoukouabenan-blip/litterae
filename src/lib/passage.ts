@@ -107,9 +107,10 @@ export function recevoir(code: string): boolean {
     } catch { /* stockage plein : on garde ce qui est passé */ }
   }
   // Même identifiant d'appareil : le serveur reconnaît le téléphone, aucune place de la clé n'est prise.
-  if (p.c && !read("licence", null)) {
+  // Gardé aussi sans clé dans le code : si l'élève tape ensuite la clé reçue par e-mail, c'est le même appareil.
+  if (!read("licence", null)) {
     if (p.a) write("appareil", p.a);
-    write(CLE_RECUE, p.c);
+    if (p.c) write(CLE_RECUE, p.c);
   }
   write(RECU, Date.now());
   return true;
