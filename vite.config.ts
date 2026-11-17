@@ -36,7 +36,9 @@ export default defineConfig({
         importScripts: ["push-sw.js"],
         globPatterns: ["**/*.{js,css,html,svg,png,woff2}"],
         // Polices cyrilliques, grecques et vietnamiennes : jamais utilisées, inutile de les télécharger d'avance.
-        globIgnores: ["**/*-{cyrillic,cyrillic-ext,greek,greek-ext,vietnamese}-*.woff2"]
+        globIgnores: ["**/*-{cyrillic,cyrillic-ext,greek,greek-ext,vietnamese}-*.woff2"],
+        // Pages publiques pour Google (scripts/pages-google.mjs) : jamais remplacées par l'appli quand elle est installée.
+        navigateFallbackDenylist: [/\/(oeuvres|themes|fonctions|programme|pages)\//, /\/(sitemap\.xml|robots\.txt)$/]
       }
     })
   ]

@@ -1,0 +1,60 @@
+/* Pages publiques pour Google (scripts/pages-google.mjs) : mêmes couleurs que l'appli, sans JavaScript. */
+@font-face { font-family: "Literata"; src: url("literata.woff2") format("woff2"); font-weight: 200 900; font-style: normal; font-display: swap; }
+@font-face { font-family: "Literata"; src: url("literata-italique.woff2") format("woff2"); font-weight: 200 900; font-style: italic; font-display: swap; }
+@font-face { font-family: "DM Sans"; src: url("dm-sans.woff2") format("woff2"); font-weight: 100 1000; font-display: swap; }
+
+:root {
+  --paper: #FFF8EC; --surface: #FFFFFF; --line: #F0DFC2; --ink: #2B2118; --muted: #7A6552;
+  --green: #0F3D2E; --green-tint: #E7F0EA; --orange: #C4562B; --ochre: #F2A541; --cream: #FFF3DC;
+  --titre: "Literata", Georgia, "Times New Roman", serif;
+  --texte: "DM Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 17px/1.6 var(--texte); }
+a { color: var(--green); }
+
+.barre { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 16px; background: var(--green); }
+.marque { display: flex; align-items: center; gap: 10px; color: var(--cream); text-decoration: none; font: 800 22px/1 var(--titre); }
+.marque svg { width: 32px; height: 32px; }
+.marque b { color: var(--ochre); font-weight: 800; }
+.ouvrir { color: var(--cream); font-size: 15px; font-weight: 600; text-decoration: none; padding: 8px 12px; border: 1px solid rgba(255, 243, 220, .4); border-radius: 999px; white-space: nowrap; }
+.frise { height: 8px; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='10'%3E%3Crect width='40' height='10' fill='%23C4562B'/%3E%3Cpath d='M0 10 5 0h5L5 10zM10 10 15 0h5l-5 10z' fill='%23F2A541'/%3E%3Crect x='23' y='2' width='6' height='6' fill='%230F3D2E'/%3E%3Crect x='33' y='3.5' width='3' height='3' fill='%23FFF3DC'/%3E%3C/svg%3E") repeat-x; background-size: auto 8px; }
+.menu { display: flex; justify-content: center; gap: 20px; padding: 10px 16px; border-bottom: 1px solid var(--line); font-size: 15px; font-weight: 600; }
+.menu a { text-decoration: none; }
+
+main { max-width: 44rem; margin: 0 auto; padding: 24px 16px 40px; }
+h1 { margin: 8px 0 12px; font: 800 30px/1.2 var(--titre); color: var(--green); }
+h1 small { display: block; margin-top: 6px; font: 500 18px/1.3 var(--texte); color: var(--muted); }
+h2 { margin: 28px 0 10px; font: 700 20px/1.3 var(--titre); color: var(--green); }
+.chapeau { margin: 0 0 16px; color: var(--muted); }
+.presentation { margin: 0 0 16px; font-size: 18px; }
+
+.infos { display: grid; gap: 6px; margin: 0; padding: 14px 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; }
+.infos div { display: flex; gap: 10px; }
+.infos dt { flex: 0 0 7.5rem; color: var(--muted); font-size: 15px; }
+.infos dd { margin: 0; }
+
+.pastilles { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; }
+.theme, .fn { display: inline-block; padding: 5px 12px; border-radius: 999px; font-size: 15px; text-decoration: none; }
+.theme { background: var(--green-tint); color: var(--green); }
+.theme span { color: var(--muted); font-size: 13px; }
+.fn { border: 1.5px solid var(--c); color: var(--c); font-weight: 600; background: var(--surface); }
+.chapeau .fn { margin: 2px 2px 0 0; }
+
+.fiche { margin: 28px 0 8px; padding: 18px 16px; background: var(--green); color: var(--cream); border-radius: 14px; }
+.fiche h2 { margin-top: 0; color: var(--cream); }
+.fiche ul { margin: 0 0 16px; padding-left: 1.2em; }
+.bouton { display: inline-block; padding: 13px 22px; border-radius: 10px; background: var(--ochre); color: #1B1B1B; font-weight: 700; text-decoration: none; }
+.petit { margin: 10px 0 0; font-size: 14px; opacity: .85; }
+
+.liste { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+.liste li { padding: 10px 0; border-bottom: 1px solid var(--line); }
+.liste a { font-family: var(--titre); font-size: 18px; text-decoration: none; }
+.liste .meta { display: block; color: var(--muted); font-size: 14px; }
+.lettres { display: flex; flex-wrap: wrap; gap: 4px; }
+.lettres a { min-width: 32px; padding: 4px 0; text-align: center; border-radius: 6px; background: var(--surface); border: 1px solid var(--line); text-decoration: none; font-weight: 600; }
+
+footer { padding: 28px 16px 36px; background: var(--surface); border-top: 1px solid var(--line); text-align: center; }
+footer p { max-width: 36rem; margin: 0 auto 14px; }
+footer .petit { margin-top: 16px; }

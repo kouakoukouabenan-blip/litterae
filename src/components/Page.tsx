@@ -21,9 +21,12 @@ interface Props {
   children: ComponentChildren;
 }
 
+/** Titre de index.html (celui que Google affiche pour l'accueil), gardé pour les écrans sans titre. */
+const TITRE_ACCUEIL = document.title || "Litterae";
+
 export function Page({ title, back, wide, partage, actions, children }: Props) {
   useEffect(() => {
-    document.title = title ? `${title} · Litterae` : "Litterae";
+    document.title = title ? `${title} · Litterae` : TITRE_ACCUEIL;
   }, [title]);
 
   return (

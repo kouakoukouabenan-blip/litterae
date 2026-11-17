@@ -39,6 +39,8 @@ export type Platform = "ios" | "android" | "desktop";
 
 export function platform(): Platform {
   const ua = navigator.userAgent;
+  // Robots de Google et des autres moteurs : pas d'écran d'installation (Google pénalise les écrans qui cachent la page).
+  if (/Googlebot|Google-InspectionTool|AdsBot-Google|bingbot|DuckDuckBot|YandexBot|Lighthouse|facebookexternalhit/i.test(ua)) return "desktop";
   // Les iPad récents se présentent comme un Mac avec écran tactile.
   if (/iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1)) return "ios";
   if (/Android/.test(ua)) return "android";

@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "npm run check:data && tsc --noEmit && vite build",
+    "build": "npm run check:data && tsc --noEmit && vite build && node scripts/pages-google.mjs",
     "preview": "vite preview",
     "check:data": "node scripts/check-data.mjs && node scripts/controle-devoir.mjs",
     "import-contenu": "node scripts/import-contenu.mjs",
