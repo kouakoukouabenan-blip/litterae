@@ -8,7 +8,8 @@
     "build": "npm run check:data && tsc --noEmit && vite build",
     "preview": "vite preview",
     "check:data": "node scripts/check-data.mjs && node scripts/controle-devoir.mjs",
-    "import-contenu": "node scripts/import-contenu.mjs"
+    "import-contenu": "node scripts/import-contenu.mjs",
+    "build:app": "cp -f icones-app/icon-192.png icones-app/icon-512.png icones-app/favicon.svg public/ && npm run build"
   },
   "dependencies": {
     "preact": "^10.29.8"
