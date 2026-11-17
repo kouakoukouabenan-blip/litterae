@@ -1,4 +1,6 @@
 import "./lib/compat";
+// Avant tout le reste : range ce qui arrive de l'ancienne adresse avant que l'appli ne lise quoi que ce soit.
+import { cleRecue, nouvelleAdressePrete, surAncienneAdresse } from "./lib/passage";
 import { render } from "preact";
 import "@fontsource-variable/literata/wght.css";
 import "@fontsource-variable/literata/wght-italic.css";
@@ -14,6 +16,7 @@ import "./lib/install";
 import { App } from "./app";
 import { conserverDonnees } from "./lib/storage";
 import { registerSW } from "virtual:pwa-register";
+import { PassageArrivee, PassageDepart } from "./components/Passage";
 
 conserverDonnees();
 
@@ -31,7 +34,18 @@ registerSW({
   }
 });
 
-render(<App />, document.getElementById("app")!);
+const racine = document.getElementById("app")!;
+if (cleRecue() && navigator.onLine) render(<PassageArrivee />, racine);
+else {
+  render(<App />, racine);
+  // Ancienne adresse : dès que la nouvelle répond, l'élève y est emmené avec sa clé et sa progression.
+  // Sans connexion, ou tant que la nouvelle adresse n'est pas branchée, l'appli marche ici comme avant.
+  if (surAncienneAdresse()) nouvelleAdressePrete().then(ok => {
+    if (!ok) return;
+    document.getElementById("splash")?.remove();
+    render(<PassageDepart />, racine);
+  });
+}
 
 // Retire l'écran d'ouverture : il reste au moins le temps de son animation, jamais plus (environ 2 s).
 const splash = document.getElementById("splash");

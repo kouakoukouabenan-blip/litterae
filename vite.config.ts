@@ -21,7 +21,8 @@ export default defineConfig({
         scope: "./",
         display: "standalone",
         // Permet à Chrome (Android) de savoir si l'application est déjà installée.
-        related_applications: [{ platform: "webapp", url: "https://kouakoukouabenan-blip.github.io/litterae/manifest.webmanifest" }],
+        // Cloudflare Pages (litterae.app) ou GitHub Pages (ancienne adresse).
+        related_applications: [{ platform: "webapp", url: process.env.CF_PAGES ? "https://litterae.app/manifest.webmanifest" : "https://kouakoukouabenan-blip.github.io/litterae/manifest.webmanifest" }],
         background_color: "#FFF8EC",
         theme_color: "#0F3D2E",
         icons: [

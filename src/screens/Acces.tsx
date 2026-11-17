@@ -9,6 +9,10 @@ import { AchatLien } from "../components/Achat";
 import { CommentPayerBouton } from "../components/CommentPayer";
 import { BIENVENUE } from "../components/Bienvenue";
 import { write } from "../lib/storage";
+import { cleRecue, oublierCleRecue, recevoir, surAncienneAdresse } from "../lib/passage";
+
+/** Code de passage (ancienne adresse, iPhone) collé dans la case de la clé : bien plus long qu'une clé. */
+const estCodePassage = (t: string) => t.trim().length > 80 && /^[A-Za-z0-9_-]+$/.test(t.trim().replace(/^.*#passage=/, ""));
 
 /** Saisie de la clé reçue par e-mail après l'achat, ou état de l'accès complet. */
 export function AccesScreen({ params }: { params: URLSearchParams }) {
@@ -22,7 +26,7 @@ export function AccesScreen({ params }: { params: URLSearchParams }) {
   const coller = async () => {
     try {
       const t = (await navigator.clipboard.readText()).trim();
-      if (t) { setCle(t.toUpperCase()); setErreur(""); }
+      if (t) { setCle(estCodePassage(t) ? t : t.toUpperCase()); setErreur(""); }
     } catch { /* l'élève peut toujours coller à la main */ }
   };
   const [etat, setEtat] = useState<"saisie" | "envoi" | "ok">("saisie");
@@ -33,7 +37,16 @@ export function AccesScreen({ params }: { params: URLSearchParams }) {
     if (etat === "envoi" || !cle.trim()) return;
     setEtat("envoi");
     setErreur("");
-    const err = await activer(cle);
+    // Code de passage : la progression est rangée ici, puis la clé qu'il contient est validée (même appareil).
+    let aValider = cle;
+    if (estCodePassage(cle)) {
+      if (!recevoir(cle)) { setErreur("Ce code de passage est incomplet. Recopie-le en entier depuis l'ancienne appli."); setEtat("saisie"); return; }
+      const recue = cleRecue();
+      if (!recue) { setEtat("ok"); setTimeout(() => { location.hash = "#/accueil"; location.reload(); }, 1200); return; }
+      aValider = recue;
+    }
+    const err = await activer(aValider);
+    if (!err) oublierCleRecue();
     if (err) {
       setErreur(err.message);
       setEtat("saisie");
@@ -108,6 +121,13 @@ export function AccesScreen({ params }: { params: URLSearchParams }) {
               {etat === "envoi" ? "Vérification…" : "Valider ma clé"}
             </button>
           </form>
+        )}
+
+        {!surAncienneAdresse() && !actuelle && (
+          <details class="repli acces-aide">
+            <summary>J'ai un code de passage</summary>
+            <p>Tu avais Litterae sur l'ancienne adresse (iPhone) ? Colle le code copié dans la case ci-dessus et valide : ta clé et ta progression reviennent, sans prendre de place sur ta clé.</p>
+          </details>
         )}
 
         <details class="repli acces-aide">

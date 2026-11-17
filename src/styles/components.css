@@ -461,3 +461,8 @@
 .bienvenue-methodes strong { display: block; }
 .bienvenue-detail { display: block; color: var(--ink); font-size: .9375rem; margin-top: 2px; }
 .bienvenue-bientot { color: var(--muted); font-size: .9375rem; margin: 0; align-self: stretch; text-align: left; }
+
+/* Changement d'adresse (ancienne adresse → nouvelle) */
+.passage-adresse { margin: 0; padding: var(--s2) var(--s4); border-radius: 999px; background: rgba(255, 243, 220, 0.12); font: 700 1.25rem/1.2 var(--font-title); color: var(--ochre); letter-spacing: 0.01em; }
+.passage-etapes { margin: 0; padding-left: calc(var(--s4) + 1.25rem); display: flex; flex-direction: column; gap: var(--s2); font-size: var(--text-sm); line-height: 1.45; }
+.passage-note { font-size: var(--text-sm); color: var(--on-dark-muted); margin: 0; }
