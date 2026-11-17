@@ -1,6 +1,6 @@
 import { useEffect, useState } from "preact/hooks";
 import { Icon } from "./Icon";
-import { cleRecue, codePassage, iphoneInstallee, lienPassage, oublierCleRecue } from "../lib/passage";
+import { androidInstallee, cleRecue, codePassage, iphoneInstallee, lienPassage, lienPassageChrome, oublierCleRecue } from "../lib/passage";
 import { read } from "../lib/storage";
 import { ESSAI, PASSAGE_VERS, lienAidePassage } from "../lib/site";
 import { BoutonVideo } from "./VideoInstallation";
@@ -28,11 +28,17 @@ export function PassageDepart() {
   // L'élève regarde la vidéo ou écrit sur WhatsApp : on ne part pas tout seul.
   const [attendre, setAttendre] = useState(false);
   const partir = () => {
-    if (demo) { location.href = location.pathname + "#passage=" + codePassage(); location.reload(); return; }
-    location.href = lienPassage();
+    // Démo (essai) : on revient sur l'essai, par Chrome si l'appli d'essai est installée sur Android.
+    if (demo) {
+      if (androidInstallee()) { location.href = lienPassageChrome(location.origin + location.pathname); return; }
+      location.href = location.pathname + "#passage=" + codePassage(); location.reload(); return;
+    }
+    // Appli Android installée : Chrome ouvre la nouvelle adresse lui-même (il faut que l'élève touche le bouton).
+    location.href = android ? lienPassageChrome() : lienPassage();
   };
+  const android = androidInstallee();
   useEffect(() => {
-    if (iphone || attendre) return;
+    if (iphone || attendre || android) return;
     const t = setTimeout(partir, demo ? 8000 : 4000);
     return () => clearTimeout(t);
   }, [attendre]);
@@ -86,8 +92,8 @@ export function PassageDepart() {
             <button type="button" class="btn install-gate-btn" onClick={partir}>
               <Icon name="arrow_forward" size={24} />Continuer sur {nom()}
             </button>
-            {!attendre && <span class="install-gate-attente" role="progressbar" aria-label="On t'emmène sur la nouvelle adresse" />}
-            <p class="install-gate-texte passage-note">Là-bas, installe la nouvelle icône, puis supprime l'ancienne.</p>
+            {!attendre && !android && <span class="install-gate-attente" role="progressbar" aria-label="On t'emmène sur la nouvelle adresse" />}
+            <p class="install-gate-texte passage-note">{android ? "Litterae s'ouvre dans Chrome : installe la nouvelle icône, puis supprime l'ancienne." : "Là-bas, installe la nouvelle icône, puis supprime l'ancienne."}</p>
             <BoutonVideo os={video} passage onOuvrir={() => setAttendre(true)} />
             <span onClick={() => setAttendre(true)}><Aide /></span>
           </>

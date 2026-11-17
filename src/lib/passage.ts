@@ -70,6 +70,23 @@ export function codePassage(): string {
 /** Lien qui ouvre la nouvelle adresse avec tout ce que l'élève a (ancienne adresse). */
 export const lienPassage = () => `${PASSAGE_VERS}#passage=${codePassage()}`;
 
+/** Appli installée sur Android : un lien normal s'ouvrirait dans une fenêtre de l'ancienne appli, pas dans Chrome. */
+export const androidInstallee = () =>
+  /Android/i.test(navigator.userAgent) && typeof matchMedia === "function" && matchMedia("(display-mode: standalone)").matches;
+
+/**
+ * Lien qui demande à Chrome lui-même d'ouvrir la nouvelle adresse (là où l'élève peut installer la nouvelle icône).
+ * Les données passent dans « ?passage= » (le # sert au lien Android). Sans Chrome, ou si elles sont trop longues,
+ * on revient au lien normal.
+ */
+export function lienPassageChrome(vers = PASSAGE_VERS) {
+  const code = codePassage();
+  const repli = `${vers}#passage=${code}`;
+  if (code.length > 12000) return repli;
+  const u = new URL(vers);
+  return `intent://${u.host}${u.pathname}?passage=${code}#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url=${encodeURIComponent(repli)};end`;
+}
+
 /**
  * Range sur cet appareil ce que l'ancienne adresse a envoyé.
  * Rien n'est écrasé : ce que l'élève a déjà fait ici, et une clé déjà active ici, sont gardés.
@@ -99,11 +116,12 @@ export function recevoir(code: string): boolean {
 }
 
 // Arrivée par le lien de passage : les données sont rangées avant que l'appli ne démarre.
-if (location.hash.startsWith("#passage=")) {
-  const code = location.hash.slice("#passage=".length);
+const depuisChrome = new URLSearchParams(location.search).get("passage");
+if (location.hash.startsWith("#passage=") || depuisChrome) {
+  const code = depuisChrome ?? location.hash.slice("#passage=".length);
   // Une seule fois : si l'ancienne icône renvoie encore ici, la progression faite depuis n'est pas mélangée.
   if (!read<number>(RECU, 0)) recevoir(code);
-  history.replaceState(null, "", location.pathname + location.search + "#/accueil");
+  history.replaceState(null, "", location.pathname + "#/accueil");
 }
 
 /** Clé reçue de l'ancienne adresse, pas encore validée sur cet appareil. */
