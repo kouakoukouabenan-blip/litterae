@@ -168,8 +168,8 @@ try {
   }
 
   // 40 sujets jamais vus (test du 16 novembre 2026) : l'avis de l'auteur (pour ou contre), les sujets hors fonctions, le guide quand l'appli doute.
-  const { SUJETS_NOVEMBRE: N1, SUJETS_NOVEMBRE_2: N2 } = await import("./sujets-novembre.mjs");
-  const SUJETS_NOVEMBRE = [...N1, ...N2];
+  const { SUJETS_NOVEMBRE: N1, SUJETS_NOVEMBRE_2: N2, SUJETS_NOVEMBRE_3: N3 } = await import("./sujets-novembre.mjs");
+  const SUJETS_NOVEMBRE = [...N1, ...N2, ...N3];
   let novembreOk = 0;
   for (const [t, ok] of SUJETS_NOVEMBRE) {
     const a = analyserSujet(t, 6);
