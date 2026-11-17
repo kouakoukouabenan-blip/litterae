@@ -5,13 +5,14 @@ import { Icon } from "./Icon";
  * Vidéo qui montre l'installation pas à pas (moins de 1 Mo, chargée seulement quand l'élève la demande).
  * Android : depuis le lien dans Chrome. iPhone : depuis Safari, menu Partager.
  */
-export function BoutonVideo({ os, onOuvrir }: { os: "android" | "ios"; onOuvrir?: () => void }) {
+export function BoutonVideo({ os, onOuvrir, passage }: { os: "android" | "ios"; onOuvrir?: () => void; passage?: boolean }) {
   const [ouverte, setOuverte] = useState(false);
-  const fichier = os === "ios" ? "installer-iphone" : "installer-android";
+  // Passage : la vidéo montre comment aller sur la nouvelle adresse (voix d'Atikan), pas l'installation seule.
+  const fichier = `${passage ? "passage" : "installer"}-${os === "ios" ? "iphone" : "android"}`;
   return (
     <>
       <button type="button" class="video-aide-bouton" onClick={() => { onOuvrir?.(); setOuverte(true); }}>
-        <Icon name="play_circle" size={22} />Voir la vidéo : installer sur {os === "ios" ? "iPhone" : "Android"}
+        <Icon name="play_circle" size={22} />{passage ? "Voir la vidéo : comment faire" : `Voir la vidéo : installer sur ${os === "ios" ? "iPhone" : "Android"}`}
       </button>
       {ouverte && (
         <div class="video-aide" role="dialog" aria-modal="true" aria-label="Vidéo d'installation" onClick={e => { if (e.target === e.currentTarget) setOuverte(false); }}>

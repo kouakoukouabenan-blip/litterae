@@ -59,7 +59,7 @@ export function PassageDepart() {
               <li>Ouvre-la, va dans <strong>Mon espace › Accès complet</strong> et colle ton code.</li>
             </ol>
             <p class="install-gate-texte passage-note">Ensuite, tu peux supprimer cette ancienne icône.</p>
-            <BoutonVideo os="ios" />
+            <BoutonVideo os="ios" passage />
             <Aide />
           </>
         ) : (
@@ -70,7 +70,7 @@ export function PassageDepart() {
             </button>
             {!attendre && <span class="install-gate-attente" role="progressbar" aria-label="On t'emmène sur la nouvelle adresse" />}
             <p class="install-gate-texte passage-note">Là-bas, installe la nouvelle icône, puis supprime l'ancienne.</p>
-            <BoutonVideo os={video} onOuvrir={() => setAttendre(true)} />
+            <BoutonVideo os={video} passage onOuvrir={() => setAttendre(true)} />
             <span onClick={() => setAttendre(true)}><Aide /></span>
           </>
         )}
