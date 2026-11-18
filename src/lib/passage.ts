@@ -17,7 +17,7 @@ const PREFIX = "litterae.";
 const RECU = "passage-recu";
 /** Clé reçue, à valider auprès du serveur (avec l'identifiant d'appareil reçu). */
 export const CLE_RECUE = "passage-cle";
-/** L'élève a choisi de rester sur l'ancienne adresse : l'écran de passage ne revient plus (sauf s'il change d'avis). */
+/** Date du dernier rappel de la nouvelle adresse (ou du choix « je reste ») : le rappel revient une semaine plus tard. */
 const RESTER = "passage-rester";
 
 /**
@@ -127,9 +127,9 @@ if (location.hash.startsWith("#passage=") || depuisChrome) {
   history.replaceState(null, "", location.pathname + "#/accueil");
 }
 
-export const resteIci = () => read<number>(RESTER, 0) > 0;
+/** Rappel discret de la nouvelle adresse : une fois par semaine au plus (l'ancienne appli reste utilisable). */
+export const rappelDu = () => Date.now() - read<number>(RESTER, 0) > 7 * 864e5;
 export const rester = () => write(RESTER, Date.now());
-export const changerDAvis = () => write(RESTER, 0);
 
 /** Clé reçue de l'ancienne adresse, pas encore validée sur cet appareil. */
 export const cleRecue = () => (read("licence", null) ? null : read<string | null>(CLE_RECUE, null));

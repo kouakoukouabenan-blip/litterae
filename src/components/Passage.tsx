@@ -1,3 +1,4 @@
+import { render } from "preact";
 import { useEffect, useState } from "preact/hooks";
 import { Icon } from "./Icon";
 import { androidInstallee, cleRecue, rester, codePassage, iphoneInstallee, lienPassage, lienPassageChrome, oublierCleRecue } from "../lib/passage";
@@ -13,7 +14,31 @@ const nom = () => (PASSAGE_VERS || "https://litterae.app/").replace(/^https?:\/\
 /** Site d'essai : #/passage-demo montre l'écran de passage (?iphone : version iPhone, ?gratuit : sans accès complet), le lien revient sur l'essai. */
 export const demoPassage = () => ESSAI && location.hash.startsWith("#/passage-demo");
 
-/** Bien visible : l'élève peut garder l'ancienne appli (elle reste à jour). L'écran ne revient plus. */
+/** Ouvre l'écran de passage (depuis Mon espace ou le rappel). */
+export function ouvrirPassage() {
+  document.getElementById("splash")?.remove();
+  render(<PassageDepart />, document.getElementById("app")!);
+}
+
+/** Petit rappel en bas de l'écran, au plus une fois par semaine : l'élève continue d'utiliser l'appli. */
+export function afficherRappel() {
+  if (!demoPassage()) rester();
+  const hote = document.createElement("div");
+  document.body.appendChild(hote);
+  const fermer = () => { render(null, hote); hote.remove(); };
+  render(
+    <div class="passage-rappel" role="status">
+      <p><strong>Litterae a une nouvelle adresse :</strong> {nom()}. Ta clé et ta progression te suivent.</p>
+      <div class="passage-rappel-actions">
+        <button type="button" class="btn btn-primary" onClick={() => { fermer(); ouvrirPassage(); }}>Voir comment passer</button>
+        <button type="button" class="btn btn-secondary" onClick={fermer}>Plus tard</button>
+      </div>
+    </div>,
+    hote
+  );
+}
+
+/** Bien visible : l'élève garde l'ancienne appli (elle reste à jour). */
 const Rester = () => (
   <button type="button" class="passage-rester" onClick={() => {
     if (!demoPassage()) rester();

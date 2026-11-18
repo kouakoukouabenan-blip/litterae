@@ -1,6 +1,6 @@
 import "./lib/compat";
 // Avant tout le reste : range ce qui arrive de l'ancienne adresse avant que l'appli ne lise quoi que ce soit.
-import { cleRecue, nouvelleAdressePrete, surAncienneAdresse, resteIci } from "./lib/passage";
+import { cleRecue, nouvelleAdressePrete, surAncienneAdresse, rappelDu } from "./lib/passage";
 import { render } from "preact";
 import "@fontsource-variable/literata/wght.css";
 import "@fontsource-variable/literata/wght-italic.css";
@@ -16,7 +16,7 @@ import "./lib/install";
 import { App } from "./app";
 import { conserverDonnees } from "./lib/storage";
 import { registerSW } from "virtual:pwa-register";
-import { PassageArrivee, PassageDepart, demoPassage } from "./components/Passage";
+import { PassageArrivee, PassageDepart, afficherRappel, demoPassage } from "./components/Passage";
 
 conserverDonnees();
 
@@ -36,16 +36,12 @@ registerSW({
 
 const racine = document.getElementById("app")!;
 if (cleRecue() && navigator.onLine) render(<PassageArrivee />, racine);
-else if (demoPassage()) { document.getElementById("splash")?.remove(); render(<PassageDepart />, racine); }
+else if (demoPassage() && !location.hash.includes("rappel")) { document.getElementById("splash")?.remove(); render(<PassageDepart />, racine); }
 else {
   render(<App />, racine);
-  // Ancienne adresse : dès que la nouvelle répond, l'élève y est emmené avec sa clé et sa progression.
-  // Sans connexion, ou tant que la nouvelle adresse n'est pas branchée, l'appli marche ici comme avant.
-  if (surAncienneAdresse() && !resteIci()) nouvelleAdressePrete().then(ok => {
-    if (!ok) return;
-    document.getElementById("splash")?.remove();
-    render(<PassageDepart />, racine);
-  });
+  // Ancienne adresse : l'appli marche comme avant. Le passage est dans Mon espace, et un petit rappel
+  // (une fois par semaine au plus) propose la nouvelle adresse dès qu'elle répond.
+  if ((surAncienneAdresse() && rappelDu()) || (demoPassage() && location.hash.includes("rappel"))) nouvelleAdressePrete().then(ok => { if (ok || demoPassage()) afficherRappel(); });
 }
 
 // Retire l'écran d'ouverture : il reste au moins le temps de son animation, jamais plus (environ 2 s).
