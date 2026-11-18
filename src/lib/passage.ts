@@ -156,7 +156,9 @@ export async function nouvelleAdressePrete(): Promise<boolean> {
   try {
     const r = await fetch(`${PASSAGE_VERS}passage.json`, { cache: "no-store", signal: ctrl?.signal });
     const d = await r.json();
-    return r.ok && d?.litterae === true;
+    // « litterae » reste à false : les anciennes versions gardées sur les téléphones (qui ouvraient d'office
+    // l'écran de passage) ne le montrent plus. Les versions actuelles lisent « nouvelle » pour le petit rappel.
+    return r.ok && d?.nouvelle === true;
   } catch {
     return false;
   } finally {
