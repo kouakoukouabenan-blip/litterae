@@ -17,6 +17,8 @@ const PREFIX = "litterae.";
 const RECU = "passage-recu";
 /** Clé reçue, à valider auprès du serveur (avec l'identifiant d'appareil reçu). */
 export const CLE_RECUE = "passage-cle";
+/** L'élève a choisi de rester sur l'ancienne adresse : l'écran de passage ne revient plus (sauf s'il change d'avis). */
+const RESTER = "passage-rester";
 
 /**
  * Valeurs qui ne voyagent pas : contenu rechargé depuis le serveur, état propre à l'icône installée
@@ -24,7 +26,7 @@ export const CLE_RECUE = "passage-cle";
  */
 const RESTENT = new Set([
   "licence", "appareil", "contenu-libre", "annonces", "installee", "installation-plus-tard",
-  "notif-abonne", "notif-acces", "rappels-actifs", "rappel-cible", "bienvenue-acces", RECU, CLE_RECUE
+  "notif-abonne", "notif-acces", "rappels-actifs", "rappel-cible", "bienvenue-acces", RECU, CLE_RECUE, RESTER
 ]);
 
 interface Paquet {
@@ -124,6 +126,10 @@ if (location.hash.startsWith("#passage=") || depuisChrome) {
   if (!read<number>(RECU, 0)) recevoir(code);
   history.replaceState(null, "", location.pathname + "#/accueil");
 }
+
+export const resteIci = () => read<number>(RESTER, 0) > 0;
+export const rester = () => write(RESTER, Date.now());
+export const changerDAvis = () => write(RESTER, 0);
 
 /** Clé reçue de l'ancienne adresse, pas encore validée sur cet appareil. */
 export const cleRecue = () => (read("licence", null) ? null : read<string | null>(CLE_RECUE, null));

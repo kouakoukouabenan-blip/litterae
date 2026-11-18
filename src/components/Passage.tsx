@@ -1,6 +1,6 @@
 import { useEffect, useState } from "preact/hooks";
 import { Icon } from "./Icon";
-import { androidInstallee, cleRecue, codePassage, iphoneInstallee, lienPassage, lienPassageChrome, oublierCleRecue } from "../lib/passage";
+import { androidInstallee, cleRecue, rester, codePassage, iphoneInstallee, lienPassage, lienPassageChrome, oublierCleRecue } from "../lib/passage";
 import { read } from "../lib/storage";
 import { ESSAI, PASSAGE_VERS, lienAidePassage } from "../lib/site";
 import { BoutonVideo } from "./VideoInstallation";
@@ -12,6 +12,15 @@ const nom = () => (PASSAGE_VERS || "https://litterae.app/").replace(/^https?:\/\
 
 /** Site d'essai : #/passage-demo montre l'écran de passage (?iphone : version iPhone, ?gratuit : sans accès complet), le lien revient sur l'essai. */
 export const demoPassage = () => ESSAI && location.hash.startsWith("#/passage-demo");
+
+/** Bien visible : l'élève peut garder l'ancienne appli (elle reste à jour). L'écran ne revient plus. */
+const Rester = () => (
+  <button type="button" class="passage-rester" onClick={() => {
+    if (!demoPassage()) rester();
+    location.hash = "#/accueil";
+    location.reload();
+  }}>Je reste sur l'ancienne adresse</button>
+);
 
 const Aide = () => (
   <a class="passage-aide" href={lienAidePassage()} target="_blank" rel="noopener">Un souci ? Écris-nous sur WhatsApp</a>
@@ -25,8 +34,6 @@ export function PassageDepart() {
   const demo = demoPassage();
   const iphone = iphoneInstallee() || (demo && location.hash.includes("iphone"));
   const [copie, setCopie] = useState(false);
-  // L'élève regarde la vidéo ou écrit sur WhatsApp : on ne part pas tout seul.
-  const [attendre, setAttendre] = useState(false);
   const partir = () => {
     // Démo (essai) : on revient sur l'essai, par Chrome si l'appli d'essai est installée sur Android.
     if (demo) {
@@ -37,11 +44,7 @@ export function PassageDepart() {
     location.href = android ? lienPassageChrome() : lienPassage();
   };
   const android = androidInstallee();
-  useEffect(() => {
-    if (iphone || attendre || android) return;
-    const t = setTimeout(partir, demo ? 8000 : 4000);
-    return () => clearTimeout(t);
-  }, [attendre]);
+
   // Sans accès complet : pas de clé à faire suivre, l'écran est plus simple (le code ne sert qu'à garder la progression).
   const paye = demo ? !location.hash.includes("gratuit") : !!read("licence", null);
   const video = platform() === "ios" || iphone ? "ios" : "android";
@@ -69,6 +72,7 @@ export function PassageDepart() {
             </button>
             {copie && <p class="install-gate-texte passage-note">Dans la nouvelle appli, va dans <strong>Mon espace › Accès complet</strong> et colle ce code.</p>}
             <BoutonVideo os="ios" />
+            <Rester />
             <Aide />
           </>
         ) : iphone ? (
@@ -84,6 +88,7 @@ export function PassageDepart() {
             </ol>
             <p class="install-gate-texte passage-note">Ensuite, tu peux supprimer cette ancienne icône.</p>
             <BoutonVideo os="ios" passage />
+            <Rester />
             <Aide />
           </>
         ) : (
@@ -92,10 +97,10 @@ export function PassageDepart() {
             <button type="button" class="btn install-gate-btn" onClick={partir}>
               <Icon name="arrow_forward" size={24} />Continuer sur {nom()}
             </button>
-            {!attendre && !android && <span class="install-gate-attente" role="progressbar" aria-label="On t'emmène sur la nouvelle adresse" />}
             <p class="install-gate-texte passage-note">{android ? <>Installe la nouvelle icône, puis supprime l'ancienne. Si Litterae s'ouvre dans une fenêtre avec une croix <strong>✕</strong>, touche le menu <strong>⋮</strong> en haut à droite, puis <strong>Ouvrir dans Chrome</strong>.</> : "Là-bas, installe la nouvelle icône, puis supprime l'ancienne."}</p>
-            <BoutonVideo os={video} passage onOuvrir={() => setAttendre(true)} />
-            <span onClick={() => setAttendre(true)}><Aide /></span>
+            <BoutonVideo os={video} passage />
+            <Rester />
+            <Aide />
           </>
         )}
       </div>

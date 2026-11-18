@@ -13,6 +13,7 @@ import { useQuestions } from "../lib/contact";
 import { OeuvresOnglets } from "../components/SujetsOnglets";
 import { auteursDebloques, badgeGagne, badges } from "../lib/collection";
 import { useDevoirs } from "../lib/devoirs";
+import { changerDAvis, resteIci, surAncienneAdresse } from "../lib/passage";
 
 /** Accès aux messages : questions à l'auteur et réponses (accès complet), ou page Contact. */
 function LigneMessages() {
@@ -95,6 +96,16 @@ export function CarnetScreen() {
       <LigneDevoirs />
       <LigneCollection />
       <LigneMessages />
+      {surAncienneAdresse() && resteIci() && (
+        <button type="button" class="row access-row" onClick={() => { changerDAvis(); location.reload(); }}>
+          <Icon name="arrow_forward" size={20} />
+          <span class="row-body">
+            <span class="row-title">Passer à la nouvelle adresse</span>
+            <span class="meta">litterae.app, avec ta clé et ta progression</span>
+          </span>
+          <Icon name="chevron_right" />
+        </button>
+      )}
     </Page>
   );
 }
