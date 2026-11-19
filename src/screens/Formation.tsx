@@ -396,7 +396,13 @@ function Reussite({ etape, params }: { etape: EtapeFormation; params: URLSearchP
         <svg class="reussite-anneau" width="112" height="112" viewBox="0 0 112 112" role="img" aria-label={`Maîtrise ${maitrise} %`}>
           <circle cx="56" cy="56" r="48" fill="none" class="reussite-fond" stroke-width="4" />
           <circle cx="56" cy="56" r="48" fill="none" class="reussite-trait" stroke-width="4" stroke-linecap="round" transform="rotate(-90 56 56)" style={`--reste:${reste}`} />
-          <path class="reussite-coche" d="M40 57l11 11 22-24" fill="none" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+          <path class="reussite-coche seulement-ancienne" d="M40 57l11 11 22-24" fill="none" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+          {/* Nouvelle identité : le logo « La Synthèse » se rassemble au centre de l'anneau (thèse, antithèse, synthèse). */}
+          <g class="reussite-logo seulement-nouvelle" transform="translate(28 28) scale(0.21875)">
+            <path class="reussite-l1" d="M40,40 H72 V184 H160 V216 H40 Z" />
+            <path class="reussite-l2" d="M216,216 H184 V72 H96 V40 H216 Z" />
+            <path class="reussite-carre" d="M112,112 H144 V144 H112 Z" />
+          </g>
         </svg>
         <p class="univers-sur">Étape {etape.num} réussie</p>
         <h1 class="univers-titre univers-titre-centre">{etape.id === "epreuve" ? "Tu as réussi l'épreuve finale" : `Tu sais ${etape.titre.charAt(0).toLowerCase() + etape.titre.slice(1)}`}</h1>

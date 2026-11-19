@@ -378,3 +378,24 @@
 :root.identite-nouvelle.couleurs-afrique .step-num { color: var(--green); background: var(--green-tint); }
 :root.identite-nouvelle.couleurs-afrique .prochaine-message .prochaine-icone .icon { color: var(--green); }
 :root.identite-nouvelle.couleurs-afrique .row > .icon { color: var(--green); }
+
+/* ---------- Formation : l'« autre univers » reste sur fond vert profond dans la nouvelle identité ---------- */
+:root.identite-nouvelle[data-univers="formation"] body { background: var(--green); }
+:root.identite-nouvelle[data-univers="formation"] .topbar { background: var(--green); box-shadow: none; }
+:root.identite-nouvelle[data-univers="formation"] :is(.topbar .icon-btn, .topbar-title, .brand) { color: var(--on-dark); }
+:root.identite-nouvelle[data-univers="formation"] .topbar .espace-btn { background: rgba(255, 243, 220, .14); color: var(--on-dark); }
+:root.identite-nouvelle[data-univers="formation"] .methode-bouton { border-color: rgba(255, 243, 220, .4) !important; color: var(--on-dark) !important; }
+:root.identite-nouvelle[data-univers="formation"] .site-footer a { color: var(--on-dark-muted); }
+:root.identite-nouvelle .univers-titre { font-weight: 700; letter-spacing: -0.02em; color: #fff; }
+
+/* Étape réussie : les deux L glissent l'un vers l'autre dans l'anneau, puis le carré de la synthèse surgit et bat une fois. */
+.reussite-logo path { fill: var(--on-dark); }
+.reussite-logo .reussite-carre { fill: var(--orange); }
+.reussite-l1 { animation: rl-l1 .7s .35s cubic-bezier(.2,.8,.3,1) both; }
+.reussite-l2 { animation: rl-l2 .7s .45s cubic-bezier(.2,.8,.3,1) both; }
+.reussite-carre { transform-box: fill-box; transform-origin: center; animation: rl-carre .45s 1.05s cubic-bezier(.3,1.7,.5,1) both, rl-bat .6s 1.7s ease-in-out both; }
+@keyframes rl-l1 { from { opacity: 0; transform: translate(-70px, 70px); } to { opacity: 1; transform: none; } }
+@keyframes rl-l2 { from { opacity: 0; transform: translate(70px, -70px); } to { opacity: 1; transform: none; } }
+@keyframes rl-carre { from { transform: scale(0); } to { transform: none; } }
+@keyframes rl-bat { 50% { transform: scale(1.35); } }
+:root.identite-nouvelle .reussite-anneau { width: 128px; height: 128px; }
