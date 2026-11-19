@@ -1,4 +1,5 @@
 // Informations d'édition et adresses de service.
+import { read } from "./storage";
 export const EDITEUR = "Donatien Kouabenan";
 /** Adresse de contact affichée dans les CGU et la page Confidentialité. */
 export const CONTACT_EMAIL = "livresfaciles@gmail.com";
@@ -9,8 +10,16 @@ export const ACHAT_URL = "https://livresfaciles.mychariow.shop/prd_mhf6g1pp";
 /** Serveur de vérification des clés (Cloudflare Worker), sans barre finale. */
 export const SERVEUR_URL: string = import.meta.env.VITE_SERVEUR_URL ?? "https://litterae-serveur.kouakoukouabenan.workers.dev";
 
-/** Numéro WhatsApp de l'assistance, au format international sans « + » ni espaces (ex. 2250700000000). Vide : e-mail seulement. */
-export const WHATSAPP = "2250758806323";
+/**
+ * Numéro WhatsApp de l'assistance, au format international sans « + » ni espaces (ex. 2250700000000). Vide : e-mail seulement.
+ * Réglé dans le tableau de bord (Élèves › WhatsApp) et gardé avec le contenu libre ; ce numéro sert tant que l'appli ne l'a pas reçu.
+ * L'appli se recharge quand le réglage change (synchro.ts), la valeur lue au lancement suffit donc.
+ */
+const WHATSAPP_DEPART = "2250758806323";
+const recu = read<{ whatsapp?: unknown } | null>("contenu-libre", null)?.whatsapp;
+export const WHATSAPP: string = typeof recu === "string" && /^(\d{8,15})?$/.test(recu) ? recu : WHATSAPP_DEPART;
+/** « +225 07 58 80 63 23 » pour l'affichage. */
+export const WHATSAPP_LISIBLE = "+" + (/^\d{13}$/.test(WHATSAPP) ? WHATSAPP.replace(/^(\d{3})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})$/, "$1 $2 $3 $4 $5 $6") : WHATSAPP);
 
 /** Lien d'aide quand la clé n'arrive pas ou est refusée : WhatsApp si un numéro est renseigné, sinon e-mail. */
 export function lienAide(sujet: string) {

@@ -12,7 +12,7 @@ import {
 import { useAccess } from "../lib/access";
 import { replaceRoute } from "../lib/router";
 import { TexteLiens } from "../components/TexteLiens";
-import { CONTACT_EMAIL, EDITEUR, WHATSAPP } from "../lib/site";
+import { CONTACT_EMAIL, EDITEUR, WHATSAPP, WHATSAPP_LISIBLE } from "../lib/site";
 
 const MAX = 2000;
 
@@ -244,7 +244,7 @@ export function ContactScreen({ params }: { params: URLSearchParams }) {
           <h2 id="direct-title" class="section-title">Écrire directement</h2>
           <p>Pour un souci de paiement ou de clé d'accès, WhatsApp est le plus rapide.</p>
           <div class="lock-actions">
-            {WHATSAPP && <a class="btn btn-secondary" href={`https://wa.me/${WHATSAPP}`} target="_blank" rel="noopener">WhatsApp : +{WHATSAPP.replace(/^(\d{3})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})$/, "$1 $2 $3 $4 $5 $6")}</a>}
+            {WHATSAPP && <a class="btn btn-secondary" href={`https://wa.me/${WHATSAPP}`} target="_blank" rel="noopener">WhatsApp : {WHATSAPP_LISIBLE}</a>}
             <a class="btn btn-secondary" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
           </div>
         </section>

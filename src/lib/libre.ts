@@ -15,6 +15,8 @@ export interface ContenuLibre {
   revision: number;
   /** Prix de l'accès complet réglé dans le tableau de bord. */
   prix?: Prix;
+  /** Numéro WhatsApp de l'assistance réglé dans le tableau de bord ("" : e-mail seulement). Lu par site.ts. */
+  whatsapp?: string;
   /** Durée de l'accès des clés achetées à partir de « depuis » (null : sans limite). */
   duree?: { depuis: string; mois: number } | null;
   /** Anciennes fiches gratuites imposées : toujours vide (l'élève choisit ses 10 fiches), ignoré. */
