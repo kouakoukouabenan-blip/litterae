@@ -7,6 +7,7 @@ import { InstallButton } from "./Install";
 import { Cloche } from "./Annonces";
 import { ChoixMethode } from "./ChoixMethode";
 import { Partager, type Partage } from "./Partager";
+import { LogoHorizontal } from "./Marque";
 
 interface Props {
   /** Titre court affiché dans la barre du haut sur mobile pour les pages de détail. */
@@ -40,6 +41,7 @@ export function Page({ title, back, wide, partage, actions, children }: Props) {
           ) : null}
           <a class={`brand ${back ? "brand-desktop" : ""}`} href="#/accueil" aria-label="Litterae, accueil">
             Litter<span>ae</span>
+            <LogoHorizontal class="brand-logo seulement-nouvelle" />
           </a>
           {back && title ? <p class="topbar-title">{title}</p> : <span class="topbar-spacer" />}
           <NavTabs />

@@ -1,0 +1,379 @@
+/*
+ * Identité « La Synthèse » (charte Litterae-identite, novembre 2026).
+ * Tout est rangé sous :root.identite-nouvelle : sans cette classe, l'appli garde exactement
+ * l'ancien design « Couleurs d'Afrique ». L'interrupteur est dans src/lib/identite-defaut.ts.
+ *
+ * Encre indigo (#26285E) et terracotta (#D9653B) sur papier (#FAF7F0).
+ * Space Grotesk pour les titres, Inter pour le texte, Fraunces italique pour les citations et les titres d'œuvres.
+ * Angles francs : 4 px (boutons, champs, étiquettes), 8 px au plus (cartes). Pas d'ombre lourde, pas de frise.
+ */
+
+/* Le carré de la synthèse et le fond des tuiles suivent la palette active. */
+:root.identite-nouvelle .carre-synthese { fill: var(--orange); }
+:root.identite-nouvelle .encre-synthese { fill: var(--green); }
+:root.identite-nouvelle .papier-synthese { fill: var(--paper); }
+
+/* Les éléments propres à une seule identité (logos, icônes de méthode). */
+.seulement-nouvelle { display: none !important; }
+:root.identite-nouvelle .seulement-ancienne { display: none !important; }
+:root.identite-nouvelle .seulement-nouvelle { display: revert !important; }
+
+:root.identite-nouvelle {
+  /* Papier, surfaces, filets */
+  --paper: #FAF7F0;
+  --surface: #FFFFFF;
+  --surface-hover: #F1EFE8;
+  --soft: #EFEDE6;
+  --line: #E6E2D8;
+  --line-strong: #DAD6CC;
+  --ink: #26285E;
+  --ink-strong: #1C1E4A;
+  --muted: #5B5E7A;
+  --on-dark: #FFFFFF;
+  --on-dark-muted: #C9CAE0;
+
+  /* « Vert » = l'encre indigo (barres, boutons, titres) */
+  --green: #26285E;
+  --green-press: #1C1E4A;
+  --green-pale: #E6E7F2;
+  --green-tint: #EFF0F7;
+
+  /* Terre cuite = terracotta de la charte */
+  --orange: #D9653B;
+  --orange-text: #B24A22;
+  --orange-pale: #F9E6DD;
+
+  /* L'ocre n'existe plus : la mise en avant prend le terracotta (une seule touche par écran). */
+  --ochre: #D9653B;
+  --ochre-pale: #F9E6DD;
+  --ochre-text: #B24A22;
+
+  /* Une couleur par fonction littéraire, accordées à l'encre et au terracotta */
+  --fn-engagement: #B24A22;
+  --fn-esthetique: #3A3D86;
+  --fn-evasion: #A86A12;
+  --fn-lyrique: #8E3B5F;
+  --fn-sociale: #2F6E5B;
+
+  --error: #B42318;
+  --success: #2F7D5B;
+  --highlight: #F9E6DD;
+
+  --font-title: "Fraunces", Georgia, "Times New Roman", serif;
+  --font-head: "Space Grotesk", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-text: "Inter Variable", Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  --radius: 8px;
+  --radius-sm: 4px;
+  --band-h: 0px;
+  --shadow: none;
+  --focus: 0 0 0 2px var(--paper), 0 0 0 4px var(--orange-text);
+  /* Nuances propres à l'identité (remplacées par la variante « couleurs d'Afrique » plus bas) */
+  --marque-survol: #3A3D86;
+  --accent-sur-sombre: #F2B79F;
+  --accent-presse: #C4552D;
+  --texte-sur-sombre-doux: #C9CAE0;
+}
+
+:root.identite-nouvelle body { background: var(--paper); color: var(--ink); font-family: var(--font-text); }
+:root.identite-nouvelle :focus-visible { outline: 2px solid var(--orange-text); outline-offset: 2px; }
+
+/* ---------- Barre du haut : papier, logo horizontal, pas de frise ---------- */
+:root.identite-nouvelle .topbar { background: var(--paper); color: var(--green); box-shadow: 0 1px 0 var(--line); }
+:root.identite-nouvelle .topbar::after { display: none; }
+:root.identite-nouvelle .topbar .icon-btn, :root.identite-nouvelle .topbar-title { color: var(--green); }
+:root.identite-nouvelle .topbar .espace-btn { background: var(--green); color: #fff; }
+:root.identite-nouvelle .topbar .espace-btn[aria-current="page"] { box-shadow: 0 0 0 3px var(--green-pale); }
+:root.identite-nouvelle :is(.search-bar, .accueil-recherche) .field { box-shadow: inset 0 0 0 1.5px var(--green); }
+:root.identite-nouvelle :is(.search-bar, .accueil-recherche) .field:focus-within { box-shadow: inset 0 0 0 2px var(--green), 0 0 0 3px var(--green-pale); }
+:root.identite-nouvelle :is(.search-bar, .accueil-recherche) .field > .icon { color: var(--green); }
+:root.identite-nouvelle .brand { font-size: 0; line-height: 0; color: var(--green); display: inline-flex; align-items: center; }
+:root.identite-nouvelle .brand > span { display: none; }
+@media (max-width: 719px) { :root.identite-nouvelle .brand.brand-desktop { display: none; } }
+:root.identite-nouvelle .brand-logo { height: 36px; width: auto; margin-left: -4px; }
+:root.identite-nouvelle .topbar-title { font-family: var(--font-head); font-weight: 600; }
+:root.identite-nouvelle .bandeau-essai { background: var(--green); color: #fff; }
+
+/* Barre du bas : papier, onglet actif souligné d'un carré terracotta */
+:root.identite-nouvelle .bottom-nav { background: var(--paper); box-shadow: 0 -1px 0 var(--line); }
+:root.identite-nouvelle .bottom-nav-item { color: var(--muted); font-family: var(--font-head); font-weight: 500; letter-spacing: .01em; }
+:root.identite-nouvelle .bottom-nav-item[aria-current="page"] { color: var(--green); font-weight: 700; position: relative; }
+:root.identite-nouvelle .bottom-nav-item[aria-current="page"] .icon,
+:root.identite-nouvelle .bottom-nav-item[aria-current="page"] .bottom-nav-icone { background: none !important; padding: 0 !important; }
+:root.identite-nouvelle .bottom-nav-item[aria-current="page"]::before { content: ""; position: absolute; top: 0; left: 50%; width: 24px; height: 3px; margin-left: -12px; background: var(--orange); }
+:root.identite-nouvelle .nav-tab[aria-current="page"] { background: var(--green); color: #fff; }
+
+/* ---------- Titres en Space Grotesk ---------- */
+:root.identite-nouvelle :is(.page-title, .home-title, .section-title, .home-section-title, .resume-title, .choix-titre, .fn-tile-title,
+  .link-panel-title, .empty-title, .lock-title, .quiz-q, .quiz-score, .annonce-titre, .install-gate-title, .message-titre,
+  .univers-titre, .formation-titre, .sujet-num, .dico-lettre, .dico-mot, .carte-mot, .auteur-initiale, .cc-carte-titre,
+  .cc-sous-titre, .atelier-arg legend, .passage-adresse, .step-num, .sub-title, .eyebrow) {
+  font-family: var(--font-head);
+}
+:root.identite-nouvelle :is(.page-title, .home-title) { font-weight: 700; letter-spacing: -0.02em; color: var(--green); }
+:root.identite-nouvelle :is(.page-title, .home-title) em { font-style: normal; color: var(--green); }
+:root.identite-nouvelle :is(.section-title, .home-section-title) { font-weight: 600; letter-spacing: -0.01em; color: var(--green); }
+:root.identite-nouvelle .eyebrow { font-weight: 700; letter-spacing: .08em; color: var(--orange-text); }
+:root.identite-nouvelle .sujet-num { font-weight: 700; color: var(--orange-text); }
+:root.identite-nouvelle .quiz-score { font-weight: 700; color: var(--green); }
+:root.identite-nouvelle .dico-mot { font-weight: 600; letter-spacing: 0; }
+:root.identite-nouvelle .carte-mot { font-weight: 700; color: var(--green); }
+:root.identite-nouvelle .install-gate-title span, :root.identite-nouvelle .brand span { color: inherit; }
+
+/* Titres d'œuvres et citations : la voix du texte étudié, en Fraunces italique */
+:root.identite-nouvelle .work-title, :root.identite-nouvelle h1.work-page-title.work-page-title { font-family: var(--font-title); font-style: italic; font-weight: 600; letter-spacing: 0; color: var(--green); }
+:root.identite-nouvelle :is(.citation, .row-quote, .fil-citation) { font-family: var(--font-title); font-style: italic; font-weight: 400; color: var(--ink); }
+:root.identite-nouvelle .citation { border-left: 0; padding-left: 0; position: relative; padding: var(--s2) 0 var(--s2) var(--s5); }
+/* Le cadre Synthèse : un L dans le coin haut gauche de la citation. */
+:root.identite-nouvelle .citation::before { content: ""; position: absolute; left: 0; top: 0; width: 12px; height: 12px; border-left: 3px solid var(--green); border-top: 3px solid var(--green); }
+/* Les extraits étudiés (commentaire) et la copie restent lisibles en Fraunces droit… qui n'est pas chargé : Inter. */
+:root.identite-nouvelle :is(.cc-strophe, .cc-prose, .cc-souligner, .atelier-copie, .devoir-garde-texte, .cc-exemple, .cc-exemples,
+  .cc-phrases, .cc-fiche-indice, .cc-groupe-indices, .cc-cocher label) { font-family: var(--font-text); }
+:root.identite-nouvelle :is(.cc-strophe, .cc-prose, .cc-souligner) { font-family: var(--font-title); font-style: italic; }
+
+/* ---------- Boutons, champs, puces ---------- */
+:root.identite-nouvelle .btn { font-family: var(--font-text); font-weight: 600; }
+:root.identite-nouvelle .btn-primary { background: var(--green); color: #fff; }
+:root.identite-nouvelle .btn-primary:hover { background: var(--marque-survol); }
+:root.identite-nouvelle .btn-secondary { background: var(--surface); color: var(--green); border: 1.5px solid var(--line-strong); }
+:root.identite-nouvelle .btn-secondary:hover { border-color: var(--green); background: var(--surface); }
+:root.identite-nouvelle .chip { background: var(--surface); border: 1.5px solid var(--line-strong); color: var(--green); }
+:root.identite-nouvelle .chip[aria-pressed="true"], :root.identite-nouvelle .chip[aria-selected="true"] { background: var(--green); border-color: var(--green); color: #fff; }
+:root.identite-nouvelle .field { background: var(--surface); border: 1.5px solid var(--line-strong); color: var(--muted); }
+:root.identite-nouvelle .field:focus-within { border-color: var(--green); }
+:root.identite-nouvelle :is(.input, .textarea) { background: var(--surface); border-color: var(--line-strong); }
+:root.identite-nouvelle .segments { background: var(--soft); }
+:root.identite-nouvelle .sticky-bar { background: var(--paper); backdrop-filter: none; }
+:root.identite-nouvelle .link-btn, :root.identite-nouvelle .lien-suite, :root.identite-nouvelle .arg-autres { color: var(--green); }
+
+/* ---------- Cartes : surface blanche, filet fin, pas d'ombre ---------- */
+:root.identite-nouvelle :is(.list, .work, .link-panel, .args li, .def, .model, .pager-link, .install-banner, .access-row, .arg, .choix-outils) {
+  box-shadow: none !important; border: 1px solid var(--line) !important; background: var(--surface);
+}
+:root.identite-nouvelle :is(.work, .link-panel):hover { box-shadow: none; border-color: var(--line-strong) !important; }
+:root.identite-nouvelle .resume-card, :root.identite-nouvelle .prochaine { background: var(--green); color: #fff; }
+:root.identite-nouvelle .resume-card .eyebrow { color: var(--accent-sur-sombre); }
+:root.identite-nouvelle .resume-card .btn-primary { background: var(--orange); color: #fff; }
+:root.identite-nouvelle .resume-card .progress-bar span { background: var(--orange); }
+:root.identite-nouvelle .arg.argument-trouve { background: var(--orange-pale); box-shadow: inset 3px 0 0 var(--orange) !important; }
+:root.identite-nouvelle .fn-tile { background: var(--surface); border: 1px solid var(--line) !important; }
+:root.identite-nouvelle .fn-tile-title { color: var(--green); font-weight: 600; }
+
+/* Tuiles de l'accueil : aplats calmes, une seule touche terracotta (le bouton du haut) */
+:root.identite-nouvelle .choix-carte { box-shadow: none !important; }
+:root.identite-nouvelle :is(.choix-methode, .choix-entrainer, .choix-corriges, .choix-outils) { background: var(--surface); border: 1px solid var(--line) !important; }
+:root.identite-nouvelle :is(.choix-methode, .choix-entrainer, .choix-corriges, .choix-outils) .icon { color: var(--green); }
+:root.identite-nouvelle .choix-oeuvres { background: var(--green); border-color: var(--green); }
+:root.identite-nouvelle .choix-oeuvres .icon { color: var(--accent-sur-sombre); }
+
+/* ---------- Écran d'installation et de passage : aplat indigo ---------- */
+:root.identite-nouvelle .install-gate { background: var(--green); color: #fff; }
+:root.identite-nouvelle .install-gate::before { display: none; }
+:root.identite-nouvelle .install-gate-title { font-weight: 700; letter-spacing: -0.02em; color: #fff; }
+:root.identite-nouvelle .install-gate-points .icon { color: var(--accent-sur-sombre); }
+:root.identite-nouvelle .install-gate-btn { background: var(--orange); color: #fff; }
+:root.identite-nouvelle .install-gate-btn:hover { background: var(--accent-presse); }
+:root.identite-nouvelle .install-gate-attente { border-color: rgba(255, 255, 255, .25); border-top-color: var(--orange); }
+:root.identite-nouvelle .install-gate-skip { color: var(--on-dark-muted); }
+:root.identite-nouvelle .passage-adresse { background: rgba(255, 255, 255, .1); color: #fff; }
+
+/* ---------- Choix de la méthode : les icônes de la charte ---------- */
+:root.identite-nouvelle:not(.couleurs-afrique) .methode-bouton { border-radius: 4px; } :root.identite-nouvelle .methode-bouton { font-family: var(--font-head); }
+:root.identite-nouvelle .methode-icone { width: 28px; height: 28px; flex-shrink: 0; color: var(--green); }
+:root.identite-nouvelle .methode-ligne.is-bientot .methode-icone { color: var(--muted); opacity: .7; }
+
+/* ---------- Pied de page ---------- */
+:root.identite-nouvelle .site-footer a { color: var(--muted); }
+
+/* ---------- Angles francs, sauf dans la variante couleurs d'Afrique qui garde les arrondis de l'ancien (généré depuis les autres feuilles) : 4 px pour les contrôles, 8 px pour les cartes, carrés pour les points ---------- */
+:root.identite-nouvelle:not(.couleurs-afrique) .accueil-recherche .field,
+:root.identite-nouvelle:not(.couleurs-afrique) .bottom-nav-item[aria-current="page"] .bottom-nav-icone,
+:root.identite-nouvelle:not(.couleurs-afrique) .bottom-nav-item[aria-current="page"] .icon,
+:root.identite-nouvelle:not(.couleurs-afrique) .btn,
+:root.identite-nouvelle:not(.couleurs-afrique) .chip,
+:root.identite-nouvelle:not(.couleurs-afrique) .defi-chrono,
+:root.identite-nouvelle:not(.couleurs-afrique) .dico-search .field,
+:root.identite-nouvelle:not(.couleurs-afrique) .fil-nouveau,
+:root.identite-nouvelle:not(.couleurs-afrique) .fn-chip,
+:root.identite-nouvelle:not(.couleurs-afrique) .fn-mini,
+:root.identite-nouvelle:not(.couleurs-afrique) .fn-tile,
+:root.identite-nouvelle:not(.couleurs-afrique) .formule-partie,
+:root.identite-nouvelle:not(.couleurs-afrique) .install-btn,
+:root.identite-nouvelle:not(.couleurs-afrique) .nav-tab[aria-current="page"],
+:root.identite-nouvelle:not(.couleurs-afrique) .passage-adresse,
+:root.identite-nouvelle:not(.couleurs-afrique) .pays-liste li,
+:root.identite-nouvelle:not(.couleurs-afrique) .search-bar .field,
+:root.identite-nouvelle:not(.couleurs-afrique) .search-bar .filter-btn,
+:root.identite-nouvelle:not(.couleurs-afrique) .segment,
+:root.identite-nouvelle:not(.couleurs-afrique) .segments,
+:root.identite-nouvelle:not(.couleurs-afrique) .segments-curseur,
+:root.identite-nouvelle:not(.couleurs-afrique) .serie-badge,
+:root.identite-nouvelle:not(.couleurs-afrique) .tag,
+:root.identite-nouvelle:not(.couleurs-afrique) .video-aide-bouton,
+:root.identite-nouvelle:not(.couleurs-afrique) .work-libre { border-radius: var(--radius-sm) !important; }
+:root.identite-nouvelle:not(.couleurs-afrique) .annot-num,
+:root.identite-nouvelle:not(.couleurs-afrique) .arg,
+:root.identite-nouvelle:not(.couleurs-afrique) .auteur-carte,
+:root.identite-nouvelle:not(.couleurs-afrique) .auteur-initiale,
+:root.identite-nouvelle:not(.couleurs-afrique) .badge-carte,
+:root.identite-nouvelle:not(.couleurs-afrique) .bulle,
+:root.identite-nouvelle:not(.couleurs-afrique) .choix .choix-carte,
+:root.identite-nouvelle:not(.couleurs-afrique) .choix-carte,
+:root.identite-nouvelle:not(.couleurs-afrique) .defi-bravo,
+:root.identite-nouvelle:not(.couleurs-afrique) .demo-tel,
+:root.identite-nouvelle:not(.couleurs-afrique) .devoir-avertissement,
+:root.identite-nouvelle:not(.couleurs-afrique) .devoir-compris,
+:root.identite-nouvelle:not(.couleurs-afrique) .devoir-compris-carte,
+:root.identite-nouvelle:not(.couleurs-afrique) .devoir-conseil,
+:root.identite-nouvelle:not(.couleurs-afrique) .devoir-corriger,
+:root.identite-nouvelle:not(.couleurs-afrique) .devoir-etapes,
+:root.identite-nouvelle:not(.couleurs-afrique) .devoir-exemple,
+:root.identite-nouvelle:not(.couleurs-afrique) .devoir-garde,
+:root.identite-nouvelle:not(.couleurs-afrique) .devoir-menu-choix,
+:root.identite-nouvelle:not(.couleurs-afrique) .devoir-note,
+:root.identite-nouvelle:not(.couleurs-afrique) .devoir-piste,
+:root.identite-nouvelle:not(.couleurs-afrique) .devoir-plan,
+:root.identite-nouvelle:not(.couleurs-afrique) .fil-argument,
+:root.identite-nouvelle:not(.couleurs-afrique) .fil-carte,
+:root.identite-nouvelle:not(.couleurs-afrique) .formation-choix-btn,
+:root.identite-nouvelle:not(.couleurs-afrique) .formation-etape,
+:root.identite-nouvelle:not(.couleurs-afrique) .formation-etape-num,
+:root.identite-nouvelle:not(.couleurs-afrique) .formation-indice,
+:root.identite-nouvelle:not(.couleurs-afrique) .formation-reponse,
+:root.identite-nouvelle:not(.couleurs-afrique) .formation-retour,
+:root.identite-nouvelle:not(.couleurs-afrique) .formation-tableau > div,
+:root.identite-nouvelle:not(.couleurs-afrique) .formation-tete,
+:root.identite-nouvelle:not(.couleurs-afrique) .formation-tuile,
+:root.identite-nouvelle:not(.couleurs-afrique) .invitation-notifs,
+:root.identite-nouvelle:not(.couleurs-afrique) .methode-bouton,
+:root.identite-nouvelle:not(.couleurs-afrique) .outil-icone,
+:root.identite-nouvelle:not(.couleurs-afrique) .pour-toi-ligne,
+:root.identite-nouvelle:not(.couleurs-afrique) .prochaine,
+:root.identite-nouvelle:not(.couleurs-afrique) .prochaine-message,
+:root.identite-nouvelle:not(.couleurs-afrique) .progres-action,
+:root.identite-nouvelle:not(.couleurs-afrique) .progres-haut,
+:root.identite-nouvelle:not(.couleurs-afrique) .resume-card,
+:root.identite-nouvelle:not(.couleurs-afrique) .reussite-cartes section,
+:root.identite-nouvelle:not(.couleurs-afrique) .step-num,
+:root.identite-nouvelle:not(.couleurs-afrique) .sujet-tape { border-radius: var(--radius) !important; }
+:root.identite-nouvelle:not(.couleurs-afrique) .annonce-urgent::before,
+:root.identite-nouvelle:not(.couleurs-afrique) .atelier-pastille,
+:root.identite-nouvelle:not(.couleurs-afrique) .devoir-lecture-points i,
+:root.identite-nouvelle:not(.couleurs-afrique) .fn-chip::before,
+:root.identite-nouvelle:not(.couleurs-afrique) .message-nouveau .message-haut::before,
+:root.identite-nouvelle:not(.couleurs-afrique) .methode-point,
+:root.identite-nouvelle:not(.couleurs-afrique) .objectif-points span,
+:root.identite-nouvelle:not(.couleurs-afrique) .prochaine-signal,
+:root.identite-nouvelle:not(.couleurs-afrique) .work-fn::before { border-radius: 0 !important; }
+
+/* Mon espace (site d'essai) : choix de l'apparence. Présent dans les deux identités. */
+.apparence { margin-top: var(--s6); }
+.apparence .sub-title { margin-bottom: var(--s2); }
+.apparence .chips { flex-wrap: wrap; margin-bottom: var(--s2); }
+/* Lignes de Mon espace : icônes à l'encre, la flèche discrète (le terracotta reste pour l'essentiel). */
+:root.identite-nouvelle .access-row > .icon { color: var(--green); }
+:root.identite-nouvelle .access-row > .icon:last-child { color: var(--muted); }
+
+/* ---------- Animations (discrètes, coupées si le téléphone demande moins d'animations : base.css) ---------- */
+/* Changement de méthode : un voile papier, l'icône qui se pose, le carré qui apparaît, le nom. Présent dans les deux identités. */
+.transition-methode { position: fixed; inset: 0; z-index: 95; display: grid; place-items: center; background: var(--paper); animation: tm-voile 1s ease both; pointer-events: none; }
+.transition-methode-contenu { display: flex; flex-direction: column; align-items: center; gap: var(--s3); }
+.transition-methode-icone { width: 72px; height: 72px; color: var(--green); animation: tm-icone .5s cubic-bezier(.2,.8,.3,1.2) both; }
+.transition-methode-icone path:last-child { transform-origin: center; transform-box: fill-box; animation: tm-carre .3s .3s cubic-bezier(.3,1.6,.5,1) both; }
+.transition-methode-point { width: 28px; height: 28px; border-radius: 50%; animation: tm-icone .5s cubic-bezier(.2,.8,.3,1.2) both; }
+:root.identite-nouvelle:not(.couleurs-afrique) .transition-methode-point { border-radius: 0; }
+.transition-methode-nom { font: 700 1.375rem/1.2 var(--font-head, var(--font-text)); color: var(--ink-strong); animation: tm-nom .4s .2s ease-out both; }
+@keyframes tm-voile { 0% { opacity: 0; } 15% { opacity: 1; } 70% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes tm-icone { from { opacity: 0; transform: scale(.6); } to { opacity: 1; transform: none; } }
+@keyframes tm-carre { from { transform: scale(0); } to { transform: none; } }
+@keyframes tm-nom { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+/* Le reste : seulement dans la nouvelle identité (l'ancienne reste telle qu'elle était). */
+/* Chaque écran arrive en douceur. */
+:root.identite-nouvelle main.page { animation: id-arrive .25s ease-out backwards; }
+@keyframes id-arrive { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+/* Les tuiles de l'accueil et les lignes de listes arrivent l'une après l'autre (une seule fois, à l'ouverture de l'écran). */
+:root.identite-nouvelle .choix > * { animation: id-arrive .3s ease-out backwards; }
+:root.identite-nouvelle .choix > :nth-child(2) { animation-delay: .05s; }
+:root.identite-nouvelle .choix > :nth-child(3) { animation-delay: .1s; }
+:root.identite-nouvelle .choix > :nth-child(4) { animation-delay: .15s; }
+/* Boutons, cartes et lignes : un léger enfoncement sous le doigt. */
+:root.identite-nouvelle :is(.btn, .chip, .choix-carte, .work, .link-panel, .access-row, .quiz-option, .methode-ligne, .bottom-nav-item) { transition: transform .12s ease, background-color .16s, border-color .16s, color .16s; }
+:root.identite-nouvelle :is(.btn, .chip, .quiz-option, .methode-ligne):active { transform: scale(.97); }
+:root.identite-nouvelle :is(.choix-carte, .work, .link-panel, .access-row):active { transform: scale(.99); }
+/* Barre du bas : le carré terracotta de l'onglet actif se déploie. */
+:root.identite-nouvelle .bottom-nav-item[aria-current="page"]::before { animation: id-onglet .25s ease-out both; }
+@keyframes id-onglet { from { transform: scaleX(0); } to { transform: none; } }
+/* Feuilles du bas (choix de la méthode…) : elles montent. */
+:root.identite-nouvelle .sheet[open] { animation: id-feuille .25s cubic-bezier(.2,.8,.3,1) both; }
+@keyframes id-feuille { from { transform: translateY(24px); opacity: 0; } to { transform: none; opacity: 1; } }
+/* Quiz : la bonne réponse se valide d'une petite pulsation, la mauvaise d'un léger refus. */
+:root.identite-nouvelle .quiz-option.ok { animation: id-juste .35s ease-out; }
+:root.identite-nouvelle .quiz-option.faux { animation: id-faux .3s ease-in-out; }
+@keyframes id-juste { 50% { transform: scale(1.02); } }
+@keyframes id-faux { 25% { transform: translateX(-4px); } 75% { transform: translateX(4px); } }
+/* Barres de progression : elles se remplissent. */
+:root.identite-nouvelle .progress-bar span { transition: width .6s cubic-bezier(.4,0,.2,1); }
+
+/* ---------- Variante « La Synthèse, couleurs d'Afrique » ----------
+ * Même identité (logo, polices, angles, animations) avec les couleurs de l'ancien design :
+ * vert profond à la place de l'indigo, terre cuite en accent, ocre en mise en avant, fond crème. */
+:root.identite-nouvelle.couleurs-afrique {
+  /* Les arrondis de l'ancien design (demande d'Atikan, 19/11/2026). */
+  --radius: 20px;
+  --radius-sm: 14px;
+  --paper: #FFF8EC;
+  --surface: #FFFFFF;
+  --surface-hover: #FFF3DE;
+  --soft: #F7EEDD;
+  --line: #F0DFC2;
+  --line-strong: #E2C9A0;
+  /* Texte courant presque noir (l'encre de l'ancien design) ; le vert reste pour titres, logo et boutons. */
+  --ink: #2B2118;
+  --ink-strong: #1C140D;
+  --muted: #6E5F50;
+  --on-dark: #FFF3DC;
+  --on-dark-muted: #BFD6C9;
+
+  --green: #0F3D2E;
+  --green-press: #0A2B20;
+  --green-pale: #CFE3D6;
+  --green-tint: #E7F0EA;
+
+  --orange: #C4562B;
+  --orange-text: #A2431C;
+  --orange-pale: #FBE3D3;
+
+  --ochre: #F2A541;
+  --ochre-pale: #FDEBC8;
+  --ochre-text: #7A3514;
+
+  --fn-engagement: #C4562B;
+  --fn-esthetique: #2E5E8C;
+  --fn-evasion: #B07A12;
+  --fn-lyrique: #8E3B5F;
+  --fn-sociale: #2F6E5B;
+
+  --highlight: #FCE3A6;
+  --marque-survol: #1A5240;
+  --accent-sur-sombre: #F2A541;
+  --accent-presse: #A9481F;
+  --texte-sur-sombre-doux: #BFD6C9;
+}
+/* Sur le vert, la mise en avant reprend l'ocre de l'ancien design. */
+:root.identite-nouvelle.couleurs-afrique .resume-card .btn-primary,
+:root.identite-nouvelle.couleurs-afrique .install-gate-btn { background: var(--ochre); color: var(--ink-strong); }
+:root.identite-nouvelle.couleurs-afrique .install-gate-btn:hover { background: #F5B55F; }
+:root.identite-nouvelle.couleurs-afrique .resume-card .progress-bar span { background: var(--ochre); }
+:root.identite-nouvelle.couleurs-afrique .bandeau-essai { background: var(--ochre); color: var(--ink-strong); }
+
+/* Une seule touche d'accent par écran : surtitres et flèches redeviennent calmes ;
+ * la terre cuite reste pour le carré du logo, l'onglet actif et les liens d'achat, l'ocre pour le bouton principal sur fond vert. */
+:root.identite-nouvelle.couleurs-afrique .eyebrow { color: var(--muted); }
+:root.identite-nouvelle.couleurs-afrique :is(.resume-card, .prochaine, .formation-tuile, .choix-oeuvres) :is(.eyebrow, .formation-tuile-sur) { color: var(--on-dark-muted); }
+:root.identite-nouvelle.couleurs-afrique :is(.resume-card, .prochaine, .formation-tuile, .choix-oeuvres) .icon { color: var(--on-dark); }
+:root.identite-nouvelle.couleurs-afrique .sujet-num { color: var(--green); }
+:root.identite-nouvelle.couleurs-afrique .sub-title { color: var(--green); }
+:root.identite-nouvelle.couleurs-afrique .step-num { color: var(--green); background: var(--green-tint); }
+:root.identite-nouvelle.couleurs-afrique .prochaine-message .prochaine-icone .icon { color: var(--green); }
+:root.identite-nouvelle.couleurs-afrique .row > .icon { color: var(--green); }

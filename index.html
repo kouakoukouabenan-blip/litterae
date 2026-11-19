@@ -4,6 +4,27 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#0F3D2E" />
+    <script>
+      // Identité visuelle, avant tout affichage (même calcul que src/lib/identite.ts) :
+      // choix fait sur ce téléphone, puis réglage du tableau de bord, puis l'interrupteur du code.
+      (function () {
+        var id = "__IDENTITE_PAR_DEFAUT__";
+        try {
+          var ici = JSON.parse(localStorage.getItem("litterae.identite") || "null");
+          var tdb = (JSON.parse(localStorage.getItem("litterae.contenu-libre") || "null") || {}).identite;
+          var ok = function (x) { return x === "nouvelle" || x === "nouvelle-afrique" || x === "ancienne"; };
+          id = ok(ici) ? ici : ok(tdb) ? tdb : id;
+        } catch (e) {}
+        // Ouverture : l'animation complète (3 s) à la première ouverture de la journée, une version courte (1 s) ensuite.
+        try {
+          var d = new Date(), jour = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+          if (localStorage.getItem("litterae.ouverture-jour") === jour) document.documentElement.className += " ouverture-rapide";
+          else localStorage.setItem("litterae.ouverture-jour", jour);
+        } catch (e) {}
+        if (id !== "ancienne") document.documentElement.className += " identite-nouvelle";
+        if (id === "nouvelle-afrique") document.documentElement.className += " couleurs-afrique";
+      })();
+    </script>
     <meta name="description" content="Apprends la dissertation littéraire pas à pas : cours simples, sujets corrigés du bac et plus de 400 fiches d'œuvres africaines et classiques. Pour les élèves de Côte d'Ivoire et d'Afrique de l'Ouest." />
     <link rel="canonical" href="https://litterae.app/" />
     <meta property="og:type" content="website" />
@@ -34,6 +55,42 @@
       @keyframes splash-texte { from { transform: translateY(8px); opacity: 0; } to { transform: none; opacity: 1; } }
       @keyframes splash-frise { to { background-position: 40px 0; } }
       @media (prefers-reduced-motion: reduce) { #splash * { animation: none !important; } }
+      /* Nouvelle identité : aplat indigo, le logo « La Synthèse » se rassemble, pas de frise. */
+      #splash .neuf { display: none; }
+      .identite-nouvelle #splash { background: #26285E; color: #FFFFFF; }
+      .identite-nouvelle #splash .ancien { display: none; }
+      .identite-nouvelle #splash .neuf { display: block; }
+      #splash svg.neuf { width: 72px; height: 72px; animation: none; overflow: visible; }
+      #splash .neuf .l1 { animation: splash-l1 .8s cubic-bezier(.2,.8,.3,1) both; }
+      #splash .neuf .l2 { animation: splash-l2 .8s cubic-bezier(.2,.8,.3,1) both; }
+      #splash .neuf .carre { animation: splash-carre .4s .7s cubic-bezier(.3,1.6,.5,1) both; transform-origin: 128px 128px; }
+      /* Les deux L glissent l'un vers l'autre, le carré de la synthèse apparaît, le nom s'écrit, puis la promesse. */
+      #splash p.neuf { font: 600 32px/1 "Space Grotesk", system-ui, sans-serif; letter-spacing: -.01em; clip-path: inset(0 100% 0 0); animation: splash-ecrit .7s .9s steps(8, end) both; }
+      #splash p.neuf.promesse { clip-path: none; letter-spacing: 0; font: 400 15px/1.4 Inter, system-ui, sans-serif; color: #C9CAE0; animation: splash-texte .5s 1.7s ease-out both; }
+      #splash .chargement { width: 120px; height: 3px; background: rgba(255,255,255,.15); overflow: hidden; margin-top: 8px; animation: splash-texte .3s .2s both; }
+      #splash .chargement i { display: block; height: 100%; width: 100%; background: #D9653B; transform-origin: left; animation: splash-charge 2.8s .2s cubic-bezier(.4,0,.2,1) both; }
+      @keyframes splash-ecrit { to { clip-path: inset(0 0 0 0); } }
+      @keyframes splash-charge { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+      @media (prefers-reduced-motion: reduce) { #splash p.neuf { clip-path: none; } }
+      /* Ouverture courte (déjà ouverte aujourd'hui) : la même animation en accéléré, sans la promesse. */
+      .ouverture-rapide #splash .neuf .l1 { animation-duration: .4s; }
+      .ouverture-rapide #splash .neuf .l2 { animation-duration: .4s; }
+      .ouverture-rapide #splash .neuf .carre { animation-duration: .25s; animation-delay: .3s; }
+      .ouverture-rapide #splash p.neuf { animation-duration: .35s; animation-delay: .4s; }
+      .ouverture-rapide #splash p.neuf.promesse { display: none; }
+      .ouverture-rapide #splash .chargement i { animation-duration: .85s; animation-delay: 0s; }
+      .ouverture-rapide #splash .chargement { animation-delay: 0s; }
+      @keyframes splash-l1 { from { transform: translate(-36px, 36px); opacity: 0; } to { transform: none; opacity: 1; } }
+      @keyframes splash-l2 { from { transform: translate(36px, -36px); opacity: 0; } to { transform: none; opacity: 1; } }
+      @keyframes splash-carre { from { transform: scale(0); } to { transform: none; } }
+      .identite-nouvelle #splash .bloque a { background: #D9653B; color: #FFFFFF; border-radius: 4px; }
+      .identite-nouvelle #splash .bloque button { color: #FFFFFF; }
+      /* Variante couleurs d'Afrique : vert profond, carré terre cuite, chargement ocre. */
+      .couleurs-afrique #splash { background: #0F3D2E; color: #FFF3DC; }
+      .couleurs-afrique #splash .neuf path.l1, .couleurs-afrique #splash .neuf path.l2 { fill: #FFF3DC; }
+      .couleurs-afrique #splash .neuf path.carre { fill: #C4562B; }
+      .couleurs-afrique #splash p.neuf.promesse { color: #BFD6C9; }
+      .couleurs-afrique #splash .chargement i { background: #F2A541; }
       #splash .bloque { max-width: 22rem; padding: 0 20px; text-align: center; font: 16px/1.5 sans-serif; }
       #splash .bloque a, #splash .bloque button { display: block; width: 100%; margin-top: 12px; padding: 14px; border: 0; border-radius: 10px; font: 700 16px sans-serif; text-decoration: none; box-sizing: border-box; }
       #splash .bloque a { background: #F2A541; color: #1B1B1B; }
@@ -42,9 +99,13 @@
   </head>
   <body>
     <div id="splash" aria-hidden="true">
-      <svg viewBox="0 0 64 64"><rect width="64" height="64" rx="12" fill="#FFF3DC"/><path fill="#0F3D2E" d="M18 14h14v3h-4v28h9.5l3-8H44l-1.5 13H18v-3h4V17h-4z"/><circle cx="50" cy="47.5" r="3.5" fill="#C4562B"/></svg>
-      <p class="nom">Litter<span>ae</span></p>
-      <div class="frise"></div>
+      <svg class="ancien" viewBox="0 0 64 64"><rect width="64" height="64" rx="12" fill="#FFF3DC"/><path fill="#0F3D2E" d="M18 14h14v3h-4v28h9.5l3-8H44l-1.5 13H18v-3h4V17h-4z"/><circle cx="50" cy="47.5" r="3.5" fill="#C4562B"/></svg>
+      <p class="nom ancien">Litter<span>ae</span></p>
+      <div class="frise ancien"></div>
+      <svg class="neuf" viewBox="0 0 256 256"><path class="l1" d="M40,40 H72 V184 H160 V216 H40 Z" fill="#FFFFFF"/><path class="l2" d="M216,216 H184 V72 H96 V40 H216 Z" fill="#FFFFFF"/><path class="carre" d="M112,112 H144 V144 H112 Z" fill="#D9653B"/></svg>
+      <p class="neuf">Litterae</p>
+      <p class="neuf promesse">Le bac de français dans ta poche</p>
+      <div class="neuf chargement"><i></i></div>
     </div>
     <div id="app"></div>
     <script>

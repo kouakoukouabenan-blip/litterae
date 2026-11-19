@@ -53,7 +53,7 @@ export async function actualiserContenuLibre() {
     const r = await fetch(SERVEUR_URL + "/contenu-libre", { cache: "no-store" });
     if (!r.ok) return false;
     const d = (await r.json()) as ContenuLibre;
-    if (Array.isArray(d?.gratuites) && d.revision !== contenuLibre()?.revision) { write(CLE, d); return true; }
+    if (Array.isArray(d?.gratuites) && d.revision !== contenuLibre()?.revision) { write(CLE, d); window.dispatchEvent(new Event("contenu-libre")); return true; }
   } catch {
     // Hors connexion : la liste gardée sur l'appareil reste valable.
   }

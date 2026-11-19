@@ -15,6 +15,26 @@ import { auteursDebloques, badgeGagne, badges } from "../lib/collection";
 import { useDevoirs } from "../lib/devoirs";
 import { surAncienneAdresse } from "../lib/passage";
 import { ouvrirPassage } from "../components/Passage";
+import { useState } from "preact/hooks";
+import { ESSAI } from "../lib/site";
+import { choisirIdentite, identiteActive, identiteChoisieIci, type Identite } from "../lib/identite";
+
+/** Site d'essai : passer d'une identité visuelle à l'autre sur ce téléphone, pour comparer. */
+function ChoixApparence() {
+  const [actuelle, setActuelle] = useState<Identite>(identiteActive());
+  const choisir = (id: Identite) => { choisirIdentite(id); setActuelle(id); };
+  return (
+    <section class="apparence" aria-labelledby="apparence-titre">
+      <h2 id="apparence-titre" class="sub-title">Apparence (site d'essai)</h2>
+      <div class="chips" role="group" aria-label="Identité visuelle">
+        <button type="button" class="chip" aria-pressed={actuelle === "nouvelle-afrique"} onClick={() => choisir("nouvelle-afrique")}>Synthèse, couleurs d'Afrique</button>
+        <button type="button" class="chip" aria-pressed={actuelle === "nouvelle"} onClick={() => choisir("nouvelle")}>Synthèse, indigo</button>
+        <button type="button" class="chip" aria-pressed={actuelle === "ancienne"} onClick={() => choisir("ancienne")}>Ancien design</button>
+      </div>
+      {identiteChoisieIci() && <button type="button" class="link-btn" onClick={() => { choisirIdentite(null); setActuelle(identiteActive()); }}>Revenir au réglage général</button>}
+    </section>
+  );
+}
 
 /** Accès aux messages : questions à l'auteur et réponses (accès complet), ou page Contact. */
 function LigneMessages() {
@@ -107,6 +127,7 @@ export function CarnetScreen() {
           <Icon name="chevron_right" />
         </button>
       )}
+      {ESSAI && <ChoixApparence />}
     </Page>
   );
 }

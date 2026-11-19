@@ -5,6 +5,14 @@ import { render } from "preact";
 import "@fontsource-variable/literata/wght.css";
 import "@fontsource-variable/literata/wght-italic.css";
 import "@fontsource-variable/dm-sans/index.css";
+// Polices de la nouvelle identité : le navigateur ne les télécharge que si elles servent (identité active).
+import "@fontsource/space-grotesk/latin-500.css";
+import "@fontsource/space-grotesk/latin-600.css";
+import "@fontsource/space-grotesk/latin-700.css";
+import "@fontsource-variable/inter/wght.css";
+import "@fontsource-variable/inter/wght-italic.css";
+import "@fontsource/fraunces/latin-400-italic.css";
+import "@fontsource/fraunces/latin-600-italic.css";
 import "./styles/tokens.css";
 import "./styles/base.css";
 import "./styles/layout.css";
@@ -12,13 +20,17 @@ import "./styles/components.css";
 import "./styles/screens.css";
 import "./styles/theme-melange.css";
 import "./styles/formation.css";
+// Nouvelle identité « La Synthèse » : tout est rangé sous html.identite-nouvelle (src/lib/identite-defaut.ts).
+import "./styles/theme-identite.css";
 import "./lib/install";
 import { App } from "./app";
 import { conserverDonnees } from "./lib/storage";
+import { appliquerIdentite } from "./lib/identite";
 import { registerSW } from "virtual:pwa-register";
 import { PassageArrivee, PassageDepart, afficherRappel, demoPassage } from "./components/Passage";
 
 conserverDonnees();
+appliquerIdentite();
 
 // Nouvelle version en ligne : elle s'installe et la page se recharge seule, pour ne jamais garder
 // un ancien code avec de nouvelles images. Vérifie aussi toutes les heures si l'appli reste ouverte,
@@ -44,11 +56,12 @@ else {
   if ((surAncienneAdresse() && rappelDu()) || (demoPassage() && location.hash.includes("rappel"))) nouvelleAdressePrete().then(ok => { if (ok || demoPassage()) afficherRappel(); });
 }
 
-// Retire l'écran d'ouverture : il reste au moins le temps de son animation, jamais plus (environ 2 s).
+// Retire l'écran d'ouverture : 3 secondes à la première ouverture de la journée (le temps de son animation,
+// demande d'Atikan), 1 seconde ensuite (classe posée par index.html), jamais plus.
 const splash = document.getElementById("splash");
 if (splash) {
-  const calme = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const reste = calme ? 0 : Math.max(0, 1900 - performance.now());
+  const duree = document.documentElement.classList.contains("ouverture-rapide") ? 1000 : 3000;
+  const reste = Math.max(0, duree - performance.now());
   setTimeout(() => {
     splash.classList.add("fin");
     setTimeout(() => splash.remove(), 400);

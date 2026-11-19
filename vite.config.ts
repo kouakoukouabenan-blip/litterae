@@ -1,6 +1,24 @@
 import { defineConfig } from "vite";
 import preact from "@preact/preset-vite";
 import { VitePWA } from "vite-plugin-pwa";
+import { IDENTITE_PAR_DEFAUT } from "./src/lib/identite-defaut";
+
+// Icônes d'appli et couleurs du manifeste : celles de l'identité choisie par l'interrupteur (src/lib/identite-defaut.ts).
+const NOUVELLE = IDENTITE_PAR_DEFAUT !== "ancienne";
+const DOSSIER = IDENTITE_PAR_DEFAUT === "nouvelle-afrique" ? "identite-afrique" : "identite";
+const BARRE = IDENTITE_PAR_DEFAUT === "nouvelle" ? "#26285E" : "#0F3D2E";
+const FOND = IDENTITE_PAR_DEFAUT === "nouvelle" ? "#FAF7F0" : "#FFF8EC";
+const ICONES = NOUVELLE
+  ? [
+      { src: `${DOSSIER}/icon-192.png`, sizes: "192x192", type: "image/png" },
+      { src: `${DOSSIER}/icon-512.png`, sizes: "512x512", type: "image/png" },
+      { src: `${DOSSIER}/maskable-512.png`, sizes: "512x512", type: "image/png", purpose: "maskable" }
+    ]
+  : [
+      { src: "icon-192.png", sizes: "192x192", type: "image/png" },
+      { src: "icon-512.png", sizes: "512x512", type: "image/png" },
+      { src: "icon-512.png", sizes: "512x512", type: "image/png", purpose: "maskable" }
+    ];
 
 // Chemins relatifs : le site fonctionne sous /litterae/ sur GitHub Pages comme en local.
 export default defineConfig({
@@ -9,9 +27,19 @@ export default defineConfig({
   build: { target: ["es2018", "chrome64", "safari12"], cssTarget: ["chrome64", "safari12"] },
   plugins: [
     preact(),
+    {
+      // index.html : identité par défaut pour le petit script du haut de page, et icônes de l'identité choisie.
+      name: "identite",
+      transformIndexHtml(html: string) {
+        html = html.replace("__IDENTITE_PAR_DEFAUT__", IDENTITE_PAR_DEFAUT);
+        return NOUVELLE
+          ? html.replace('href="./favicon.svg"', `href="./${DOSSIER}/favicon.svg"`).replace('href="./icon-192.png"', `href="./${DOSSIER}/apple-touch-icon.png"`).replace('content="#0F3D2E"', `content="${BARRE}"`)
+          : html;
+      }
+    },
     VitePWA({
       registerType: "autoUpdate",
-      includeAssets: ["favicon.svg", "icon-192.png", "icon-512.png"],
+      includeAssets: ["favicon.svg", "icon-192.png", "icon-512.png", "identite/favicon.svg", "identite-afrique/favicon.svg"],
       manifest: {
         name: "Litterae",
         short_name: "Litterae",
@@ -23,13 +51,9 @@ export default defineConfig({
         // Permet à Chrome (Android) de savoir si l'application est déjà installée.
         // Cloudflare Pages (litterae.app) ou GitHub Pages (ancienne adresse).
         related_applications: [{ platform: "webapp", url: process.env.CF_PAGES ? "https://litterae.app/manifest.webmanifest" : "https://kouakoukouabenan-blip.github.io/litterae/manifest.webmanifest" }],
-        background_color: "#FFF8EC",
-        theme_color: "#0F3D2E",
-        icons: [
-          { src: "icon-192.png", sizes: "192x192", type: "image/png" },
-          { src: "icon-512.png", sizes: "512x512", type: "image/png" },
-          { src: "icon-512.png", sizes: "512x512", type: "image/png", purpose: "maskable" }
-        ]
+        background_color: FOND,
+        theme_color: BARRE,
+        icons: ICONES
       },
       workbox: {
         // Réception des notifications (promos, messages, astuces) : public/push-sw.js
