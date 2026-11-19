@@ -7,7 +7,7 @@ import { IDENTITE_PAR_DEFAUT } from "./src/lib/identite-defaut";
 const NOUVELLE = IDENTITE_PAR_DEFAUT !== "ancienne";
 const DOSSIER = IDENTITE_PAR_DEFAUT === "nouvelle-afrique" ? "identite-afrique" : "identite";
 const BARRE = IDENTITE_PAR_DEFAUT === "nouvelle" ? "#26285E" : "#0F3D2E";
-const FOND = IDENTITE_PAR_DEFAUT === "nouvelle" ? "#FAF7F0" : "#FFF8EC";
+const FOND = IDENTITE_PAR_DEFAUT === "nouvelle" ? "#FAF7F0" : "#F6F4EF";
 const ICONES = NOUVELLE
   ? [
       { src: `${DOSSIER}/icon-192.png`, sizes: "192x192", type: "image/png" },
