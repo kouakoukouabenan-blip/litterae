@@ -956,6 +956,75 @@
 @media (max-width: 359px) { .arg-fonctions .fn-mini { padding: 0 4px; font-size: 0.6875rem; } }
 
 
+
+/* ---------- Matière puis méthode (propositions A, B, C sur le site d'essai) ---------- */
+/* Bouton de la barre du haut : la matière en petit au-dessus, la méthode en dessous. */
+.matiere-bouton { gap: 4px; padding: 0 4px 0 12px; }
+.matiere-bouton-texte { display: flex; flex-direction: column; align-items: flex-start; min-width: 0; line-height: 1.05; }
+.matiere-bouton-matiere { font-size: 10px; font-weight: 600; color: var(--muted); letter-spacing: .02em; }
+.matiere-bouton .icon { transition: transform .18s; }
+.matiere-bouton.is-ouvert .icon { transform: rotate(180deg); }
+
+/* Les méthodes côte à côte, trois par ligne. */
+.methode-tuiles { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s2); }
+.methode-tuile {
+  width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; gap: 6px; padding: var(--s3) 4px var(--s2);
+  border: 1.5px solid var(--line); border-radius: var(--radius-sm); background: var(--surface); color: var(--ink-strong);
+  font: inherit; cursor: pointer; text-align: center;
+}
+.methode-tuile strong { font-size: var(--text-xs); line-height: 1.2; }
+.methode-tuile .methode-icone { width: 30px; height: 30px; }
+.methode-tuile .methode-point { width: 14px; height: 14px; margin: 8px 0; }
+.methode-tuile-etat { font-size: 11px; color: var(--muted); line-height: 1; min-height: 11px; }
+.methode-tuile:hover { border-color: var(--line-strong); }
+.methode-tuile.is-active { border-color: var(--green); background: var(--green-tint); color: var(--green); }
+.methode-tuile.is-active .methode-tuile-etat { color: var(--green); font-weight: 600; }
+.methode-tuile.is-bientot { color: var(--muted); border-style: dashed; }
+.methode-tuile.is-bientot .methode-icone { color: var(--muted); opacity: .6; }
+.methode-feuille .methode-note { margin: var(--s3) 0 0; }
+.methode-cle { margin: var(--s4) 0 0; font-size: var(--text-xs); color: var(--muted); text-align: center; }
+.matiere-attente { margin: 0; padding: var(--s4); border: 1.5px dashed var(--line-strong); border-radius: var(--radius-sm); font-size: var(--text-xs); color: var(--muted); text-align: center; }
+
+/* A : les matières en onglets, les méthodes dessous. Les onglets passent à la ligne s'il y en a beaucoup. */
+.matiere-onglets { display: flex; flex-wrap: wrap; gap: 4px 6px; margin-bottom: var(--s4); }
+.matiere-onglet {
+  min-height: 34px; padding: 0 12px; border: 1.5px solid var(--line); border-radius: 17px; background: var(--surface);
+  font: 600 var(--text-xs)/1 var(--font-text); color: var(--ink-strong); cursor: pointer;
+}
+.matiere-onglet.is-bientot { color: var(--muted); }
+.matiere-onglet[aria-selected="true"] { background: var(--green); border-color: var(--green); color: #fff; }
+
+/* B : une ligne par matière ; on l'ouvre, les méthodes sont dedans. */
+.matiere-liste { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--s2); }
+.matiere-bloc { border: 1.5px solid var(--line); border-radius: var(--radius-sm); background: var(--surface); }
+.matiere-bloc.is-ouvert { border-color: var(--line-strong); }
+.matiere-ligne {
+  width: 100%; min-height: 50px; display: flex; align-items: center; gap: var(--s2); padding: 0 var(--s2) 0 var(--s4);
+  border: 0; background: none; font: inherit; color: var(--ink-strong); cursor: pointer; text-align: left;
+}
+.matiere-nom { flex: 1; font-weight: 700; font-size: var(--text-sm); }
+.matiere-ligne.is-bientot .matiere-nom { color: var(--muted); font-weight: 600; }
+.matiere-ligne .icon { color: var(--muted); transition: transform .18s; }
+.matiere-ligne[aria-expanded="true"] .icon { transform: rotate(180deg); }
+.matiere-badge { font-size: 11px; color: var(--muted); }
+.matiere-badge.is-actuelle { padding: 3px 8px; border-radius: 10px; background: var(--green-tint); color: var(--green); font-weight: 600; }
+.matiere-dedans { padding: 0 var(--s3) var(--s3); }
+
+/* C : petit menu juste sous la barre du haut, sans feuille plein écran. */
+.menu-matiere-fond { position: fixed; inset: calc(var(--topbar-h) + var(--band-h)) 0 0; z-index: 19; background: rgba(26, 26, 26, .25); }
+.menu-matiere {
+  max-width: 26rem; margin: 0 0 0 auto; padding: var(--s3) var(--s4) var(--s4); background: var(--surface);
+  border-radius: 0 0 var(--radius) var(--radius); box-shadow: 0 8px 24px rgba(26, 26, 26, .12);
+  animation: menu-matiere-entre .16s ease-out;
+}
+@keyframes menu-matiere-entre { from { opacity: 0; transform: translateY(-6px); } }
+.menu-matiere-titre { margin: 0 0 var(--s2); font-size: var(--text-xs); font-weight: 700; color: var(--muted); }
+.menu-matiere .methode-note { margin: var(--s2) 0 0; }
+.menu-matiere-autres { margin: var(--s3) 0 0; padding-top: var(--s3); border-top: 1px solid var(--line); font-size: var(--text-xs); color: var(--muted); }
+.menu-matiere-autres span { font-weight: 600; }
+@media (min-width: 720px) { .menu-matiere { margin-right: max(var(--s4), calc((100vw - var(--page-width)) / 2)); } }
+@media (max-width: 400px) { .matiere-bouton { padding: 0 12px; } }
+
 /* Espace Devoirs (COMPOSA dans Litterae) : le cadre prend tout l'écran sous la barre du haut. */
 html[data-univers="composa"] body { padding-bottom: 0; }
 html[data-univers="composa"] .bottom-nav,

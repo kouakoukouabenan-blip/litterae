@@ -1,3 +1,4 @@
+import { write } from "../lib/storage";
 import { Page } from "../components/Page";
 import { PageHeader } from "../components/PageHeader";
 import { EmptyState } from "../components/EmptyState";
@@ -17,12 +18,14 @@ import { surAncienneAdresse } from "../lib/passage";
 import { ouvrirPassage } from "../components/Passage";
 import { useState } from "preact/hooks";
 import { ESSAI } from "../lib/site";
+import { varianteMatiere } from "../components/ChoixMethode";
 import { choisirIdentite, identiteActive, identiteChoisieIci, type Identite } from "../lib/identite";
 
 /** Site d'essai : passer d'une identité visuelle à l'autre sur ce téléphone, pour comparer. */
 function ChoixApparence() {
   const [actuelle, setActuelle] = useState<Identite>(identiteActive());
   const choisir = (id: Identite) => { choisirIdentite(id); setActuelle(id); };
+  const [variante, setVariante] = useState(varianteMatiere());
   return (
     <section class="apparence" aria-labelledby="apparence-titre">
       <h2 id="apparence-titre" class="sub-title">Apparence (site d'essai)</h2>
@@ -30,6 +33,14 @@ function ChoixApparence() {
         <button type="button" class="chip" aria-pressed={actuelle === "nouvelle-afrique"} onClick={() => choisir("nouvelle-afrique")}>Synthèse, couleurs d'Afrique</button>
         <button type="button" class="chip" aria-pressed={actuelle === "nouvelle"} onClick={() => choisir("nouvelle")}>Synthèse, indigo</button>
         <button type="button" class="chip" aria-pressed={actuelle === "ancienne"} onClick={() => choisir("ancienne")}>Ancien design</button>
+      </div>
+      <p class="small muted">Choix de la matière et de la méthode :</p>
+      <div class="chips" role="group" aria-label="Choix de la matière">
+        {(["a", "b", "c"] as const).map(v => (
+          <button key={v} type="button" class="chip" aria-pressed={variante === v} onClick={() => { write("variante-matiere", v); setVariante(v); location.reload(); }}>
+            {v === "a" ? "A · Onglets" : v === "b" ? "B · Matières à ouvrir" : "C · Petit menu"}
+          </button>
+        ))}
       </div>
       {identiteChoisieIci() && <button type="button" class="link-btn" onClick={() => { choisirIdentite(null); setActuelle(identiteActive()); }}>Revenir au réglage général</button>}
     </section>
