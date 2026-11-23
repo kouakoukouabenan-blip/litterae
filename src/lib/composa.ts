@@ -169,13 +169,13 @@ export function useCodesAffiches(): DevoirAffiche[] {
 /** « K7M-4QX » : le code tel que le professeur l'écrit. */
 export const codeLisible = (c: string) => `${c.slice(0, 3)}-${c.slice(3)}`;
 
-const heure = (d: Date) => d.toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" }).replace(":", " h ");
+const heure = (d: Date) => `${d.getHours()} h${d.getMinutes() ? " " + String(d.getMinutes()).padStart(2, "0") : ""}`;
 function jour(d: Date, maintenant: Date) {
   const j = (x: Date) => new Date(x.getFullYear(), x.getMonth(), x.getDate()).getTime();
   const ecart = Math.round((j(d) - j(maintenant)) / 864e5);
   if (ecart === 0) return "aujourd'hui";
   if (ecart === 1) return "demain";
-  return d.toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long" });
+  return d.toLocaleDateString("fr-FR", { weekday: "short", day: "numeric", month: "short" }).replace(/ /g, "\u00a0");
 }
 
 /** « fin à 18 h 00 » (aujourd'hui), « début demain à 08 h 00 ». */
@@ -183,7 +183,8 @@ export function quand(d: Pick<DevoirComposa, "ouverture_at" | "fermeture_at">, m
   const debut = Date.parse(d.ouverture_at) > maintenant.getTime();
   const t = new Date(debut ? d.ouverture_at : d.fermeture_at);
   const j = jour(t, maintenant);
-  return `${debut ? "début" : "fin"} ${j === "aujourd'hui" ? "" : j + " "}à ${heure(t)}`;
+  // Espaces insécables : la date et l'heure ne se coupent jamais en deux.
+  return `${debut ? "début" : "fin"} ${j === "aujourd'hui" ? "" : j + " "}à\u00a0${heure(t).replace(/ /g, "\u00a0")}`;
 }
 
 // ---------------------------------------------------------------------------
