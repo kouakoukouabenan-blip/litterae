@@ -320,6 +320,35 @@
 .install-gate-steps { width: 100%; padding: var(--s4); background: var(--paper); color: var(--ink); border-radius: var(--radius); text-align: left; }
 .install-gate-attente { width: 44px; height: 44px; border: 4px solid rgba(255, 243, 220, 0.25); border-top-color: var(--ochre); border-radius: 50%; animation: install-tourne 0.9s linear infinite; }
 @keyframes install-tourne { to { transform: rotate(360deg); } }
+/* Installation en cours : un petit écran d'accueil où l'icône Litterae vient se poser. */
+.install-scene { width: 192px; display: flex; flex-direction: column; align-items: center; gap: var(--s4); }
+.install-scene-tel { position: relative; width: 192px; height: 172px; border: 2px solid rgba(255, 243, 220, .35); border-bottom: 0; border-radius: 28px 28px 0 0; -webkit-mask-image: linear-gradient(#000 70%, transparent); mask-image: linear-gradient(#000 70%, transparent); }
+.install-scene-tel::before { content: ""; position: absolute; top: 10px; left: 50%; width: 44px; height: 5px; margin-left: -22px; border-radius: 3px; background: rgba(255, 243, 220, .3); }
+.install-scene-grille { position: absolute; top: 34px; left: 16px; display: grid; grid-template-columns: repeat(4, 30px); gap: 12px 14px; }
+.install-scene-appli, .install-scene-place { width: 30px; height: 30px; border-radius: 9px; }
+.install-scene-appli { background: rgba(255, 243, 220, .14); }
+.install-scene-appli:nth-child(3n) { background: rgba(242, 165, 65, .22); }
+.install-scene-appli:nth-child(5n) { background: rgba(196, 86, 43, .3); }
+.install-scene-place { border: 2px dashed rgba(242, 165, 65, .7); animation: install-place 1.6s ease-in-out infinite; }
+/* L'icône est posée au-dessus de la 7e place (2e ligne, 3e colonne). */
+.install-scene-icone { position: absolute; top: 76px; left: 104px; width: 30px; height: 30px; animation: install-flotte 1.8s ease-in-out infinite; }
+.install-scene-tuile { display: block; width: 30px; height: 30px; filter: drop-shadow(0 10px 6px rgba(0, 0, 0, .28)); }
+.install-scene-coche { position: absolute; top: -9px; right: -11px; width: 22px; height: 22px; display: grid; place-items: center; border-radius: 50%; background: var(--ochre); color: var(--ink-strong, #2B2118); transform: scale(0); }
+.install-scene-barre { width: 100%; height: 6px; border-radius: 3px; background: rgba(255, 243, 220, .18); overflow: hidden; }
+.install-scene-barre span { display: block; height: 100%; border-radius: inherit; background: var(--ochre); transition: width .6s ease-out; }
+.install-scene-faite .install-scene-place { animation: none; border-color: transparent; }
+.install-scene-faite .install-scene-icone { animation: install-pose .7s cubic-bezier(.3, 1.5, .5, 1) forwards; }
+.install-scene-faite .install-scene-tuile { filter: none; }
+.install-scene-faite .install-scene-coche { animation: install-coche .35s .55s ease-out forwards; }
+@keyframes install-flotte { 0%, 100% { transform: translateY(-30px); } 50% { transform: translateY(-38px); } }
+@keyframes install-place { 0%, 100% { opacity: .45; } 50% { opacity: 1; } }
+@keyframes install-pose { from { transform: translateY(-34px); } to { transform: translateY(0); } }
+@keyframes install-coche { to { transform: scale(1); } }
+@media (prefers-reduced-motion: reduce) {
+  .install-scene-icone { transform: translateY(-30px); }
+  .install-scene-faite .install-scene-icone { transform: none; }
+  .install-scene-faite .install-scene-coche { transform: scale(1); }
+}
 @media (prefers-reduced-motion: reduce) { .install-gate-attente { animation-duration: 2.5s; } }
 .install-gate-liens { display: flex; flex-direction: column; align-items: center; }
 .install-gate-skip { margin-top: var(--s2); padding: var(--s2); border: 0; background: none; color: var(--on-dark-muted); font: inherit; font-size: var(--text-xs); text-decoration: underline; text-underline-offset: 2px; cursor: pointer; }
