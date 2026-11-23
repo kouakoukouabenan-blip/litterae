@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "preact/hooks";
-import { dejaInstallee, navigateurAndroid, navigateurIos, platform, useInstall } from "../lib/install";
+import { confirmerInstallation, debutDeLInstallation, dejaInstallee, installationSignalee, navigateurAndroid, navigateurIos, platform, useInstall } from "../lib/install";
 import { TuileAppli } from "./Marque";
 import { read, write } from "../lib/storage";
 import { BoutonVideo } from "./VideoInstallation";
@@ -171,6 +171,38 @@ export function InstallButton() {
 const PASSE = "litterae.navigateur";
 
 /**
+ * Petit écran d'accueil dessiné : l'icône Litterae flotte au-dessus de sa place pendant l'installation,
+ * puis s'y pose quand c'est fait. La barre avance vite au début puis ralentit, sans jamais finir seule :
+ * elle n'atteint le bout que lorsque l'installation est vraiment terminée.
+ */
+function ScèneInstallation({ etat }: { etat: "en-cours" | "faite" }) {
+  const [, tic] = useState(0);
+  useEffect(() => {
+    if (etat === "faite") return;
+    const t = setInterval(() => tic(n => n + 1), 300);
+    return () => clearInterval(t);
+  }, [etat]);
+  const ecoule = (Date.now() - (debutDeLInstallation() || Date.now())) / 1000;
+  const avance = etat === "faite" ? 100 : Math.round(6 + 86 * (1 - Math.exp(-ecoule / (installationSignalee() ? 6 : 20))));
+  return (
+    <div class={`install-scene install-scene-${etat}`} aria-hidden="true">
+      <div class="install-scene-tel">
+        <div class="install-scene-grille">
+          {Array.from({ length: 12 }, (_, i) => i === 6
+            ? <span key={i} class="install-scene-place" />
+            : <span key={i} class="install-scene-appli" style={{ animationDelay: `${(i % 4) * 0.15}s` }} />)}
+        </div>
+        <div class="install-scene-icone">
+          <TuileAppli class="install-scene-tuile" />
+          <span class="install-scene-coche"><Icon name="check" size={16} /></span>
+        </div>
+      </div>
+      <div class="install-scene-barre"><span style={{ width: `${avance}%` }} /></div>
+    </div>
+  );
+}
+
+/**
  * Écran d'installation plein écran sur téléphone, dès la première ouverture dans le navigateur.
  * Si l'app est déjà installée, il invite à l'ouvrir depuis l'écran d'accueil.
  * Un lien discret permet de continuer quand même (une fois par visite).
@@ -190,27 +222,40 @@ export function InstallGate() {
     setPasse(true);
   };
 
-  const logo = <TuileAppli class="install-gate-logo" />;
-
-  // L'élève vient d'accepter dans la fenêtre de Chrome : on montre que ça travaille, pour qu'il ne retouche pas.
-  if (installation === "en-cours") return (
+  // L'élève vient d'accepter dans la fenêtre de Chrome : on montre l'installation qui avance,
+  // jusqu'à ce que Chrome confirme que l'icône est vraiment sur l'écran d'accueil.
+  if (installation === "en-cours" || installation === "lente") return (
     <div class="install-gate" role="dialog" aria-modal="true" aria-labelledby="gate-title">
       <div class="install-gate-inner">
-        {logo}
-        <h1 id="gate-title" class="install-gate-title">Installation en cours…</h1>
-        <span class="install-gate-attente" role="progressbar" aria-label="Installation en cours" />
-        <p class="install-gate-texte">Chrome ajoute Litterae à ton écran d'accueil. Ne touche à rien, ça prend quelques secondes.</p>
+        <ScèneInstallation etat="en-cours" />
+        {installation === "en-cours" ? (
+          <>
+            <h1 id="gate-title" class="install-gate-title">Installation en cours…</h1>
+            <p class="install-gate-texte" aria-live="polite">{installationSignalee()
+              ? <>Litterae arrive sur ton écran d'accueil. Encore quelques secondes.</>
+              : <>Chrome prépare Litterae. Laisse cette page ouverte, ça peut prendre jusqu'à une minute.</>}</p>
+          </>
+        ) : (
+          <>
+            <h1 id="gate-title" class="install-gate-title">Ça prend un peu plus de temps</h1>
+            <p class="install-gate-texte">Regarde ton écran d'accueil ou la liste de tes applis. Tu vois l'icône <strong>Litterae</strong> ?</p>
+            <button type="button" class="btn install-gate-btn" onClick={confirmerInstallation}>Oui, je la vois</button>
+            <div class="install-gate-liens">
+              <button type="button" class="install-gate-skip" onClick={continuer}>Pas encore, continuer dans le navigateur</button>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
 
-  // Installation tout juste terminée : on dit où trouver l'icône.
+  // Installation vraiment terminée : on dit où trouver l'icône.
   if (installation === "faite") return (
     <div class="install-gate" role="dialog" aria-modal="true" aria-labelledby="gate-title">
       <div class="install-gate-inner">
-        {logo}
+        <ScèneInstallation etat="faite" />
         <h1 id="gate-title" class="install-gate-title">C'est installé !</h1>
-        <p class="install-gate-texte">Ferme le navigateur et touche l'icône <strong>Litterae</strong> sur ton écran d'accueil ou dans tes applis. Si elle n'y est pas encore, attends quelques secondes.</p>
+        <p class="install-gate-texte">Ferme le navigateur et touche l'icône <strong>Litterae</strong> sur ton écran d'accueil ou dans tes applis.</p>
         <div class="install-gate-liens">
           <button type="button" class="install-gate-skip" onClick={continuer}>Continuer dans le navigateur</button>
         </div>

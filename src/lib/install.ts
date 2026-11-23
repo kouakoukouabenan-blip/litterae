@@ -25,15 +25,58 @@ window.addEventListener("beforeinstallprompt", e => {
  * Où en est l'installation lancée depuis Litterae : après « Installer » dans la fenêtre de Chrome,
  * l'ajout à l'écran d'accueil prend quelques secondes sans que rien ne bouge à l'écran.
  */
-export type EtatInstallation = "aucune" | "en-cours" | "faite";
+export type EtatInstallation = "aucune" | "en-cours" | "lente" | "faite";
 let installation: EtatInstallation = "aucune";
+let debutInstallation = 0;
+let verification: ReturnType<typeof setInterval> | undefined;
+let signalee = 0;
 const terminer = () => {
+  if (verification) clearInterval(verification);
+  verification = undefined;
   deferred = null;
   installation = "faite";
   write("installee", true);
   notify();
 };
-window.addEventListener("appinstalled", terminer);
+
+const navApps = () => (navigator as Navigator & { getInstalledRelatedApps?: () => Promise<unknown[]> }).getInstalledRelatedApps;
+
+/**
+ * Chrome signale « appinstalled » dès qu'il commence l'installation, alors que l'icône n'arrive
+ * sur l'écran d'accueil que bien plus tard. On ne dit donc « installée » que lorsque Chrome confirme
+ * que l'application est vraiment là (getInstalledRelatedApps), en vérifiant toutes les 2 secondes.
+ * Téléphones qui ne savent pas confirmer : on se fie au signal de Chrome, avec un délai de sécurité.
+ */
+function suivreInstallation() {
+  installation = "en-cours";
+  debutInstallation = Date.now();
+  if (verification) clearInterval(verification);
+  verification = setInterval(async () => {
+    if (installation === "faite") return;
+    const ecoule = Date.now() - debutInstallation;
+    const f = navApps();
+    if (f) {
+      try { if ((await f.call(navigator)).length > 0) return terminer(); } catch { /* on réessaie */ }
+    }
+    // Sans confirmation possible, ou si Chrome a fait un simple raccourci : 8 s après son signal.
+    if (signalee && Date.now() - signalee > (f ? 45000 : 8000)) return terminer();
+    // Rien après 90 secondes : on ne prétend pas que c'est fait, on aide l'élève à vérifier.
+    if (ecoule > 90000 && installation === "en-cours") { installation = "lente"; notify(); }
+  }, 2000);
+}
+window.addEventListener("appinstalled", () => {
+  signalee = Date.now();
+  // Installation lancée depuis le menu de Chrome, sans notre bouton : on suit aussi.
+  if (installation === "aucune") suivreInstallation();
+  notify();
+});
+
+/** Moment où l'installation a commencé (pour l'animation), 0 sinon. */
+export const debutDeLInstallation = () => debutInstallation;
+/** Chrome a signalé qu'il installe (il reste à poser l'icône). */
+export const installationSignalee = () => signalee > 0;
+/** L'élève dit avoir trouvé l'icône alors que Chrome n'a rien confirmé. */
+export const confirmerInstallation = () => terminer();
 
 export type Platform = "ios" | "android" | "desktop";
 
@@ -175,11 +218,7 @@ export function useInstall() {
       deferred = null;
       await e.prompt();
       const choix = await e.userChoice;
-      if (choix.outcome === "accepted" && installation === "aucune") {
-        installation = "en-cours";
-        // Certains téléphones ne signalent pas la fin : on la considère faite au bout de 20 secondes.
-        setTimeout(() => { if (installation === "en-cours") terminer(); }, 20000);
-      }
+      if (choix.outcome === "accepted" && installation === "aucune") suivreInstallation();
       notify();
       return true;
     }
