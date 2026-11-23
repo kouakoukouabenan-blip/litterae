@@ -1049,6 +1049,8 @@ html[data-univers="composa"] .bandeau-essai { display: none; }
 
 /* Accueil : entrée discrète vers l'espace Devoirs */
 .devoirs-lien { display: flex; align-items: center; gap: var(--s2); min-height: 44px; margin-top: var(--s4); padding: 0 var(--s3); border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); color: var(--ink); font-weight: 600; text-decoration: none; }
-.devoirs-lien > span { flex: 1; }
+.devoirs-lien > span:first-of-type { flex: 1; }
+.devoirs-lien-reste { flex: none; display: inline-flex; align-items: center; gap: 4px; font-size: var(--text-xs); font-weight: 600; color: var(--muted); }
+.devoir-ligne-action .icon { margin-right: 4px; }
 .devoirs-lien > .icon:first-child { color: var(--green); }
 .devoirs-lien > .icon:last-child { color: var(--muted); }

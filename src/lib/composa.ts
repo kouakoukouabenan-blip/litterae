@@ -3,7 +3,8 @@
 // et retient les devoirs en cours qu'il lui envoie, pour la case de l'accueil.
 import { useEffect } from "preact/hooks";
 import { read, useStored, write } from "./storage";
-import { titulaire } from "./licence";
+import { licence, titulaire } from "./licence";
+import { contenuLibre } from "./libre";
 
 /** Adresse de COMPOSA, sans barre finale. */
 export const COMPOSA_URL: string = import.meta.env.VITE_COMPOSA_URL
@@ -93,6 +94,7 @@ export function useEcouteComposa() {
       if (devoirs) write<Memo>(CLE, { devoirs, maj: Date.now() });
       const notes = lireNotes(e.data);
       if (notes) write(CLE_NOTES, notes);
+      noterFaits([...(devoirs ?? []).map(d => d.id), ...(notes ?? []).map(n => n.id), ...lireInscrits(e.data)]);
       if (devoirs) window.dispatchEvent(new Event("composa-recu"));
     };
     window.addEventListener("message", recevoir);
@@ -182,4 +184,36 @@ export function quand(d: Pick<DevoirComposa, "ouverture_at" | "fermeture_at">, m
   const t = new Date(debut ? d.ouverture_at : d.fermeture_at);
   const j = jour(t, maintenant);
   return `${debut ? "début" : "fin"} ${j === "aujourd'hui" ? "" : j + " "}à ${heure(t)}`;
+}
+
+// ---------------------------------------------------------------------------
+// Devoirs gratuits : sans clé, l'élève fait un nombre limité de devoirs dans Litterae (compté sur ce téléphone).
+// ---------------------------------------------------------------------------
+const CLE_FAITS = "composa-faits";
+const UUID = /^[0-9a-f-]{36}$/;
+/** Nombre de devoirs gratuits sans clé : réglé dans le tableau de bord, 5 par défaut. */
+export const devoirsGratuits = () => {
+  const n = Number(contenuLibre()?.devoirsGratuits);
+  return Number.isInteger(n) && n >= 0 && n <= 100 ? n : 5;
+};
+function lireInscrits(donnees: unknown): string[] {
+  const l = donnees && typeof donnees === "object" ? (donnees as { inscrits?: unknown }).inscrits : undefined;
+  return Array.isArray(l) ? l.slice(0, 100).filter((x): x is string => typeof x === "string" && UUID.test(x)) : [];
+}
+function noterFaits(ids: string[]) {
+  const avant = read<string[]>(CLE_FAITS, []);
+  const nouveaux = ids.filter(id => !avant.includes(id));
+  if (nouveaux.length) write(CLE_FAITS, [...avant, ...nouveaux].slice(-200));
+}
+/** Où en est l'élève : devoirs déjà faits, limite, et s'il peut encore en commencer un nouveau. */
+export function useLimiteDevoirs() {
+  const [faits] = useStored<string[]>(CLE_FAITS, []);
+  const premium = !!licence();
+  const limite = devoirsGratuits();
+  return {
+    premium, limite, faits,
+    restants: premium ? Infinity : Math.max(0, limite - faits.length),
+    /** Ce devoir peut-il être ouvert ? (déjà fait, ou il reste des devoirs gratuits) */
+    peutOuvrir: (id?: string | null) => premium || (!!id && faits.includes(id)) || faits.length < limite,
+  };
 }

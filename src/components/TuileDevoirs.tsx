@@ -1,7 +1,7 @@
 import { useEffect, useState } from "preact/hooks";
 import { Icon } from "./Icon";
 import {
-  adresseSonde, codeLisible, marquerNoteVue, noteLisible, noterSonde, quand, sondeAFaire, useCodesAffiches, useDevoirsComposa, useNoteAVoir,
+  adresseSonde, codeLisible, marquerNoteVue, noteLisible, noterSonde, quand, sondeAFaire, useCodesAffiches, useDevoirsComposa, useLimiteDevoirs, useNoteAVoir,
 } from "../lib/composa";
 
 /** Haut de l'accueil : la note publiée (si l'élève ne l'a pas encore vue), puis le devoir en cours. */
@@ -50,6 +50,7 @@ function SondeComposa() {
  */
 function LigneDevoir() {
   const rejoints = useDevoirsComposa();
+  const limiteDevoirs = useLimiteDevoirs();
   const affiches = useCodesAffiches();
   const dejaLa = new Set(rejoints.map(d => d.id));
   const aRejoindre = affiches.find(d => !dejaLa.has(d.id));
@@ -69,6 +70,16 @@ function LigneDevoir() {
   }
   if (!aRejoindre) return null;
   const ouvert = Date.parse(aRejoindre.ouverture_at) <= Date.now();
+  // Devoirs gratuits épuisés : pas de code, la ligne mène à l'accès complet.
+  if (!limiteDevoirs.peutOuvrir(aRejoindre.id)) return (
+    <a class="devoir-ligne" href={`#/composa?code=${aRejoindre.code}`}>
+      <span class="devoir-ligne-texte">
+        <span class="devoir-ligne-sur">{ouvert ? "En cours" : "Programmé"} · {quand(aRejoindre)}</span>
+        <span class="devoir-ligne-titre">{aRejoindre.titre}</span>
+      </span>
+      <span class="devoir-ligne-action"><Icon name="lock" size={16} />Débloquer</span>
+    </a>
+  );
   return (
     <a class="devoir-ligne" href={`#/composa?code=${aRejoindre.code}`} aria-label={`${aRejoindre.titre}, code ${codeLisible(aRejoindre.code)}, entrer dans le devoir`}>
       <span class="devoir-ligne-texte">
@@ -82,10 +93,12 @@ function LigneDevoir() {
 
 /** Entrée discrète vers l'espace Devoirs, en bas de l'accueil (pour taper un code reçu du professeur). */
 export function LienDevoirs() {
+  const { premium, restants, limite } = useLimiteDevoirs();
   return (
     <a class="devoirs-lien" href="#/composa">
       <Icon name="fact_check" size={20} />
       <span>Devoirs de ton professeur</span>
+      {!premium && limite > 0 && <span class="devoirs-lien-reste">{restants > 0 ? `${restants} gratuit${restants > 1 ? "s" : ""}` : <><Icon name="lock" size={14} />Accès complet</>}</span>}
       <Icon name="chevron_right" size={20} />
     </a>
   );

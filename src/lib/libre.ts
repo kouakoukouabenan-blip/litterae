@@ -15,6 +15,8 @@ export interface ContenuLibre {
   revision: number;
   /** Prix de l'accès complet réglé dans le tableau de bord. */
   prix?: Prix;
+  /** Devoirs COMPOSA gratuits sans clé (réglé dans le tableau de bord). */
+  devoirsGratuits?: number;
   /** Numéro WhatsApp de l'assistance réglé dans le tableau de bord ("" : e-mail seulement). Lu par site.ts. */
   whatsapp?: string;
   /** Durée de l'accès des clés achetées à partir de « depuis » (null : sans limite). */
