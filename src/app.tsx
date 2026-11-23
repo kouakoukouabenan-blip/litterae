@@ -36,6 +36,8 @@ import { CollectionScreen } from "./screens/Collection";
 import { DuelScreen } from "./screens/Duel";
 import { CommentaireScreen } from "./screens/Commentaire";
 import { FormationScreen } from "./screens/Formation";
+import { ComposaScreen } from "./screens/Composa";
+import { useEcouteComposa } from "./lib/composa";
 import { reverifier } from "./lib/licence";
 import { synchroAccesNotifs } from "./lib/notifications";
 import { noterMethodeDuJour } from "./lib/methodes";
@@ -96,6 +98,8 @@ export function App() {
       history.replaceState(null, "", location.pathname + location.hash);
     }
   }, []);
+  // Devoirs en cours envoyés par COMPOSA (espace Devoirs), pour la case de l'accueil.
+  useEcouteComposa();
   const { path, params } = useRoute();
   const [section = "accueil", id] = path;
   useEffect(() => { noter({ t: "ecran", ref: section }); }, [section]);
@@ -127,6 +131,7 @@ export function App() {
     case "cc": screen = <CommentaireScreen path={path} />; break;
     case "formation": screen = <FormationScreen path={path} params={params} />; break;
     case "duel": screen = <DuelScreen params={params} />; break;
+    case "composa": screen = <ComposaScreen params={params} />; break;
     default: screen = <NotFound />;
   }
 

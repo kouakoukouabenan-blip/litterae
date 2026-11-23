@@ -14,6 +14,7 @@ import { useMethode } from "../lib/methodes";
 import { AccueilCommentaire } from "./Commentaire";
 import { useFormation, SEUIL } from "../lib/formation";
 import { ETAPES } from "../data/formation";
+import { LienDevoirs, TuileDevoirs } from "../components/TuileDevoirs";
 
 /** Détail d'une case : version courte sur téléphone, où les cases sont étroites. */
 const Detail = ({ long, court }: { long: string; court: string }) => (
@@ -38,6 +39,9 @@ function AccueilDissertation() {
         <p class="eyebrow">La dissertation littéraire, pas à pas</p>
         <h1 class="home-title">Que veux-tu faire ?</h1>
       </header>
+
+      {/* Un devoir du professeur ouvert passe avant tout le reste. */}
+      <TuileDevoirs />
 
       <ProchaineAction />
 
@@ -85,6 +89,7 @@ function AccueilDissertation() {
         </a>
       </nav>
 
+      <LienDevoirs />
       <InvitationNotifs />
       <Suggestions />
       <ReponseAlerte />

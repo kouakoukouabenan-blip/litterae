@@ -1,3 +1,4 @@
+import { LienDevoirs, TuileDevoirs } from "../components/TuileDevoirs";
 import { Fragment } from "preact";
 import { useEffect, useState } from "preact/hooks";
 import { Page } from "../components/Page";
@@ -88,6 +89,7 @@ export function AccueilCommentaire() {
         <p class="eyebrow">Le commentaire composé, pas à pas</p>
         <h1 class="home-title">Que veux-tu faire ?</h1>
       </header>
+      <TuileDevoirs />
       <MessageALaUne />
       {!premium && licence() && <MiseAJourCC />}
       {!premium && !licence() && <p class="quota cc-quota"><span class="muted quota-texte">Réservé à l'accès complet</span><AchatLien label="Débloquer" /></p>}
@@ -124,6 +126,7 @@ export function AccueilCommentaire() {
           <span class="choix-detail">Formules pour ta copie</span>
         </a>
       </nav>
+      <LienDevoirs />
       <Annonces />
       {premium && <PourToiCC />}
       <InstallBanner />
