@@ -125,7 +125,10 @@ function TuileFormation() {
           {reussies === 0 ? "Aucune étape réussie pour l'instant" : `${reussies} étape${reussies > 1 ? "s" : ""} réussie${reussies > 1 ? "s" : ""} sur ${ETAPES.length}`} · {f.points} points
           {enCours ? ` · ton score ${f.etapes[prochaine.id].maitrise} %, il faut ${SEUIL} %` : ""}
         </span>
-        <span class="formation-tuile-barre" aria-hidden="true"><span style={{ width: `${(reussies / ETAPES.length) * 100}%` }} /></span>
+        <span class="formation-tuile-progres">
+          <span class="formation-tuile-barre" aria-hidden="true"><span style={{ width: `${(reussies / ETAPES.length) * 100}%` }} /></span>
+          <span class="formation-tuile-pct">{Math.round((reussies / ETAPES.length) * 100)} %</span>
+        </span>
       </span>
       <Icon name="arrow_forward" size={22} />
     </a>

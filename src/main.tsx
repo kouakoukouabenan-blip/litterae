@@ -26,11 +26,13 @@ import "./lib/install";
 import { App } from "./app";
 import { conserverDonnees } from "./lib/storage";
 import { appliquerIdentite } from "./lib/identite";
+import { typographieFrancaise } from "./lib/typo";
 import { registerSW } from "virtual:pwa-register";
 import { PassageArrivee, PassageDepart, afficherRappel, demoPassage } from "./components/Passage";
 
 conserverDonnees();
 appliquerIdentite();
+typographieFrancaise();
 
 // Nouvelle version en ligne : elle s'installe et la page se recharge seule, pour ne jamais garder
 // un ancien code avec de nouvelles images. Vérifie aussi toutes les heures si l'appli reste ouverte,

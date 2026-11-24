@@ -372,8 +372,8 @@
 /* Une seule touche d'accent par écran : surtitres et flèches redeviennent calmes ;
  * la terre cuite reste pour le carré du logo, l'onglet actif et les liens d'achat, l'ocre pour le bouton principal sur fond vert. */
 :root.identite-nouvelle.couleurs-afrique .eyebrow { color: var(--muted); }
-:root.identite-nouvelle.couleurs-afrique :is(.resume-card, .prochaine, .formation-tuile, .choix-oeuvres) :is(.eyebrow, .formation-tuile-sur) { color: var(--on-dark-muted); }
-:root.identite-nouvelle.couleurs-afrique :is(.resume-card, .prochaine, .formation-tuile, .choix-oeuvres) .icon { color: var(--on-dark); }
+:root.identite-nouvelle.couleurs-afrique :is(.resume-card, .prochaine, .choix-oeuvres) .eyebrow { color: var(--on-dark-muted); }
+:root.identite-nouvelle.couleurs-afrique :is(.resume-card, .prochaine, .choix-oeuvres) .icon { color: var(--on-dark); }
 :root.identite-nouvelle.couleurs-afrique .sujet-num { color: var(--green); }
 :root.identite-nouvelle.couleurs-afrique .sub-title { color: var(--green); }
 :root.identite-nouvelle.couleurs-afrique .step-num { color: var(--green); background: var(--green-tint); }

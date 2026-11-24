@@ -959,8 +959,9 @@
 
 /* ---------- Matière puis méthode (propositions A, B, C sur le site d'essai) ---------- */
 /* Bouton de la barre du haut : la matière en petit au-dessus, la méthode en dessous. */
-.matiere-bouton { gap: 4px; padding: 0 4px 0 12px; }
-.matiere-bouton-texte { display: flex; flex-direction: column; align-items: flex-start; min-width: 0; line-height: 1.05; }
+/* Matière au-dessus, méthode en dessous, avec de l'air : le badge ne paraît plus serré. */
+.matiere-bouton { gap: 4px; min-height: 42px; padding: 5px 6px 5px 14px; }
+.matiere-bouton-texte { display: flex; flex-direction: column; align-items: flex-start; gap: 3px; min-width: 0; line-height: 1.1; }
 .matiere-bouton-matiere { font-size: 10px; font-weight: 600; color: var(--muted); letter-spacing: .02em; }
 .matiere-bouton .icon { transition: transform .18s; }
 .matiere-bouton.is-ouvert .icon { transform: rotate(180deg); }
@@ -1023,7 +1024,7 @@
 .menu-matiere-autres { margin: var(--s3) 0 0; padding-top: var(--s3); border-top: 1px solid var(--line); font-size: var(--text-xs); color: var(--muted); }
 .menu-matiere-autres span { font-weight: 600; }
 @media (min-width: 720px) { .menu-matiere { margin-right: max(var(--s4), calc((100vw - var(--page-width)) / 2)); } }
-@media (max-width: 400px) { .matiere-bouton { padding: 0 12px; } }
+@media (max-width: 400px) { .matiere-bouton { padding: 5px 14px; } }
 
 /* Espace Devoirs (COMPOSA dans Litterae) : le cadre prend tout l'écran sous la barre du haut. */
 html[data-univers="composa"] body { padding-bottom: 0; }
