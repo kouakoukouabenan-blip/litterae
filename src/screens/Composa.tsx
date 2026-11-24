@@ -33,8 +33,37 @@ export function ComposaScreen({ params }: { params: URLSearchParams }) {
     <Page title="Devoirs" back="#/accueil">
       <h1 class="sr-only">Devoirs de ton professeur</h1>
       {!charge && <p class="composa-attente" role="status">Ouverture de tes devoirs…</p>}
+      <EntreeSalle pret={charge} />
       <iframe class="composa-cadre" src={src} title="Devoirs de ton professeur (COMPOSA)"
         allow="fullscreen; clipboard-write" referrerpolicy="strict-origin" onLoad={() => setCharge(true)} />
     </Page>
+  );
+}
+
+/**
+ * Entrée dans la salle de devoir : la porte « Devoir » s'ouvre sur la salle, le temps que COMPOSA s'ouvre.
+ * Dessin plat, sans effet : au moins 1,6 s pour qu'on la voie, jamais plus de 6 s même si COMPOSA tarde.
+ */
+function EntreeSalle({ pret }: { pret: boolean }) {
+  const calme = typeof matchMedia === "function" && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const [vue, setVue] = useState(false);
+  const [fin, setFin] = useState(false);
+  const [parti, setParti] = useState(false);
+  useEffect(() => {
+    const a = setTimeout(() => setVue(true), calme ? 500 : 1600);
+    const b = setTimeout(() => setFin(true), 6000);
+    return () => { clearTimeout(a); clearTimeout(b); };
+  }, []);
+  const sortir = fin || (vue && pret);
+  useEffect(() => { if (sortir) { const t = setTimeout(() => setParti(true), 250); return () => clearTimeout(t); } }, [sortir]);
+  if (parti) return null;
+  return (
+    <div class={`salle-entree${sortir ? " salle-sortie" : ""}`} role="status" aria-label="Tu entres dans la salle de devoir">
+      <div class="salle-porte-cadre" aria-hidden="true">
+        <div class="salle-dedans" />
+        <div class="salle-porte"><span class="salle-plaque">Devoir</span><span class="salle-poignee" /></div>
+      </div>
+      <p class="salle-titre">Salle de devoir</p>
+    </div>
   );
 }

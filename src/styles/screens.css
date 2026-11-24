@@ -1055,3 +1055,17 @@ html[data-univers="composa"] .bandeau-essai { display: none; }
 .devoir-ligne-action .icon { margin-right: 4px; }
 .devoirs-lien > .icon:first-child { color: var(--green); }
 .devoirs-lien > .icon:last-child { color: var(--muted); }
+
+/* Entrée dans la salle de devoir (espace Devoirs) : dessin plat, la porte « Devoir » s'ouvre sur la salle. */
+.salle-entree { position: fixed; inset: 0; z-index: 60; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--s4); background: var(--green); color: var(--on-dark); }
+.salle-entree.salle-sortie { animation: salle-part .25s linear both; }
+.salle-porte-cadre { position: relative; width: 70px; height: 106px; border: 4px solid var(--on-dark); border-bottom: 0; perspective: 600px; }
+.salle-porte-cadre::after { content: ""; position: absolute; z-index: 0; left: -16px; right: -16px; bottom: -4px; height: 4px; background: var(--on-dark); }
+.salle-dedans { position: absolute; inset: 0; overflow: hidden; background: var(--paper); }
+.salle-porte { position: absolute; inset: 0; z-index: 1; background: var(--green-press); border: 1.5px solid var(--on-dark); box-sizing: border-box; transform-origin: left center; animation: salle-ouvre .9s .3s ease-in-out both; }
+.salle-poignee { position: absolute; right: 7px; top: 52%; width: 5px; height: 5px; border-radius: 50%; background: var(--on-dark); }
+.salle-plaque { position: absolute; left: 50%; top: 14px; transform: translateX(-50%); padding: 1px 5px; background: var(--on-dark); color: var(--green); font: 700 7.5px/1.4 var(--font-text); letter-spacing: .08em; text-transform: uppercase; }
+.salle-titre { margin: 0; font: 700 1.0625rem/1.2 var(--font-title); color: var(--on-dark); }
+@keyframes salle-ouvre { to { transform: rotateY(-75deg); } }
+@keyframes salle-part { to { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .salle-porte { animation: none; transform: rotateY(-75deg); } }

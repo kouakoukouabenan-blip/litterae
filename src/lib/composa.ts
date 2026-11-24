@@ -115,7 +115,8 @@ export const aDejaOuvertComposa = () => read<Memo | null>(CLE, null) !== null;
 export function adresseComposa(salle?: string | null, code?: string | null, vue?: string | null) {
   const chemin = code && CODE.test(code) ? `/eleve/rejoindre/${code}`
     : salle && /^[0-9a-f-]{36}$/.test(salle) ? `/eleve/salles/${salle}${vue === "resultat" ? "/resultat" : ""}` : "/eleve";
-  const q = new URLSearchParams({ dans: "litterae" });
+  // retour=litterae : dans COMPOSA, le bouton retour du téléphone ramène à Litterae.
+  const q = new URLSearchParams({ dans: "litterae", retour: "litterae" });
   const prenom = titulaire()?.prenom;
   if (prenom) q.set("prenom", prenom);
   return `${COMPOSA_URL}${chemin}?${q}`;
