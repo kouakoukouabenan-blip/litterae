@@ -209,7 +209,12 @@ function ScèneInstallation({ etat }: { etat: "en-cours" | "faite" }) {
  */
 export function InstallGate() {
   const { installed, canPrompt, prompt, installation } = useInstall();
-  const [passe, setPasse] = useState(() => { try { return !!sessionStorage.getItem(PASSE); } catch { return false; } });
+  // Lien d'un devoir reçu sur WhatsApp (#/composa?code=…) : l'élève vient composer tout de suite,
+  // on ne lui barre pas la route avec l'écran d'installation.
+  const [passe, setPasse] = useState(() => {
+    if (/^#\/composa\?(.*&)?code=/.test(location.hash)) return true;
+    try { return !!sessionStorage.getItem(PASSE); } catch { return false; }
+  });
   const [etapes, setEtapes] = useState(false);
   const [dejaLa, setDejaLa] = useState(false);
   const [attente, setAttente] = useState(false);
