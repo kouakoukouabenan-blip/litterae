@@ -67,7 +67,7 @@ export function PremierChoix() {
 /** Quelque chose occupe déjà l'écran : le repère attend. */
 const occupe = () => !!document.querySelector("#splash, .install-gate, .premier-choix, dialog[open], .transition-methode, .salle-entree, .menu-matiere-fond");
 
-interface Position { top: number; right: number; fleche: number }
+interface Position { top: number; left: number; largeur: number; fleche: number }
 
 /**
  * Petit repère sous le bouton de méthode de la barre du haut : « Il y a aussi le Commentaire composé. »
@@ -79,6 +79,7 @@ export function RepereMethode() {
   const [active] = useMethode();
   const [pos, setPos] = useState<Position | null>(null);
   const bouton = useRef<HTMLElement | null>(null);
+  const bulle = useRef<HTMLDivElement>(null);
   // Juste après le tout premier choix, le repère suit.
   const [tour, setTour] = useState(0);
   useEffect(() => {
@@ -90,9 +91,14 @@ export function RepereMethode() {
   const placer = () => {
     const b = bouton.current;
     if (!b) return;
+    // La bulle reste toujours entière dans l'écran : alignée sur le bord droit du bouton si possible,
+    // sinon poussée vers l'intérieur ; la petite flèche continue de viser le milieu du bouton.
     const r = b.getBoundingClientRect();
-    const right = Math.max(12, innerWidth - r.right - 4);
-    setPos({ top: r.bottom + 12, right, fleche: Math.max(14, innerWidth - (r.left + r.width / 2) - right - 8) });
+    const ecran = document.documentElement.clientWidth || innerWidth;
+    const largeur = Math.min(250, ecran - 24);
+    const left = Math.min(Math.max(12, r.right + 4 - largeur), ecran - 12 - largeur);
+    const fleche = Math.min(Math.max(12, r.left + r.width / 2 - left - 6), largeur - 24);
+    setPos({ top: r.bottom + 12, left, largeur, fleche });
   };
   const fermer = () => { bouton.current?.classList.remove("repere-actif"); bouton.current = null; setPos(null); };
 
@@ -116,7 +122,9 @@ export function RepereMethode() {
 
   useEffect(() => {
     if (!pos) return;
-    const toucher = () => fermer();
+    // Un toucher sur la bulle elle-même ne la retire pas tout de suite : sinon le doigt « tombe »
+    // sur ce qu'il y a dessous (le devoir du jour, par exemple). La bulle se ferme au clic, sans rien ouvrir.
+    const toucher = (e: Event) => { if (!(e.target instanceof Node && bulle.current?.contains(e.target))) fermer(); };
     // Le toucher qui ouvre le choix de méthode ferme aussi le repère.
     const t = setTimeout(() => document.addEventListener("pointerdown", toucher), 300);
     addEventListener("resize", placer);
@@ -127,9 +135,9 @@ export function RepereMethode() {
   if (!pos) return null;
   const autres = METHODES.filter(m => m.prete && m.id !== active.id).map(m => AVEC_ARTICLE[m.id] ?? m.nom);
   return (
-    <div class="repere-methode" role="status" style={{ top: `${pos.top}px`, right: `${pos.right}px`, "--fleche": `${pos.fleche}px` }}>
+    <div ref={bulle} class="repere-methode" role="status" onClick={e => { e.preventDefault(); e.stopPropagation(); fermer(); }} style={{ top: `${pos.top}px`, left: `${pos.left}px`, width: `${pos.largeur}px`, "--fleche": `${pos.fleche}px` }}>
       <p><strong>Il y a aussi {autres.join(" et ")}.</strong> Touche ici pour changer de méthode.</p>
-      <button type="button" class="repere-methode-ok" onClick={fermer}>Compris</button>
+      <button type="button" class="repere-methode-ok">Compris</button>
     </div>
   );
 }

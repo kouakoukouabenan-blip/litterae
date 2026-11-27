@@ -1100,8 +1100,8 @@ html[data-univers="composa"] .bandeau-essai { display: none; }
   border-radius: var(--radius-sm); background: var(--green); color: var(--on-dark); box-shadow: 0 6px 20px rgba(0, 0, 0, .18);
   animation: repere-entre .35s cubic-bezier(.2, .9, .3, 1.2) both;
 }
-.repere-methode::before { content: ""; position: absolute; top: -6px; right: var(--fleche); width: 12px; height: 12px; background: inherit; transform: rotate(45deg); border-radius: 2px; }
-.repere-methode p { margin: 0; font-size: var(--text-xs); line-height: 1.45; }
+.repere-methode::before { content: ""; position: absolute; top: -6px; left: var(--fleche); width: 12px; height: 12px; background: inherit; transform: rotate(45deg); border-radius: 2px; }
+.repere-methode p { margin: 0; font-size: var(--text-xs); line-height: 1.45; overflow-wrap: break-word; white-space: normal; }
 .repere-methode strong { display: block; margin-bottom: 2px; font-size: var(--text-sm); }
 .repere-methode-ok { display: block; margin: var(--s2) 0 0 auto; padding: 4px 2px; border: 0; background: none; color: var(--ochre); font: 700 var(--text-xs)/1.2 var(--font-text); cursor: pointer; }
 .methode-bouton.repere-actif { animation: repere-pouls 1.6s ease-out 3; }
