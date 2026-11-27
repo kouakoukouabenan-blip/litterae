@@ -40,21 +40,31 @@ function useDerniersOnglets() {
     const adresseCC = `cc/${path[1]}`;
     if (read(`onglet-cc-${partieCC}`, "") !== adresseCC) write(`onglet-cc-${partieCC}`, adresseCC);
   }
+  // Résumé de texte : ses propres onglets Cours, Exercices et Outils.
+  if (path[0] === "rs" && path.length === 2) {
+    const partieRS = ["sujets", "entrainement"].includes(path[1]) ? "sujets" : ["outils", "aide"].includes(path[1]) ? "outils" : "";
+    if (partieRS && read(`onglet-rs-${partieRS}`, "") !== path[1]) write(`onglet-rs-${partieRS}`, path[1]);
+  }
+  if (methode.id === "resume") return (i: (typeof ITEMS)[number]) =>
+    i.section === "cours" ? "#/rs/cours" : i.section === "sujets" ? `#/rs/${read("onglet-rs-sujets", "sujets")}` : i.section === "oeuvres" ? `#/rs/${read("onglet-rs-outils", "outils")}` : `#/${read(`onglet-${i.section}`, i.section)}`;
   // Commentaire composé : la barre du bas mène à ses propres leçons et sujets.
   if (methode.id === "commentaire") return (i: (typeof ITEMS)[number]) =>
     i.section === "cours" ? `#/${read("onglet-cc-cours", "cc/cours")}` : i.section === "sujets" ? `#/${read("onglet-cc-sujets", "cc/corriges")}` : i.section === "oeuvres" ? `#/${read("onglet-cc-genres", "cc/genres")}` : `#/${read(`onglet-${i.section}`, i.section)}`;
   return (i: (typeof ITEMS)[number]) => `#/${read(`onglet-${i.section}`, "lien" in i ? i.lien : i.section)}`;
 }
 
-/** Commentaire composé : l'onglet Œuvres devient Genres (genres littéraires et tonalités). */
+/** Commentaire composé : l'onglet Œuvres devient Genres. Résumé : Sujets devient Exercices et Œuvres devient Outils. */
 function useLibelle() {
   const [methode] = useMethode();
+  if (methode.id === "resume") return (i: (typeof ITEMS)[number]) =>
+    i.section === "sujets" ? { label: "Exercices", icon: "history_edu" as const } : i.section === "oeuvres" ? { label: "Outils", icon: "tune" as const } : i;
   return (i: (typeof ITEMS)[number]) => methode.id === "commentaire" && i.section === "oeuvres" ? { label: "Genres", icon: "account_tree" as const } : i;
 }
 
 function useSection() {
   const [premier, second] = useRoute().path;
   // Commentaire composé : les leçons et outils vont avec Cours, les corrigés et l'entraînement avec Sujets.
+  if (premier === "rs") return second === "cours" || second === "texte" ? "cours" : second === "sujets" || second === "entrainement" || second === "corrige" || second === "atelier" ? "sujets" : second === "outils" || second === "aide" ? "oeuvres" : "accueil";
   if (premier === "cc") return second === "cours" || second === "outils" || second === "figures" ? "cours" : second === "corriges" || second === "entrainement" || second === "atelier" ? "sujets" : second === "genres" || second === "tonalites" ? "oeuvres" : "accueil";
   const section = premier ?? "accueil";
   // Les sujets d'entraînement et « J'ai un devoir » sont des onglets de Sujets ; la boîte à outils se range avec le cours.

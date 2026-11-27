@@ -1,5 +1,6 @@
 import type { ContenuEtape } from "./formation";
 import type { DonneesCC } from "./cc-types";
+import type { DonneesRS } from "./resume-types";
 export type Fonction = "Engagement" | "Esthétique" | "Évasion" | "Lyrique" | "Sociale";
 export const FONCTIONS: Fonction[] = ["Engagement", "Esthétique", "Évasion", "Lyrique", "Sociale"];
 
@@ -143,6 +144,8 @@ export interface ContenuPayant {
   commentaire?: DonneesCC;
   /** Formation à la dissertation : étapes payantes 4 à 13 (absentes des clés activées avant leur arrivée). */
   formation?: { etapes: Record<string, ContenuEtape> };
+  /** Résumé de texte complet : leçons, quiz et exercices (absent des clés activées avant son arrivée). */
+  resume?: DonneesRS;
 }
 
 export interface QuestionQuiz {

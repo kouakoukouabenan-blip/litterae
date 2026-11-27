@@ -12,6 +12,7 @@ import { useState } from "preact/hooks";
 import { href } from "../lib/router";
 import { useMethode } from "../lib/methodes";
 import { AccueilCommentaire } from "./Commentaire";
+import { AccueilResume } from "./Resume";
 import { useFormation, SEUIL } from "../lib/formation";
 import { ETAPES } from "../data/formation";
 import { LienDevoirs, TuileDevoirs } from "../components/TuileDevoirs";
@@ -24,7 +25,7 @@ const Detail = ({ long, court }: { long: string; court: string }) => (
 /** Écran d'accueil : la recherche d'œuvres, puis les autres choses que l'élève vient faire. Les leçons ont leur propre écran (Cours). */
 export function AccueilScreen() {
   const [methode] = useMethode();
-  return methode.id === "commentaire" ? <AccueilCommentaire /> : <AccueilDissertation />;
+  return methode.id === "commentaire" ? <AccueilCommentaire /> : methode.id === "resume" ? <AccueilResume /> : <AccueilDissertation />;
 }
 
 function AccueilDissertation() {

@@ -63,7 +63,7 @@ function TexteEnRoute() {
 }
 
 /** Ouverture d'une leçon gratuite : un court message pendant l'envoi, ou ce qui bloque. */
-function OuvertureLecon({ echec, reessayer }: { echec: EchecLecon | null; reessayer: () => void }) {
+export function OuvertureLecon({ echec, reessayer }: { echec: EchecLecon | null; reessayer: () => void }) {
   if (!echec) return <p class="notice notice-court" role="status">Ouverture de la leçon…</p>;
   return (
     <div role="alert">

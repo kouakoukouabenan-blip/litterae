@@ -33,6 +33,7 @@ interface Repere { vus: number; jours: number; dernierJour: string }
   if (read<string[] | null>(ESSAYEES, null)) return;
   const deja = new Set<string>([read<string>("methode", "dissertation")]);
   if (cles("cc-").length) deja.add("commentaire");
+  if (cles("rs-").length) deja.add("resume");
   write(ESSAYEES, [...deja]);
 })();
 

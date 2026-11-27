@@ -36,6 +36,7 @@ import { ProgresScreen } from "./screens/Progres";
 import { CollectionScreen } from "./screens/Collection";
 import { DuelScreen } from "./screens/Duel";
 import { CommentaireScreen } from "./screens/Commentaire";
+import { ResumeScreen } from "./screens/Resume";
 import { FormationScreen } from "./screens/Formation";
 import { ComposaScreen } from "./screens/Composa";
 import { useEcouteComposa } from "./lib/composa";
@@ -130,6 +131,7 @@ export function App() {
     case "progres": screen = <ProgresScreen />; break;
     case "collection": screen = <CollectionScreen />; break;
     case "cc": screen = <CommentaireScreen path={path} />; break;
+    case "rs": screen = <ResumeScreen path={path} />; break;
     case "formation": screen = <FormationScreen path={path} params={params} />; break;
     case "duel": screen = <DuelScreen params={params} />; break;
     case "composa": screen = <ComposaScreen params={params} />; break;

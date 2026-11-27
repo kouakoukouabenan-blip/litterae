@@ -955,8 +955,6 @@
 @media (max-width: 719px) { .arg-fonctions { flex-wrap: nowrap; justify-content: space-between; gap: 2px; } .arg-fonctions .fn-mini { padding: 0 7px; } }
 @media (max-width: 359px) { .arg-fonctions .fn-mini { padding: 0 4px; font-size: 0.6875rem; } }
 
-
-
 /* ---------- Matière puis méthode (propositions A, B, C sur le site d'essai) ---------- */
 /* Bouton de la barre du haut : la matière en petit au-dessus, la méthode en dessous. */
 /* Matière au-dessus, méthode en dessous, avec de l'air : le badge ne paraît plus serré. */
@@ -1112,3 +1110,137 @@ html[data-univers="composa"] .bandeau-essai { display: none; }
 .premier-choix-matiere-nom { margin: 0 0 var(--s2); font: 700 var(--text-xs)/1.2 var(--font-text); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
 .premier-choix-autre { display: flex; justify-content: space-between; align-items: center; margin: var(--s3) 0 0; padding: var(--s3) var(--s4); border: 1.5px dashed var(--line-strong); border-radius: var(--radius-sm); color: var(--muted); font-size: var(--text-sm); }
 .premier-choix-autre span { font-size: var(--text-xs); }
+
+/* Résumé de texte : carte du texte support dans une leçon */
+.rs-carte-texte { display: flex; flex-direction: column; gap: var(--s2); margin: var(--s4) 0; padding: var(--s4); border-radius: var(--radius); background: var(--ochre-pale); border-left: 4px solid var(--ochre); }
+.rs-carte-texte > p { margin: 0; }
+.rs-carte-texte.is-ouvert { background: var(--surface); }
+.rs-carte-texte.is-ouvert .crayon-barre { background: var(--surface); }
+.rs-carte-texte .crayon { margin-top: var(--s2); }
+.crayon-texte::after { content: ""; display: block; clear: both; }
+.rs-carte-titre { font: 600 var(--text-md)/1.3 var(--font-title); color: var(--ink-strong); }
+
+/* Le crayon : souligner, entourer, encadrer, annoter, gommer */
+.crayon { --encre-bleu: #1f4fa3; --encre-rouge: #c23b22; --encre-vert: #1d7a4c; }
+.crayon-prendre-zone { position: sticky; top: calc(var(--topbar-h) + var(--band-h)); z-index: 5; display: flex; align-items: center; justify-content: flex-end; margin: 0 0 var(--s2); padding: 6px 0; background: var(--surface); border-bottom: 1px solid var(--line); }
+.crayon-prendre { display: inline-flex; align-items: center; gap: 6px; min-height: 34px; padding: 0 var(--s3); border-radius: 999px; border: 1.5px solid var(--green); background: var(--surface); color: var(--green); font: 600 var(--text-xs) var(--font-text); cursor: pointer; }
+.crayon-barre { position: sticky; top: calc(var(--topbar-h) + var(--band-h)); z-index: 5; margin: 0 0 var(--s2); padding: 6px 0 4px; background: var(--paper); border-bottom: 1px solid var(--line); }
+.rs-carte-texte .crayon-barre { background: var(--ochre-pale); }
+.crayon-ligne { display: flex; align-items: center; gap: 3px; }
+.crayon-outil { display: inline-flex; align-items: center; justify-content: center; flex: 1 1 0; max-width: 44px; height: 36px; padding: 0; border: 1px solid transparent; border-radius: 8px; background: none; color: var(--ink); cursor: pointer; }
+.crayon-outil[aria-pressed="true"] { border-color: var(--green); background: var(--green-tint); color: var(--green); }
+.crayon-outil:disabled { opacity: .35; cursor: default; }
+.crayon-sep { width: 1px; height: 22px; margin: 0 3px; background: var(--line); }
+.crayon-couleur { flex: none; width: 26px; height: 26px; margin: 0 5px; border-radius: 50%; border: 2px solid var(--surface); box-shadow: 0 0 0 1.5px var(--ink-strong); cursor: pointer; }
+.crayon-couleur.encre-bleu { background: var(--encre-bleu); }
+.crayon-couleur.encre-rouge { background: var(--encre-rouge); }
+.crayon-couleur.encre-vert { background: var(--encre-vert); }
+.crayon-petit { min-height: 32px; padding: 0 var(--s3); border: 1px solid var(--line); border-radius: 999px; background: var(--surface); color: var(--ink); font: 500 var(--text-xs) var(--font-text); cursor: pointer; }
+.crayon-petit.danger { border-color: var(--orange); color: var(--orange-text); }
+.crayon-aide { margin: 2px 0 0; font-size: 12px; line-height: 1.4; color: var(--muted); }
+.crayon-lien { margin-left: var(--s2); padding: 0; border: 0; background: none; color: var(--orange-text); font: inherit; text-decoration: underline; cursor: pointer; }
+.crayon-confirmer { display: flex; align-items: center; flex-wrap: wrap; gap: var(--s2); margin-top: 4px; font-size: 13px; }
+
+.crayon-texte { font: 400 var(--text-sm)/2.05 var(--font-title); color: var(--ink-strong); }
+.crayon-texte p { margin: 0 0 var(--s3); }
+.crayon.is-actif .crayon-texte { user-select: none; -webkit-user-select: none; }
+.crayon.is-actif .crayon-mot { cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.crayon-debut { background: var(--ochre-pale); outline: 2px dashed var(--ink-strong); outline-offset: 1px; border-radius: 3px; }
+.crayon-source-note { font: 400 13px/1.5 var(--font-text); color: var(--muted); }
+
+.encre-bleu { --encre: var(--encre-bleu); }
+.encre-rouge { --encre: var(--encre-rouge); }
+.encre-vert { --encre: var(--encre-vert); }
+.crayon-souligne { text-decoration: underline; text-decoration-color: var(--encre); text-decoration-thickness: 2px; text-underline-offset: 4px; }
+.crayon-annote { text-decoration: underline dotted; text-decoration-color: var(--encre); text-decoration-thickness: 2px; text-underline-offset: 4px; background: color-mix(in srgb, var(--encre) 8%, transparent); }
+.crayon-entourer, .crayon-encadrer { border: 2px solid var(--encre); padding: 0 4px; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+.crayon-entourer { border-radius: 999px; padding: 0 7px; }
+.crayon-encadrer { border-radius: 2px; }
+.crayon-appel { display: inline-flex; align-items: center; justify-content: center; min-width: 20px; height: 20px; margin: 0 2px; padding: 0 4px; border: 0; border-radius: 999px; background: var(--encre); color: #fff; font: 700 11px/1 var(--font-text); vertical-align: super; cursor: pointer; }
+
+.crayon-notes { margin-top: var(--s4); padding: var(--s3) var(--s4); border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+.crayon-notes-titre { margin: 0 0 var(--s2); font: 600 var(--text-sm) var(--font-text); }
+.crayon-notes ol { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--s2); }
+.crayon-note-ligne { display: flex; gap: var(--s2); width: 100%; padding: var(--s2) 0; border: 0; background: none; text-align: left; font: 400 var(--text-sm)/1.45 var(--font-text); color: var(--ink); cursor: pointer; }
+.crayon-note-ligne .crayon-appel { vertical-align: baseline; flex: none; margin-top: 1px; }
+.crayon-cite { display: block; font-style: italic; color: var(--muted); font-size: 13px; }
+.crayon-feuille { position: fixed; left: 0; right: 0; bottom: 0; z-index: 60; display: flex; flex-direction: column; gap: var(--s2); max-width: 640px; margin: 0 auto; padding: var(--s4); padding-bottom: calc(var(--s4) + env(safe-area-inset-bottom)); background: var(--surface); border-radius: 18px 18px 0 0; box-shadow: 0 -8px 30px rgba(0,0,0,.18); }
+.crayon-zone { width: 100%; box-sizing: border-box; padding: var(--s2) var(--s3); border: 1px solid var(--line); border-radius: 10px; font: 400 16px/1.4 var(--font-text); background: var(--paper); color: var(--ink); }
+.crayon-feuille-boutons { display: flex; flex-wrap: wrap; gap: var(--s2); }
+.crayon-prendre-aide { margin-right: auto; font-size: 12px; color: var(--muted); }
+
+/* Résumé : les quatre parties du cours */
+.rs-partie + .rs-partie { margin-top: var(--s5); }
+.rs-partie-titre { display: flex; align-items: center; gap: var(--s2); margin: 0 0 var(--s2); font: 700 var(--text-md)/1.3 var(--font-text); color: var(--ink-strong); }
+.rs-partie-num { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 50%; background: var(--ochre); color: #fff; font: 700 13px/1 var(--font-text); }
+
+/* Résumé : calculateur de mots */
+.rs-calcul { display: flex; flex-direction: column; gap: var(--s3); margin-bottom: var(--s4); padding: var(--s4); border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+.rs-calcul-champ { display: flex; flex-direction: column; gap: var(--s2); font: 600 var(--text-sm) var(--font-text); }
+.rs-calcul-champ input, .rs-calcul-champ textarea { box-sizing: border-box; width: 100%; padding: var(--s2) var(--s3); border: 1px solid var(--line); border-radius: 10px; background: var(--paper); color: var(--ink); font: 400 16px/1.5 var(--font-text); }
+.rs-calcul-champ input { max-width: 12rem; }
+.rs-calcul-resultat { padding: var(--s3); border-radius: 10px; background: var(--ochre-pale); }
+.rs-calcul-resultat p { margin: 0; }
+.rs-calcul-fourchette { font: 600 var(--text-lg)/1.3 var(--font-text); color: var(--ink-strong); }
+.rs-calcul-compte { margin: 0; font-size: var(--text-sm); }
+.rs-calcul-compte.ok { color: var(--green); }
+.rs-calcul-compte.court, .rs-calcul-compte.long { color: var(--orange-text); }
+.rs-calcul-ligne { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.rs-calcul-effacer { flex: none; border: 1px solid var(--line); background: var(--surface); color: var(--orange-text); border-radius: 999px; padding: 6px 14px; font: inherit; font-size: var(--text-sm); font-weight: 600; cursor: pointer; }
+
+/* Résumé de texte : exercices, corrigés et atelier */
+.rs-partie-aide { margin: 0 0 var(--s2); }
+.rs-corrige-partie { margin-top: var(--s6); }
+.rs-sous-titre { margin: var(--s4) 0 var(--s2); font: 700 var(--text-sm)/1.3 var(--font-text); color: var(--orange-text); text-transform: uppercase; letter-spacing: .04em; }
+.rs-sujet-liste { margin: var(--s2) 0 0; padding-left: 1.2em; display: flex; flex-direction: column; gap: var(--s2); }
+.rs-question + .rs-question { margin-top: var(--s4); }
+.rs-question-q { font-weight: 700; color: var(--ink-strong); }
+.rs-idees { margin: var(--s2) 0 0; padding-left: 1.4em; display: flex; flex-direction: column; gap: var(--s3); }
+.rs-idee-texte { margin: 0; font-size: var(--text-sm); color: var(--muted); font-style: italic; }
+.rs-idee-reformulee { margin: var(--s1) 0 0; display: flex; gap: var(--s2); align-items: flex-start; color: var(--ink-strong); }
+.rs-idee-reformulee .icon { flex: none; margin-top: 3px; color: var(--green); }
+.rs-copie p + p { margin-top: var(--s2); }
+.rs-phrase-intro, .rs-transition { font-style: italic; }
+.rs-resume-modele p { text-indent: 1.5em; }
+.rs-phases { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 var(--s2); }
+.rs-phase { display: inline-flex; align-items: center; gap: 4px; min-height: 34px; padding: 0 10px; border: 1px solid var(--line-strong); border-radius: 999px; background: var(--surface); color: var(--ink); font: 600 13px/1 var(--font-text); cursor: pointer; }
+.rs-phase.faite { border-color: var(--green); color: var(--green); background: var(--green-tint); }
+.rs-phase.actif { background: var(--green); border-color: var(--green); color: var(--on-dark); }
+.rs-points { display: flex; gap: 6px; margin: 0 0 var(--s4); }
+.rs-point { width: 28px; height: 6px; padding: 0; border: 0; border-radius: 3px; background: var(--line); cursor: pointer; }
+.rs-point.fait { background: var(--green); opacity: .45; }
+.rs-point.actif { background: var(--orange); opacity: 1; }
+.rs-voir { margin: calc(-1 * var(--s2)) 0 var(--s4); }
+.rs-voir summary { cursor: pointer; color: var(--orange-text); font-size: var(--text-sm); font-weight: 600; min-height: 32px; display: flex; align-items: center; }
+.rs-voir-corps { padding: var(--s2) var(--s3); background: var(--green-tint); border-radius: var(--radius-sm); }
+.rs-voir-corps p { margin: 0; }
+.rs-voir-corps p + p { margin-top: var(--s2); }
+.rs-atelier-texte { margin: var(--s4) 0 0; }
+.rs-choisir { margin: var(--s3) 0; padding: var(--s3); background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-sm); font-family: var(--font-text); }
+.rs-choisir p { margin: 0; line-height: 1.7; }
+.rs-choisir p + p { margin-top: var(--s3); }
+.rs-phrase { display: inline; padding: 1px 2px; margin: 0; border: 0; background: none; color: var(--ink); font: inherit; text-align: left; cursor: pointer; border-radius: 3px; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+.rs-phrase.choisie { background: var(--ochre-pale); box-shadow: inset 0 -2px 0 var(--ochre); }
+.rs-phrase.juste { background: var(--green-tint); box-shadow: inset 0 -2px 0 var(--green); }
+.rs-phrase.en-trop { background: none; box-shadow: none; text-decoration: line-through; text-decoration-color: var(--orange); color: var(--muted); }
+.rs-phrase.oubliee { box-shadow: inset 0 -2px 0 var(--orange); background: none; outline: 1.5px dashed var(--orange); outline-offset: 1px; }
+.rs-actions { display: flex; flex-wrap: wrap; gap: var(--s2); margin: var(--s3) 0; }
+.rs-bloc { margin: 0 0 var(--s4); padding: var(--s3); background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-sm); }
+.rs-bloc .textarea { width: 100%; box-sizing: border-box; }
+.rs-bloc .cc-champ:last-of-type { margin-bottom: var(--s2); }
+.rs-bloc .rs-voir { margin: var(--s2) 0 0; }
+.rs-bloc-num { margin: 0 0 var(--s1); font: 700 var(--text-xs)/1.3 var(--font-text); color: var(--orange-text); text-transform: uppercase; letter-spacing: .04em; }
+.rs-bloc .rs-idee-texte { margin-bottom: var(--s2); }
+.rs-lien { margin: 0 0 var(--s2); }
+.rs-connecteur { display: block; margin: 0 0 var(--s1); }
+.rs-connecteur .select { min-height: 36px; }
+.rs-lien-phrase { margin: 0; padding: var(--s2) var(--s3); background: var(--surface); border-left: 3px solid var(--green); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; }
+.rs-alinea { text-indent: 1.5em; }
+.rs-suggestions { display: flex; flex-wrap: wrap; gap: var(--s2); margin: calc(-1 * var(--s2)) 0 var(--s4); }
+.rs-suggestions .chip { display: block; flex-shrink: 1; max-width: 100%; white-space: normal; text-align: left; height: auto; min-height: 32px; padding: 6px 12px; line-height: 1.3; }
+.rs-copie-finale { margin: var(--s3) 0; padding: var(--s4); background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-sm); }
+.rs-copie-finale .rs-sous-titre:first-child { margin-top: 0; }
+.rs-alinea-texte { text-indent: 1.5em; }
+.rs-effacer { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2); }
+.rs-outil summary { color: var(--ink-strong); }
+.rs-corrige-partie:last-child { margin-bottom: var(--s5); }

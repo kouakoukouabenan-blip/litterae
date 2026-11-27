@@ -11,8 +11,10 @@ import { read, useStored } from "../lib/storage";
 import { NotFound } from "./NotFound";
 import { LockPanel } from "../components/LockPanel";
 import { AchatLien } from "../components/Achat";
-import { useAccesCC as useAccess } from "../data/cc-donnees";
-import { Bloc } from "./Lecon";
+import { CC_COMPLET, useAccesCC as useAccess } from "../data/cc-donnees";
+import { LECONS_GRATUITES_METHODE, ouvrirLeconMethode, useLeconsMethode } from "../lib/lecons-methode";
+import type { EchecLecon } from "../lib/lecons-libres";
+import { Bloc, OuvertureLecon } from "./Lecon";
 import { CORRIGES_CC, FORMULES_CC, GENRES_CC, LECONS_CC, SUJETS_CC, VERBES_CC, genreDe, type BlocCC, type CorrigeCC as CorrigeCCType, type TexteEtudie } from "../data/commentaire";
 import { ETUDES_CC, type EtudeCC } from "../data/commentaire-etudes";
 import { AtelierCC } from "./AtelierCC";
@@ -165,7 +167,7 @@ export function TexteEtudieBloc({ t }: { t: TexteEtudie }) {
 /** Liste des leçons. */
 function CoursCC() {
   const [lues] = useStored<string[]>("cc-lecons-lues", []);
-  const { premium } = useAccess();
+  const acces = useLeconsMethode("cc", CC_COMPLET);
   return (
     <Page>
       <CoursOngletsCC actif="lecons" />
@@ -173,6 +175,7 @@ function CoursCC() {
         <h1 class="page-title">Le commentaire composé</h1>
         <p class="lede">{LECONS_CC.length} leçons, de la définition à la conclusion.</p>
       </header>
+      {acces.libre && <p class="quota cc-quota"><span class="muted quota-texte">{acces.restantes ? `${acces.restantes} leçon${acces.restantes > 1 ? "s" : ""} gratuite${acces.restantes > 1 ? "s" : ""} au choix` : "Leçons gratuites lues"}</span><AchatLien label="Tout débloquer" /></p>}
       <ol class="list" aria-label="Leçons">
         {LECONS_CC.map((l, i) => {
           const lue = lues.includes(l.id);
@@ -181,7 +184,7 @@ function CoursCC() {
               <a class="row" href={`#/cc/cours/${l.id}`}>
                 <span class={`step-num ${lue ? "done" : ""}`} aria-hidden="true">{lue ? <Icon name="check" size={18} /> : i + 1}</span>
                 <span class="row-body"><span class="row-title">{l.titre}</span><span class="meta">{l.duree}{lue ? " · lue" : ""}</span></span>
-                {premium ? <Icon name="chevron_right" /> : <Cadenas />}
+                {acces.peutLire(l.id) || !acces.libre ? <Icon name="chevron_right" /> : <Cadenas />}
               </a>
             </li>
           );
@@ -268,18 +271,37 @@ function LeconCC({ id }: { id: string }) {
   const i = LECONS_CC.findIndex(l => l.id === id);
   const [lues, setLues] = useStored<string[]>("cc-lecons-lues", []);
   const { premium } = useAccess();
+  const acces = useLeconsMethode("cc", CC_COMPLET);
+  // Sans clé : 3 leçons au choix, demandées au serveur à la première ouverture.
+  const ouverte = acces.ouverte(id);
+  const aOuvrir = i > -1 && acces.libre && !ouverte && acces.peutLire(id);
+  const [echec, setEchec] = useState<EchecLecon | null>(null);
+  const [essai, setEssai] = useState(0);
+  useEffect(() => {
+    if (!aOuvrir) return;
+    let actif = true;
+    setEchec(null);
+    ouvrirLeconMethode("cc", id).then(r => { if (actif && typeof r === "string") setEchec(r); });
+    return () => { actif = false; };
+  }, [id, aOuvrir, essai]);
   if (i < 0) return <NotFound what="Cette leçon n'existe pas." back="#/cc/cours" />;
-  if (premium && !lues.includes(id)) setTimeout(() => setLues([...lues, id]));
-  const l = LECONS_CC[i], prev = LECONS_CC[i - 1], next = LECONS_CC[i + 1];
+  const lisible = premium || !!ouverte;
+  if (lisible && !lues.includes(id)) setTimeout(() => setLues([...lues, id]));
+  const base = LECONS_CC[i], prev = LECONS_CC[i - 1], next = LECONS_CC[i + 1];
+  const l = ouverte ? { ...base, blocs: ouverte.blocs as BlocCC[] } : base;
+  const quiz = ouverte ? ouverte.quiz : QUIZ_CC[l.id];
   return (
     <Page title={`Leçon ${i + 1}`} back="#/cc/cours">
       <article class="reading">
         <header class="page-header">
           <p class="eyebrow">Commentaire composé · Leçon {i + 1} sur {LECONS_CC.length} · {l.duree}</p>
           <h1 class="page-title"><Texte text={l.titre} /></h1>
+          {ouverte && <p class="small muted fiche-quota">Leçon gratuite. <AchatLien label="Tout débloquer" /></p>}
         </header>
-        {premium ? <div class="prose">{l.blocs.map((b, k) => <BlocLeconCC key={k} b={b} />)}</div> : <VerrouCC />}
-        {premium && QUIZ_CC[l.id] && <QuizCC id={l.id} questions={QUIZ_CC[l.id]} />}
+        {aOuvrir && echec !== "limite" ? <OuvertureLecon echec={echec} reessayer={() => setEssai(essai + 1)} />
+          : !lisible ? (acces.libre ? <LockPanel reason={`Tu as lu tes ${LECONS_GRATUITES_METHODE} leçons gratuites du Commentaire composé.`} contenu={CONTENU_CC} /> : <VerrouCC />)
+          : <div class="prose">{l.blocs.map((b, k) => <BlocLeconCC key={k} b={b} />)}</div>}
+        {lisible && quiz && <QuizCC id={l.id} questions={quiz} />}
         <nav class="pager" aria-label="Leçons">
           {prev ? <a class="pager-link" href={`#/cc/cours/${prev.id}`}><span class="meta">Précédente</span>{prev.titre}</a> : <span />}
           {next

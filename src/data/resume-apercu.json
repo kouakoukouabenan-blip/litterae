@@ -1,0 +1,357 @@
+{
+ "lecons": [
+  {
+   "id": "definition",
+   "partie": "comprendre",
+   "titre": "Le résumé de texte, c'est quoi ?",
+   "duree": "8 min",
+   "blocs": []
+  },
+  {
+   "id": "comprendre",
+   "partie": "comprendre",
+   "titre": "Le paratexte et la lecture passive",
+   "duree": "6 min",
+   "blocs": []
+  },
+  {
+   "id": "lecture-active",
+   "partie": "comprendre",
+   "titre": "La lecture active : thème, thèse et visée",
+   "duree": "7 min",
+   "blocs": []
+  },
+  {
+   "id": "enonciation-structure",
+   "partie": "comprendre",
+   "titre": "Situation d'énonciation et structure logique",
+   "duree": "7 min",
+   "blocs": []
+  },
+  {
+   "id": "questions",
+   "partie": "questions",
+   "titre": "À quoi servent les questions ?",
+   "duree": "7 min",
+   "blocs": []
+  },
+  {
+   "id": "vocabulaire",
+   "partie": "questions",
+   "titre": "Expliquer un mot ou une expression en contexte",
+   "duree": "8 min",
+   "blocs": []
+  },
+  {
+   "id": "rediger-reponses",
+   "partie": "questions",
+   "titre": "Bien rédiger ses réponses",
+   "duree": "6 min",
+   "blocs": []
+  },
+  {
+   "id": "idees-essentielles",
+   "partie": "resume",
+   "titre": "Repérer les idées essentielles",
+   "duree": "8 min",
+   "blocs": []
+  },
+  {
+   "id": "reformuler",
+   "partie": "resume",
+   "titre": "Reformuler les idées essentielles",
+   "duree": "10 min",
+   "blocs": []
+  },
+  {
+   "id": "enchainer",
+   "partie": "resume",
+   "titre": "Enchaîner les idées avec des connecteurs",
+   "duree": "6 min",
+   "blocs": []
+  },
+  {
+   "id": "rediger",
+   "partie": "resume",
+   "titre": "Rédiger le résumé",
+   "duree": "8 min",
+   "blocs": []
+  },
+  {
+   "id": "production",
+   "partie": "production",
+   "titre": "La production écrite, c'est quoi ?",
+   "duree": "5 min",
+   "blocs": []
+  },
+  {
+   "id": "comprendre-sujet",
+   "partie": "production",
+   "titre": "Comprendre le sujet",
+   "duree": "6 min",
+   "blocs": []
+  },
+  {
+   "id": "introduction-pe",
+   "partie": "production",
+   "titre": "Rédiger l'introduction",
+   "duree": "5 min",
+   "blocs": []
+  },
+  {
+   "id": "developpement-pe",
+   "partie": "production",
+   "titre": "Rédiger le développement",
+   "duree": "8 min",
+   "blocs": []
+  },
+  {
+   "id": "conclusion-pe",
+   "partie": "production",
+   "titre": "Rédiger la conclusion",
+   "duree": "6 min",
+   "blocs": []
+  },
+  {
+   "id": "exemple-pe",
+   "partie": "production",
+   "titre": "Une production écrite complète",
+   "duree": "6 min",
+   "blocs": []
+  }
+ ],
+ "quiz": {},
+ "exercices": [
+  {
+   "id": "divorce",
+   "titre": "Vers un divorce entre Paris et le continent africain ?",
+   "auteur": "Delphine Lecoutre et Admore Mupoki Kambudzi",
+   "source": "*Le Monde diplomatique*, juin 2006",
+   "date": "2006",
+   "mots": 696,
+   "fraction": 4,
+   "corrige": true,
+   "texte": "",
+   "paratexte": "",
+   "theme": "",
+   "these": "",
+   "visee": "",
+   "enonciation": "",
+   "structure": [],
+   "questions": [],
+   "idees": [],
+   "enchainement": "",
+   "resume": "",
+   "pe": {
+    "verbe": "étayer",
+    "consigne": "",
+    "citation": "",
+    "theme": "",
+    "these": "",
+    "intro": ""
+   }
+  },
+  {
+   "id": "revel",
+   "titre": "La connaissance inutile",
+   "auteur": "Jean-François Revel",
+   "source": "*La Connaissance inutile*, 1988",
+   "date": "1988",
+   "mots": 506,
+   "fraction": 4,
+   "corrige": true,
+   "texte": "",
+   "paratexte": "",
+   "theme": "",
+   "these": "",
+   "visee": "",
+   "enonciation": "",
+   "structure": [],
+   "questions": [],
+   "idees": [],
+   "enchainement": "",
+   "resume": "",
+   "pe": {
+    "verbe": "réfuter",
+    "consigne": "",
+    "citation": "",
+    "theme": "",
+    "these": "",
+    "intro": ""
+   }
+  },
+  {
+   "id": "tourisme",
+   "titre": "Le tourisme, une rencontre manquée ?",
+   "auteur": "Abdelwahab Bouhdiba",
+   "source": "*Le Courrier de l'UNESCO*, février 1981",
+   "date": "1981",
+   "mots": 770,
+   "fraction": 4,
+   "corrige": true,
+   "texte": "",
+   "paratexte": "",
+   "theme": "",
+   "these": "",
+   "visee": "",
+   "enonciation": "",
+   "structure": [],
+   "questions": [],
+   "idees": [],
+   "enchainement": "",
+   "resume": "",
+   "pe": {
+    "verbe": "discuter",
+    "consigne": "",
+    "citation": "",
+    "theme": "",
+    "these": "",
+    "intro": ""
+   }
+  },
+  {
+   "id": "bebey",
+   "titre": "Tradition orale et écriture",
+   "auteur": "Francis Bebey",
+   "source": "Avant-propos de la revue *Recherche, Pédagogie et Culture*, n° 29-30, mai-août 1977",
+   "date": "1977",
+   "mots": 610,
+   "fraction": 4,
+   "corrige": false,
+   "texte": "",
+   "paratexte": "",
+   "theme": "",
+   "these": "",
+   "visee": "",
+   "enonciation": "",
+   "structure": [],
+   "questions": [],
+   "idees": [],
+   "enchainement": "",
+   "resume": "",
+   "pe": {
+    "verbe": "réfuter",
+    "consigne": "",
+    "citation": "",
+    "theme": "",
+    "these": "",
+    "intro": ""
+   }
+  },
+  {
+   "id": "images",
+   "titre": "Faut-il vraiment se méfier des images ?",
+   "auteur": "",
+   "source": "Texte proposé au bac (auteur non indiqué)",
+   "mots": 359,
+   "fraction": 4,
+   "corrige": false,
+   "texte": "",
+   "paratexte": "",
+   "theme": "",
+   "these": "",
+   "visee": "",
+   "enonciation": "",
+   "structure": [],
+   "questions": [],
+   "idees": [],
+   "enchainement": "",
+   "resume": "",
+   "pe": {
+    "verbe": "étayer",
+    "consigne": "",
+    "citation": "",
+    "theme": "",
+    "these": "",
+    "intro": ""
+   }
+  },
+  {
+   "id": "violence",
+   "titre": "La violence urbaine",
+   "auteur": "Josyane Savigneau",
+   "source": "*Le Monde*, Dossiers et documents, 1979",
+   "date": "1979",
+   "mots": 327,
+   "fraction": 4,
+   "corrige": false,
+   "texte": "",
+   "paratexte": "",
+   "theme": "",
+   "these": "",
+   "visee": "",
+   "enonciation": "",
+   "structure": [],
+   "questions": [],
+   "idees": [],
+   "enchainement": "",
+   "resume": "",
+   "pe": {
+    "verbe": "étayer",
+    "consigne": "",
+    "citation": "",
+    "theme": "",
+    "these": "",
+    "intro": ""
+   }
+  },
+  {
+   "id": "lwoff",
+   "titre": "Que représente la race ?",
+   "auteur": "André Lwoff",
+   "source": "*Le Monde*, 24 avril 1977",
+   "date": "1977",
+   "mots": 306,
+   "fraction": 4,
+   "corrige": false,
+   "texte": "",
+   "paratexte": "",
+   "theme": "",
+   "these": "",
+   "visee": "",
+   "enonciation": "",
+   "structure": [],
+   "questions": [],
+   "idees": [],
+   "enchainement": "",
+   "resume": "",
+   "pe": {
+    "verbe": "étayer",
+    "consigne": "",
+    "citation": "",
+    "theme": "",
+    "these": "",
+    "intro": ""
+   }
+  },
+  {
+   "id": "lecomte",
+   "titre": "Relations sociales en danger",
+   "auteur": "Bernard Lecomte",
+   "source": "*Communication et nouvelles technologies*, 1984",
+   "date": "1984",
+   "mots": 691,
+   "fraction": 4,
+   "corrige": false,
+   "texte": "",
+   "paratexte": "",
+   "theme": "",
+   "these": "",
+   "visee": "",
+   "enonciation": "",
+   "structure": [],
+   "questions": [],
+   "idees": [],
+   "enchainement": "",
+   "resume": "",
+   "pe": {
+    "verbe": "étayer",
+    "consigne": "",
+    "citation": "",
+    "theme": "",
+    "these": "",
+    "intro": ""
+   }
+  }
+ ]
+}
