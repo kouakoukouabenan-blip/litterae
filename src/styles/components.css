@@ -507,3 +507,13 @@
 .video-aide-cadre { display: flex; flex-direction: column; align-items: center; gap: var(--s3); width: 100%; max-width: 22rem; }
 .video-aide-cadre video { width: 100%; max-height: calc(100vh - 120px); max-height: calc(100dvh - 120px); aspect-ratio: 9 / 16; border-radius: var(--radius); background: #000; object-fit: contain; }
 .video-aide-fermer { background: var(--paper); color: var(--ink-strong); border: 0; }
+
+/* Appareils de la clé (page Accès complet) */
+.mes-appareils { display: flex; flex-direction: column; gap: var(--s2); margin-top: var(--s2); color: var(--ink, inherit); }
+.appareils-liste { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--s2); }
+.appareils-liste li { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2) var(--s3); padding: var(--s3); border: 1px solid var(--line, #ddd); border-radius: 12px; background: var(--surface, transparent); }
+.appareils-liste li > .icon { color: var(--green); flex: none; }
+.appareil-corps { display: flex; flex-direction: column; flex: 1; min-width: 0; }
+.appareil-nom { font-weight: 600; }
+.appareil-confirmer { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2); width: 100%; }
+.mes-appareils .btn-small { min-height: 36px; padding: 0 var(--s3); font-size: var(--text-sm); }

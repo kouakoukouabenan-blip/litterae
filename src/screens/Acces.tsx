@@ -9,6 +9,7 @@ import { AchatLien } from "../components/Achat";
 import { CommentPayerBouton } from "../components/CommentPayer";
 import { BIENVENUE } from "../components/Bienvenue";
 import { write } from "../lib/storage";
+import { MesAppareils } from "../components/MesAppareils";
 import { cleRecue, oublierCleRecue, recevoir, surAncienneAdresse } from "../lib/passage";
 
 /** Code de passage (ancienne adresse, iPhone) collé dans la case de la clé : bien plus long qu'une clé. */
@@ -31,9 +32,12 @@ export function AccesScreen({ params }: { params: URLSearchParams }) {
   };
   const [etat, setEtat] = useState<"saisie" | "envoi" | "ok" | "progression">("saisie");
   const [erreur, setErreur] = useState("");
+  // Clé déjà sur 2 appareils : l'élève peut en déconnecter un depuis ce téléphone.
+  const [pleine, setPleine] = useState("");
+  const [voirAppareils, setVoirAppareils] = useState(false);
 
-  async function valider(e: Event) {
-    e.preventDefault();
+  async function valider(e?: Event) {
+    e?.preventDefault();
     if (etat === "envoi" || !cle.trim()) return;
     setEtat("envoi");
     setErreur("");
@@ -48,7 +52,8 @@ export function AccesScreen({ params }: { params: URLSearchParams }) {
     const err = await activer(aValider);
     if (!err) oublierCleRecue();
     if (err) {
-      setErreur(err.message);
+      setPleine(err.code === "limite" ? aValider : "");
+      setErreur(err.code === "limite" ? "Ta clé est déjà utilisée sur 2 appareils, le maximum." : err.message);
       setEtat("saisie");
     } else {
       setEtat("ok");
@@ -79,9 +84,10 @@ export function AccesScreen({ params }: { params: URLSearchParams }) {
               <a class="btn btn-secondary align-start" href="#/acces?nouvelle=1">J'ai ma nouvelle clé</a>
             </section>
           )}
-          <details class="repli acces-note">
-            <summary>Ta clé marche sur 2 appareils</summary>
-            <p>Garde l'e-mail qui la contient pour la saisir sur un nouveau téléphone. Attention : effacer les données du navigateur compte comme un nouvel appareil. En cas de souci, <a href={lienAide("ma clé Litterae a atteint sa limite d'appareils")} target="_blank" rel="noopener">écris-nous</a>.</p>
+          <details class="repli acces-note" onToggle={e => setVoirAppareils((e.target as HTMLDetailsElement).open)}>
+            <summary>Mes appareils</summary>
+            <p>Ta clé marche sur 2 appareils. Garde l'e-mail qui la contient pour la saisir sur un nouveau téléphone. Attention : effacer les données du navigateur compte comme un nouvel appareil.</p>
+            {voirAppareils && <MesAppareils cle={actuelle.cle} />}
           </details>
           <button type="button" class="btn btn-secondary" onClick={() => { if (confirm("Retirer l'accès complet de cet appareil ? Tu pourras le réactiver avec ta clé.")) { retirer(); location.reload(); } }}>
             Retirer de cet appareil
@@ -115,11 +121,12 @@ export function AccesScreen({ params }: { params: URLSearchParams }) {
             <label class="field-label" for="cle">Clé d'accès</label>
             <input id="cle" class="input mono" value={cle} autocomplete="off" autocapitalize="characters" spellcheck={false}
               placeholder="ABCD-1234-EFGH-5678" aria-invalid={!!erreur} aria-describedby={erreur ? "cle-erreur" : undefined}
-              onInput={e => { setCle((e.target as HTMLInputElement).value); setErreur(""); }} />
+              onInput={e => { setCle((e.target as HTMLInputElement).value); setErreur(""); setPleine(""); }} />
             {peutColler && !cle && <button type="button" class="btn btn-secondary align-start" onClick={coller}><Icon name="content_paste" size={20} />Coller ma clé</button>}
             {erreur && <p id="cle-erreur" class="field-error" role="alert"><Icon name="error" size={18} />{erreur}</p>}
-            {erreur && ACHAT_URL && <p class="small">Tu n'as pas de clé valide ? <AchatLien label={`Acheter une clé, ${PRICE}`} /></p>}
-            {erreur && <p class="small">Tu as payé et ta clé est refusée ? <a href={lienAide("ma clé Litterae est refusée")} target="_blank" rel="noopener">Écris-nous{WHATSAPP ? " sur WhatsApp" : ""}</a>, on règle ça.</p>}
+            {pleine && <MesAppareils cle={pleine} nouvelAppareil onPlace={() => setTimeout(() => valider(), 800)} />}
+            {erreur && !pleine && ACHAT_URL && <p class="small">Tu n'as pas de clé valide ? <AchatLien label={`Acheter une clé, ${PRICE}`} /></p>}
+            {erreur && !pleine && <p class="small">Tu as payé et ta clé est refusée ? <a href={lienAide("ma clé Litterae est refusée")} target="_blank" rel="noopener">Écris-nous{WHATSAPP ? " sur WhatsApp" : ""}</a>, on règle ça.</p>}
             <button type="submit" class="btn btn-primary btn-block" disabled={!cle.trim() || etat === "envoi"}>
               {etat === "envoi" ? "Vérification…" : "Valider ma clé"}
             </button>

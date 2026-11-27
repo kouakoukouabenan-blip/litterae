@@ -84,7 +84,7 @@ export function appareil() {
   return id;
 }
 
-export type ErreurActivation = { message: string };
+export type ErreurActivation = { message: string; code?: string };
 
 async function appel(chemin: string, corps: object): Promise<Response> {
   if (!SERVEUR_URL) throw new Error("serveur");
@@ -107,7 +107,7 @@ export async function activer(cle: string): Promise<ErreurActivation | null> {
     return { message: "Impossible de joindre le serveur. Vérifie ta connexion et réessaie." };
   }
   const data = await res.json().catch(() => null);
-  if (!res.ok || !data?.contenu) return { message: data?.message ?? "La clé n'a pas pu être validée. Réessaie dans quelques minutes." };
+  if (!res.ok || !data?.contenu) return { message: data?.message ?? "La clé n'a pas pu être validée. Réessaie dans quelques minutes.", code: typeof data?.erreur === "string" ? data.erreur : undefined };
   // Le serveur renvoie la clé exacte (tiret invisible retiré, O remplacé par 0…) : c'est elle qu'on garde.
   enregistrer({ cle: typeof data.cle === "string" ? data.cle : cle.trim().toUpperCase(), contenu: data.contenu, verifieeLe: Date.now(), titulaire: lireTitulaire(data.titulaire), fin: typeof data.fin === "number" ? data.fin : null, duree: dureeActuelle() } satisfies Licence);
   write(TERMINE, null);
@@ -163,4 +163,31 @@ export async function reverifier() {
   } catch {
     // Réseau indisponible : on réessaiera plus tard.
   }
+}
+
+/** Un appareil où la clé est active, vu par l'élève (« ref » désigne l'appareil sans révéler son identifiant). */
+export interface AppareilCle { ref: string; nom: string; premier: number; dernier: number; moi: boolean }
+export interface AppareilsCle {
+  appareils: AppareilCle[]; max: number;
+  /** Déconnexions encore possibles sur 30 jours, et date où une nouvelle redevient possible. */
+  restants: number; parMois: number; prochain: number | null;
+  erreur?: string;
+}
+
+/** Appareils de la clé (celle de cet appareil, ou celle qu'on vient de saisir et qui est pleine). */
+export async function appareilsCle(cle: string): Promise<AppareilsCle | null> {
+  try {
+    const res = await appel("/appareils", { cle: cle.trim(), appareil: appareil() });
+    const d = await res.json().catch(() => null);
+    return res.ok && Array.isArray(d?.appareils) ? d : null;
+  } catch { return null; }
+}
+
+/** Déconnecte un autre appareil de la clé : il perd l'accès complet à sa prochaine connexion. */
+export async function deconnecterAppareil(cle: string, ref: string): Promise<AppareilsCle | null> {
+  try {
+    const res = await appel("/deconnecter", { cle: cle.trim(), appareil: appareil(), cible: ref });
+    const d = await res.json().catch(() => null);
+    return Array.isArray(d?.appareils) ? d : null;
+  } catch { return null; }
 }
