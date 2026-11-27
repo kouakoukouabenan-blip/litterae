@@ -23,6 +23,7 @@ import { InstallGate, InstallGuide } from "./components/Install";
 import { DemandeNotifs } from "./components/DemandeNotifs";
 import { DemandeAchat } from "./components/DemandeAchat";
 import { Bienvenue } from "./components/Bienvenue";
+import { PremierChoix, RepereMethode } from "./components/DecouverteMethodes";
 import { FinAcces } from "./components/FinAcces";
 import { AvantPayer, preparerAvantPaiement } from "./components/AvantPayer";
 import { CommentPayer } from "./components/CommentPayer";
@@ -149,6 +150,8 @@ export function App() {
       <FinAcces />
       <AvantPayer />
       <PanneauMessages />
+      <RepereMethode />
+      <PremierChoix />
       <CommentPayer />
       <InstallGate />
     </>

@@ -11,7 +11,7 @@ import { IconeMethode } from "./Marque";
  * Petite transition quand l'élève change de méthode : l'icône de la méthode et son nom apparaissent
  * un instant par-dessus l'écran (moins d'une seconde), pendant que l'accueil de la nouvelle méthode se met en place.
  */
-function animerMethode(m: Methode) {
+export function animerMethode(m: Methode) {
   if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
   document.querySelector(".transition-methode")?.remove();
   const el = document.createElement("div");
