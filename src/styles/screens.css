@@ -1244,3 +1244,6 @@ html[data-univers="composa"] .bandeau-essai { display: none; }
 .rs-effacer { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2); }
 .rs-outil summary { color: var(--ink-strong); }
 .rs-corrige-partie:last-child { margin-bottom: var(--s5); }
+
+/* Résumé : titres des groupes de la liste d'exercices (textes courts, niveau bac). */
+.rs-liste-titre { font-size: 1rem; font-weight: 700; margin: 1.25rem 0 .5rem; color: var(--muted); }

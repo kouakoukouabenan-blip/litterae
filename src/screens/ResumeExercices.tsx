@@ -149,7 +149,18 @@ export function SujetsRS({ vue }: { vue?: string }) {
           : "L'atelier te guide étape par étape, et te montre ce que tu as oublié."}</p>
       </header>
       {!RS_COMPLET && !licence() && <p class="quota cc-quota"><span class="muted quota-texte">Réservé à l'accès complet</span><AchatLien label="Débloquer" /></p>}
-      <ol class="list">{corrige ? corriges.map(e => ligne(e, `#/rs/corrige/${e.id}`)) : entrainement.map(e => ligne(e, `#/rs/atelier/${e.id}`))}</ol>
+      {(() => {
+        const liste = corrige ? corriges : entrainement, lien = (e: ExerciceRS) => corrige ? `#/rs/corrige/${e.id}` : `#/rs/atelier/${e.id}`;
+        const debut = liste.filter(e => e.niveau === "debut"), bac = liste.filter(e => e.niveau !== "debut");
+        // Textes courts de niveau 3e d'abord, pour apprendre la méthode ; puis les sujets du niveau bac.
+        if (!debut.length) return <ol class="list">{bac.map(e => ligne(e, lien(e)))}</ol>;
+        return <>
+          <h2 class="rs-liste-titre">Pour commencer : textes courts</h2>
+          <ol class="list">{debut.map(e => ligne(e, lien(e)))}</ol>
+          <h2 class="rs-liste-titre">Niveau bac</h2>
+          <ol class="list">{bac.map(e => ligne(e, lien(e)))}</ol>
+        </>;
+      })()}
     </Page>
   );
 }
@@ -199,7 +210,7 @@ function ExerciceVerrouille({ e, titre }: { e: ExerciceRS; titre: string }) {
         <header class="page-header">
           <p class="eyebrow">{titre} · {NOMS_VERBES[e.pe.verbe]}</p>
           <h1 class="page-title"><Texte text={e.titre} /></h1>
-          {e.auteur && <p class="lede">{e.auteur}, <Texte text={e.source} /></p>}
+          <p class="lede">{e.auteur ? `${e.auteur}, ` : ""}<Texte text={e.source} /></p>
         </header>
         <VerrouRS />
       </article>
@@ -219,7 +230,7 @@ function CorrigeRS({ id }: { id: string }) {
         <header class="page-header">
           <p class="eyebrow">Corrigé · {NOMS_VERBES[e.pe.verbe]}</p>
           <h1 class="page-title"><Texte text={e.titre} /></h1>
-          <p class="lede">{e.auteur}, <Texte text={e.source} /></p>
+          <p class="lede">{e.auteur ? `${e.auteur}, ` : ""}<Texte text={e.source} /></p>
         </header>
         <CarteTexte t={texteEtudie(e)} />
         <aside class="callout">

@@ -51,6 +51,8 @@ export interface ExerciceRS {
   texte: string;
   note?: string;
   corrige: boolean;
+  /** « debut » : texte court de niveau 3e, pour apprendre la méthode (rangé en tête de liste). */
+  niveau?: "debut";
   paratexte: string;
   theme: string;
   these: string;
