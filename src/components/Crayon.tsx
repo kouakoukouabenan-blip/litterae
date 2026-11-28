@@ -2,6 +2,7 @@ import type { JSX } from "preact";
 import { useState } from "preact/hooks";
 import { useStored } from "../lib/storage";
 import { Icon } from "./Icon";
+import { Texte } from "./Texte";
 
 /**
  * Le crayon : l'élève travaille sur le texte comme sur une feuille.
@@ -42,7 +43,8 @@ function decouper(texte: string) {
   return texte.split(/\n\s*\n/).map(p => p.split(/\s+/).filter(Boolean).map(m => ({ i: n++, m })));
 }
 
-export function TexteCrayon({ id, texte, note }: { id: string; texte: string; note?: string }) {
+/** reference : l'auteur et la source, écrits sous le texte comme dans les sujets d'examen. */
+export function TexteCrayon({ id, texte, note, reference }: { id: string; texte: string; note?: string; reference?: string }) {
   const [traits, setTraits] = useStored<Trait[]>(`crayon:${id}`, []);
   const [actif, setActif] = useState(false);
   const [outil, setOutil] = useState<Outil>("souligner");
@@ -181,6 +183,7 @@ export function TexteCrayon({ id, texte, note }: { id: string; texte: string; no
         if (i != null) toucher(Number(i));
       }}>
         {pars.map((p, k) => <p key={k}>{rendre(p, cadres)}</p>)}
+        {reference && <p class="crayon-reference"><Texte text={reference} /></p>}
         {note && <p class="crayon-source-note">{note}</p>}
       </div>
 

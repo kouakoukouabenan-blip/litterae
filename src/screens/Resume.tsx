@@ -140,6 +140,9 @@ LECONS_RS.forEach(l => l.blocs.forEach(b => { if ("texte" in b) TEXTES_RS.set(b.
 // Le nombre de mots donné par le sujet fait foi ; sinon on compte comme au bac.
 const nbMots = (t: TexteEtudie) => Number(/(\d+) mots/.exec(t.consigne)?.[1]) || compterMots(t.texte);
 
+// L'auteur et la source vont sous le texte, comme dans les sujets que les élèves connaissent.
+const reference = (t: TexteEtudie) => t.auteur ? `${t.auteur}, ${t.source}` : t.source;
+
 /** Dans une leçon : le texte support se lit sur sa propre page, avec le crayon. */
 export function CarteTexte({ t }: { t: TexteEtudie }) {
   const [traits] = useStored<unknown[]>(`crayon:${t.id}`, []);
@@ -149,8 +152,8 @@ export function CarteTexte({ t }: { t: TexteEtudie }) {
     <aside class={`rs-carte-texte ${ouvert ? "is-ouvert" : ""}`}>
       <p class="callout-label">Texte support</p>
       <p class="rs-carte-titre"><Texte text={`« ${t.titre} »`} /></p>
-      <p class="meta">{t.auteur}, <Texte text={t.source} /> · {nbMots(t)} mots{traits.length ? " · annoté" : ""}</p>
-      {ouvert && <TexteCrayon id={t.id} texte={t.texte} note={t.note} />}
+      <p class="meta">{nbMots(t)} mots{traits.length ? " · annoté" : ""}</p>
+      {ouvert && <TexteCrayon id={t.id} texte={t.texte} note={t.note} reference={reference(t)} />}
       <button type="button" class={`btn ${ouvert ? "btn-secondary" : "btn-primary"} align-start`} aria-expanded={ouvert}
         onClick={e => {
           const carte = (e.currentTarget as HTMLElement).closest(".rs-carte-texte");
@@ -173,9 +176,8 @@ function TexteSupportRS({ id }: { id: string }) {
         <header class="page-header">
           <p class="eyebrow">Texte support · {nbMots(t)} mots</p>
           <h1 class="page-title">{t.titre}</h1>
-          <p class="lede">{t.auteur}, <Texte text={t.source} /></p>
         </header>
-        <TexteCrayon id={t.id} texte={t.texte} note={t.note} />
+        <TexteCrayon id={t.id} texte={t.texte} note={t.note} reference={reference(t)} />
       </article>
     </Page>
   );

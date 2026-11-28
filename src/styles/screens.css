@@ -1146,6 +1146,7 @@ html[data-univers="composa"] .bandeau-essai { display: none; }
 .crayon.is-actif .crayon-texte { user-select: none; -webkit-user-select: none; }
 .crayon.is-actif .crayon-mot { cursor: pointer; -webkit-tap-highlight-color: transparent; }
 .crayon-debut { background: var(--ochre-pale); outline: 2px dashed var(--ink-strong); outline-offset: 1px; border-radius: 3px; }
+.crayon-reference { margin-top: var(--s3); text-align: right; font: 400 14px/1.5 var(--font-text); color: var(--muted); }
 .crayon-source-note { font: 400 13px/1.5 var(--font-text); color: var(--muted); }
 
 .encre-bleu { --encre: var(--encre-bleu); }

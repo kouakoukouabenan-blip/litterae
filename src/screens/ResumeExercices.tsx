@@ -28,7 +28,7 @@ const nomFraction = (e: ExerciceRS) => e.fraction === 4 ? "au quart" : "au tiers
 
 /** Le texte de l'exercice, sous la forme qu'attend la carte « Texte support » (avec le crayon). */
 const texteEtudie = (e: ExerciceRS, id = `rs-ex-${e.id}`): TexteEtudie => ({
-  id, titre: e.titre, auteur: e.auteur || "Auteur non indiqué", source: e.source, prose: true, texte: e.texte, note: e.note,
+  id, titre: e.titre, auteur: e.auteur, source: e.source, prose: true, texte: e.texte, note: e.note,
   consigne: `Résumez ce texte de ${e.mots} mots ${nomFraction(e)} de son volume.`
 });
 
@@ -210,7 +210,6 @@ function ExerciceVerrouille({ e, titre }: { e: ExerciceRS; titre: string }) {
         <header class="page-header">
           <p class="eyebrow">{titre} · {NOMS_VERBES[e.pe.verbe]}</p>
           <h1 class="page-title"><Texte text={e.titre} /></h1>
-          <p class="lede">{e.auteur ? `${e.auteur}, ` : ""}<Texte text={e.source} /></p>
         </header>
         <VerrouRS />
       </article>
@@ -230,7 +229,6 @@ function CorrigeRS({ id }: { id: string }) {
         <header class="page-header">
           <p class="eyebrow">Corrigé · {NOMS_VERBES[e.pe.verbe]}</p>
           <h1 class="page-title"><Texte text={e.titre} /></h1>
-          <p class="lede">{e.auteur ? `${e.auteur}, ` : ""}<Texte text={e.source} /></p>
         </header>
         <CarteTexte t={texteEtudie(e)} />
         <aside class="callout">
@@ -375,7 +373,7 @@ function AtelierRSScreen({ id }: { id: string }) {
         <header class="page-header">
           <p class="eyebrow">Atelier · Étape {etape + 1} sur {ETAPES.length}</p>
           <h1 class="page-title">{ETAPES[etape].nom}</h1>
-          <p class="lede"><Texte text={e.titre} />{e.auteur ? ` · ${e.auteur}` : ""}</p>
+          <p class="lede"><Texte text={e.titre} /></p>
         </header>
         <nav class="rs-phases" aria-label="Parties du sujet">
           {PHASES.map((nom, p) => {
@@ -397,7 +395,7 @@ function AtelierRSScreen({ id }: { id: string }) {
             <Def lignes={[["Titre", `« ${e.titre} »`], ["Auteur", e.auteur || "Non indiqué"], ["Source", e.source]]} />
             <Champ label="Mes suppositions" aide="« Ce texte va sans doute parler de…, et l'auteur va probablement défendre… »" lignes={3} valeur={a.hypotheses} onInput={v => maj({ hypotheses: v })} />
             <Voir><p><Texte text={e.paratexte} /></p></Voir>
-            <figure class="rs-atelier-texte"><TexteCrayon id={`rs-atelier-${e.id}`} texte={e.texte} note={e.note} /></figure>
+            <figure class="rs-atelier-texte"><TexteCrayon id={`rs-atelier-${e.id}`} texte={e.texte} note={e.note} reference={e.auteur ? `${e.auteur}, ${e.source}` : e.source} /></figure>
           </>}
 
           {etape === 1 && <>
